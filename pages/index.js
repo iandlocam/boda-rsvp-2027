@@ -44,7 +44,7 @@ export default function Home() {
   // ✅ Spotify: pega aquí tu embed correcto.
   // Si tu link fue: https://open.spotify.com/track/XXXXX
   // entonces aquí debe quedar: https://open.spotify.com/embed/track/XXXXX
-  const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/track/ID_DE_TU_CANCION";
+  const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv";
 
   const styles = {
     page: {
