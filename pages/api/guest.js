@@ -63,7 +63,7 @@ export default async function handler(req, res) {
       }
 
       // Leemos rango A:I (tu estructura completa)
-      const range = ${SHEET_TAB}!A2:I;
+      const range = "${SHEET_TAB}!A2:I";
       const resp = await sheets.spreadsheets.values.get({
         spreadsheetId: SHEET_ID,
         range,
