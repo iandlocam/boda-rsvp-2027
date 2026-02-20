@@ -366,7 +366,9 @@ export default function Home() {
           <div style={styles.rsvpWrap}>
             <div style={styles.rsvpTitle}>
               Confirmación de asistencia
-              <span style={styles.idBadge}>{guestId ? ID: ${guestId} : "ID no detectado"}</span>
+              <span style={styles.idBadge}>
+  {guestId ? `ID: ${guestId}` : "ID no detectado"}
+</span>
             </div>
 
             <textarea
