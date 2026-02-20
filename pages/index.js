@@ -398,7 +398,8 @@ export default function Home() {
             {rsvpStatus === "saving" && <div style={styles.hint}>Guardando tu confirmación…</div>}
             {rsvpStatus === "ok" && (
               <div style={styles.statusOk}>
-                ¡Listo! Quedó registrado. ✅ {rsvpResult?.updatedRow ? (Fila ${rsvpResult.updatedRow}) : ""}
+                ¡Listo! Quedó registrado. ✅{" "}
+{rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
               </div>
             )}
             {rsvpStatus === "error" && <div style={styles.statusErr}>{rsvpError}</div>}
