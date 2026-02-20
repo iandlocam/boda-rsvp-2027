@@ -239,6 +239,7 @@ export default function Home() {
       outline: "none",
       resize: "vertical",
       minHeight: 90,
+      color: "#000",
     },
     rsvpRow: {
       display: "flex",
@@ -247,23 +248,25 @@ export default function Home() {
       flexWrap: "wrap",
     },
     btn: {
-      borderRadius: 12,
-      border: "1px solid rgba(31, 65, 95, 0.16)",
-      padding: "10px 14px",
-      background: "white",
-      cursor: "pointer",
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16,
-    },
-    btnPrimary: {
-      borderRadius: 12,
-      border: "1px solid rgba(31, 65, 95, 0.16)",
-      padding: "10px 14px",
-      background: "rgba(214, 178, 94, 0.22)",
-      cursor: "pointer",
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16,
-    },
+  borderRadius: 12,
+  border: "1px solid rgba(31, 65, 95, 0.16)",
+  padding: "10px 14px",
+  background: "white",
+  cursor: "pointer",
+  fontFamily: '"Cormorant Garamond", serif',
+  fontSize: 16,
+  color: "#000", // ✅ AÑADIR
+},
+btnPrimary: {
+  borderRadius: 12,
+  border: "1px solid rgba(31, 65, 95, 0.16)",
+  padding: "10px 14px",
+  background: "rgba(214, 178, 94, 0.22)",
+  cursor: "pointer",
+  fontFamily: '"Cormorant Garamond", serif',
+  fontSize: 16,
+  color: "#000", // ✅ AÑADIR
+},
     statusOk: {
       marginTop: 10,
       fontFamily: '"Cormorant Garamond", serif',
@@ -288,7 +291,7 @@ export default function Home() {
       background: "rgba(255,255,255,0.65)",
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: 13,
-      color: "rgba(19, 32, 45, 0.75)",
+      color: "#000",
       marginLeft: 8,
     },
   };
@@ -307,6 +310,12 @@ export default function Home() {
           rel="stylesheet"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <style>{`
+  textarea::placeholder {
+    color: #000;
+    opacity: 0.6;
+  }
+`}</style>
       </Head>
 
       <div style={styles.page}>
