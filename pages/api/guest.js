@@ -138,7 +138,7 @@ export default async function handler(req, res) {
 
     await sheets.spreadsheets.values.update({
       spreadsheetId: SHEET_ID,
-      range: ${SHEET_TAB}!E${sheetRowNumber}:H${sheetRowNumber},
+      range: '${SHEET_TAB}!E${sheetRowNumber}:H${sheetRowNumber}',
       valueInputOption: "USER_ENTERED",
       requestBody: { values },
     });
