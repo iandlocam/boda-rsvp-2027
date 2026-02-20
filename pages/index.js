@@ -1,17 +1,46 @@
 import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 function clamp(n) {
   return Number.isFinite(n) && n > 0 ? n : 0;
 }
 
+async function enviarRSVP({ id, asistencia, mensaje }) {
+  const resp = await fetch("/api/guest", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, asistencia, mensaje }),
+  });
+
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data?.error || "Error desconocido");
+  return data;
+}
+
 export default function Home() {
+  const router = useRouter();
+
   // Fecha boda: 23 abril 2027, ceremonia 4:00pm (hora local de tu navegador)
   const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0, hours: 0, minutes: 0, seconds: 0,
   });
+
+  // RSVP states
+  const [guestId, setGuestId] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [rsvpStatus, setRsvpStatus] = useState("idle"); // idle | saving | ok | error
+  const [rsvpError, setRsvpError] = useState("");
+  const [rsvpResult, setRsvpResult] = useState(null);
+
+  // Lee ?id=AV001 de la URL
+  useEffect(() => {
+    if (!router.isReady) return;
+    const id = router.query.id;
+    if (typeof id === "string") setGuestId(id.trim());
+  }, [router.isReady, router.query.id]);
 
   useEffect(() => {
     const tick = () => {
@@ -35,6 +64,30 @@ export default function Home() {
     const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
   }, [weddingDateMs]);
+
+  async function confirmar(asistencia) {
+    try {
+      setRsvpStatus("saving");
+      setRsvpError("");
+      setRsvpResult(null);
+
+      if (!guestId) {
+        throw new Error("Falta el ID en el enlace. Ejemplo: ?id=AV001");
+      }
+
+      const result = await enviarRSVP({
+        id: guestId,
+        asistencia,
+        mensaje,
+      });
+
+      setRsvpResult(result);
+      setRsvpStatus("ok");
+    } catch (e) {
+      setRsvpStatus("error");
+      setRsvpError(e?.message || String(e));
+    }
+  }
 
   // ✅ CAMBIA ESTO si quieres nombres en negro:
   // const NAME_STYLE = "gold";
@@ -158,6 +211,86 @@ export default function Home() {
       fontSize: 13,
       color: "rgba(19, 32, 45, 0.55)",
     },
+
+    // RSVP UI
+    rsvpWrap: {
+      maxWidth: 520,
+      margin: "24px auto 0",
+      textAlign: "left",
+      border: "1px solid rgba(31, 65, 95, 0.12)",
+      background: "rgba(248, 251, 255, 0.85)",
+      borderRadius: 16,
+      padding: 16,
+    },
+    rsvpTitle: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 18,
+      margin: "0 0 10px",
+      color: "rgba(19, 32, 45, 0.85)",
+    },
+    input: {
+      width: "100%",
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.16)",
+      padding: "10px 12px",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      background: "rgba(255,255,255,0.85)",
+      outline: "none",
+      resize: "vertical",
+      minHeight: 90,
+    },
+    rsvpRow: {
+      display: "flex",
+      gap: 10,
+      marginTop: 10,
+      flexWrap: "wrap",
+    },
+    btn: {
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.16)",
+      padding: "10px 14px",
+      background: "white",
+      cursor: "pointer",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+    },
+    btnPrimary: {
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.16)",
+      padding: "10px 14px",
+      background: "rgba(214, 178, 94, 0.22)",
+      cursor: "pointer",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+    },
+    statusOk: {
+      marginTop: 10,
+      fontFamily: '"Cormorant Garamond", serif',
+      color: "rgba(19, 32, 45, 0.85)",
+    },
+    statusErr: {
+      marginTop: 10,
+      fontFamily: '"Cormorant Garamond", serif',
+      color: "#b42318",
+    },
+    hint: {
+      marginTop: 8,
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 13,
+      color: "rgba(19, 32, 45, 0.55)",
+    },
+    idBadge: {
+      display: "inline-block",
+      borderRadius: 999,
+      padding: "6px 10px",
+      border: "1px solid rgba(31, 65, 95, 0.12)",
+      background: "rgba(255,255,255,0.65)",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 13,
+      color: "rgba(19, 32, 45, 0.75)",
+      marginLeft: 8,
+    },
   };
 
   const nameStyleObj = NAME_STYLE === "black" ? styles.namesBlack : styles.namesGold;
@@ -227,6 +360,50 @@ export default function Home() {
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
             />
+          </div>
+
+          {/* RSVP */}
+          <div style={styles.rsvpWrap}>
+            <div style={styles.rsvpTitle}>
+              Confirmación de asistencia
+              <span style={styles.idBadge}>{guestId ? ID: ${guestId} : "ID no detectado"}</span>
+            </div>
+
+            <textarea
+              style={styles.input}
+              value={mensaje}
+              onChange={(e) => setMensaje(e.target.value)}
+              placeholder="Escribe un mensaje de buenos deseos (opcional)"
+            />
+
+            <div style={styles.rsvpRow}>
+              <button
+                style={styles.btnPrimary}
+                onClick={() => confirmar("Sí")}
+                disabled={rsvpStatus === "saving"}
+              >
+                Sí asistiré
+              </button>
+              <button
+                style={styles.btn}
+                onClick={() => confirmar("No")}
+                disabled={rsvpStatus === "saving"}
+              >
+                No podré asistir
+              </button>
+            </div>
+
+            {rsvpStatus === "saving" && <div style={styles.hint}>Guardando tu confirmación…</div>}
+            {rsvpStatus === "ok" && (
+              <div style={styles.statusOk}>
+                ¡Listo! Quedó registrado. ✅ {rsvpResult?.updatedRow ? (Fila ${rsvpResult.updatedRow}) : ""}
+              </div>
+            )}
+            {rsvpStatus === "error" && <div style={styles.statusErr}>{rsvpError}</div>}
+
+            <div style={styles.hint}>
+              Tip: tu enlace debe incluir <code>?id=AV001</code> (cada invitado tiene un ID).
+            </div>
           </div>
 
           <div style={styles.note}>
