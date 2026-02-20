@@ -117,7 +117,7 @@ export default async function handler(req, res) {
     const ip = getClientIp(req);
 
     // 1) Encontrar la fila por ID leyendo solo la columna A
-    const idRange = '${SHEET_TAB}!A2:A';
+    const idRange = `${SHEET_TAB}!A2:A`;
     const idResp = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
       range: idRange,
