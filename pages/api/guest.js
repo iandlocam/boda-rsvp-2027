@@ -73,7 +73,7 @@ export default async function handler(req, res) {
       const idx = rows.findIndex((r) => String(r?.[0] || "").trim() === id);
 
       if (idx === -1) {
-        return res.status(404).json({ ok: false, error: ID not found: ${id} });
+        return res.status(404).json({ ok: false, error: 'ID not found: ${id}' });
       }
 
       const r = rows[idx];
