@@ -34,6 +34,8 @@ export default function Home() {
   const [rsvpStatus, setRsvpStatus] = useState("idle"); // idle | saving | ok | error
   const [rsvpError, setRsvpError] = useState("");
   const [rsvpResult, setRsvpResult] = useState(null);
+    const [yaConfirmo, setYaConfirmo] = useState(false);
+  const [asistenciaActual, setAsistenciaActual] = useState("");
   const [guestInfo, setGuestInfo] = useState(null); // { guest, isActive }
 const [guestError, setGuestError] = useState("");
     // Datos del invitado (vienen de GET /api/guest?id=...)
@@ -66,6 +68,9 @@ const [guestError, setGuestError] = useState("");
         if (cancelled) return;
 
         setGuestData(data.guest || null);
+        const a = String(data?.guest?.asistencia || "").trim();
+setAsistenciaActual(a);
+setYaConfirmo(a === "Sí" || a === "No");
         setLinkActive(Boolean(data.isActive));
         
         // Opcional: si ya había un mensaje guardado en sheets, precárgalo
@@ -493,17 +498,22 @@ btnPrimary: {
             />
 
             <div style={styles.rsvpRow}>
-              <button
+                {yaConfirmo && (
+  <div style={styles.hint}>
+    Ya confirmaste: <b>{asistenciaActual}</b>. Si necesitas cambiarlo, contáctanos.
+  </div>
+)}
+                            <button
                 style={styles.btnPrimary}
                 onClick={() => confirmar("Sí")}
-                disabled={rsvpStatus === "saving" || guestInfo?.isActive === false}
+                disabled={rsvpStatus === "saving" || yaConfirmo}
               >
                 Sí asistiré
               </button>
               <button
                 style={styles.btn}
                 onClick={() => confirmar("No")}
-               disabled={rsvpStatus === "saving" || guestInfo?.isActive === false}
+              disabled={rsvpStatus === "saving" || yaConfirmo}
               >
                 No podré asistir
               </button>
