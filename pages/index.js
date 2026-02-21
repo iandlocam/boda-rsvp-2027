@@ -89,7 +89,6 @@ export default function Home() {
 
         // ✅ Ajustar pasesConfirmados al rango 1..pasesAsignados
         const maxPases = Math.max(1, Number(g?.pasesAsignados || 1));
-        const maxPases = Math.max(1, Number(g?.pasesAsignados || 1));
 
         //precargar desde columna J si existe; si no, default =1
         const j = Number(g?.pasesConfirmados || 0);
