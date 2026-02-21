@@ -35,7 +35,6 @@ export default function Home() {
   const [rsvpError, setRsvpError] = useState("");
   const [rsvpResult, setRsvpResult] = useState(null);
   const [guestInfo, setGuestInfo] = useState(null); // { guest, isActive }
-const [guestLoading, setGuestLoading] = useState(false);
 const [guestError, setGuestError] = useState("");
     // Datos del invitado (vienen de GET /api/guest?id=...)
   const [guestData, setGuestData] = useState(null); // { id, nombre, pasesAsignados, ... }
