@@ -484,9 +484,7 @@ export default function Home() {
       </>
     ) : (
       <>
-        Gracias por avisarnos,  
-        <br />
-        te vamos a extrañar 💔
+        Gracias por avisarnos, te vamos a extrañar 💔
       </>
     )}
   </div>
