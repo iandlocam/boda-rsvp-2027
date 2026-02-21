@@ -6,17 +6,7 @@ function clamp(n) {
   return Number.isFinite(n) && n > 0 ? n : 0;
 }
 
-async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
-  const resp = await fetch("/api/guest", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id, asistencia, mensaje, pasesConfirmados }),
-  });
-const [pasesConfirmados, setPasesConfirmados] = useState(1);
-  const data = await resp.json();
-  if (!resp.ok) throw new Error(data?.error || "Error desconocido");
-  return data;
-}
+async function enviarRSVP({ id, asistencia, mensaje }) {
   const resp = await fetch("/api/guest", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -27,7 +17,6 @@ const [pasesConfirmados, setPasesConfirmados] = useState(1);
   if (!resp.ok) throw new Error(data?.error || "Error desconocido");
   return data;
 }
-
 export default function Home() {
   const router = useRouter();
 
