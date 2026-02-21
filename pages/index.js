@@ -6,25 +6,33 @@ function clamp(n) {
   return Number.isFinite(n) && n > 0 ? n : 0;
 }
 
-async function enviarRSVP({ id, asistencia, mensaje }) {
+async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
   const resp = await fetch("/api/guest", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id, asistencia, mensaje }),
+    // Nota: aunque tu API hoy ignore pasesConfirmados, no rompe nada.
+    body: JSON.stringify({ id, asistencia, mensaje, pasesConfirmados }),
   });
 
   const data = await resp.json();
   if (!resp.ok) throw new Error(data?.error || "Error desconocido");
   return data;
 }
+
 export default function Home() {
   const router = useRouter();
 
   // Fecha boda: 23 abril 2027, ceremonia 4:00pm (hora local de tu navegador)
-  const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
+  const weddingDateMs = useMemo(
+    () => new Date("2027-04-23T16:00:00").getTime(),
+    []
+  );
 
   const [timeLeft, setTimeLeft] = useState({
-    days: 0, hours: 0, minutes: 0, seconds: 0,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
 
   // RSVP states
@@ -33,15 +41,15 @@ export default function Home() {
   const [rsvpStatus, setRsvpStatus] = useState("idle"); // idle | saving | ok | error
   const [rsvpError, setRsvpError] = useState("");
   const [rsvpResult, setRsvpResult] = useState(null);
-    const [yaConfirmo, setYaConfirmo] = useState(false);
-  const [asistenciaActual, setAsistenciaActual] = useState("");
-  const [guestInfo, setGuestInfo] = useState(null); // { guest, isActive }
-const [guestError, setGuestError] = useState("");
-    // Datos del invitado (vienen de GET /api/guest?id=...)
-  const [guestData, setGuestData] = useState(null); // { id, nombre, pasesAsignados, ... }
+
+  const [guestData, setGuestData] = useState(null); // { id, nombre, pasesAsignados, asistencia, ... }
   const [guestLoading, setGuestLoading] = useState(false);
   const [guestLoadError, setGuestLoadError] = useState("");
-  const [linkActive, setLinkActive] = useState(true);
+  const [yaConfirmo, setYaConfirmo] = useState(false);
+  const [asistenciaActual, setAsistenciaActual] = useState("");
+
+  // ✅ ESTO FALTABA (arregla el crash)
+  const [pasesConfirmados, setPasesConfirmados] = useState(1);
 
   // Lee ?id=AV001 de la URL
   useEffect(() => {
@@ -49,6 +57,8 @@ const [guestError, setGuestError] = useState("");
     const id = router.query.id;
     if (typeof id === "string") setGuestId(id.trim());
   }, [router.isReady, router.query.id]);
+
+  // Carga invitado desde GET /api/guest?id=...
   useEffect(() => {
     if (!guestId) return;
 
@@ -63,61 +73,44 @@ const [guestError, setGuestError] = useState("");
         const data = await resp.json();
 
         if (!resp.ok) throw new Error(data?.error || "No se pudo cargar el invitado");
-
         if (cancelled) return;
 
-        setGuestData(data.guest || null);
-        const a = String(data?.guest?.asistencia || "").trim();
-setAsistenciaActual(a);
-setYaConfirmo(a === "Sí" || a === "No");
-        setLinkActive(Boolean(data.isActive));
-        
-        // Opcional: si ya había un mensaje guardado en sheets, precárgalo
-        if (data.guest?.mensaje && !mensaje) {
-          setMensaje(String(data.guest.mensaje));
+        const g = data.guest || null;
+        setGuestData(g);
+
+        const a = String(g?.asistencia || "").trim();
+        setAsistenciaActual(a);
+        setYaConfirmo(a === "Sí" || a === "No");
+
+        // Precargar mensaje si ya existía y no has escrito nada aún
+        if (g?.mensaje && !mensaje) {
+          setMensaje(String(g.mensaje));
         }
+
+        // ✅ Ajustar pasesConfirmados al rango 1..pasesAsignados
+        const maxPases = Math.max(1, Number(g?.pasesAsignados || 1));
+        setPasesConfirmados(1); // default
+        // Si quieres que por defecto sea el máximo, cambia a: setPasesConfirmados(maxPases);
       } catch (e) {
         if (cancelled) return;
         setGuestLoadError(e?.message || String(e));
         setGuestData(null);
-        setLinkActive(true);
+        setYaConfirmo(false);
+        setAsistenciaActual("");
       } finally {
         if (!cancelled) setGuestLoading(false);
       }
     }
 
     loadGuest();
-
     return () => {
       cancelled = true;
     };
+    // OJO: mensaje NO va en deps para no recargar invitado por cada letra
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guestId]);
-  
-  useEffect(() => {
-  const run = async () => {
-    if (!guestId) return;
 
-    try {
-      setGuestLoading(true);
-      setGuestError("");
-      setGuestInfo(null);
-
-      const resp = await fetch(`/api/guest?id=${encodeURIComponent(guestId)}`);
-      const data = await resp.json();
-
-      if (!resp.ok) throw new Error(data?.error || "Error al consultar invitado");
-
-      setGuestInfo(data); // { ok:true, guest:{...}, isActive:true/false }
-    } catch (e) {
-      setGuestError(e?.message || String(e));
-    } finally {
-      setGuestLoading(false);
-    }
-  };
-
-  run();
-}, [guestId]);
-
+  // Contador
   useEffect(() => {
     const tick = () => {
       const now = Date.now();
@@ -151,29 +144,29 @@ setYaConfirmo(a === "Sí" || a === "No");
         throw new Error("Falta el ID en el enlace. Ejemplo: ?id=AV001");
       }
 
-      const result = await enviarRSVP({
-  id: guestId,
-  asistencia,
-  mensaje,
+      // Si dicen "No", automáticamente confirmamos 0 pases
+      const pasesAEnviar = asistencia === "Sí" ? pasesConfirmados : 0;
 
-});
+      const result = await enviarRSVP({
+        id: guestId,
+        asistencia,
+        mensaje,
+        pasesConfirmados: pasesAEnviar,
+      });
+
       setRsvpResult(result);
       setRsvpStatus("ok");
+      setYaConfirmo(true);
+      setAsistenciaActual(asistencia);
     } catch (e) {
       setRsvpStatus("error");
       setRsvpError(e?.message || String(e));
     }
   }
 
-  // ✅ CAMBIA ESTO si quieres nombres en negro:
-  // const NAME_STYLE = "gold";
-  // opciones: "gold" | "black"
   const NAME_STYLE = "gold";
-
-  // ✅ Spotify: pega aquí tu embed correcto.
-  // Si tu link fue: https://open.spotify.com/track/XXXXX
-  // entonces aquí debe quedar: https://open.spotify.com/embed/track/XXXXX
-  const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv";
+  const SPOTIFY_EMBED_URL =
+    "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv";
 
   const styles = {
     page: {
@@ -273,7 +266,8 @@ setYaConfirmo(a === "Sí" || a === "No");
     divider: {
       width: 120,
       height: 1,
-      background: "linear-gradient(90deg, transparent, rgba(176,141,87,0.7), transparent)",
+      background:
+        "linear-gradient(90deg, transparent, rgba(176,141,87,0.7), transparent)",
       margin: "26px auto",
     },
     spotifyWrap: {
@@ -322,27 +316,28 @@ setYaConfirmo(a === "Sí" || a === "No");
       gap: 10,
       marginTop: 10,
       flexWrap: "wrap",
+      alignItems: "center",
     },
     btn: {
-  borderRadius: 12,
-  border: "1px solid rgba(31, 65, 95, 0.16)",
-  padding: "10px 14px",
-  background: "white",
-  cursor: "pointer",
-  fontFamily: '"Cormorant Garamond", serif',
-  fontSize: 16,
-  color: "#000", // ✅ AÑADIR
-},
-btnPrimary: {
-  borderRadius: 12,
-  border: "1px solid rgba(31, 65, 95, 0.16)",
-  padding: "10px 14px",
-  background: "rgba(214, 178, 94, 0.22)",
-  cursor: "pointer",
-  fontFamily: '"Cormorant Garamond", serif',
-  fontSize: 16,
-  color: "#000", // ✅ AÑADIR
-},
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.16)",
+      padding: "10px 14px",
+      background: "white",
+      cursor: "pointer",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      color: "#000",
+    },
+    btnPrimary: {
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.16)",
+      padding: "10px 14px",
+      background: "rgba(214, 178, 94, 0.22)",
+      cursor: "pointer",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      color: "#000",
+    },
     statusOk: {
       marginTop: 10,
       fontFamily: '"Cormorant Garamond", serif',
@@ -370,15 +365,27 @@ btnPrimary: {
       color: "#000",
       marginLeft: 8,
     },
+    select: {
+      width: "100%",
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.16)",
+      padding: "10px 12px",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      background: "rgba(255,255,255,0.85)",
+      color: "#0b0f14",
+      outline: "none",
+    },
   };
 
   const nameStyleObj = NAME_STYLE === "black" ? styles.namesBlack : styles.namesGold;
+
+  const maxPases = Math.max(1, Number(guestData?.pasesAsignados || 1));
 
   return (
     <>
       <Head>
         <title>Andrés & Vanessa — 23 abril 2027</title>
-        {/* Tipografías: manuscrita elegante + serif formal */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link
@@ -386,12 +393,9 @@ btnPrimary: {
           rel="stylesheet"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <style>{`
-  textarea::placeholder {
-    color: #000;
-    opacity: 0.6;
-  }
-`}</style>
+        <style>{`
+          textarea::placeholder { color: #000; opacity: 0.6; }
+        `}</style>
       </Head>
 
       <div style={styles.page}>
@@ -400,9 +404,7 @@ btnPrimary: {
 
           <h1 style={nameStyleObj}>Andrés &amp; Vanessa</h1>
 
-          <div style={styles.subtitle}>
-            Jiutepec, Morelos · Jardín Maroma
-          </div>
+          <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
 
           <div style={styles.quote}>
             “El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección.”
@@ -430,9 +432,15 @@ btnPrimary: {
           </div>
 
           <div style={styles.infoBlock}>
-            <div><b>Ceremonia</b> · 4:00 PM</div>
-            <div><b>Recepción</b> · 5:00 PM</div>
-            <div><b>Cierre</b> · 3:00 AM</div>
+            <div>
+              <b>Ceremonia</b> · 4:00 PM
+            </div>
+            <div>
+              <b>Recepción</b> · 5:00 PM
+            </div>
+            <div>
+              <b>Cierre</b> · 3:00 AM
+            </div>
           </div>
 
           <div style={styles.spotifyWrap}>
@@ -450,45 +458,29 @@ btnPrimary: {
           {/* RSVP */}
           <div style={styles.rsvpWrap}>
             <div style={styles.rsvpTitle}>
-  {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
+              {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
+              <span style={styles.idBadge}>
+                {guestId ? `ID: ${guestId}` : "ID no detectado"}
+              </span>
+            </div>
 
-  <span style={styles.idBadge}>
-    {guestId ? `ID: ${guestId}` : "ID no detectado"}
-  </span>
-</div>
+            {guestData?.nombre && (
+              <div style={styles.hint}>
+                <b>{guestData.nombre}</b>, nos dará mucho gusto verte. ✨
+                {guestData.pasesAsignados ? (
+                  <>
+                    {" "}
+                    · Pases asignados: <b>{guestData.pasesAsignados}</b>
+                  </>
+                ) : null}
+              </div>
+            )}
 
-{/* Línea personalizada con nombre */}
-{/* Línea personalizada con nombre */}
-{guestData?.nombre && (
-  <div style={styles.hint}>
-    <b>{guestData.nombre}</b>, nos dará mucho gusto verte. ✨
-    {guestData.pasesAsignados ? (
-      <> &nbsp;·&nbsp; Pases asignados: <b>{guestData.pasesAsignados}</b></>
-    ) : null}
-  </div>
-)}
-
-{/* Errores de carga */}
-{guestLoadError && (
-  <div style={styles.statusErr}>
-    No se pudo cargar tu invitación: {guestLoadError}
-  </div>
-)}
-{!linkActive && (
-  <div style={styles.statusErr}>
-    Este enlace no está activo. Si crees que es un error, contáctanos.
-  </div>
-)}
-
-{/* Estado de carga / error / datos del invitado */}
-{guestLoading && <div style={styles.hint}>Cargando datos del invitado…</div>}
-{guestError && <div style={styles.statusErr}>{guestError}</div>}
-
-{guestInfo?.guest && (
-  <div style={{ ...styles.hint, color: "#111" }}>
-    <b>{guestInfo.guest.nombre}</b> · Pases asignados: <b>{guestInfo.guest.pasesAsignados}</b>
-  </div>
-)}
+            {guestLoadError && (
+              <div style={styles.statusErr}>
+                No se pudo cargar tu invitación: {guestLoadError}
+              </div>
+            )}
 
             <textarea
               style={styles.input}
@@ -496,69 +488,70 @@ btnPrimary: {
               onChange={(e) => setMensaje(e.target.value)}
               placeholder="Escribe un mensaje de buenos deseos (opcional)"
             />
-{guestData?.pasesAsignados && String(guestData.pasesAsignados).trim() !== "" && (
-  <div style={{ marginTop: 10 }}>
-    <div style={{ fontFamily: '"Cormorant Garamond", serif', marginBottom: 6, color: "#0b0f14" }}>
-      Pases a confirmar:
-    </div>
 
-    <select
-      value={pasesConfirmados}
-      onChange={(e) => setPasesConfirmados(Number(e.target.value))}
-      style={{
-        width: "100%",
-        borderRadius: 12,
-        border: "1px solid rgba(31, 65, 95, 0.16)",
-        padding: "10px 12px",
-        fontFamily: '"Cormorant Garamond", serif',
-        fontSize: 16,
-        background: "rgba(255,255,255,0.85)",
-        color: "#0b0f14",
-        outline: "none",
-      }}
-      disabled={rsvpStatus === "saving"}
-    >
-      {Array.from({ length: Number(guestData.pasesAsignados) || 1 }, (_, i) => i + 1).map((n) => (
-        <option key={n} value={n}>
-          {n} {n === 1 ? "pase" : "pases"}
-        </option>
-      ))}
-    </select>
-  </div>
-)}
+            {/* Selector de pases */}
+            {guestData?.pasesAsignados && String(guestData.pasesAsignados).trim() !== "" && (
+              <div style={{ marginTop: 10 }}>
+                <div
+                  style={{
+                    fontFamily: '"Cormorant Garamond", serif',
+                    marginBottom: 6,
+                    color: "#0b0f14",
+                  }}
+                >
+                  Pases a confirmar:
+                </div>
+
+                <select
+                  value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
+                  onChange={(e) => setPasesConfirmados(Number(e.target.value))}
+                  style={styles.select}
+                  disabled={rsvpStatus === "saving" || yaConfirmo}
+                >
+                  {Array.from({ length: maxPases }, (_, i) => i + 1).map((n) => (
+                    <option key={n} value={n}>
+                      {n} {n === 1 ? "pase" : "pases"}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
             <div style={styles.rsvpRow}>
-                {yaConfirmo && (
-  <div style={styles.hint}>
-    Ya confirmaste: <b>{asistenciaActual}</b>. Si necesitas cambiarlo, contáctanos.
-  </div>
-)}
-                            <button
+              {yaConfirmo && (
+                <div style={styles.hint}>
+                  Ya confirmaste: <b>{asistenciaActual}</b>. Si necesitas cambiarlo, contáctanos.
+                </div>
+              )}
+
+              <button
                 style={styles.btnPrimary}
                 onClick={() => confirmar("Sí")}
                 disabled={rsvpStatus === "saving" || yaConfirmo}
               >
                 Sí asistiré
               </button>
+
               <button
                 style={styles.btn}
                 onClick={() => confirmar("No")}
-              disabled={rsvpStatus === "saving" || yaConfirmo}
+                disabled={rsvpStatus === "saving" || yaConfirmo}
               >
                 No podré asistir
               </button>
-                 {guestInfo?.isActive === false && (
-  <div style={styles.statusErr}>
-    Este enlace está inactivo. Si crees que es un error, contáctanos.
-  </div>
-)}
             </div>
 
-            {rsvpStatus === "saving" && <div style={styles.hint}>Guardando tu confirmación…</div>}
+            {rsvpStatus === "saving" && (
+              <div style={styles.hint}>Guardando tu confirmación…</div>
+            )}
+
             {rsvpStatus === "ok" && (
               <div style={styles.statusOk}>
-                ¡Listo! Quedó registrado. ✅ {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
+                ¡Listo! Quedó registrado. ✅{" "}
+                {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
               </div>
             )}
+
             {rsvpStatus === "error" && <div style={styles.statusErr}>{rsvpError}</div>}
 
             <div style={styles.hint}>
