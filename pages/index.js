@@ -531,11 +531,24 @@ export default function Home() {
             )}
 
             <div style={styles.rsvpRow}>
-              {yaConfirmo && (
-                <div style={styles.hint}>
-                  Ya confirmaste: <b>{asistenciaActual}</b>. Si necesitas cambiarlo, contáctanos.
-                </div>
-              )}
+             {yaConfirmo && (
+  <div
+    style={{
+      marginTop: 10,
+      padding: "10px 12px",
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.18)",
+      background: "rgba(214, 178, 94, 0.18)",
+      color: "#0b0f14",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 14,
+      lineHeight: 1.35,
+    }}
+  >
+    Ya confirmaste: <b>{asistenciaActual}</b>. ✅<br />
+    Para cambiar tu respuesta, contáctanos por WhatsApp.
+  </div>
+)}
 
               <button
                 style={styles.btnPrimary}
