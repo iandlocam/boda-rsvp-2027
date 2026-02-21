@@ -34,6 +34,9 @@ export default function Home() {
   const [rsvpStatus, setRsvpStatus] = useState("idle"); // idle | saving | ok | error
   const [rsvpError, setRsvpError] = useState("");
   const [rsvpResult, setRsvpResult] = useState(null);
+  const [guestInfo, setGuestInfo] = useState(null); // { guest, isActive }
+const [guestLoading, setGuestLoading] = useState(false);
+const [guestError, setGuestError] = useState("");
 
   // Lee ?id=AV001 de la URL
   useEffect(() => {
@@ -41,6 +44,30 @@ export default function Home() {
     const id = router.query.id;
     if (typeof id === "string") setGuestId(id.trim());
   }, [router.isReady, router.query.id]);
+  useEffect(() => {
+  const run = async () => {
+    if (!guestId) return;
+
+    try {
+      setGuestLoading(true);
+      setGuestError("");
+      setGuestInfo(null);
+
+      const resp = await fetch(`/api/guest?id=${encodeURIComponent(guestId)}`);
+      const data = await resp.json();
+
+      if (!resp.ok) throw new Error(data?.error || "Error al consultar invitado");
+
+      setGuestInfo(data); // { ok:true, guest:{...}, isActive:true/false }
+    } catch (e) {
+      setGuestError(e?.message || String(e));
+    } finally {
+      setGuestLoading(false);
+    }
+  };
+
+  run();
+}, [guestId]);
 
   useEffect(() => {
     const tick = () => {
@@ -374,9 +401,21 @@ btnPrimary: {
           {/* RSVP */}
           <div style={styles.rsvpWrap}>
             <div style={styles.rsvpTitle}>
-              Confirmación de asistencia
-              <span style={styles.idBadge}>{guestId ? `ID: ${guestId}` : "ID no detectado"}</span>
-            </div>
+  Confirmación de asistencia{" "}
+  <span style={styles.idBadge}>
+    {guestId ? `ID: ${guestId}` : "ID no detectado"}
+  </span>
+</div>
+
+{/* Estado de carga / error / datos del invitado */}
+{guestLoading && <div style={styles.hint}>Cargando datos del invitado…</div>}
+{guestError && <div style={styles.statusErr}>{guestError}</div>}
+
+{guestInfo?.guest && (
+  <div style={{ ...styles.hint, color: "#111" }}>
+    <b>{guestInfo.guest.nombre}</b> · Pases asignados: <b>{guestInfo.guest.pasesAsignados}</b>
+  </div>
+)}
 
             <textarea
               style={styles.input}
@@ -389,17 +428,22 @@ btnPrimary: {
               <button
                 style={styles.btnPrimary}
                 onClick={() => confirmar("Sí")}
-                disabled={rsvpStatus === "saving"}
+                disabled={rsvpStatus === "saving" || guestInfo?.isActive === false}
               >
                 Sí asistiré
               </button>
               <button
                 style={styles.btn}
                 onClick={() => confirmar("No")}
-                disabled={rsvpStatus === "saving"}
+               disabled={rsvpStatus === "saving" || guestInfo?.isActive === false}
               >
                 No podré asistir
               </button>
+                 {guestInfo?.isActive === false && (
+  <div style={styles.statusErr}>
+    Este enlace está inactivo. Si crees que es un error, contáctanos.
+  </div>
+)}
             </div>
 
             {rsvpStatus === "saving" && <div style={styles.hint}>Guardando tu confirmación…</div>}
