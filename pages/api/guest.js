@@ -25,7 +25,6 @@ function normalizeId(id) {
 }
 
 function isValidId(id) {
-  // Ajusta si tu formato real cambia (ej. AV0001)
   return /^AV\d{3,6}$/.test(id);
 }
 
@@ -35,7 +34,14 @@ function normalizeAsistencia(val) {
   if (["si", "sí", "s", "yes", "y"].includes(s)) return "Sí";
   if (["no", "n"].includes(s)) return "No";
   if (["pendiente", "pending"].includes(s)) return "Pendiente";
-  return String(val).trim(); // si tú usas otros valores
+  return String(val).trim();
+}
+
+function clampInt(n, min, max) {
+  const x = Number(n);
+  if (!Number.isFinite(x)) return min;
+  const v = Math.floor(x);
+  return Math.max(min, Math.min(max, v));
 }
 
 export default async function handler(req, res) {
@@ -53,7 +59,6 @@ export default async function handler(req, res) {
     if (req.method === "GET") {
       const id = normalizeId(req.query?.id);
 
-      // Healthcheck si no mandan id
       if (!id) {
         return res.status(200).json({ ok: true, message: "guest endpoint alive" });
       }
@@ -62,8 +67,8 @@ export default async function handler(req, res) {
         return res.status(400).json({ ok: false, error: "Invalid id format" });
       }
 
-      // Leemos rango A:I (tu estructura completa)
-      const range = `${SHEET_TAB}!A2:I`;
+      // A:J (incluye Pases_Confirmados en J)
+      const range = `${SHEET_TAB}!A2:J`;
       const resp = await sheets.spreadsheets.values.get({
         spreadsheetId: SHEET_ID,
         range,
@@ -73,7 +78,7 @@ export default async function handler(req, res) {
       const idx = rows.findIndex((r) => String(r?.[0] || "").trim() === id);
 
       if (idx === -1) {
-        return res.status(404).json({ ok: false, error: 'ID not found: ${id}' });
+        return res.status(404).json({ ok: false, error: `ID not found: ${id}` });
       }
 
       const r = rows[idx];
@@ -88,9 +93,9 @@ export default async function handler(req, res) {
         fechaConfirma: r[6] || "",
         ipRegistro: r[7] || "",
         estadoLink: r[8] || "",
+        pasesConfirmados: r[9] || "", // J
       };
 
-      // Si el link está inactivo, el front debe bloquear
       const isActive = String(guest.estadoLink || "").trim().toLowerCase() !== "inactivo";
 
       return res.status(200).json({ ok: true, guest, isActive });
@@ -101,7 +106,7 @@ export default async function handler(req, res) {
       return res.status(405).json({ ok: false, error: "Method not allowed" });
     }
 
-    const { id: rawId, asistencia, mensaje } = req.body || {};
+    const { id: rawId, asistencia, mensaje, pasesConfirmados } = req.body || {};
     const id = normalizeId(rawId);
 
     if (!id) return res.status(400).json({ ok: false, error: "Missing id" });
@@ -127,23 +132,57 @@ export default async function handler(req, res) {
     const idx = idRows.findIndex((r) => String(r?.[0] || "").trim() === id);
 
     if (idx === -1) {
-      return res.status(404).json({ ok: false, error: 'ID not found: ${id}' });
+      return res.status(404).json({ ok: false, error: `ID not found: ${id}` });
     }
 
     const sheetRowNumber = idx + 2;
 
-    // 2) Solo actualizamos E-H (no pisamos I)
-    // E Asistencia, F Mensaje, G Fecha_Confirma, H IP_Registro
-    const values = [[asistenciaVal, mensajeVal, now, ip]];
-
-    await sheets.spreadsheets.values.update({
+    // 2) Necesitamos saber cuántos pases tiene asignados (col D) para limitar pasesConfirmados
+    const rowRange = `${SHEET_TAB}!A${sheetRowNumber}:J${sheetRowNumber}`;
+    const rowResp = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
-      range: `${SHEET_TAB}!E${sheetRowNumber}:H${sheetRowNumber}`,
-      valueInputOption: "USER_ENTERED",
-      requestBody: { values },
+      range: rowRange,
     });
 
-    return res.status(200).json({ ok: true, updatedRow: sheetRowNumber });
+    const row = (rowResp.data.values && rowResp.data.values[0]) || [];
+    const pasesAsignados = clampInt(row[3], 0, 99); // D
+
+    let pasesFinal = 0;
+    if (asistenciaVal === "Sí") {
+      // si dicen Sí, limitamos de 1..pasesAsignados
+      const wanted = clampInt(pasesConfirmados, 1, Math.max(1, pasesAsignados || 1));
+      pasesFinal = Math.min(wanted, pasesAsignados || wanted);
+    } else {
+      // si dicen No, es 0
+      pasesFinal = 0;
+    }
+
+    // 3) Actualizamos E-H y J (sin tocar I)
+    const valuesEH = [[asistenciaVal, mensajeVal, now, ip]];
+    const valuesJ = [[String(pasesFinal)]];
+
+    await sheets.spreadsheets.values.batchUpdate({
+      spreadsheetId: SHEET_ID,
+      requestBody: {
+        valueInputOption: "USER_ENTERED",
+        data: [
+          {
+            range: `${SHEET_TAB}!E${sheetRowNumber}:H${sheetRowNumber}`,
+            values: valuesEH,
+          },
+          {
+            range: `${SHEET_TAB}!J${sheetRowNumber}:J${sheetRowNumber}`,
+            values: valuesJ,
+          },
+        ],
+      },
+    });
+
+    return res.status(200).json({
+      ok: true,
+      updatedRow: sheetRowNumber,
+      pasesConfirmados: pasesFinal,
+    });
   } catch (err) {
     return res.status(500).json({ ok: false, error: err?.message || String(err) });
   }
