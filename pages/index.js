@@ -26,7 +26,7 @@ const [pasesConfirmados, setPasesConfirmados] = useState(1);
   const data = await resp.json();
   if (!resp.ok) throw new Error(data?.error || "Error desconocido");
   return data;
-
+}
 
 export default function Home() {
   const router = useRouter();
