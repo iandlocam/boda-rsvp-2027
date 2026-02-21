@@ -89,8 +89,13 @@ export default function Home() {
 
         // ✅ Ajustar pasesConfirmados al rango 1..pasesAsignados
         const maxPases = Math.max(1, Number(g?.pasesAsignados || 1));
-        setPasesConfirmados(1); // default
-        // Si quieres que por defecto sea el máximo, cambia a: setPasesConfirmados(maxPases);
+        const maxPases = Math.max(1, Number(g?.pasesAsignados || 1));
+
+        //precargar desde columna J si existe; si no, default =1
+        const j = Number(g?.pasesConfirmados || 0);
+        const precarga = j > 0 ? Math.min(Math.max(1, j), maxPases) : 1;
+        setPasesConfirmados(precarga);
+        
       } catch (e) {
         if (cancelled) return;
         setGuestLoadError(e?.message || String(e));
@@ -483,11 +488,20 @@ export default function Home() {
             )}
 
             <textarea
-              style={styles.input}
-              value={mensaje}
-              onChange={(e) => setMensaje(e.target.value)}
-              placeholder="Escribe un mensaje de buenos deseos (opcional)"
-            />
+  style={{
+    ...styles.input,
+    opacity: yaConfirmo ? 0.7 : 1,
+    cursor: yaConfirmo ? "not-allowed" : "text",
+  }}
+  value={mensaje}
+  onChange={(e) => setMensaje(e.target.value)}
+  placeholder={
+    yaConfirmo
+      ? "Tu confirmación ya quedó registrada. Si necesitas cambiar algo, contáctanos."
+      : "Escribe un mensaje de buenos deseos (opcional)"
+  }
+  disabled={yaConfirmo || rsvpStatus === "saving"}
+/>
 
             {/* Selector de pases */}
             {guestData?.pasesAsignados && String(guestData.pasesAsignados).trim() !== "" && (
@@ -546,11 +560,32 @@ export default function Home() {
             )}
 
             {rsvpStatus === "ok" && (
-              <div style={styles.statusOk}>
-                ¡Listo! Quedó registrado. ✅{" "}
-                {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
-              </div>
-            )}
+  <div style={styles.statusOk}>
+    {(() => {
+      const nombre = guestData?.nombre ? String(guestData.nombre) : "¡Gracias!";
+      const a = String(asistenciaActual || "").trim();
+      const pases = Number(rsvpResult?.pasesConfirmados ?? (a === "Sí" ? pasesConfirmados : 0));
+
+      if (a === "Sí") {
+        return (
+          <>
+            <b>{nombre}</b>, quedó registrada tu confirmación: <b>Sí</b> —{" "}
+            <b>{pases}</b> {pases === 1 ? "pase" : "pases"} ✅
+          </>
+        );
+      }
+      if (a === "No") {
+        return (
+          <>
+            <b>{nombre}</b>, gracias por avisarnos, te vamos a extrañar. Quedó registrada tu respuesta. ❤️
+          </>
+        );
+      }
+      return <>¡Listo! Quedó registrado. ✅</>;
+    })()}
+    {rsvpResult?.updatedRow ? ` (Fila ${rsvpResult.updatedRow})` : ""}
+  </div>
+)}
 
             {rsvpStatus === "error" && <div style={styles.statusErr}>{rsvpError}</div>}
 
