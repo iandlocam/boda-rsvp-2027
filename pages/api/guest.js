@@ -47,15 +47,14 @@ function clampInt(n, min, max) {
 export default async function handler(req, res) {
   try {
     const SHEET_ID = process.env.SHEET_ID;
-    const SHEET_TAB = process.env.SHEET_TAB; // "Invitados"
+    const SHEET_TAB = process.env.SHEET_TAB;
+
     if (!SHEET_ID) throw new Error("Missing SHEET_ID");
     if (!SHEET_TAB) throw new Error("Missing SHEET_TAB");
 
     const auth = getAuth();
     const sheets = google.sheets({ version: "v4", auth });
 
-    // ========= GET (consulta) =========
-    // /api/guest?id=AV001
     if (req.method === "GET") {
       const id = normalizeId(req.query?.id);
 
@@ -67,7 +66,6 @@ export default async function handler(req, res) {
         return res.status(400).json({ ok: false, error: "Invalid id format" });
       }
 
-      // A:J (incluye Pases_Confirmados en J)
       const range = `${SHEET_TAB}!A2:J`;
       const resp = await sheets.spreadsheets.values.get({
         spreadsheetId: SHEET_ID,
@@ -93,15 +91,15 @@ export default async function handler(req, res) {
         fechaConfirma: r[6] || "",
         ipRegistro: r[7] || "",
         estadoLink: r[8] || "",
-        pasesConfirmados: r[9] || "", // J
+        pasesConfirmados: r[9] || "",
       };
 
-      const isActive = String(guest.estadoLink || "").trim().toLowerCase() !== "inactivo";
+      const isActive =
+        String(guest.estadoLink || "").trim().toLowerCase() !== "inactivo";
 
       return res.status(200).json({ ok: true, guest, isActive });
     }
 
-    // ========= POST (actualiza) =========
     if (req.method !== "POST") {
       return res.status(405).json({ ok: false, error: "Method not allowed" });
     }
@@ -117,11 +115,9 @@ export default async function handler(req, res) {
       return res.status(400).json({ ok: false, error: "Missing asistencia" });
     }
 
-    const mensajeVal = mensaje != null ? String(mensaje).trim() : "";
     const now = new Date().toISOString();
     const ip = getClientIp(req);
 
-    // 1) Encontrar la fila por ID leyendo solo la columna A
     const idRange = `${SHEET_TAB}!A2:A`;
     const idResp = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
@@ -137,7 +133,6 @@ export default async function handler(req, res) {
 
     const sheetRowNumber = idx + 2;
 
-    // 2) Necesitamos saber cuántos pases tiene asignados (col D) para limitar pasesConfirmados
     const rowRange = `${SHEET_TAB}!A${sheetRowNumber}:J${sheetRowNumber}`;
     const rowResp = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
@@ -145,21 +140,31 @@ export default async function handler(req, res) {
     });
 
     const row = (rowResp.data.values && rowResp.data.values[0]) || [];
-    const pasesAsignados = clampInt(row[3], 0, 99); // D
+
+    const asistenciaActual = String(row[4] || "").trim();
+
+    // 🔒 LOCK REAL
+    if (asistenciaActual === "Sí" || asistenciaActual === "No") {
+      return res.status(409).json({
+        ok: false,
+        error: `Ya confirmaste: ${asistenciaActual}. Si necesitas cambiarlo, contáctanos.`,
+        locked: true,
+      });
+    }
+
+    const pasesAsignados = clampInt(row[3], 0, 99);
 
     let pasesFinal = 0;
     if (asistenciaVal === "Sí") {
-      // si dicen Sí, limitamos de 1..pasesAsignados
-      const wanted = clampInt(pasesConfirmados, 1, Math.max(1, pasesAsignados || 1));
+      const wanted = clampInt(
+        pasesConfirmados,
+        1,
+        Math.max(1, pasesAsignados || 1)
+      );
       pasesFinal = Math.min(wanted, pasesAsignados || wanted);
     } else {
-      // si dicen No, es 0
       pasesFinal = 0;
     }
-
-    // 3) Actualizamos E-H y J (sin tocar I)
-    const valuesEH = [[asistenciaVal, mensajeVal, now, ip]];
-    const valuesJ = [[String(pasesFinal)]];
 
     await sheets.spreadsheets.values.batchUpdate({
       spreadsheetId: SHEET_ID,
@@ -168,11 +173,11 @@ export default async function handler(req, res) {
         data: [
           {
             range: `${SHEET_TAB}!E${sheetRowNumber}:H${sheetRowNumber}`,
-            values: valuesEH,
+            values: [[asistenciaVal, mensaje || "", now, ip]],
           },
           {
             range: `${SHEET_TAB}!J${sheetRowNumber}:J${sheetRowNumber}`,
-            values: valuesJ,
+            values: [[String(pasesFinal)]],
           },
         ],
       },
