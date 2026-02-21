@@ -6,7 +6,17 @@ function clamp(n) {
   return Number.isFinite(n) && n > 0 ? n : 0;
 }
 
-async function enviarRSVP({ id, asistencia, mensaje }) {
+async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
+  const resp = await fetch("/api/guest", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, asistencia, mensaje, pasesConfirmados }),
+  });
+const [pasesConfirmados, setPasesConfirmados] = useState(1);
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data?.error || "Error desconocido");
+  return data;
+}
   const resp = await fetch("/api/guest", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -153,9 +163,11 @@ setYaConfirmo(a === "Sí" || a === "No");
       }
 
       const result = await enviarRSVP({
-        id: guestId,
-        asistencia,
-        mensaje,
+  id: guestId,
+  asistencia,
+  mensaje,
+  pasesConfirmados: asistencia === "Sí" ? pasesConfirmados : 0,
+});
       });
 
       setRsvpResult(result);
@@ -497,7 +509,36 @@ btnPrimary: {
               onChange={(e) => setMensaje(e.target.value)}
               placeholder="Escribe un mensaje de buenos deseos (opcional)"
             />
+{guestData?.pasesAsignados && String(guestData.pasesAsignados).trim() !== "" && (
+  <div style={{ marginTop: 10 }}>
+    <div style={{ fontFamily: '"Cormorant Garamond", serif', marginBottom: 6, color: "#0b0f14" }}>
+      Pases a confirmar:
+    </div>
 
+    <select
+      value={pasesConfirmados}
+      onChange={(e) => setPasesConfirmados(Number(e.target.value))}
+      style={{
+        width: "100%",
+        borderRadius: 12,
+        border: "1px solid rgba(31, 65, 95, 0.16)",
+        padding: "10px 12px",
+        fontFamily: '"Cormorant Garamond", serif',
+        fontSize: 16,
+        background: "rgba(255,255,255,0.85)",
+        color: "#0b0f14",
+        outline: "none",
+      }}
+      disabled={rsvpStatus === "saving"}
+    >
+      {Array.from({ length: Number(guestData.pasesAsignados) || 1 }, (_, i) => i + 1).map((n) => (
+        <option key={n} value={n}>
+          {n} {n === 1 ? "pase" : "pases"}
+        </option>
+      ))}
+    </select>
+  </div>
+)}
             <div style={styles.rsvpRow}>
                 {yaConfirmo && (
   <div style={styles.hint}>
