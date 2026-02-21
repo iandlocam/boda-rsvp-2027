@@ -157,8 +157,6 @@ setYaConfirmo(a === "Sí" || a === "No");
   mensaje,
   pasesConfirmados: asistencia === "Sí" ? pasesConfirmados : 0,
 });
-      });
-
       setRsvpResult(result);
       setRsvpStatus("ok");
     } catch (e) {
