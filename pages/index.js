@@ -155,7 +155,7 @@ setYaConfirmo(a === "Sí" || a === "No");
   id: guestId,
   asistencia,
   mensaje,
-  pasesConfirmados: asistencia === "Sí" ? pasesConfirmados : 0,
+
 });
       setRsvpResult(result);
       setRsvpStatus("ok");
