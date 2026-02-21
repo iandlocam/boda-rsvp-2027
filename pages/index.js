@@ -459,7 +459,7 @@ btnPrimary: {
 </div>
 
 {/* Línea personalizada con nombre */}
-{guestData?.nombre && (
+{(
   <div style={styles.hint}>
     <b>{guestData.nombre}</b>, nos dará mucho gusto verte. ✨
     {guestData.pasesAsignados ? (
