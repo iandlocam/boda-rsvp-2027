@@ -37,6 +37,11 @@ export default function Home() {
   const [guestInfo, setGuestInfo] = useState(null); // { guest, isActive }
 const [guestLoading, setGuestLoading] = useState(false);
 const [guestError, setGuestError] = useState("");
+    // Datos del invitado (vienen de GET /api/guest?id=...)
+  const [guestData, setGuestData] = useState(null); // { id, nombre, pasesAsignados, ... }
+  const [guestLoading, setGuestLoading] = useState(false);
+  const [guestLoadError, setGuestLoadError] = useState("");
+  const [linkActive, setLinkActive] = useState(true);
 
   // Lee ?id=AV001 de la URL
   useEffect(() => {
@@ -44,6 +49,47 @@ const [guestError, setGuestError] = useState("");
     const id = router.query.id;
     if (typeof id === "string") setGuestId(id.trim());
   }, [router.isReady, router.query.id]);
+  useEffect(() => {
+    if (!guestId) return;
+
+    let cancelled = false;
+
+    async function loadGuest() {
+      try {
+        setGuestLoading(true);
+        setGuestLoadError("");
+
+        const resp = await fetch(`/api/guest?id=${encodeURIComponent(guestId)}`);
+        const data = await resp.json();
+
+        if (!resp.ok) throw new Error(data?.error || "No se pudo cargar el invitado");
+
+        if (cancelled) return;
+
+        setGuestData(data.guest || null);
+        setLinkActive(Boolean(data.isActive));
+        
+        // Opcional: si ya había un mensaje guardado en sheets, precárgalo
+        if (data.guest?.mensaje && !mensaje) {
+          setMensaje(String(data.guest.mensaje));
+        }
+      } catch (e) {
+        if (cancelled) return;
+        setGuestLoadError(e?.message || String(e));
+        setGuestData(null);
+        setLinkActive(true);
+      } finally {
+        if (!cancelled) setGuestLoading(false);
+      }
+    }
+
+    loadGuest();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [guestId]);
+  
   useEffect(() => {
   const run = async () => {
     if (!guestId) return;
@@ -401,11 +447,34 @@ btnPrimary: {
           {/* RSVP */}
           <div style={styles.rsvpWrap}>
             <div style={styles.rsvpTitle}>
-  Confirmación de asistencia{" "}
+  {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
+
   <span style={styles.idBadge}>
     {guestId ? `ID: ${guestId}` : "ID no detectado"}
   </span>
 </div>
+
+{/* Línea personalizada con nombre */}
+{guestData?.nombre && (
+  <div style={styles.hint}>
+    <b>{guestData.nombre}</b>, nos dará mucho gusto verte. ✨
+    {guestData.pasesAsignados ? (
+      <> &nbsp;·&nbsp; Pases asignados: <b>{guestData.pasesAsignados}</b></>
+    ) : null}
+  </div>
+)}
+
+{/* Errores de carga */}
+{guestLoadError && (
+  <div style={styles.statusErr}>
+    No se pudo cargar tu invitación: {guestLoadError}
+  </div>
+)}
+{!linkActive && (
+  <div style={styles.statusErr}>
+    Este enlace no está activo. Si crees que es un error, contáctanos.
+  </div>
+)}
 
 {/* Estado de carga / error / datos del invitado */}
 {guestLoading && <div style={styles.hint}>Cargando datos del invitado…</div>}
