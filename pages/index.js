@@ -18,8 +18,8 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
   return data;
 }
 
-/** ✅ Monograma AV (nuevo: limpio, elegante, tipo sello) */
-function MonogramaAV({ size = 64, color = "rgba(19,32,45,0.86)" }) {
+/** ✅ Monograma AV (limpio, elegante, tipo sello) */
+function MonogramaAV({ size = 60, color = "rgba(19,32,45,0.86)" }) {
   return (
     <svg
       width={size}
@@ -31,8 +31,8 @@ function MonogramaAV({ size = 64, color = "rgba(19,32,45,0.86)" }) {
     >
       <defs>
         <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="rgba(176,141,87,0.70)" />
-          <stop offset="1" stopColor="rgba(19,32,45,0.22)" />
+          <stop offset="0" stopColor="rgba(176,141,87,0.78)" />
+          <stop offset="1" stopColor="rgba(19,32,45,0.18)" />
         </linearGradient>
       </defs>
 
@@ -51,7 +51,7 @@ function MonogramaAV({ size = 64, color = "rgba(19,32,45,0.86)" }) {
         cy="60"
         r="44"
         fill="none"
-        stroke="rgba(255,255,255,0.28)"
+        stroke="rgba(255,255,255,0.30)"
         strokeWidth="1.2"
       />
 
@@ -83,8 +83,8 @@ function MonogramaAV({ size = 64, color = "rgba(19,32,45,0.86)" }) {
   );
 }
 
-/** ✅ Sello de cera “realista” (borde irregular + relieve + brillo) */
-function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 100 }) {
+/** ✅ Sello “dorado” (borde irregular + relieve + brillo) */
+function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   return (
     <div
       role="button"
@@ -109,18 +109,20 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 100 }) {
         <defs>
           <filter id="sShadow" x="-30%" y="-30%" width="160%" height="160%">
             <feDropShadow dx="0" dy="10" stdDeviation="7" floodColor="rgba(0,0,0,0.24)" />
-            <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="rgba(0,0,0,0.22)" />
+            <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="rgba(0,0,0,0.18)" />
           </filter>
 
-          <radialGradient id="wax" cx="30%" cy="25%" r="80%">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
-            <stop offset="18%" stopColor="rgba(255,255,255,0.10)" />
-            <stop offset="55%" stopColor="rgba(173,34,44,0.96)" />
-            <stop offset="100%" stopColor="rgba(92,14,24,1)" />
+          {/* dorado realista */}
+          <radialGradient id="goldWax" cx="28%" cy="22%" r="85%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.70)" />
+            <stop offset="14%" stopColor="rgba(255,255,255,0.14)" />
+            <stop offset="44%" stopColor="rgba(243,226,166,1)" />
+            <stop offset="70%" stopColor="rgba(214,178,94,1)" />
+            <stop offset="100%" stopColor="rgba(122,91,34,1)" />
           </radialGradient>
 
-          <radialGradient id="shine" cx="22%" cy="18%" r="45%">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.75)" />
+          <radialGradient id="goldShine" cx="20%" cy="18%" r="48%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.90)" />
             <stop offset="70%" stopColor="rgba(255,255,255,0)" />
           </radialGradient>
 
@@ -139,36 +141,47 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 100 }) {
         </defs>
 
         <g filter="url(#sShadow)">
-          <use href="#blob" fill="url(#wax)" />
-          <use href="#blob" fill="url(#shine)" opacity="0.55" />
-          <use href="#blob" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="2" />
+          <use href="#blob" fill="url(#goldWax)" />
+          <use href="#blob" fill="url(#goldShine)" opacity="0.55" />
+          <use href="#blob" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" />
+          <use href="#blob" fill="none" stroke="rgba(122,91,34,0.28)" strokeWidth="1.3" />
 
           {/* relieve central (grabado AV) */}
           <path
             d="M42 76 L52 44 L62 76"
             fill="none"
-            stroke="rgba(255,255,255,0.28)"
-            strokeWidth="2.4"
+            stroke="rgba(60,45,18,0.40)"
+            strokeWidth="2.6"
             strokeLinecap="round"
             strokeLinejoin="round"
-            opacity="0.85"
+            opacity="0.9"
           />
           <path
             d="M47 64 H57"
             fill="none"
-            stroke="rgba(255,255,255,0.28)"
-            strokeWidth="2.2"
+            stroke="rgba(60,45,18,0.40)"
+            strokeWidth="2.4"
             strokeLinecap="round"
-            opacity="0.85"
+            opacity="0.9"
           />
           <path
             d="M66 46 L78 76 L90 46"
             fill="none"
-            stroke="rgba(255,255,255,0.28)"
-            strokeWidth="2.4"
+            stroke="rgba(60,45,18,0.40)"
+            strokeWidth="2.6"
             strokeLinecap="round"
             strokeLinejoin="round"
-            opacity="0.85"
+            opacity="0.9"
+          />
+
+          {/* highlight fino para “metal” */}
+          <path
+            d="M26 44 C38 26, 58 18, 78 22"
+            fill="none"
+            stroke="rgba(255,255,255,0.35)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            opacity="0.55"
           />
         </g>
       </svg>
@@ -187,8 +200,8 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 100 }) {
           style={{
             fontFamily: '"Great Vibes", cursive',
             fontSize: 32,
-            color: "rgba(255,255,255,0.92)",
-            textShadow: "0 1px 0 rgba(0,0,0,0.18), 0 10px 24px rgba(0,0,0,0.28)",
+            color: "rgba(19,32,45,0.85)", // ✅ texto oscuro sobre dorado
+            textShadow: "0 1px 0 rgba(255,255,255,0.25), 0 10px 22px rgba(0,0,0,0.20)",
             letterSpacing: "0.01em",
           }}
         >
@@ -200,7 +213,7 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 100 }) {
 }
 
 /** ✅ Íconos sobrios (línea) */
-function TimelineIcon({ type = "ceremony", size = 36 }) {
+function TimelineIcon({ type = "ceremony", size = 44 }) {
   const common = {
     width: size,
     height: size,
@@ -265,132 +278,233 @@ function TimelineIcon({ type = "ceremony", size = 36 }) {
   );
 }
 
-/** ✅ Flores primavera elegantes (overlay en esquinas) */
+/**
+ * ✅ Flores MÁS abundantes y “más reales” (sin imágenes externas):
+ * - más clusters
+ * - más hojas
+ * - sombras suaves
+ * - 4 esquinas + sprigs laterales
+ */
 function FloralCorners() {
+  const commonStyle = {
+    position: "absolute",
+    pointerEvents: "none",
+    opacity: 0.62,
+    filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.10))",
+  };
+
+  const defs = (
+    <defs>
+      <linearGradient id="leafG" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stopColor="rgba(75,170,130,0.85)" />
+        <stop offset="1" stopColor="rgba(25,110,80,0.85)" />
+      </linearGradient>
+      <radialGradient id="centerG" cx="40%" cy="35%" r="70%">
+        <stop offset="0" stopColor="rgba(255,255,255,0.95)" />
+        <stop offset="30%" stopColor="rgba(255,255,255,0.60)" />
+        <stop offset="100%" stopColor="rgba(176,141,87,0.80)" />
+      </radialGradient>
+
+      <radialGradient id="petalY" cx="35%" cy="30%" r="85%">
+        <stop offset="0" stopColor="rgba(255,255,255,0.75)" />
+        <stop offset="22%" stopColor="rgba(255,240,180,0.95)" />
+        <stop offset="72%" stopColor="rgba(255,200,64,0.95)" />
+        <stop offset="100%" stopColor="rgba(214,178,94,0.95)" />
+      </radialGradient>
+
+      <radialGradient id="petalB" cx="35%" cy="30%" r="85%">
+        <stop offset="0" stopColor="rgba(255,255,255,0.65)" />
+        <stop offset="28%" stopColor="rgba(170,220,255,0.95)" />
+        <stop offset="78%" stopColor="rgba(80,165,255,0.95)" />
+        <stop offset="100%" stopColor="rgba(40,110,210,0.95)" />
+      </radialGradient>
+
+      <radialGradient id="petalO" cx="35%" cy="30%" r="85%">
+        <stop offset="0" stopColor="rgba(255,255,255,0.65)" />
+        <stop offset="30%" stopColor="rgba(255,210,170,0.95)" />
+        <stop offset="80%" stopColor="rgba(255,150,90,0.95)" />
+        <stop offset="100%" stopColor="rgba(210,95,55,0.95)" />
+      </radialGradient>
+
+      <filter id="softBlur" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="0.25" />
+      </filter>
+    </defs>
+  );
+
+  const flower = (x, y, s, palette = "Y") => {
+    const petal = palette === "B" ? "url(#petalB)" : palette === "O" ? "url(#petalO)" : "url(#petalY)";
+    return (
+      <g transform={`translate(${x} ${y}) scale(${s})`} filter="url(#softBlur)">
+        {/* hojas */}
+        <path d="M-36 10 C-55 -10, -22 -28, -12 -10 C-18 10, -26 16, -36 10Z" fill="url(#leafG)" opacity="0.72" />
+        <path d="M34 16 C58 2, 34 -26, 12 -10 C10 10, 18 18, 34 16Z" fill="url(#leafG)" opacity="0.60" />
+        {/* pétalos */}
+        <ellipse cx="-18" cy="0" rx="24" ry="14" fill={petal} opacity="0.95" />
+        <ellipse cx="18" cy="0" rx="24" ry="14" fill={petal} opacity="0.95" />
+        <ellipse cx="0" cy="-18" rx="14" ry="24" fill={petal} opacity="0.90" />
+        <ellipse cx="0" cy="18" rx="14" ry="24" fill={petal} opacity="0.90" />
+        <ellipse cx="-12" cy="-12" rx="12" ry="18" fill={petal} opacity="0.70" />
+        <ellipse cx="12" cy="-12" rx="12" ry="18" fill={petal} opacity="0.70" />
+        {/* centro */}
+        <circle cx="0" cy="0" r="10" fill="url(#centerG)" />
+        <circle cx="0" cy="0" r="4.5" fill="rgba(122,91,34,0.55)" />
+      </g>
+    );
+  };
+
+  const sprig = (x1, y1, x2, y2, x3, y3) => (
+    <g>
+      <path
+        d={`M${x1} ${y1} C ${x2} ${y2}, ${x3} ${y3}, ${x3 + 50} ${y3 - 40}`}
+        fill="none"
+        stroke="rgba(19,32,45,0.18)"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path d={`M${x3 + 6} ${y3 - 10} C ${x3 - 4} ${y3 - 30}, ${x3 + 20} ${y3 - 32}, ${x3 + 26} ${y3 - 16} C ${x3 + 20} ${y3 - 6}, ${x3 + 12} ${y3 - 4}, ${x3 + 6} ${y3 - 10}Z`} fill="url(#leafG)" opacity="0.55" />
+      <path d={`M${x3 + 34} ${y3 - 28} C ${x3 + 24} ${y3 - 48}, ${x3 + 50} ${y3 - 52}, ${x3 + 56} ${y3 - 36} C ${x3 + 50} ${y3 - 24}, ${x3 + 40} ${y3 - 22}, ${x3 + 34} ${y3 - 28}Z`} fill="url(#leafG)" opacity="0.45" />
+    </g>
+  );
+
   return (
     <>
-      {/* esquina superior izquierda */}
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        width="220"
-        height="220"
-        viewBox="0 0 220 220"
-        style={{
-          position: "absolute",
-          left: -20,
-          top: -30,
-          opacity: 0.55,
-          pointerEvents: "none",
-          filter: "blur(0px)",
-        }}
-      >
-        <defs>
-          <linearGradient id="petalA" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="rgba(255,200,64,0.95)" />
-            <stop offset="1" stopColor="rgba(255,140,64,0.95)" />
-          </linearGradient>
-          <linearGradient id="petalB" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="rgba(80,165,255,0.90)" />
-            <stop offset="1" stopColor="rgba(40,110,210,0.90)" />
-          </linearGradient>
-          <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="rgba(75,170,130,0.70)" />
-            <stop offset="1" stopColor="rgba(35,120,90,0.70)" />
-          </linearGradient>
-        </defs>
-
-        {/* ramas */}
-        <path
-          d="M30 150 C60 120, 92 92, 140 70"
-          fill="none"
-          stroke="rgba(19,32,45,0.20)"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-        <path
-          d="M48 170 C75 140, 110 110, 168 86"
-          fill="none"
-          stroke="rgba(19,32,45,0.18)"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-
-        {/* hojas */}
-        <path d="M78 118 C70 98, 92 92, 98 110 C90 124, 84 126, 78 118Z" fill="url(#leaf)" opacity="0.65" />
-        <path d="M110 92 C100 74, 124 70, 130 86 C122 100, 116 102, 110 92Z" fill="url(#leaf)" opacity="0.55" />
-
-        {/* flor 1 */}
-        <g transform="translate(78 120)">
-          <circle cx="0" cy="0" r="8" fill="rgba(255,255,255,0.70)" />
-          <circle cx="0" cy="0" r="4" fill="rgba(176,141,87,0.70)" />
-          <ellipse cx="-14" cy="0" rx="16" ry="10" fill="url(#petalA)" opacity="0.85" />
-          <ellipse cx="14" cy="0" rx="16" ry="10" fill="url(#petalA)" opacity="0.85" />
-          <ellipse cx="0" cy="-14" rx="10" ry="16" fill="url(#petalB)" opacity="0.75" />
-          <ellipse cx="0" cy="14" rx="10" ry="16" fill="url(#petalB)" opacity="0.75" />
-        </g>
-
-        {/* flor 2 */}
-        <g transform="translate(132 84) scale(0.9)">
-          <circle cx="0" cy="0" r="7" fill="rgba(255,255,255,0.65)" />
-          <circle cx="0" cy="0" r="3.5" fill="rgba(176,141,87,0.65)" />
-          <ellipse cx="-12" cy="0" rx="14" ry="9" fill="rgba(255,170,90,0.85)" />
-          <ellipse cx="12" cy="0" rx="14" ry="9" fill="rgba(255,170,90,0.85)" />
-          <ellipse cx="0" cy="-12" rx="9" ry="14" fill="rgba(255,210,70,0.85)" />
-          <ellipse cx="0" cy="12" rx="9" ry="14" fill="rgba(255,210,70,0.85)" />
-        </g>
+      {/* Superior izquierda */}
+      <svg width="320" height="300" viewBox="0 0 320 300" aria-hidden="true" style={{ ...commonStyle, left: -58, top: -70 }}>
+        {defs}
+        {sprig(30, 250, 70, 200, 120, 170)}
+        {flower(120, 170, 1.0, "Y")}
+        {flower(200, 120, 0.85, "B")}
+        {flower(170, 220, 0.70, "O")}
+        {flower(70, 220, 0.60, "B")}
       </svg>
 
-      {/* esquina inferior derecha */}
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        width="240"
-        height="240"
-        viewBox="0 0 240 240"
-        style={{
-          position: "absolute",
-          right: -30,
-          bottom: -40,
-          opacity: 0.45,
-          pointerEvents: "none",
-        }}
-      >
-        <defs>
-          <linearGradient id="petalC" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="rgba(255,195,80,0.90)" />
-            <stop offset="1" stopColor="rgba(255,120,80,0.90)" />
-          </linearGradient>
-          <linearGradient id="petalD" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="rgba(70,170,255,0.85)" />
-            <stop offset="1" stopColor="rgba(60,120,220,0.85)" />
-          </linearGradient>
-          <linearGradient id="leaf2" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="rgba(85,185,140,0.65)" />
-            <stop offset="1" stopColor="rgba(35,120,90,0.65)" />
-          </linearGradient>
-        </defs>
+      {/* Superior derecha */}
+      <svg width="320" height="300" viewBox="0 0 320 300" aria-hidden="true" style={{ ...commonStyle, right: -70, top: -78, transform: "scaleX(-1)" }}>
+        {defs}
+        {sprig(30, 250, 70, 200, 120, 170)}
+        {flower(120, 170, 1.0, "Y")}
+        {flower(200, 120, 0.85, "B")}
+        {flower(170, 220, 0.70, "O")}
+        {flower(70, 220, 0.60, "B")}
+      </svg>
 
-        <path
-          d="M210 80 C180 110, 150 145, 92 175"
-          fill="none"
-          stroke="rgba(19,32,45,0.18)"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
+      {/* Inferior izquierda */}
+      <svg width="340" height="320" viewBox="0 0 340 320" aria-hidden="true" style={{ ...commonStyle, left: -78, bottom: -90, transform: "scaleY(-1)" }}>
+        {defs}
+        {sprig(40, 260, 85, 210, 135, 175)}
+        {flower(135, 175, 1.0, "B")}
+        {flower(220, 130, 0.85, "O")}
+        {flower(190, 230, 0.72, "Y")}
+        {flower(85, 230, 0.62, "Y")}
+      </svg>
 
-        <path d="M150 150 C165 130, 190 144, 176 166 C160 172, 154 168, 150 150Z" fill="url(#leaf2)" opacity="0.6" />
+      {/* Inferior derecha */}
+      <svg width="340" height="320" viewBox="0 0 340 320" aria-hidden="true" style={{ ...commonStyle, right: -78, bottom: -92, transform: "scale(-1, -1)" }}>
+        {defs}
+        {sprig(40, 260, 85, 210, 135, 175)}
+        {flower(135, 175, 1.0, "B")}
+        {flower(220, 130, 0.85, "O")}
+        {flower(190, 230, 0.72, "Y")}
+        {flower(85, 230, 0.62, "Y")}
+      </svg>
 
-        <g transform="translate(160 150)">
-          <circle cx="0" cy="0" r="8" fill="rgba(255,255,255,0.65)" />
-          <circle cx="0" cy="0" r="4" fill="rgba(176,141,87,0.65)" />
-          <ellipse cx="-14" cy="0" rx="16" ry="10" fill="url(#petalC)" opacity="0.80" />
-          <ellipse cx="14" cy="0" rx="16" ry="10" fill="url(#petalC)" opacity="0.80" />
-          <ellipse cx="0" cy="-14" rx="10" ry="16" fill="url(#petalD)" opacity="0.72" />
-          <ellipse cx="0" cy="14" rx="10" ry="16" fill="url(#petalD)" opacity="0.72" />
-        </g>
+      {/* sprigs laterales (para que se sienta “marco floral”) */}
+      <svg width="120" height="520" viewBox="0 0 120 520" aria-hidden="true" style={{ ...commonStyle, left: -32, top: 120, opacity: 0.35 }}>
+        {defs}
+        <path d="M80 30 C 30 120, 55 250, 30 380 C 22 420, 28 470, 50 500" fill="none" stroke="rgba(19,32,45,0.16)" strokeWidth="2" strokeLinecap="round" />
+        <path d="M62 120 C40 102, 35 132, 52 144 C66 144, 70 132, 62 120Z" fill="url(#leafG)" opacity="0.55" />
+        <path d="M52 240 C30 222, 26 252, 44 264 C58 264, 62 252, 52 240Z" fill="url(#leafG)" opacity="0.50" />
+        <path d="M58 360 C36 342, 32 372, 50 384 C64 384, 68 372, 58 360Z" fill="url(#leafG)" opacity="0.48" />
+        {flower(74, 170, 0.40, "Y")}
+        {flower(70, 300, 0.36, "B")}
+      </svg>
+
+      <svg width="120" height="520" viewBox="0 0 120 520" aria-hidden="true" style={{ ...commonStyle, right: -32, top: 120, opacity: 0.35, transform: "scaleX(-1)" }}>
+        {defs}
+        <path d="M80 30 C 30 120, 55 250, 30 380 C 22 420, 28 470, 50 500" fill="none" stroke="rgba(19,32,45,0.16)" strokeWidth="2" strokeLinecap="round" />
+        <path d="M62 120 C40 102, 35 132, 52 144 C66 144, 70 132, 62 120Z" fill="url(#leafG)" opacity="0.55" />
+        <path d="M52 240 C30 222, 26 252, 44 264 C58 264, 62 252, 52 240Z" fill="url(#leafG)" opacity="0.50" />
+        <path d="M58 360 C36 342, 32 372, 50 384 C64 384, 68 372, 58 360Z" fill="url(#leafG)" opacity="0.48" />
+        {flower(74, 170, 0.40, "Y")}
+        {flower(70, 300, 0.36, "B")}
       </svg>
     </>
+  );
+}
+
+/** ✅ Logos sobrios (SVG) como botones */
+function BrandLogo({ type = "liverpool" }) {
+  if (type === "amazon") {
+    return (
+      <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
+        <rect
+          x="1"
+          y="1"
+          width="418"
+          height="110"
+          rx="18"
+          fill="rgba(255,255,255,0.92)"
+          stroke="rgba(31,65,95,0.16)"
+        />
+        <text
+          x="210"
+          y="64"
+          textAnchor="middle"
+          fontFamily="system-ui, -apple-system, Segoe UI, Roboto, Arial"
+          fontSize="44"
+          fill="rgba(19,32,45,0.88)"
+        >
+          amazon
+        </text>
+        <path
+          d="M140 78c40 22 100 22 140 0"
+          fill="none"
+          stroke="rgba(176,141,87,0.95)"
+          strokeWidth="6"
+          strokeLinecap="round"
+        />
+        <path
+          d="M274 76l14 5-9 12"
+          fill="none"
+          stroke="rgba(176,141,87,0.95)"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  // liverpool
+  return (
+    <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
+      <rect
+        x="1"
+        y="1"
+        width="418"
+        height="110"
+        rx="18"
+        fill="rgba(255,255,255,0.92)"
+        stroke="rgba(31,65,95,0.16)"
+      />
+      <text
+        x="210"
+        y="66"
+        textAnchor="middle"
+        fontFamily='"Cormorant Garamond", serif'
+        fontSize="50"
+        fill="rgba(19,32,45,0.88)"
+        style={{ letterSpacing: "0.02em" }}
+      >
+        liverpool
+      </text>
+      <path
+        d="M92 30c10 0 16 6 16 14 0 10-8 18-18 18-8 0-14-6-14-14 0-10 6-18 16-18z"
+        fill="rgba(214,178,94,0.18)"
+        stroke="rgba(176,141,87,0.50)"
+      />
+    </svg>
   );
 }
 
@@ -572,7 +686,7 @@ export default function Home() {
     },
   ];
 
-  // ✅ Itinerario (layout: icono izquierda, texto y hora debajo)
+  // ✅ Itinerario
   const TIMELINE = [
     { time: "4:00 PM", title: "Ceremonia", iconType: "ceremony" },
     { time: "5:00 PM", title: "Recepción", iconType: "reception" },
@@ -580,6 +694,20 @@ export default function Home() {
     { time: "9:00 PM", title: "Fiesta", iconType: "party" },
     { time: "3:00 AM", title: "Cierre", iconType: "close" },
   ];
+
+  // ✅ Mesa de regalos (logos)
+  const MESA_REGALOS = [
+    { type: "liverpool", url: "https://www.liverpool.com.mx/" },
+    { type: "amazon", url: "https://www.amazon.com.mx/" },
+  ];
+
+  // ✅ Regalo monetario (con el mismo estilo que traías antes)
+  const REGALO_MONETARIO = {
+    subtitle: "Si deseas apoyarnos en esta nueva etapa:",
+    accountLabel: "CLABE / Cuenta",
+    accountValue: "000000000000000000",
+    nameValue: "Andrés y Vanessa",
+  };
 
   const styles = {
     page: {
@@ -601,13 +729,10 @@ export default function Home() {
       padding: "52px 22px",
       textAlign: "center",
       backdropFilter: "blur(6px)",
-
-      // ✅ para flores
       position: "relative",
       overflow: "hidden",
     },
 
-    // ✅ “Nuestra boda” más grande
     smallCaps: {
       fontFamily: '"Cormorant Garamond", serif',
       letterSpacing: "0.22em",
@@ -617,11 +742,10 @@ export default function Home() {
       marginBottom: 10,
     },
 
-    // ✅ Ajustes para que NO se corten letras grandes (A/V)
     namesGold: {
       fontFamily: '"Great Vibes", cursive',
       fontSize: 68,
-      lineHeight: 1.10,
+      lineHeight: 1.1,
       paddingTop: 10,
       margin: "8px 0 12px",
       backgroundImage:
@@ -636,7 +760,7 @@ export default function Home() {
     namesBlack: {
       fontFamily: '"Great Vibes", cursive',
       fontSize: 68,
-      lineHeight: 1.10,
+      lineHeight: 1.1,
       paddingTop: 10,
       margin: "8px 0 12px",
       color: "#0b0f14",
@@ -685,12 +809,6 @@ export default function Home() {
       textTransform: "uppercase",
       color: "rgba(19, 32, 45, 0.60)",
     },
-    infoBlock: {
-      fontFamily: '"Cormorant Garamond", serif',
-      marginTop: 14,
-      color: "rgba(19, 32, 45, 0.78)",
-      fontSize: 18,
-    },
     divider: {
       width: 120,
       height: 1,
@@ -728,6 +846,50 @@ export default function Home() {
       padding: 14,
     },
 
+    // Links UI
+    chipsCol: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 10,
+      alignItems: "center",
+      marginTop: 12,
+    },
+    linkBtn: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      padding: "10px 12px",
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.16)",
+      background: "white",
+      cursor: "pointer",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      color: "#0b0f14",
+      textDecoration: "none",
+      width: "100%",
+      maxWidth: 360,
+    },
+    linkBtnPrimary: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      padding: "10px 12px",
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.16)",
+      background: "rgba(214, 178, 94, 0.22)",
+      cursor: "pointer",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      color: "#0b0f14",
+      textDecoration: "none",
+      width: "100%",
+      maxWidth: 360,
+    },
+
+    // Fotos
     photoStrip: {
       maxWidth: 560,
       margin: "22px auto 0",
@@ -738,7 +900,7 @@ export default function Home() {
     },
     photo: { width: "100%", height: 220, objectFit: "cover", display: "block" },
 
-    // ✅ ITINERARIO: centrado + layout icono izquierda, texto/hora derecha (icono 2.5cm aprox)
+    // ✅ ITINERARIO
     timelineOuter: { maxWidth: 560, margin: "10px auto 0" },
     timelineCard: {
       borderRadius: 18,
@@ -755,8 +917,8 @@ export default function Home() {
       borderBottom: "1px solid rgba(31,65,95,0.10)",
     },
     timelineIconBox: {
-      width: 96, // ~ 2.5cm
-      height: 96, // ~ 2.5cm
+      width: 96,
+      height: 96,
       borderRadius: "50%",
       background: "rgba(214, 178, 94, 0.14)",
       border: "1px solid rgba(176,141,87,0.32)",
@@ -818,26 +980,26 @@ export default function Home() {
       transformStyle: "preserve-3d",
     },
 
-    // ✅ Flap content (mejor lectura fecha)
+    // ✅ Flap: MÁS alto + clipPath menos agresivo para que NO corte nombres/fecha
     envelopeFlap: {
       position: "absolute",
       left: 0,
       right: 0,
       top: 0,
-      height: 210,
+      height: 232, // ✅ más alto
       transformOrigin: "top center",
       transformStyle: "preserve-3d",
       transform: envelopeOpen ? "rotateX(180deg)" : "rotateX(0deg)",
       transition: "transform 980ms cubic-bezier(0.2, 0.85, 0.2, 1)",
-      background: "linear-gradient(180deg, rgba(165,182,198,0.95), rgba(135,156,176,0.95))",
-      clipPath: "polygon(0 0, 100% 0, 50% 80%)",
+      background: "linear-gradient(180deg, rgba(165,182,198,0.96), rgba(135,156,176,0.96))",
+      clipPath: "polygon(0 0, 100% 0, 50% 92%)", // ✅ más “abierto”
       borderBottom: "1px solid rgba(31,65,95,0.14)",
       backfaceVisibility: "hidden",
       zIndex: 4,
     },
     flapContent: {
       position: "absolute",
-      top: 18,
+      top: 22,
       left: 0,
       right: 0,
       textAlign: "center",
@@ -846,21 +1008,23 @@ export default function Home() {
       display: "grid",
       placeItems: "center",
       gap: 8,
+      padding: "0 16px", // ✅ evita cortes laterales
     },
     flapNames: {
       fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16,
+      fontSize: 15,
       fontWeight: 700,
-      letterSpacing: "0.04em",
+      letterSpacing: "0.08em",
       color: "rgba(19,32,45,0.88)",
       textTransform: "uppercase",
       textShadow: "0 1px 0 rgba(255,255,255,0.35)",
+      whiteSpace: "nowrap",
     },
     flapDatePill: {
       display: "inline-block",
       padding: "6px 10px",
       borderRadius: 999,
-      background: "rgba(255,255,255,0.42)",
+      background: "rgba(255,255,255,0.46)",
       border: "1px solid rgba(31,65,95,0.14)",
       boxShadow: "inset 0 1px 0 rgba(255,255,255,0.55)",
       fontFamily: '"Cormorant Garamond", serif',
@@ -868,15 +1032,16 @@ export default function Home() {
       letterSpacing: "0.14em",
       textTransform: "uppercase",
       color: "rgba(19,32,45,0.82)",
+      whiteSpace: "nowrap",
     },
 
-    // ✅ Carta (leyenda abajo para que NO la tape el sello)
+    // ✅ Carta (leyenda abajo)
     envelopePaper: {
       position: "absolute",
       left: 18,
       right: 18,
       bottom: 18,
-      top: 52,
+      top: 58,
       borderRadius: 16,
       background: "linear-gradient(180deg, rgba(252,248,240,0.98), rgba(248,242,232,0.98))",
       border: "1px solid rgba(176,141,87,0.25)",
@@ -901,24 +1066,44 @@ export default function Home() {
       color: "rgba(19,32,45,0.62)",
     },
 
-    // ✅ Sello (posición ajustada para no tapar texto)
+    // ✅ Sello (un poco más abajo para NO tapar texto)
     sealStage: {
       position: "absolute",
       left: "50%",
-      top: 192,
+      top: 208, // ✅ bajado
       transform: "translateX(-50%)",
       zIndex: 8,
     },
 
-    openHint: {
-      marginTop: 12,
-      textAlign: "center",
+    // Mesa regalos / money
+    logoBtn: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      textDecoration: "none",
+      cursor: "pointer",
+      borderRadius: 18,
+      overflow: "hidden",
+      boxShadow: "0 10px 26px rgba(0,0,0,0.08)",
+      transform: "translateZ(0)",
+    },
+    moneyBox: {
+      borderRadius: 16,
+      border: "1px solid rgba(31, 65, 95, 0.12)",
+      background: "rgba(248, 251, 255, 0.85)",
+      padding: 14,
+      marginTop: 14,
+    },
+    monoLine: {
       fontFamily: '"Cormorant Garamond", serif',
-      color: "rgba(19,32,45,0.70)",
-      fontSize: 14,
+      fontSize: 16,
+      color: "rgba(19, 32, 45, 0.82)",
+      margin: "6px 0 0",
+      wordBreak: "break-word",
+      textAlign: "center",
     },
 
-    // RSVP UI (igual que tu base)
+    // RSVP UI
     rsvpWrap: {
       maxWidth: 520,
       margin: "24px auto 0",
@@ -1032,7 +1217,6 @@ export default function Home() {
       : 0;
 
   function abrirSobre() {
-    // ✅ gesto del usuario: abrimos el sobre
     setEnvelopeOpen(true);
 
     // ✅ Autoplay: montamos spotify DESPUÉS del click (y forzamos reload)
@@ -1040,7 +1224,6 @@ export default function Home() {
     const nonce = Date.now();
     setSpotifyNonce(nonce);
 
-    // mount en el siguiente tick (a veces ayuda en iOS)
     setTimeout(() => {
       setSpotifyEnabled(true);
     }, 30);
@@ -1080,30 +1263,26 @@ export default function Home() {
                 {/* ✅ Solapa (monograma + nombres + FECHA visible) */}
                 <div style={styles.envelopeFlap}>
                   <div style={styles.flapContent}>
-                    <MonogramaAV size={64} />
+                    <MonogramaAV size={58} />
                     <div style={styles.flapNames}>Andrés &amp; Vanessa</div>
                     <div style={styles.flapDatePill}>23 · abril · 2027</div>
                   </div>
                 </div>
 
-                {/* ✅ Sello de cera realista */}
+                {/* ✅ Sello dorado */}
                 <div style={styles.sealStage}>
-                  <WaxSeal onClick={abrirSobre} disabled={false} label="Abrir" size={104} />
+                  <WaxSeal onClick={abrirSobre} disabled={false} label="Abrir" size={112} />
                 </div>
               </div>
-
-              <div style={styles.openHint}> </div>
             </div>
           </div>
         ) : (
           <div style={styles.card}>
-            {/* ✅ flores */}
+            {/* ✅ flores (más abundantes) */}
             <FloralCorners />
 
             <div style={styles.smallCaps}>Nuestra boda</div>
-
             <h1 style={nameStyleObj}>Andrés &amp; Vanessa</h1>
-
             <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
 
             <div style={styles.quote}>
@@ -1132,17 +1311,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div style={styles.infoBlock}>
-              <div>
-                <b>Ceremonia</b> · 4:00 PM
-              </div>
-              <div>
-                <b>Recepción</b> · 5:00 PM
-              </div>
-              <div>
-                <b>Cierre</b> · 3:00 AM
-              </div>
-            </div>
+            {/* ✅ (3) Quitado el bloque “Ceremonia / Recepción / Cierre” bajo el contador */}
 
             {/* ✅ Spotify: solo se monta después del click */}
             <div style={styles.spotifyWrap}>
@@ -1191,7 +1360,7 @@ export default function Home() {
               <img alt="Foto 2" src={GALLERY_PHOTOS[1]} style={styles.photo} />
             </div>
 
-            {/* ✅ Itinerario: centrado + icono izquierda + texto + hora debajo */}
+            {/* ✅ Itinerario */}
             <div style={styles.section}>
               <div style={styles.sectionTitleCenterBig}>Itinerario</div>
 
@@ -1202,8 +1371,7 @@ export default function Home() {
                       key={i}
                       style={{
                         ...styles.timelineRow,
-                        borderBottom:
-                          i === TIMELINE.length - 1 ? "none" : styles.timelineRow.borderBottom,
+                        borderBottom: i === TIMELINE.length - 1 ? "none" : styles.timelineRow.borderBottom,
                       }}
                     >
                       <div style={styles.timelineIconBox}>
@@ -1216,6 +1384,55 @@ export default function Home() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+            </div>
+
+            {/* ✅ (4) Ubicación con LINKS restaurados */}
+            <div style={styles.section}>
+              <div style={styles.sectionTitleCenterBig}>Ubicación</div>
+              <div style={styles.softBox}>
+                <p style={{ ...styles.sectionText, textAlign: "center" }}>
+                  Jardín Maroma · Jiutepec, Morelos
+                </p>
+                <div style={styles.chipsCol}>
+                  <a href={MAPS_URL} target="_blank" rel="noreferrer" style={styles.linkBtnPrimary}>
+                    Google Maps
+                  </a>
+                  <a href={WAZE_URL} target="_blank" rel="noreferrer" style={styles.linkBtn}>
+                    Waze
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* ✅ (4) Mesa de regalos + cuenta bancaria restaurados */}
+            <div style={styles.section}>
+              <div style={styles.sectionTitleCenterBig}>Mesa de regalos</div>
+              <div style={styles.softBox}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+                  {MESA_REGALOS.map((x, i) => (
+                    <a key={i} href={x.url} target="_blank" rel="noreferrer" style={styles.logoBtn}>
+                      <BrandLogo type={x.type} />
+                    </a>
+                  ))}
+                </div>
+
+                <div style={styles.moneyBox}>
+                  <p style={{ ...styles.sectionText, textAlign: "center" }}>
+                    {REGALO_MONETARIO.subtitle}
+                  </p>
+
+                  <div style={{ marginTop: 10, textAlign: "center" }}>
+                    <div style={{ ...styles.sectionText, textAlign: "center" }}>
+                      <b>{REGALO_MONETARIO.accountLabel}:</b>
+                    </div>
+                    <div style={styles.monoLine}>{REGALO_MONETARIO.accountValue}</div>
+                  </div>
+
+                  <div style={{ marginTop: 10 }}>
+                    <div style={styles.monoLine}>{REGALO_MONETARIO.nameValue}</div>
+                  </div>
                 </div>
               </div>
             </div>
