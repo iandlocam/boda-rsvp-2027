@@ -21,9 +21,17 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
 export default function Home() {
   const router = useRouter();
 
-  const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
+  const weddingDateMs = useMemo(
+    () => new Date("2027-04-23T16:00:00").getTime(),
+    []
+  );
 
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   // RSVP states
   const [guestId, setGuestId] = useState("");
@@ -152,7 +160,9 @@ export default function Home() {
 
       // ✅ si el API regresó el número final, sincronizamos
       if (typeof result?.pasesConfirmados !== "undefined") {
-        setPasesConfirmados(Number(result.pasesConfirmados) || (asistencia === "Sí" ? pasesAEnviar : 0));
+        setPasesConfirmados(
+          Number(result.pasesConfirmados) || (asistencia === "Sí" ? pasesAEnviar : 0)
+        );
       }
     } catch (e) {
       setRsvpStatus("error");
@@ -161,7 +171,74 @@ export default function Home() {
   }
 
   const NAME_STYLE = "gold";
-  const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv";
+  const SPOTIFY_EMBED_URL =
+    "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv";
+
+  // =========================
+  // ✅ NUEVOS CAMPOS / SECCIONES (SOLO ADICIONES)
+  // =========================
+
+  // Mapa (pon aquí tus links reales)
+  const MAPS_URL = "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
+  const WAZE_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
+
+  // Fotos (placeholders — luego reemplazas por tus fotos)
+  const GALLERY_PHOTOS = [
+    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70",
+    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=70",
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=70",
+  ];
+
+  // Nuestra historia (texto placeholder, lo editas)
+  const NUESTRA_HISTORIA = [
+    {
+      title: "Cómo empezó",
+      text:
+        "Un día cualquiera se volvió especial. Entre risas, pláticas largas y complicidad, entendimos que esto iba en serio.",
+    },
+    {
+      title: "Lo que nos une",
+      text:
+        "Amor por lo simple, por la familia, por viajar y por crear un hogar donde siempre haya paz (y música).",
+    },
+    {
+      title: "El gran día",
+      text:
+        "Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo.",
+    },
+  ];
+
+  // Timeline (con iconos tipo “capilla/cena/fiesta”; puedes cambiar emojis por SVG luego)
+  const TIMELINE = [
+    { time: "4:00 PM", title: "Ceremonia", icon: "⛪" },
+    { time: "5:00 PM", title: "Recepción", icon: "🥂" },
+    { time: "7:30 PM", title: "Cena", icon: "🍽️" },
+    { time: "9:00 PM", title: "Fiesta", icon: "🎶" },
+    { time: "3:00 AM", title: "Cierre", icon: "🌙" },
+  ];
+
+  // Dress code (texto placeholder)
+  const DRESS_CODE = {
+    title: "Dress code",
+    text:
+      "Formal / jardín elegante. Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
+  };
+
+  // Mesa de regalos (links placeholder)
+  const MESA_REGALOS = [
+    { label: "Liverpool", url: "https://www.liverpool.com.mx/" },
+    { label: "Amazon", url: "https://www.amazon.com.mx/" },
+  ];
+
+  // Regalo monetario (placeholder)
+  const REGALO_MONETARIO = {
+    title: "Regalo monetario",
+    subtitle: "Si deseas apoyarnos en esta nueva etapa:",
+    accountLabel: "CLABE / Cuenta",
+    accountValue: "000000000000000000", // <- cámbiala
+    nameLabel: "Beneficiario",
+    nameValue: "Andrés & Vanessa",
+  };
 
   const styles = {
     page: {
@@ -261,7 +338,8 @@ export default function Home() {
     divider: {
       width: 120,
       height: 1,
-      background: "linear-gradient(90deg, transparent, rgba(176,141,87,0.7), transparent)",
+      background:
+        "linear-gradient(90deg, transparent, rgba(176,141,87,0.7), transparent)",
       margin: "26px auto",
     },
     spotifyWrap: {
@@ -370,6 +448,157 @@ export default function Home() {
       color: "#0b0f14",
       outline: "none",
     },
+
+    // =========================
+    // ✅ NUEVAS SECCIONES (SOLO ADICIONES)
+    // =========================
+    section: {
+      maxWidth: 560,
+      margin: "28px auto 0",
+      textAlign: "left",
+      padding: "0 6px",
+    },
+    sectionTitle: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 20,
+      margin: "0 0 10px",
+      color: "rgba(19, 32, 45, 0.88)",
+    },
+    sectionText: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      color: "rgba(19, 32, 45, 0.72)",
+      margin: 0,
+      lineHeight: 1.5,
+    },
+    softBox: {
+      borderRadius: 16,
+      border: "1px solid rgba(31, 65, 95, 0.12)",
+      background: "rgba(248, 251, 255, 0.85)",
+      padding: 14,
+    },
+    chipsRow: {
+      display: "flex",
+      gap: 10,
+      flexWrap: "wrap",
+      marginTop: 10,
+    },
+    linkBtn: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      padding: "10px 12px",
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.16)",
+      background: "white",
+      cursor: "pointer",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      color: "#0b0f14",
+      textDecoration: "none",
+    },
+    linkBtnPrimary: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      padding: "10px 12px",
+      borderRadius: 12,
+      border: "1px solid rgba(31, 65, 95, 0.16)",
+      background: "rgba(214, 178, 94, 0.22)",
+      cursor: "pointer",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      color: "#0b0f14",
+      textDecoration: "none",
+    },
+    photoStrip: {
+      maxWidth: 560,
+      margin: "22px auto 0",
+      borderRadius: 18,
+      overflow: "hidden",
+      border: "1px solid rgba(31, 65, 95, 0.10)",
+      boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
+    },
+    photo: {
+      width: "100%",
+      height: 220,
+      objectFit: "cover",
+      display: "block",
+    },
+    adultsOnly: {
+      maxWidth: 560,
+      margin: "22px auto 0",
+      borderRadius: 16,
+      padding: 14,
+      border: "1px solid rgba(176,141,87,0.35)",
+      background: "rgba(214, 178, 94, 0.10)",
+      textAlign: "left",
+    },
+    adultsOnlyTitle: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 18,
+      margin: "0 0 6px",
+      color: "rgba(19, 32, 45, 0.90)",
+    },
+    timelineWrap: {
+      maxWidth: 560,
+      margin: "18px auto 0",
+      textAlign: "left",
+    },
+    timelineItem: {
+      display: "grid",
+      gridTemplateColumns: "92px 1fr",
+      gap: 12,
+      alignItems: "start",
+      padding: "10px 0",
+      borderBottom: "1px solid rgba(31, 65, 95, 0.10)",
+    },
+    timeCol: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      color: "rgba(19, 32, 45, 0.70)",
+      paddingTop: 4,
+    },
+    eventCol: {
+      display: "flex",
+      gap: 10,
+      alignItems: "flex-start",
+    },
+    iconCircle: {
+      width: 34,
+      height: 34,
+      borderRadius: "50%",
+      background: "rgba(214, 178, 94, 0.18)",
+      border: "1px solid rgba(176,141,87,0.35)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flex: "0 0 auto",
+      marginTop: 1,
+      fontSize: 16,
+    },
+    eventTitle: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 17,
+      margin: 0,
+      color: "rgba(19, 32, 45, 0.88)",
+      lineHeight: 1.25,
+    },
+    moneyBox: {
+      borderRadius: 16,
+      border: "1px solid rgba(31, 65, 95, 0.12)",
+      background: "rgba(248, 251, 255, 0.85)",
+      padding: 14,
+    },
+    monoLine: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      color: "rgba(19, 32, 45, 0.82)",
+      margin: "6px 0 0",
+      wordBreak: "break-word",
+    },
   };
 
   const nameStyleObj = NAME_STYLE === "black" ? styles.namesBlack : styles.namesGold;
@@ -377,9 +606,12 @@ export default function Home() {
 
   // ✅ (1 + 3) Texto bonito de “ya confirmaste” + usar J si existe
   const pasesFromSheet = Number(guestData?.pasesConfirmados || 0);
-  const pasesMostrados = asistenciaActual === "Sí"
-    ? (pasesFromSheet > 0 ? pasesFromSheet : Number(pasesConfirmados || 1))
-    : 0;
+  const pasesMostrados =
+    asistenciaActual === "Sí"
+      ? pasesFromSheet > 0
+        ? pasesFromSheet
+        : Number(pasesConfirmados || 1)
+      : 0;
 
   const nombreMostrado = guestData?.nombre ? String(guestData.nombre) : "¡Gracias!";
 
@@ -406,7 +638,8 @@ export default function Home() {
           <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
 
           <div style={styles.quote}>
-            “El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección.”
+            “El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma
+            dirección.”
           </div>
 
           <div style={styles.divider} />
@@ -431,9 +664,15 @@ export default function Home() {
           </div>
 
           <div style={styles.infoBlock}>
-            <div><b>Ceremonia</b> · 4:00 PM</div>
-            <div><b>Recepción</b> · 5:00 PM</div>
-            <div><b>Cierre</b> · 3:00 AM</div>
+            <div>
+              <b>Ceremonia</b> · 4:00 PM
+            </div>
+            <div>
+              <b>Recepción</b> · 5:00 PM
+            </div>
+            <div>
+              <b>Cierre</b> · 3:00 AM
+            </div>
           </div>
 
           <div style={styles.spotifyWrap}>
@@ -448,7 +687,150 @@ export default function Home() {
             />
           </div>
 
-          {/* RSVP */}
+          {/* =========================
+              ✅ NUEVAS SECCIONES (SOLO ADICIONES)
+              ========================= */}
+
+          {/* Mini separador con foto 1 */}
+          <div style={styles.photoStrip}>
+            <img alt="Foto 1" src={GALLERY_PHOTOS[0]} style={styles.photo} />
+          </div>
+
+          {/* Nuestra historia */}
+          <div style={styles.section}>
+            <div style={styles.sectionTitle}>Nuestra historia</div>
+            <div style={styles.softBox}>
+              {NUESTRA_HISTORIA.map((b, i) => (
+                <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 12 }}>
+                  <div style={{ ...styles.sectionTitle, fontSize: 17, margin: "0 0 4px" }}>
+                    {b.title}
+                  </div>
+                  <p style={styles.sectionText}>{b.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mini separador con foto 2 */}
+          <div style={styles.photoStrip}>
+            <img alt="Foto 2" src={GALLERY_PHOTOS[1]} style={styles.photo} />
+          </div>
+
+          {/* Aviso +16 (antes del timeline como pediste) */}
+          <div style={styles.adultsOnly}>
+            <div style={styles.adultsOnlyTitle}>Importante</div>
+            <div style={styles.sectionText}>
+              Evento exclusivo para mayores de <b>16 años</b>. Sin excepciones.
+            </div>
+          </div>
+
+          {/* Timeline con iconos */}
+          <div style={styles.section}>
+            <div style={styles.sectionTitle}>Itinerario</div>
+            <div style={styles.timelineWrap}>
+              {TIMELINE.map((t, i) => (
+                <div key={i} style={styles.timelineItem}>
+                  <div style={styles.timeCol}>{t.time}</div>
+                  <div style={styles.eventCol}>
+                    <div style={styles.iconCircle} aria-hidden="true">
+                      {t.icon}
+                    </div>
+                    <p style={styles.eventTitle}>{t.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Ubicación / mapa / botones */}
+          <div style={styles.section}>
+            <div style={styles.sectionTitle}>Ubicación</div>
+            <div style={styles.softBox}>
+              <p style={styles.sectionText}>
+                Jardín Maroma · Jiutepec, Morelos
+              </p>
+              <div style={styles.chipsRow}>
+                <a
+                  href={MAPS_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={styles.linkBtnPrimary}
+                >
+                  📍 Google Maps
+                </a>
+                <a
+                  href={WAZE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={styles.linkBtn}
+                >
+                  🚗 Waze
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Mini separador con foto 3 */}
+          <div style={styles.photoStrip}>
+            <img alt="Foto 3" src={GALLERY_PHOTOS[2]} style={styles.photo} />
+          </div>
+
+          {/* Dress code */}
+          <div style={styles.section}>
+            <div style={styles.sectionTitle}>{DRESS_CODE.title}</div>
+            <div style={styles.softBox}>
+              <p style={styles.sectionText}>{DRESS_CODE.text}</p>
+            </div>
+          </div>
+
+          {/* Mesa de regalos */}
+          <div style={styles.section}>
+            <div style={styles.sectionTitle}>Mesa de regalos</div>
+            <div style={styles.softBox}>
+              <p style={styles.sectionText} style={{ ...styles.sectionText, marginBottom: 10 }}>
+                Estos son enlaces de referencia (puedes cambiarlos):
+              </p>
+              <div style={styles.chipsRow}>
+                {MESA_REGALOS.map((x, i) => (
+                  <a
+                    key={i}
+                    href={x.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={styles.linkBtn}
+                  >
+                    🎁 {x.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Regalo monetario */}
+          <div style={styles.section}>
+            <div style={styles.sectionTitle}>{REGALO_MONETARIO.title}</div>
+            <div style={styles.moneyBox}>
+              <p style={styles.sectionText}>{REGALO_MONETARIO.subtitle}</p>
+
+              <div style={{ marginTop: 10 }}>
+                <div style={styles.sectionText}>
+                  💰 <b>{REGALO_MONETARIO.accountLabel}:</b>
+                </div>
+                <div style={styles.monoLine}>{REGALO_MONETARIO.accountValue}</div>
+              </div>
+
+              <div style={{ marginTop: 10 }}>
+                <div style={styles.sectionText}>
+                  👤 <b>{REGALO_MONETARIO.nameLabel}:</b>
+                </div>
+                <div style={styles.monoLine}>{REGALO_MONETARIO.nameValue}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* =========================
+              RSVP (TU BLOQUE ORIGINAL)
+              ========================= */}
           <div style={styles.rsvpWrap}>
             <div style={styles.rsvpTitle}>
               {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
@@ -461,7 +843,10 @@ export default function Home() {
               <div style={styles.hint}>
                 <b>{guestData.nombre}</b>, nos dará mucho gusto verte. ✨
                 {guestData.pasesAsignados ? (
-                  <> · Pases asignados: <b>{guestData.pasesAsignados}</b></>
+                  <>
+                    {" "}
+                    · Pases asignados: <b>{guestData.pasesAsignados}</b>
+                  </>
                 ) : null}
               </div>
             )}
@@ -474,21 +859,19 @@ export default function Home() {
 
             {/* ✅ (1) Mensaje bonito cuando YA confirmó (aunque recargues la página) */}
             {yaConfirmo && (
-  <div style={styles.statusOk}>
-    {asistenciaActual === "Sí" ? (
-      <>
-        Gracias por confirmar <b>{pasesMostrados}</b>{" "}
-        {pasesMostrados === 1 ? "pase" : "pases"} 🥳  
-        <br />
-        Los esperamos con toda la actitud ✨
-      </>
-    ) : (
-      <>
-        Gracias por avisarnos, te vamos a extrañar 💔
-      </>
-    )}
-  </div>
-)}
+              <div style={styles.statusOk}>
+                {asistenciaActual === "Sí" ? (
+                  <>
+                    Gracias por confirmar <b>{pasesMostrados}</b>{" "}
+                    {pasesMostrados === 1 ? "pase" : "pases"} 🥳
+                    <br />
+                    Los esperamos con toda la actitud ✨
+                  </>
+                ) : (
+                  <>Gracias por avisarnos, te vamos a extrañar 💔</>
+                )}
+              </div>
+            )}
 
             {/* ✅ Si ya confirmó: ocultamos la UI para que no confunda */}
             {!yaConfirmo && (
@@ -502,32 +885,33 @@ export default function Home() {
                 />
 
                 {/* Selector de pases */}
-                {guestData?.pasesAsignados && String(guestData.pasesAsignados).trim() !== "" && (
-                  <div style={{ marginTop: 10 }}>
-                    <div
-                      style={{
-                        fontFamily: '"Cormorant Garamond", serif',
-                        marginBottom: 6,
-                        color: "#0b0f14",
-                      }}
-                    >
-                      Pases a confirmar:
-                    </div>
+                {guestData?.pasesAsignados &&
+                  String(guestData.pasesAsignados).trim() !== "" && (
+                    <div style={{ marginTop: 10 }}>
+                      <div
+                        style={{
+                          fontFamily: '"Cormorant Garamond", serif',
+                          marginBottom: 6,
+                          color: "#0b0f14",
+                        }}
+                      >
+                        Pases a confirmar:
+                      </div>
 
-                    <select
-                      value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
-                      onChange={(e) => setPasesConfirmados(Number(e.target.value))}
-                      style={styles.select}
-                      disabled={rsvpStatus === "saving"}
-                    >
-                      {Array.from({ length: maxPases }, (_, i) => i + 1).map((n) => (
-                        <option key={n} value={n}>
-                          {n} {n === 1 ? "pase" : "pases"}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+                      <select
+                        value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
+                        onChange={(e) => setPasesConfirmados(Number(e.target.value))}
+                        style={styles.select}
+                        disabled={rsvpStatus === "saving"}
+                      >
+                        {Array.from({ length: maxPases }, (_, i) => i + 1).map((n) => (
+                          <option key={n} value={n}>
+                            {n} {n === 1 ? "pase" : "pases"}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
 
                 <div style={styles.rsvpRow}>
                   <button
@@ -549,12 +933,15 @@ export default function Home() {
               </>
             )}
 
-            {rsvpStatus === "saving" && <div style={styles.hint}>Guardando tu confirmación…</div>}
+            {rsvpStatus === "saving" && (
+              <div style={styles.hint}>Guardando tu confirmación…</div>
+            )}
 
             {/* Cuando acabas de confirmar en ese momento */}
             {rsvpStatus === "ok" && !yaConfirmo && (
               <div style={styles.statusOk}>
-                ¡Listo! Quedó registrado. ✅ {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
+                ¡Listo! Quedó registrado. ✅{" "}
+                {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
               </div>
             )}
 
