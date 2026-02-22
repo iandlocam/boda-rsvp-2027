@@ -33,6 +33,9 @@ export default function Home() {
     seconds: 0,
   });
 
+  // ✅ SOBRE (nuevo)
+  const [envelopeOpen, setEnvelopeOpen] = useState(false);
+
   // RSVP states
   const [guestId, setGuestId] = useState("");
   const [mensaje, setMensaje] = useState("");
@@ -70,7 +73,8 @@ export default function Home() {
         const resp = await fetch(`/api/guest?id=${encodeURIComponent(guestId)}`);
         const data = await resp.json();
 
-        if (!resp.ok) throw new Error(data?.error || "No se pudo cargar el invitado");
+        if (!resp.ok)
+          throw new Error(data?.error || "No se pudo cargar el invitado");
         if (cancelled) return;
 
         const g = data.guest || null;
@@ -161,7 +165,8 @@ export default function Home() {
       // ✅ si el API regresó el número final, sincronizamos
       if (typeof result?.pasesConfirmados !== "undefined") {
         setPasesConfirmados(
-          Number(result.pasesConfirmados) || (asistencia === "Sí" ? pasesAEnviar : 0)
+          Number(result.pasesConfirmados) ||
+            (asistencia === "Sí" ? pasesAEnviar : 0)
         );
       }
     } catch (e) {
@@ -171,16 +176,20 @@ export default function Home() {
   }
 
   const NAME_STYLE = "gold";
+
+  // ✅ Spotify: lo renderizamos SOLO cuando abras el sobre + autoplay=1
   const SPOTIFY_EMBED_URL =
-    "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv";
+    "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv?autoplay=1";
 
   // =========================
   // ✅ NUEVOS CAMPOS / SECCIONES (SOLO ADICIONES)
   // =========================
 
   // Mapa (pon aquí tus links reales)
-  const MAPS_URL = "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
-  const WAZE_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
+  const MAPS_URL =
+    "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
+  const WAZE_URL =
+    "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
 
   // Fotos (placeholders — luego reemplazas por tus fotos)
   const GALLERY_PHOTOS = [
@@ -208,7 +217,7 @@ export default function Home() {
     },
   ];
 
-  // Timeline (con iconos tipo “capilla/cena/fiesta”; puedes cambiar emojis por SVG luego)
+  // Timeline
   const TIMELINE = [
     { time: "4:00 PM", title: "Ceremonia", icon: "⛪" },
     { time: "5:00 PM", title: "Recepción", icon: "🥂" },
@@ -217,25 +226,25 @@ export default function Home() {
     { time: "3:00 AM", title: "Cierre", icon: "🌙" },
   ];
 
-  // Dress code (texto placeholder)
+  // Dress code
   const DRESS_CODE = {
     title: "Dress code",
     text:
       "Formal / jardín elegante. Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
   };
 
-  // Mesa de regalos (links placeholder)
+  // Mesa de regalos
   const MESA_REGALOS = [
     { label: "Liverpool", url: "https://www.liverpool.com.mx/" },
     { label: "Amazon", url: "https://www.amazon.com.mx/" },
   ];
 
-  // Regalo monetario (placeholder)
+  // Regalo monetario
   const REGALO_MONETARIO = {
     title: "Regalo monetario",
     subtitle: "Si deseas apoyarnos en esta nueva etapa:",
     accountLabel: "CLABE / Cuenta",
-    accountValue: "000000000000000000", // <- cámbiala
+    accountValue: "000000000000000000",
     nameLabel: "Beneficiario",
     nameValue: "Andrés & Vanessa",
   };
@@ -450,7 +459,7 @@ export default function Home() {
     },
 
     // =========================
-    // ✅ NUEVAS SECCIONES (SOLO ADICIONES)
+    // ✅ NUEVAS SECCIONES
     // =========================
     section: {
       maxWidth: 560,
@@ -599,12 +608,121 @@ export default function Home() {
       margin: "6px 0 0",
       wordBreak: "break-word",
     },
+
+    // =========================
+    // ✅ SOBRE (nuevo)
+    // =========================
+    envelopeStage: {
+      width: "100%",
+      maxWidth: 760,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "12px 0",
+    },
+    envelopeWrap: {
+      width: "100%",
+      maxWidth: 520,
+      position: "relative",
+      borderRadius: 26,
+      padding: "22px 16px 16px",
+      background: "rgba(255,255,255,0.55)",
+      border: "1px solid rgba(31,65,95,0.10)",
+      boxShadow: "0 18px 50px rgba(12, 22, 33, 0.10)",
+      backdropFilter: "blur(6px)",
+    },
+    envelope: {
+      width: "100%",
+      height: 320,
+      position: "relative",
+      borderRadius: 22,
+      overflow: "hidden",
+      border: "1px solid rgba(31,65,95,0.14)",
+      background:
+        "linear-gradient(180deg, rgba(160,176,190,0.92), rgba(140,160,178,0.92))",
+    },
+    envelopePaper: {
+      position: "absolute",
+      left: 18,
+      right: 18,
+      bottom: 18,
+      top: 24,
+      borderRadius: 16,
+      background:
+        "linear-gradient(180deg, rgba(252,248,240,0.98), rgba(248,242,232,0.98))",
+      border: "1px solid rgba(176,141,87,0.25)",
+      boxShadow: "0 10px 26px rgba(0,0,0,0.10)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 18,
+    },
+    envelopePaperText: {
+      textAlign: "center",
+      fontFamily: '"Cormorant Garamond", serif',
+      color: "rgba(19,32,45,0.80)",
+      lineHeight: 1.4,
+    },
+    monogram: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 44,
+      letterSpacing: "0.02em",
+      color: "rgba(19,32,45,0.80)",
+      marginBottom: 8,
+    },
+    envelopeFlap: {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: 0,
+      height: 180,
+      transformOrigin: "top center",
+      transform: envelopeOpen ? "rotateX(180deg)" : "rotateX(0deg)",
+      transition: "transform 900ms cubic-bezier(0.2, 0.85, 0.2, 1)",
+      background:
+        "linear-gradient(180deg, rgba(165,182,198,0.95), rgba(135,156,176,0.95))",
+      clipPath: "polygon(0 0, 100% 0, 50% 78%)",
+      borderBottom: "1px solid rgba(31,65,95,0.14)",
+    },
+    seal: {
+      position: "absolute",
+      left: "50%",
+      top: 138,
+      transform: "translateX(-50%)",
+      width: 86,
+      height: 86,
+      borderRadius: "50%",
+      background:
+        "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.45), rgba(214,178,94,0.92) 45%, rgba(176,141,87,0.98) 80%)",
+      border: "1px solid rgba(122,91,34,0.35)",
+      boxShadow: "0 12px 26px rgba(0,0,0,0.18)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: envelopeOpen ? "default" : "pointer",
+      userSelect: "none",
+    },
+    sealText: {
+      fontFamily: '"Great Vibes", cursive',
+      fontSize: 28,
+      color: "rgba(20,20,20,0.88)",
+      textShadow: "0 1px 0 rgba(255,255,255,0.35), 0 2px 10px rgba(0,0,0,0.18)",
+      transform: "translateY(-1px)",
+    },
+    openHint: {
+      marginTop: 12,
+      textAlign: "center",
+      fontFamily: '"Cormorant Garamond", serif',
+      color: "rgba(19,32,45,0.70)",
+      fontSize: 14,
+    },
   };
 
-  const nameStyleObj = NAME_STYLE === "black" ? styles.namesBlack : styles.namesGold;
+  const nameStyleObj =
+    NAME_STYLE === "black" ? styles.namesBlack : styles.namesGold;
   const maxPases = Math.max(1, Number(guestData?.pasesAsignados || 1));
 
-  // ✅ (1 + 3) Texto bonito de “ya confirmaste” + usar J si existe
+  // ✅ Texto de “ya confirmaste” + usar J si existe
   const pasesFromSheet = Number(guestData?.pasesConfirmados || 0);
   const pasesMostrados =
     asistenciaActual === "Sí"
@@ -613,14 +731,30 @@ export default function Home() {
         : Number(pasesConfirmados || 1)
       : 0;
 
-  const nombreMostrado = guestData?.nombre ? String(guestData.nombre) : "¡Gracias!";
+  // eslint-disable-next-line no-unused-vars
+  const nombreMostrado = guestData?.nombre
+    ? String(guestData.nombre)
+    : "¡Gracias!";
+
+  // ✅ Abrir sobre
+  function abrirSobre() {
+    setEnvelopeOpen(true);
+    // por si el usuario está scrolleando raro
+    try {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {}
+  }
 
   return (
     <>
       <Head>
         <title>Andrés & Vanessa — 23 abril 2027</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="true"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&display=swap"
           rel="stylesheet"
@@ -630,332 +764,382 @@ export default function Home() {
       </Head>
 
       <div style={styles.page}>
-        <div style={styles.card}>
-          <div style={styles.smallCaps}>Nuestra boda</div>
-
-          <h1 style={nameStyleObj}>Andrés &amp; Vanessa</h1>
-
-          <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
-
-          <div style={styles.quote}>
-            “El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma
-            dirección.”
-          </div>
-
-          <div style={styles.divider} />
-
-          <div style={styles.grid}>
-            <div style={styles.pill}>
-              <div style={styles.pillNum}>{timeLeft.days}</div>
-              <div style={styles.pillLbl}>Días</div>
-            </div>
-            <div style={styles.pill}>
-              <div style={styles.pillNum}>{timeLeft.hours}</div>
-              <div style={styles.pillLbl}>Horas</div>
-            </div>
-            <div style={styles.pill}>
-              <div style={styles.pillNum}>{timeLeft.minutes}</div>
-              <div style={styles.pillLbl}>Min</div>
-            </div>
-            <div style={styles.pill}>
-              <div style={styles.pillNum}>{timeLeft.seconds}</div>
-              <div style={styles.pillLbl}>Seg</div>
-            </div>
-          </div>
-
-          <div style={styles.infoBlock}>
-            <div>
-              <b>Ceremonia</b> · 4:00 PM
-            </div>
-            <div>
-              <b>Recepción</b> · 5:00 PM
-            </div>
-            <div>
-              <b>Cierre</b> · 3:00 AM
-            </div>
-          </div>
-
-          <div style={styles.spotifyWrap}>
-            <iframe
-              style={{ borderRadius: 14 }}
-              src={SPOTIFY_EMBED_URL}
-              width="340"
-              height="92"
-              frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-            />
-          </div>
-
-          {/* =========================
-              ✅ NUEVAS SECCIONES (SOLO ADICIONES)
-              ========================= */}
-
-          {/* Mini separador con foto 1 */}
-          <div style={styles.photoStrip}>
-            <img alt="Foto 1" src={GALLERY_PHOTOS[0]} style={styles.photo} />
-          </div>
-
-          {/* Nuestra historia */}
-          <div style={styles.section}>
-            <div style={styles.sectionTitle}>Nuestra historia</div>
-            <div style={styles.softBox}>
-              {NUESTRA_HISTORIA.map((b, i) => (
-                <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 12 }}>
-                  <div style={{ ...styles.sectionTitle, fontSize: 17, margin: "0 0 4px" }}>
-                    {b.title}
-                  </div>
-                  <p style={styles.sectionText}>{b.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Mini separador con foto 2 */}
-          <div style={styles.photoStrip}>
-            <img alt="Foto 2" src={GALLERY_PHOTOS[1]} style={styles.photo} />
-          </div>
-
-          {/* Aviso +16 (antes del timeline como pediste) */}
-          <div style={styles.adultsOnly}>
-            <div style={styles.adultsOnlyTitle}>Importante</div>
-            <div style={styles.sectionText}>
-              Evento exclusivo para mayores de <b>16 años</b>. Sin excepciones.
-            </div>
-          </div>
-
-          {/* Timeline con iconos */}
-          <div style={styles.section}>
-            <div style={styles.sectionTitle}>Itinerario</div>
-            <div style={styles.timelineWrap}>
-              {TIMELINE.map((t, i) => (
-                <div key={i} style={styles.timelineItem}>
-                  <div style={styles.timeCol}>{t.time}</div>
-                  <div style={styles.eventCol}>
-                    <div style={styles.iconCircle} aria-hidden="true">
-                      {t.icon}
+        {/* =========================
+            ✅ MODO SOBRE: hasta que se abra, no mostramos nada más
+           ========================= */}
+        {!envelopeOpen ? (
+          <div style={styles.envelopeStage}>
+            <div style={styles.envelopeWrap}>
+              <div style={styles.envelope}>
+                <div style={styles.envelopePaper}>
+                  <div style={styles.envelopePaperText}>
+                    <div style={styles.monogram}>A&nbsp;V</div>
+                    <div style={{ fontSize: 16, opacity: 0.9 }}>
+                      Andrés &amp; Vanessa
                     </div>
-                    <p style={styles.eventTitle}>{t.title}</p>
+                    <div style={{ fontSize: 14, opacity: 0.75, marginTop: 6 }}>
+                      23 · abril · 2027
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          {/* Ubicación / mapa / botones */}
-          <div style={styles.section}>
-            <div style={styles.sectionTitle}>Ubicación</div>
-            <div style={styles.softBox}>
-              <p style={styles.sectionText}>
-                Jardín Maroma · Jiutepec, Morelos
-              </p>
-              <div style={styles.chipsRow}>
-                <a
-                  href={MAPS_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={styles.linkBtnPrimary}
+                <div style={styles.envelopeFlap} />
+
+                <div
+                  style={styles.seal}
+                  onClick={envelopeOpen ? undefined : abrirSobre}
+                  role="button"
+                  aria-label="Abrir invitación"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") abrirSobre();
+                  }}
                 >
-                  📍 Google Maps
-                </a>
-                <a
-                  href={WAZE_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={styles.linkBtn}
-                >
-                  🚗 Waze
-                </a>
+                  <div style={styles.sealText}>Abrir</div>
+                </div>
+              </div>
+
+              <div style={styles.openHint}>
+                Toca el sello para abrir la invitación ✨
               </div>
             </div>
           </div>
+        ) : (
+          // =========================
+          // ✅ CONTENIDO ORIGINAL (tu invitación completa)
+          // =========================
+          <div style={styles.card}>
+            <div style={styles.smallCaps}>Nuestra boda</div>
 
-          {/* Mini separador con foto 3 */}
-          <div style={styles.photoStrip}>
-            <img alt="Foto 3" src={GALLERY_PHOTOS[2]} style={styles.photo} />
-          </div>
+            <h1 style={nameStyleObj}>Andrés &amp; Vanessa</h1>
 
-          {/* Dress code */}
-          <div style={styles.section}>
-            <div style={styles.sectionTitle}>{DRESS_CODE.title}</div>
-            <div style={styles.softBox}>
-              <p style={styles.sectionText}>{DRESS_CODE.text}</p>
+            <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
+
+            <div style={styles.quote}>
+              “El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma
+              dirección.”
             </div>
-          </div>
 
-          {/* Mesa de regalos */}
-          <div style={styles.section}>
-            <div style={styles.sectionTitle}>Mesa de regalos</div>
-            <div style={styles.softBox}>
-              <p style={styles.sectionText} style={{ ...styles.sectionText, marginBottom: 10 }}>
-                Estos son enlaces de referencia (puedes cambiarlos):
-              </p>
-              <div style={styles.chipsRow}>
-                {MESA_REGALOS.map((x, i) => (
-                  <a
+            <div style={styles.divider} />
+
+            <div style={styles.grid}>
+              <div style={styles.pill}>
+                <div style={styles.pillNum}>{timeLeft.days}</div>
+                <div style={styles.pillLbl}>Días</div>
+              </div>
+              <div style={styles.pill}>
+                <div style={styles.pillNum}>{timeLeft.hours}</div>
+                <div style={styles.pillLbl}>Horas</div>
+              </div>
+              <div style={styles.pill}>
+                <div style={styles.pillNum}>{timeLeft.minutes}</div>
+                <div style={styles.pillLbl}>Min</div>
+              </div>
+              <div style={styles.pill}>
+                <div style={styles.pillNum}>{timeLeft.seconds}</div>
+                <div style={styles.pillLbl}>Seg</div>
+              </div>
+            </div>
+
+            <div style={styles.infoBlock}>
+              <div>
+                <b>Ceremonia</b> · 4:00 PM
+              </div>
+              <div>
+                <b>Recepción</b> · 5:00 PM
+              </div>
+              <div>
+                <b>Cierre</b> · 3:00 AM
+              </div>
+            </div>
+
+            <div style={styles.spotifyWrap}>
+              <iframe
+                style={{ borderRadius: 14 }}
+                src={SPOTIFY_EMBED_URL}
+                width="340"
+                height="92"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              />
+            </div>
+
+            {/* =========================
+                ✅ NUEVAS SECCIONES
+                ========================= */}
+
+            <div style={styles.photoStrip}>
+              <img alt="Foto 1" src={GALLERY_PHOTOS[0]} style={styles.photo} />
+            </div>
+
+            <div style={styles.section}>
+              <div style={styles.sectionTitle}>Nuestra historia</div>
+              <div style={styles.softBox}>
+                {NUESTRA_HISTORIA.map((b, i) => (
+                  <div
                     key={i}
-                    href={x.url}
+                    style={{
+                      marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 12,
+                    }}
+                  >
+                    <div
+                      style={{
+                        ...styles.sectionTitle,
+                        fontSize: 17,
+                        margin: "0 0 4px",
+                      }}
+                    >
+                      {b.title}
+                    </div>
+                    <p style={styles.sectionText}>{b.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={styles.photoStrip}>
+              <img alt="Foto 2" src={GALLERY_PHOTOS[1]} style={styles.photo} />
+            </div>
+
+            <div style={styles.adultsOnly}>
+              <div style={styles.adultsOnlyTitle}>Importante</div>
+              <div style={styles.sectionText}>
+                Evento exclusivo para mayores de <b>16 años</b>. Sin excepciones.
+              </div>
+            </div>
+
+            <div style={styles.section}>
+              <div style={styles.sectionTitle}>Itinerario</div>
+              <div style={styles.timelineWrap}>
+                {TIMELINE.map((t, i) => (
+                  <div key={i} style={styles.timelineItem}>
+                    <div style={styles.timeCol}>{t.time}</div>
+                    <div style={styles.eventCol}>
+                      <div style={styles.iconCircle} aria-hidden="true">
+                        {t.icon}
+                      </div>
+                      <p style={styles.eventTitle}>{t.title}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={styles.section}>
+              <div style={styles.sectionTitle}>Ubicación</div>
+              <div style={styles.softBox}>
+                <p style={styles.sectionText}>
+                  Jardín Maroma · Jiutepec, Morelos
+                </p>
+                <div style={styles.chipsRow}>
+                  <a
+                    href={MAPS_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={styles.linkBtnPrimary}
+                  >
+                    📍 Google Maps
+                  </a>
+                  <a
+                    href={WAZE_URL}
                     target="_blank"
                     rel="noreferrer"
                     style={styles.linkBtn}
                   >
-                    🎁 {x.label}
+                    🚗 Waze
                   </a>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Regalo monetario */}
-          <div style={styles.section}>
-            <div style={styles.sectionTitle}>{REGALO_MONETARIO.title}</div>
-            <div style={styles.moneyBox}>
-              <p style={styles.sectionText}>{REGALO_MONETARIO.subtitle}</p>
-
-              <div style={{ marginTop: 10 }}>
-                <div style={styles.sectionText}>
-                  💰 <b>{REGALO_MONETARIO.accountLabel}:</b>
                 </div>
-                <div style={styles.monoLine}>{REGALO_MONETARIO.accountValue}</div>
               </div>
+            </div>
 
-              <div style={{ marginTop: 10 }}>
-                <div style={styles.sectionText}>
-                  👤 <b>{REGALO_MONETARIO.nameLabel}:</b>
+            <div style={styles.photoStrip}>
+              <img alt="Foto 3" src={GALLERY_PHOTOS[2]} style={styles.photo} />
+            </div>
+
+            <div style={styles.section}>
+              <div style={styles.sectionTitle}>{DRESS_CODE.title}</div>
+              <div style={styles.softBox}>
+                <p style={styles.sectionText}>{DRESS_CODE.text}</p>
+              </div>
+            </div>
+
+            <div style={styles.section}>
+              <div style={styles.sectionTitle}>Mesa de regalos</div>
+              <div style={styles.softBox}>
+                <p style={{ ...styles.sectionText, marginBottom: 10 }}>
+                  Estos son enlaces de referencia (puedes cambiarlos):
+                </p>
+                <div style={styles.chipsRow}>
+                  {MESA_REGALOS.map((x, i) => (
+                    <a
+                      key={i}
+                      href={x.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={styles.linkBtn}
+                    >
+                      🎁 {x.label}
+                    </a>
+                  ))}
                 </div>
-                <div style={styles.monoLine}>{REGALO_MONETARIO.nameValue}</div>
               </div>
             </div>
-          </div>
 
-          {/* =========================
-              RSVP (TU BLOQUE ORIGINAL)
-              ========================= */}
-          <div style={styles.rsvpWrap}>
-            <div style={styles.rsvpTitle}>
-              {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
-              <span style={styles.idBadge}>
-                {guestId ? `ID: ${guestId}` : "ID no detectado"}
-              </span>
+            <div style={styles.section}>
+              <div style={styles.sectionTitle}>{REGALO_MONETARIO.title}</div>
+              <div style={styles.moneyBox}>
+                <p style={styles.sectionText}>{REGALO_MONETARIO.subtitle}</p>
+
+                <div style={{ marginTop: 10 }}>
+                  <div style={styles.sectionText}>
+                    💰 <b>{REGALO_MONETARIO.accountLabel}:</b>
+                  </div>
+                  <div style={styles.monoLine}>
+                    {REGALO_MONETARIO.accountValue}
+                  </div>
+                </div>
+
+                <div style={{ marginTop: 10 }}>
+                  <div style={styles.sectionText}>
+                    👤 <b>{REGALO_MONETARIO.nameLabel}:</b>
+                  </div>
+                  <div style={styles.monoLine}>{REGALO_MONETARIO.nameValue}</div>
+                </div>
+              </div>
             </div>
 
-            {guestData?.nombre && (
-              <div style={styles.hint}>
-                <b>{guestData.nombre}</b>, nos dará mucho gusto verte. ✨
-                {guestData.pasesAsignados ? (
-                  <>
-                    {" "}
-                    · Pases asignados: <b>{guestData.pasesAsignados}</b>
-                  </>
-                ) : null}
+            {/* =========================
+                RSVP (tu bloque)
+                ========================= */}
+            <div style={styles.rsvpWrap}>
+              <div style={styles.rsvpTitle}>
+                {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
+                <span style={styles.idBadge}>
+                  {guestId ? `ID: ${guestId}` : "ID no detectado"}
+                </span>
               </div>
-            )}
 
-            {guestLoadError && (
-              <div style={styles.statusErr}>
-                No se pudo cargar tu invitación: {guestLoadError}
-              </div>
-            )}
+              {guestData?.nombre && (
+                <div style={styles.hint}>
+                  <b>{guestData.nombre}</b>, nos dará mucho gusto verte. ✨
+                  {guestData.pasesAsignados ? (
+                    <>
+                      {" "}
+                      · Pases asignados: <b>{guestData.pasesAsignados}</b>
+                    </>
+                  ) : null}
+                </div>
+              )}
 
-            {/* ✅ (1) Mensaje bonito cuando YA confirmó (aunque recargues la página) */}
-            {yaConfirmo && (
-              <div style={styles.statusOk}>
-                {asistenciaActual === "Sí" ? (
-                  <>
-                    Gracias por confirmar <b>{pasesMostrados}</b>{" "}
-                    {pasesMostrados === 1 ? "pase" : "pases"} 🥳
-                    <br />
-                    Los esperamos con toda la actitud ✨
-                  </>
-                ) : (
-                  <>Gracias por avisarnos, te vamos a extrañar 💔</>
-                )}
-              </div>
-            )}
+              {guestLoadError && (
+                <div style={styles.statusErr}>
+                  No se pudo cargar tu invitación: {guestLoadError}
+                </div>
+              )}
 
-            {/* ✅ Si ya confirmó: ocultamos la UI para que no confunda */}
-            {!yaConfirmo && (
-              <>
-                <textarea
-                  style={styles.input}
-                  value={mensaje}
-                  onChange={(e) => setMensaje(e.target.value)}
-                  placeholder="Escribe un mensaje de buenos deseos (opcional)"
-                  disabled={rsvpStatus === "saving"}
-                />
-
-                {/* Selector de pases */}
-                {guestData?.pasesAsignados &&
-                  String(guestData.pasesAsignados).trim() !== "" && (
-                    <div style={{ marginTop: 10 }}>
-                      <div
-                        style={{
-                          fontFamily: '"Cormorant Garamond", serif',
-                          marginBottom: 6,
-                          color: "#0b0f14",
-                        }}
-                      >
-                        Pases a confirmar:
-                      </div>
-
-                      <select
-                        value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
-                        onChange={(e) => setPasesConfirmados(Number(e.target.value))}
-                        style={styles.select}
-                        disabled={rsvpStatus === "saving"}
-                      >
-                        {Array.from({ length: maxPases }, (_, i) => i + 1).map((n) => (
-                          <option key={n} value={n}>
-                            {n} {n === 1 ? "pase" : "pases"}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+              {yaConfirmo && (
+                <div style={styles.statusOk}>
+                  {asistenciaActual === "Sí" ? (
+                    <>
+                      Gracias por confirmar <b>{pasesMostrados}</b>{" "}
+                      {pasesMostrados === 1 ? "pase" : "pases"} 🥳
+                      <br />
+                      Los esperamos con toda la actitud ✨
+                    </>
+                  ) : (
+                    <>Gracias por avisarnos, te vamos a extrañar 💔</>
                   )}
-
-                <div style={styles.rsvpRow}>
-                  <button
-                    style={styles.btnPrimary}
-                    onClick={() => confirmar("Sí")}
-                    disabled={rsvpStatus === "saving"}
-                  >
-                    Sí asistiré
-                  </button>
-
-                  <button
-                    style={styles.btn}
-                    onClick={() => confirmar("No")}
-                    disabled={rsvpStatus === "saving"}
-                  >
-                    No podré asistir
-                  </button>
                 </div>
-              </>
-            )}
+              )}
 
-            {rsvpStatus === "saving" && (
-              <div style={styles.hint}>Guardando tu confirmación…</div>
-            )}
+              {!yaConfirmo && (
+                <>
+                  <textarea
+                    style={styles.input}
+                    value={mensaje}
+                    onChange={(e) => setMensaje(e.target.value)}
+                    placeholder="Escribe un mensaje de buenos deseos (opcional)"
+                    disabled={rsvpStatus === "saving"}
+                  />
 
-            {/* Cuando acabas de confirmar en ese momento */}
-            {rsvpStatus === "ok" && !yaConfirmo && (
-              <div style={styles.statusOk}>
-                ¡Listo! Quedó registrado. ✅{" "}
-                {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
+                  {guestData?.pasesAsignados &&
+                    String(guestData.pasesAsignados).trim() !== "" && (
+                      <div style={{ marginTop: 10 }}>
+                        <div
+                          style={{
+                            fontFamily: '"Cormorant Garamond", serif',
+                            marginBottom: 6,
+                            color: "#0b0f14",
+                          }}
+                        >
+                          Pases a confirmar:
+                        </div>
+
+                        <select
+                          value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
+                          onChange={(e) =>
+                            setPasesConfirmados(Number(e.target.value))
+                          }
+                          style={styles.select}
+                          disabled={rsvpStatus === "saving"}
+                        >
+                          {Array.from({ length: maxPases }, (_, i) => i + 1).map(
+                            (n) => (
+                              <option key={n} value={n}>
+                                {n} {n === 1 ? "pase" : "pases"}
+                              </option>
+                            )
+                          )}
+                        </select>
+                      </div>
+                    )}
+
+                  <div style={styles.rsvpRow}>
+                    <button
+                      style={styles.btnPrimary}
+                      onClick={() => confirmar("Sí")}
+                      disabled={rsvpStatus === "saving"}
+                    >
+                      Sí asistiré
+                    </button>
+
+                    <button
+                      style={styles.btn}
+                      onClick={() => confirmar("No")}
+                      disabled={rsvpStatus === "saving"}
+                    >
+                      No podré asistir
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {rsvpStatus === "saving" && (
+                <div style={styles.hint}>Guardando tu confirmación…</div>
+              )}
+
+              {rsvpStatus === "ok" && !yaConfirmo && (
+                <div style={styles.statusOk}>
+                  ¡Listo! Quedó registrado. ✅{" "}
+                  {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
+                </div>
+              )}
+
+              {rsvpStatus === "error" && (
+                <div style={styles.statusErr}>{rsvpError}</div>
+              )}
+
+              <div style={styles.hint}>
+                Tip: tu enlace debe incluir <code>?id=AV001</code> (cada invitado tiene un ID).
               </div>
-            )}
+            </div>
 
-            {rsvpStatus === "error" && <div style={styles.statusErr}>{rsvpError}</div>}
-
-            <div style={styles.hint}>
-              Tip: tu enlace debe incluir <code>?id=AV001</code> (cada invitado tiene un ID).
+            <div style={styles.note}>
+              *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
             </div>
           </div>
-
-          <div style={styles.note}>
-            *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
-          </div>
-        </div>
+        )}
       </div>
     </>
   );
