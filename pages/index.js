@@ -19,7 +19,7 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
 }
 
 // ✅ Monograma AV (entrelazado / un solo trazo)
-function MonogramaAV({ size = 86, stroke = "rgba(19,32,45,0.80)" }) {
+function MonogramaAV({ size = 78, stroke = "rgba(19,32,45,0.82)" }) {
   return (
     <svg
       width={size}
@@ -29,7 +29,6 @@ function MonogramaAV({ size = 86, stroke = "rgba(19,32,45,0.80)" }) {
       focusable="false"
       style={{ display: "block", margin: "0 auto 6px" }}
     >
-      {/* Trazo principal (A + V entrelazadas) */}
       <path
         d="
           M 18 92
@@ -40,14 +39,13 @@ function MonogramaAV({ size = 86, stroke = "rgba(19,32,45,0.80)" }) {
           C 59 34, 76 36, 86 49
           C 96 62, 93 84, 78 94
           C 62 105, 44 103, 34 90
-          "
+        "
         fill="none"
         stroke={stroke}
         strokeWidth="4.6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      {/* Remate fino para sensación “caligrafía” */}
       <path
         d="M 38 86 C 50 97, 70 97, 84 84"
         fill="none"
@@ -56,6 +54,186 @@ function MonogramaAV({ size = 86, stroke = "rgba(19,32,45,0.80)" }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         opacity="0.75"
+      />
+    </svg>
+  );
+}
+
+// ✅ Íconos sobrios (línea)
+function TimelineIcon({ type = "ceremony" }) {
+  const common = {
+    width: 20,
+    height: 20,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "rgba(19,32,45,0.85)",
+    strokeWidth: 1.6,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+  };
+
+  if (type === "ceremony") {
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M4 10h16" />
+        <path d="M6 10V8a6 6 0 0 1 12 0v2" />
+        <path d="M7 10v9" />
+        <path d="M17 10v9" />
+        <path d="M5 19h14" />
+        <path d="M12 4v2" />
+        <path d="M10.7 5.5 12 4l1.3 1.5" />
+      </svg>
+    );
+  }
+  if (type === "reception") {
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M8 2v9" />
+        <path d="M12 2v9" />
+        <path d="M16 2v9" />
+        <path d="M7 11h10" />
+        <path d="M9 22l3-11 3 11" />
+      </svg>
+    );
+  }
+  if (type === "dinner") {
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M7 2v7" />
+        <path d="M5 2v7" />
+        <path d="M9 2v7" />
+        <path d="M7 9v13" />
+        <path d="M15 2v20" />
+        <path d="M15 2c2 2 2 6 0 8" />
+      </svg>
+    );
+  }
+  if (type === "party") {
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M12 2v10" />
+        <path d="M8 6l8 4" />
+        <path d="M8 10l8-4" />
+        <path d="M6 22l6-10 6 10" />
+      </svg>
+    );
+  }
+  // close
+  return (
+    <svg {...common} aria-hidden="true">
+      <path d="M21 12a9 9 0 1 1-9-9" />
+      <path d="M12 7v6l4 2" />
+      <path d="M17 3h4v4" />
+      <path d="M21 3l-5 5" />
+    </svg>
+  );
+}
+
+function DressIcon() {
+  return (
+    <svg
+      width="120"
+      height="44"
+      viewBox="0 0 240 88"
+      aria-hidden="true"
+      style={{ display: "block", margin: "10px auto 10px" }}
+    >
+      <g
+        fill="none"
+        stroke="rgba(19,32,45,0.78)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {/* Vestido */}
+        <path d="M60 16c6 10 6 14 0 24" />
+        <path d="M60 16c-10 6-18 16-22 28" />
+        <path d="M60 16c10 6 18 16 22 28" />
+        <path d="M38 44c10 10 16 18 22 36" />
+        <path d="M82 44c-10 10-16 18-22 36" />
+        <path d="M44 62h32" />
+        {/* Smoking */}
+        <path d="M160 20c-10 10-14 20-14 34v24" />
+        <path d="M160 20c10 10 14 20 14 34v24" />
+        <path d="M146 54h28" />
+        <path d="M152 34h16" />
+        <path d="M156 34l4 8 4-8" />
+        <path d="M154 78h12" />
+      </g>
+    </svg>
+  );
+}
+
+// ✅ Logos sobrios (SVG) como botones
+function BrandLogo({ type = "liverpool" }) {
+  if (type === "amazon") {
+    return (
+      <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
+        <rect
+          x="1"
+          y="1"
+          width="418"
+          height="110"
+          rx="18"
+          fill="rgba(255,255,255,0.92)"
+          stroke="rgba(31,65,95,0.16)"
+        />
+        <text
+          x="210"
+          y="64"
+          textAnchor="middle"
+          fontFamily="system-ui, -apple-system, Segoe UI, Roboto, Arial"
+          fontSize="44"
+          fill="rgba(19,32,45,0.88)"
+        >
+          amazon
+        </text>
+        <path
+          d="M140 78c40 22 100 22 140 0"
+          fill="none"
+          stroke="rgba(176,141,87,0.95)"
+          strokeWidth="6"
+          strokeLinecap="round"
+        />
+        <path
+          d="M274 76l14 5-9 12"
+          fill="none"
+          stroke="rgba(176,141,87,0.95)"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  // liverpool
+  return (
+    <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
+      <rect
+        x="1"
+        y="1"
+        width="418"
+        height="110"
+        rx="18"
+        fill="rgba(255,255,255,0.92)"
+        stroke="rgba(31,65,95,0.16)"
+      />
+      <text
+        x="210"
+        y="66"
+        textAnchor="middle"
+        fontFamily='"Cormorant Garamond", serif'
+        fontSize="50"
+        fill="rgba(19,32,45,0.88)"
+        style={{ letterSpacing: "0.02em" }}
+      >
+        liverpool
+      </text>
+      <path
+        d="M92 30c10 0 16 6 16 14 0 10-8 18-18 18-8 0-14-6-14-14 0-10 6-18 16-18z"
+        fill="rgba(214,178,94,0.18)"
+        stroke="rgba(176,141,87,0.50)"
       />
     </svg>
   );
@@ -70,6 +248,9 @@ export default function Home() {
 
   // ✅ SOBRE
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
+
+  // ✅ Forzar reload del embed para intentar autoplay tras el click (user gesture)
+  const [spotifyNonce, setSpotifyNonce] = useState(0);
 
   // RSVP states
   const [guestId, setGuestId] = useState("");
@@ -203,8 +384,9 @@ export default function Home() {
   }
 
   const NAME_STYLE = "gold";
-  const SPOTIFY_EMBED_URL =
+  const SPOTIFY_EMBED_BASE =
     "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv?autoplay=1";
+  const SPOTIFY_EMBED_URL = `${SPOTIFY_EMBED_BASE}&_=${spotifyNonce}`;
 
   const MAPS_URL =
     "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
@@ -234,12 +416,13 @@ export default function Home() {
     },
   ];
 
+  // ✅ Íconos sobrios por etapa (sin emoji)
   const TIMELINE = [
-    { time: "4:00 PM", title: "Ceremonia", icon: "⛪" },
-    { time: "5:00 PM", title: "Recepción", icon: "🥂" },
-    { time: "7:30 PM", title: "Cena", icon: "🍽️" },
-    { time: "9:00 PM", title: "Fiesta", icon: "🎶" },
-    { time: "3:00 AM", title: "Cierre", icon: "🌙" },
+    { time: "4:00 PM", title: "Ceremonia", iconType: "ceremony" },
+    { time: "5:00 PM", title: "Recepción", iconType: "reception" },
+    { time: "7:30 PM", title: "Cena", iconType: "dinner" },
+    { time: "9:00 PM", title: "Fiesta", iconType: "party" },
+    { time: "3:00 AM", title: "Cierre", iconType: "close" },
   ];
 
   const DRESS_CODE = {
@@ -248,18 +431,18 @@ export default function Home() {
       "Formal / jardín elegante. Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
   };
 
+  // ✅ Mesa de regalos (logos)
   const MESA_REGALOS = [
-    { label: "Liverpool", url: "https://www.liverpool.com.mx/" },
-    { label: "Amazon", url: "https://www.amazon.com.mx/" },
+    { type: "liverpool", url: "https://www.liverpool.com.mx/" },
+    { type: "amazon", url: "https://www.amazon.com.mx/" },
   ];
 
+  // ✅ Regalo monetario (unido a mesa de regalos, sin encabezado ni beneficiario label)
   const REGALO_MONETARIO = {
-    title: "Regalo monetario",
     subtitle: "Si deseas apoyarnos en esta nueva etapa:",
     accountLabel: "CLABE / Cuenta",
     accountValue: "000000000000000000",
-    nameLabel: "Beneficiario",
-    nameValue: "Andrés & Vanessa",
+    nameValue: "Andrés y Vanessa",
   };
 
   const styles = {
@@ -472,12 +655,26 @@ export default function Home() {
     },
 
     // Secciones
-    section: { maxWidth: 560, margin: "28px auto 0", textAlign: "left", padding: "0 6px" },
+    section: {
+      maxWidth: 560,
+      margin: "28px auto 0",
+      textAlign: "left",
+      padding: "0 6px",
+    },
     sectionTitle: {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: 20,
       margin: "0 0 10px",
       color: "rgba(19, 32, 45, 0.88)",
+    },
+    sectionTitleCenterBig: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 24,
+      fontWeight: 700,
+      textAlign: "center",
+      margin: "0 0 12px",
+      color: "rgba(19, 32, 45, 0.90)",
+      letterSpacing: "0.01em",
     },
     sectionText: {
       fontFamily: '"Cormorant Garamond", serif',
@@ -492,7 +689,13 @@ export default function Home() {
       background: "rgba(248, 251, 255, 0.85)",
       padding: 14,
     },
-    chipsRow: { display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 },
+    chipsCol: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 10,
+      alignItems: "center",
+      marginTop: 12,
+    },
     linkBtn: {
       display: "inline-flex",
       alignItems: "center",
@@ -507,6 +710,8 @@ export default function Home() {
       fontSize: 16,
       color: "#0b0f14",
       textDecoration: "none",
+      width: "100%",
+      maxWidth: 360,
     },
     linkBtnPrimary: {
       display: "inline-flex",
@@ -522,6 +727,8 @@ export default function Home() {
       fontSize: 16,
       color: "#0b0f14",
       textDecoration: "none",
+      width: "100%",
+      maxWidth: 360,
     },
     photoStrip: {
       maxWidth: 560,
@@ -547,47 +754,50 @@ export default function Home() {
       margin: "0 0 6px",
       color: "rgba(19, 32, 45, 0.90)",
     },
-    timelineWrap: { maxWidth: 560, margin: "18px auto 0", textAlign: "left" },
+
+    // ✅ Itinerario centrado y más elegante
+    timelineWrap: { maxWidth: 560, margin: "10px auto 0", textAlign: "center" },
     timelineItem: {
-      display: "grid",
-      gridTemplateColumns: "92px 1fr",
-      gap: 12,
-      alignItems: "start",
-      padding: "10px 0",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: 8,
+      padding: "14px 0",
       borderBottom: "1px solid rgba(31, 65, 95, 0.10)",
+    },
+    iconCircle: {
+      width: 42,
+      height: 42,
+      borderRadius: "50%",
+      background: "rgba(214, 178, 94, 0.14)",
+      border: "1px solid rgba(176,141,87,0.30)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45)",
     },
     timeCol: {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: 16,
       color: "rgba(19, 32, 45, 0.70)",
-      paddingTop: 4,
-    },
-    eventCol: { display: "flex", gap: 10, alignItems: "flex-start" },
-    iconCircle: {
-      width: 34,
-      height: 34,
-      borderRadius: "50%",
-      background: "rgba(214, 178, 94, 0.18)",
-      border: "1px solid rgba(176,141,87,0.35)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flex: "0 0 auto",
-      marginTop: 1,
-      fontSize: 16,
+      letterSpacing: "0.04em",
     },
     eventTitle: {
       fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 17,
+      fontSize: 18,
       margin: 0,
       color: "rgba(19, 32, 45, 0.88)",
       lineHeight: 1.25,
+      fontWeight: 600,
     },
+
+    // ✅ Regalo monetario box
     moneyBox: {
       borderRadius: 16,
       border: "1px solid rgba(31, 65, 95, 0.12)",
       background: "rgba(248, 251, 255, 0.85)",
       padding: 14,
+      marginTop: 14,
     },
     monoLine: {
       fontFamily: '"Cormorant Garamond", serif',
@@ -595,9 +805,10 @@ export default function Home() {
       color: "rgba(19, 32, 45, 0.82)",
       margin: "6px 0 0",
       wordBreak: "break-word",
+      textAlign: "center",
     },
 
-    // Sobre
+    // ✅ Sobre
     envelopeStage: {
       width: "100%",
       maxWidth: 760,
@@ -619,27 +830,34 @@ export default function Home() {
     },
     envelope: {
       width: "100%",
-      height: 320,
+      height: 340,
       position: "relative",
       borderRadius: 22,
       overflow: "hidden",
       border: "1px solid rgba(31,65,95,0.14)",
       background: "linear-gradient(180deg, rgba(160,176,190,0.92), rgba(140,160,178,0.92))",
+      perspective: 1200,
+      transformStyle: "preserve-3d",
     },
+
+    // ✅ Carta que “sale” al abrir
     envelopePaper: {
       position: "absolute",
       left: 18,
       right: 18,
       bottom: 18,
-      top: 24,
+      top: 42,
       borderRadius: 16,
       background: "linear-gradient(180deg, rgba(252,248,240,0.98), rgba(248,242,232,0.98))",
       border: "1px solid rgba(176,141,87,0.25)",
-      boxShadow: "0 10px 26px rgba(0,0,0,0.10)",
+      boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       padding: 18,
+      transform: envelopeOpen ? "translateY(-18px)" : "translateY(28px)",
+      transition: "transform 900ms cubic-bezier(0.2, 0.85, 0.2, 1)",
+      zIndex: 1,
     },
     envelopePaperText: {
       textAlign: "center",
@@ -647,44 +865,103 @@ export default function Home() {
       color: "rgba(19,32,45,0.80)",
       lineHeight: 1.4,
       width: "100%",
+      opacity: envelopeOpen ? 0.0 : 1,
+      transition: "opacity 240ms ease",
     },
+
+    // ✅ Solapa con contenido “arriba” (encima del sello)
     envelopeFlap: {
       position: "absolute",
       left: 0,
       right: 0,
       top: 0,
-      height: 180,
+      height: 200,
       transformOrigin: "top center",
+      transformStyle: "preserve-3d",
       transform: envelopeOpen ? "rotateX(180deg)" : "rotateX(0deg)",
-      transition: "transform 900ms cubic-bezier(0.2, 0.85, 0.2, 1)",
+      transition: "transform 980ms cubic-bezier(0.2, 0.85, 0.2, 1)",
       background: "linear-gradient(180deg, rgba(165,182,198,0.95), rgba(135,156,176,0.95))",
-      clipPath: "polygon(0 0, 100% 0, 50% 78%)",
+      clipPath: "polygon(0 0, 100% 0, 50% 80%)",
       borderBottom: "1px solid rgba(31,65,95,0.14)",
+      backfaceVisibility: "hidden",
+      zIndex: 4,
     },
+    flapContent: {
+      position: "absolute",
+      top: 18,
+      left: 0,
+      right: 0,
+      textAlign: "center",
+      zIndex: 6,
+      pointerEvents: "none",
+    },
+    flapNames: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      fontWeight: 600,
+      letterSpacing: "0.02em",
+      color: "rgba(19,32,45,0.86)",
+      textShadow: "0 1px 0 rgba(255,255,255,0.35)",
+    },
+    flapDate: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 14,
+      color: "rgba(19,32,45,0.74)",
+      marginTop: 4,
+      letterSpacing: "0.06em",
+      textTransform: "uppercase",
+    },
+
+    // ✅ Sello “cera realista”
     seal: {
       position: "absolute",
       left: "50%",
-      top: 138,
+      top: 198,
       transform: "translateX(-50%)",
-      width: 86,
-      height: 86,
-      borderRadius: "50%",
+      width: 98,
+      height: 98,
+      borderRadius: "46% 54% 52% 48% / 48% 50% 50% 52%",
       background:
-        "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.45), rgba(214,178,94,0.92) 45%, rgba(176,141,87,0.98) 80%)",
-      border: "1px solid rgba(122,91,34,0.35)",
-      boxShadow: "0 12px 26px rgba(0,0,0,0.18)",
+        "radial-gradient(circle at 30% 28%, rgba(255,255,255,0.40), rgba(255,255,255,0.00) 42%)," +
+        "radial-gradient(circle at 70% 75%, rgba(0,0,0,0.20), rgba(0,0,0,0.00) 55%)," +
+        "radial-gradient(circle at 40% 60%, rgba(255,255,255,0.14), rgba(255,255,255,0.00) 60%)," +
+        "radial-gradient(circle at 52% 52%, rgba(214,178,94,0.96), rgba(176,141,87,0.98) 70%, rgba(122,91,34,0.92) 100%)",
+      border: "1px solid rgba(122,91,34,0.40)",
+      boxShadow:
+        "0 16px 34px rgba(0,0,0,0.22), inset 0 3px 10px rgba(255,255,255,0.22), inset 0 -10px 16px rgba(0,0,0,0.18)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       cursor: envelopeOpen ? "default" : "pointer",
       userSelect: "none",
+      zIndex: 5,
+    },
+    sealGrain: {
+      position: "absolute",
+      inset: 0,
+      borderRadius: "inherit",
+      background:
+        "repeating-radial-gradient(circle at 35% 40%, rgba(255,255,255,0.08) 0 2px, rgba(255,255,255,0.0) 2px 6px)",
+      opacity: 0.45,
+      mixBlendMode: "overlay",
+      pointerEvents: "none",
+    },
+    sealRim: {
+      position: "absolute",
+      inset: 8,
+      borderRadius: "inherit",
+      border: "1px solid rgba(0,0,0,0.10)",
+      boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.12)",
+      pointerEvents: "none",
+      opacity: 0.8,
     },
     sealText: {
       fontFamily: '"Great Vibes", cursive',
-      fontSize: 28,
+      fontSize: 30,
       color: "rgba(20,20,20,0.88)",
-      textShadow: "0 1px 0 rgba(255,255,255,0.35), 0 2px 10px rgba(0,0,0,0.18)",
+      textShadow: "0 1px 0 rgba(255,255,255,0.30), 0 2px 10px rgba(0,0,0,0.18)",
       transform: "translateY(-1px)",
+      zIndex: 2,
     },
     openHint: {
       marginTop: 12,
@@ -692,6 +969,22 @@ export default function Home() {
       fontFamily: '"Cormorant Garamond", serif',
       color: "rgba(19,32,45,0.70)",
       fontSize: 14,
+    },
+
+    // ✅ Botones/logo vertical
+    logoBtn: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      textDecoration: "none",
+      cursor: "pointer",
+      borderRadius: 18,
+      overflow: "hidden",
+      boxShadow: "0 10px 26px rgba(0,0,0,0.08)",
+      transform: "translateZ(0)",
+    },
+    logoBtnHover: {
+      transform: "translateY(-1px)",
     },
   };
 
@@ -707,6 +1000,8 @@ export default function Home() {
       : 0;
 
   function abrirSobre() {
+    // ✅ user gesture: abrimos y “re-cargamos” el embed para intentar autoplay
+    setSpotifyNonce(Date.now());
     setEnvelopeOpen(true);
     try {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -720,7 +1015,7 @@ export default function Home() {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Great+Vibes&display=swap"
           rel="stylesheet"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -732,20 +1027,26 @@ export default function Home() {
           <div style={styles.envelopeStage}>
             <div style={styles.envelopeWrap}>
               <div style={styles.envelope}>
+                {/* ✅ Carta */}
                 <div style={styles.envelopePaper}>
                   <div style={styles.envelopePaperText}>
-                    {/* ✅ Monograma nuevo */}
-                    <MonogramaAV />
-
-                    <div style={{ fontSize: 16, opacity: 0.9 }}>Andrés &amp; Vanessa</div>
-                    <div style={{ fontSize: 14, opacity: 0.75, marginTop: 6 }}>
-                      23 · abril · 2027
+                    (Invitación)
+                    <div style={{ fontSize: 13, opacity: 0.7, marginTop: 6 }}>
+                      Toca el sello para abrir ✨
                     </div>
                   </div>
                 </div>
 
-                <div style={styles.envelopeFlap} />
+                {/* ✅ Solapa (con monograma y nombres arriba, encima del sello) */}
+                <div style={styles.envelopeFlap}>
+                  <div style={styles.flapContent}>
+                    <MonogramaAV size={70} />
+                    <div style={styles.flapNames}>Andrés &amp; Vanessa</div>
+                    <div style={styles.flapDate}>23 · abril · 2027</div>
+                  </div>
+                </div>
 
+                {/* ✅ Sello de cera */}
                 <div
                   style={styles.seal}
                   onClick={envelopeOpen ? undefined : abrirSobre}
@@ -756,6 +1057,8 @@ export default function Home() {
                     if (e.key === "Enter" || e.key === " ") abrirSobre();
                   }}
                 >
+                  <div style={styles.sealGrain} />
+                  <div style={styles.sealRim} />
                   <div style={styles.sealText}>Abrir</div>
                 </div>
               </div>
@@ -809,15 +1112,17 @@ export default function Home() {
               </div>
             </div>
 
+            {/* ✅ Spotify: se renderiza tras abrir + nonce para “intentar” autoplay */}
             <div style={styles.spotifyWrap}>
               <iframe
+                key={spotifyNonce || "spotify"}
                 style={{ borderRadius: 14 }}
                 src={SPOTIFY_EMBED_URL}
                 width="340"
                 height="92"
                 frameBorder="0"
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
+                loading="eager"
               />
             </div>
 
@@ -825,15 +1130,25 @@ export default function Home() {
               <img alt="Foto 1" src={GALLERY_PHOTOS[0]} style={styles.photo} />
             </div>
 
+            {/* ✅ (5) “Nuestra historia” centrado, bold, más grande */}
             <div style={styles.section}>
-              <div style={styles.sectionTitle}>Nuestra historia</div>
+              <div style={styles.sectionTitleCenterBig}>Nuestra historia</div>
               <div style={styles.softBox}>
                 {NUESTRA_HISTORIA.map((b, i) => (
                   <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 12 }}>
-                    <div style={{ ...styles.sectionTitle, fontSize: 17, margin: "0 0 4px" }}>
+                    <div
+                      style={{
+                        fontFamily: '"Cormorant Garamond", serif',
+                        fontSize: 18,
+                        fontWeight: 700,
+                        margin: "0 0 4px",
+                        color: "rgba(19, 32, 45, 0.88)",
+                        textAlign: "center",
+                      }}
+                    >
                       {b.title}
                     </div>
-                    <p style={styles.sectionText}>{b.text}</p>
+                    <p style={{ ...styles.sectionText, textAlign: "center" }}>{b.text}</p>
                   </div>
                 ))}
               </div>
@@ -850,33 +1165,35 @@ export default function Home() {
               </div>
             </div>
 
+            {/* ✅ (6)(7) Itinerario centrado, bold, más grande + íconos sobrios */}
             <div style={styles.section}>
-              <div style={styles.sectionTitle}>Itinerario</div>
+              <div style={styles.sectionTitleCenterBig}>Itinerario</div>
               <div style={styles.timelineWrap}>
                 {TIMELINE.map((t, i) => (
                   <div key={i} style={styles.timelineItem}>
-                    <div style={styles.timeCol}>{t.time}</div>
-                    <div style={styles.eventCol}>
-                      <div style={styles.iconCircle} aria-hidden="true">
-                        {t.icon}
-                      </div>
-                      <p style={styles.eventTitle}>{t.title}</p>
+                    <div style={styles.iconCircle}>
+                      <TimelineIcon type={t.iconType} />
                     </div>
+                    <div style={styles.timeCol}>{t.time}</div>
+                    <p style={styles.eventTitle}>{t.title}</p>
                   </div>
                 ))}
               </div>
             </div>
 
+            {/* ✅ (8) Ubicación centrado + botones en vertical */}
             <div style={styles.section}>
-              <div style={styles.sectionTitle}>Ubicación</div>
+              <div style={styles.sectionTitleCenterBig}>Ubicación</div>
               <div style={styles.softBox}>
-                <p style={styles.sectionText}>Jardín Maroma · Jiutepec, Morelos</p>
-                <div style={styles.chipsRow}>
+                <p style={{ ...styles.sectionText, textAlign: "center" }}>
+                  Jardín Maroma · Jiutepec, Morelos
+                </p>
+                <div style={styles.chipsCol}>
                   <a href={MAPS_URL} target="_blank" rel="noreferrer" style={styles.linkBtnPrimary}>
-                    📍 Google Maps
+                    Google Maps
                   </a>
                   <a href={WAZE_URL} target="_blank" rel="noreferrer" style={styles.linkBtn}>
-                    🚗 Waze
+                    Waze
                   </a>
                 </div>
               </div>
@@ -886,50 +1203,54 @@ export default function Home() {
               <img alt="Foto 3" src={GALLERY_PHOTOS[2]} style={styles.photo} />
             </div>
 
+            {/* ✅ (9) Dress code centrado + ilustración + descripción centrada */}
             <div style={styles.section}>
-              <div style={styles.sectionTitle}>{DRESS_CODE.title}</div>
+              <div style={styles.sectionTitleCenterBig}>{DRESS_CODE.title}</div>
               <div style={styles.softBox}>
-                <p style={styles.sectionText}>{DRESS_CODE.text}</p>
+                <DressIcon />
+                <p style={{ ...styles.sectionText, textAlign: "center" }}>{DRESS_CODE.text}</p>
               </div>
             </div>
 
+            {/* ✅ (10)(11) Mesa de regalos centrado + logos vertical + regalo monetario unido */}
             <div style={styles.section}>
-              <div style={styles.sectionTitle}>Mesa de regalos</div>
+              <div style={styles.sectionTitleCenterBig}>Mesa de regalos</div>
               <div style={styles.softBox}>
-                <p style={{ ...styles.sectionText, marginBottom: 10 }}>
-                  Estos son enlaces de referencia (puedes cambiarlos):
-                </p>
-                <div style={styles.chipsRow}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
                   {MESA_REGALOS.map((x, i) => (
-                    <a key={i} href={x.url} target="_blank" rel="noreferrer" style={styles.linkBtn}>
-                      🎁 {x.label}
+                    <a
+                      key={i}
+                      href={x.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={styles.logoBtn}
+                    >
+                      <BrandLogo type={x.type} />
                     </a>
                   ))}
                 </div>
-              </div>
-            </div>
 
-            <div style={styles.section}>
-              <div style={styles.sectionTitle}>{REGALO_MONETARIO.title}</div>
-              <div style={styles.moneyBox}>
-                <p style={styles.sectionText}>{REGALO_MONETARIO.subtitle}</p>
+                {/* ✅ Regalo monetario (sin encabezado, sin “Beneficiario”) */}
+                <div style={styles.moneyBox}>
+                  <p style={{ ...styles.sectionText, textAlign: "center" }}>
+                    {REGALO_MONETARIO.subtitle}
+                  </p>
 
-                <div style={{ marginTop: 10 }}>
-                  <div style={styles.sectionText}>
-                    💰 <b>{REGALO_MONETARIO.accountLabel}:</b>
+                  <div style={{ marginTop: 10, textAlign: "center" }}>
+                    <div style={{ ...styles.sectionText, textAlign: "center" }}>
+                      <b>{REGALO_MONETARIO.accountLabel}:</b>
+                    </div>
+                    <div style={styles.monoLine}>{REGALO_MONETARIO.accountValue}</div>
                   </div>
-                  <div style={styles.monoLine}>{REGALO_MONETARIO.accountValue}</div>
-                </div>
 
-                <div style={{ marginTop: 10 }}>
-                  <div style={styles.sectionText}>
-                    👤 <b>{REGALO_MONETARIO.nameLabel}:</b>
+                  <div style={{ marginTop: 10 }}>
+                    <div style={styles.monoLine}>{REGALO_MONETARIO.nameValue}</div>
                   </div>
-                  <div style={styles.monoLine}>{REGALO_MONETARIO.nameValue}</div>
                 </div>
               </div>
             </div>
 
+            {/* RSVP */}
             <div style={styles.rsvpWrap}>
               <div style={styles.rsvpTitle}>
                 {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
@@ -1028,7 +1349,8 @@ export default function Home() {
 
               {rsvpStatus === "ok" && !yaConfirmo && (
                 <div style={styles.statusOk}>
-                  ¡Listo! Quedó registrado. ✅ {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
+                  ¡Listo! Quedó registrado. ✅{" "}
+                  {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
                 </div>
               )}
 
