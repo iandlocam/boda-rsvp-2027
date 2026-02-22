@@ -18,22 +18,57 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
   return data;
 }
 
+// ✅ Monograma AV (entrelazado / un solo trazo)
+function MonogramaAV({ size = 86, stroke = "rgba(19,32,45,0.80)" }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 120 120"
+      aria-hidden="true"
+      focusable="false"
+      style={{ display: "block", margin: "0 auto 6px" }}
+    >
+      {/* Trazo principal (A + V entrelazadas) */}
+      <path
+        d="
+          M 18 92
+          C 30 62, 42 34, 58 26
+          C 72 19, 86 30, 92 52
+          C 97 71, 83 84, 66 78
+          C 52 73, 44 55, 52 44
+          C 59 34, 76 36, 86 49
+          C 96 62, 93 84, 78 94
+          C 62 105, 44 103, 34 90
+          "
+        fill="none"
+        stroke={stroke}
+        strokeWidth="4.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* Remate fino para sensación “caligrafía” */}
+      <path
+        d="M 38 86 C 50 97, 70 97, 84 84"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity="0.75"
+      />
+    </svg>
+  );
+}
+
 export default function Home() {
   const router = useRouter();
 
-  const weddingDateMs = useMemo(
-    () => new Date("2027-04-23T16:00:00").getTime(),
-    []
-  );
+  const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
 
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-  // ✅ SOBRE (nuevo)
+  // ✅ SOBRE
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
 
   // RSVP states
@@ -43,7 +78,7 @@ export default function Home() {
   const [rsvpError, setRsvpError] = useState("");
   const [rsvpResult, setRsvpResult] = useState(null);
 
-  const [guestData, setGuestData] = useState(null); // { id, nombre, pasesAsignados, asistencia, mensaje, pasesConfirmados, ... }
+  const [guestData, setGuestData] = useState(null);
   const [guestLoading, setGuestLoading] = useState(false);
   const [guestLoadError, setGuestLoadError] = useState("");
   const [yaConfirmo, setYaConfirmo] = useState(false);
@@ -73,8 +108,7 @@ export default function Home() {
         const resp = await fetch(`/api/guest?id=${encodeURIComponent(guestId)}`);
         const data = await resp.json();
 
-        if (!resp.ok)
-          throw new Error(data?.error || "No se pudo cargar el invitado");
+        if (!resp.ok) throw new Error(data?.error || "No se pudo cargar el invitado");
         if (cancelled) return;
 
         const g = data.guest || null;
@@ -85,14 +119,12 @@ export default function Home() {
         const confirmed = a === "Sí" || a === "No";
         setYaConfirmo(confirmed);
 
-        // Precargar mensaje guardado
         if (g?.mensaje && !mensaje) {
           setMensaje(String(g.mensaje));
         }
 
-        // ✅ (3) Precargar Pases Confirmados desde columna J (si existe)
         const maxPases = Math.max(1, Number(g?.pasesAsignados || 1));
-        const j = Number(g?.pasesConfirmados || 0); // viene de API: guest.pasesConfirmados (col J)
+        const j = Number(g?.pasesConfirmados || 0);
         const precarga = j > 0 ? Math.min(Math.max(1, j), maxPases) : 1;
         setPasesConfirmados(precarga);
       } catch (e) {
@@ -143,11 +175,8 @@ export default function Home() {
       setRsvpError("");
       setRsvpResult(null);
 
-      if (!guestId) {
-        throw new Error("Falta el ID en el enlace. Ejemplo: ?id=AV001");
-      }
+      if (!guestId) throw new Error("Falta el ID en el enlace. Ejemplo: ?id=AV001");
 
-      // Si dicen "No" => 0 pases
       const pasesAEnviar = asistencia === "Sí" ? pasesConfirmados : 0;
 
       const result = await enviarRSVP({
@@ -162,11 +191,9 @@ export default function Home() {
       setYaConfirmo(true);
       setAsistenciaActual(asistencia);
 
-      // ✅ si el API regresó el número final, sincronizamos
       if (typeof result?.pasesConfirmados !== "undefined") {
         setPasesConfirmados(
-          Number(result.pasesConfirmados) ||
-            (asistencia === "Sí" ? pasesAEnviar : 0)
+          Number(result.pasesConfirmados) || (asistencia === "Sí" ? pasesAEnviar : 0)
         );
       }
     } catch (e) {
@@ -176,29 +203,19 @@ export default function Home() {
   }
 
   const NAME_STYLE = "gold";
-
-  // ✅ Spotify: lo renderizamos SOLO cuando abras el sobre + autoplay=1
   const SPOTIFY_EMBED_URL =
     "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv?autoplay=1";
 
-  // =========================
-  // ✅ NUEVOS CAMPOS / SECCIONES (SOLO ADICIONES)
-  // =========================
-
-  // Mapa (pon aquí tus links reales)
   const MAPS_URL =
     "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
-  const WAZE_URL =
-    "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
+  const WAZE_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
 
-  // Fotos (placeholders — luego reemplazas por tus fotos)
   const GALLERY_PHOTOS = [
     "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70",
     "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=70",
     "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=70",
   ];
 
-  // Nuestra historia (texto placeholder, lo editas)
   const NUESTRA_HISTORIA = [
     {
       title: "Cómo empezó",
@@ -217,7 +234,6 @@ export default function Home() {
     },
   ];
 
-  // Timeline
   const TIMELINE = [
     { time: "4:00 PM", title: "Ceremonia", icon: "⛪" },
     { time: "5:00 PM", title: "Recepción", icon: "🥂" },
@@ -226,20 +242,17 @@ export default function Home() {
     { time: "3:00 AM", title: "Cierre", icon: "🌙" },
   ];
 
-  // Dress code
   const DRESS_CODE = {
     title: "Dress code",
     text:
       "Formal / jardín elegante. Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
   };
 
-  // Mesa de regalos
   const MESA_REGALOS = [
     { label: "Liverpool", url: "https://www.liverpool.com.mx/" },
     { label: "Amazon", url: "https://www.amazon.com.mx/" },
   ];
 
-  // Regalo monetario
   const REGALO_MONETARIO = {
     title: "Regalo monetario",
     subtitle: "Si deseas apoyarnos en esta nueva etapa:",
@@ -458,15 +471,8 @@ export default function Home() {
       outline: "none",
     },
 
-    // =========================
-    // ✅ NUEVAS SECCIONES
-    // =========================
-    section: {
-      maxWidth: 560,
-      margin: "28px auto 0",
-      textAlign: "left",
-      padding: "0 6px",
-    },
+    // Secciones
+    section: { maxWidth: 560, margin: "28px auto 0", textAlign: "left", padding: "0 6px" },
     sectionTitle: {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: 20,
@@ -486,12 +492,7 @@ export default function Home() {
       background: "rgba(248, 251, 255, 0.85)",
       padding: 14,
     },
-    chipsRow: {
-      display: "flex",
-      gap: 10,
-      flexWrap: "wrap",
-      marginTop: 10,
-    },
+    chipsRow: { display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 },
     linkBtn: {
       display: "inline-flex",
       alignItems: "center",
@@ -530,12 +531,7 @@ export default function Home() {
       border: "1px solid rgba(31, 65, 95, 0.10)",
       boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
     },
-    photo: {
-      width: "100%",
-      height: 220,
-      objectFit: "cover",
-      display: "block",
-    },
+    photo: { width: "100%", height: 220, objectFit: "cover", display: "block" },
     adultsOnly: {
       maxWidth: 560,
       margin: "22px auto 0",
@@ -551,11 +547,7 @@ export default function Home() {
       margin: "0 0 6px",
       color: "rgba(19, 32, 45, 0.90)",
     },
-    timelineWrap: {
-      maxWidth: 560,
-      margin: "18px auto 0",
-      textAlign: "left",
-    },
+    timelineWrap: { maxWidth: 560, margin: "18px auto 0", textAlign: "left" },
     timelineItem: {
       display: "grid",
       gridTemplateColumns: "92px 1fr",
@@ -570,11 +562,7 @@ export default function Home() {
       color: "rgba(19, 32, 45, 0.70)",
       paddingTop: 4,
     },
-    eventCol: {
-      display: "flex",
-      gap: 10,
-      alignItems: "flex-start",
-    },
+    eventCol: { display: "flex", gap: 10, alignItems: "flex-start" },
     iconCircle: {
       width: 34,
       height: 34,
@@ -609,9 +597,7 @@ export default function Home() {
       wordBreak: "break-word",
     },
 
-    // =========================
-    // ✅ SOBRE (nuevo)
-    // =========================
+    // Sobre
     envelopeStage: {
       width: "100%",
       maxWidth: 760,
@@ -638,8 +624,7 @@ export default function Home() {
       borderRadius: 22,
       overflow: "hidden",
       border: "1px solid rgba(31,65,95,0.14)",
-      background:
-        "linear-gradient(180deg, rgba(160,176,190,0.92), rgba(140,160,178,0.92))",
+      background: "linear-gradient(180deg, rgba(160,176,190,0.92), rgba(140,160,178,0.92))",
     },
     envelopePaper: {
       position: "absolute",
@@ -648,8 +633,7 @@ export default function Home() {
       bottom: 18,
       top: 24,
       borderRadius: 16,
-      background:
-        "linear-gradient(180deg, rgba(252,248,240,0.98), rgba(248,242,232,0.98))",
+      background: "linear-gradient(180deg, rgba(252,248,240,0.98), rgba(248,242,232,0.98))",
       border: "1px solid rgba(176,141,87,0.25)",
       boxShadow: "0 10px 26px rgba(0,0,0,0.10)",
       display: "flex",
@@ -662,13 +646,7 @@ export default function Home() {
       fontFamily: '"Cormorant Garamond", serif',
       color: "rgba(19,32,45,0.80)",
       lineHeight: 1.4,
-    },
-    monogram: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 44,
-      letterSpacing: "0.02em",
-      color: "rgba(19,32,45,0.80)",
-      marginBottom: 8,
+      width: "100%",
     },
     envelopeFlap: {
       position: "absolute",
@@ -679,8 +657,7 @@ export default function Home() {
       transformOrigin: "top center",
       transform: envelopeOpen ? "rotateX(180deg)" : "rotateX(0deg)",
       transition: "transform 900ms cubic-bezier(0.2, 0.85, 0.2, 1)",
-      background:
-        "linear-gradient(180deg, rgba(165,182,198,0.95), rgba(135,156,176,0.95))",
+      background: "linear-gradient(180deg, rgba(165,182,198,0.95), rgba(135,156,176,0.95))",
       clipPath: "polygon(0 0, 100% 0, 50% 78%)",
       borderBottom: "1px solid rgba(31,65,95,0.14)",
     },
@@ -718,11 +695,9 @@ export default function Home() {
     },
   };
 
-  const nameStyleObj =
-    NAME_STYLE === "black" ? styles.namesBlack : styles.namesGold;
+  const nameStyleObj = NAME_STYLE === "black" ? styles.namesBlack : styles.namesGold;
   const maxPases = Math.max(1, Number(guestData?.pasesAsignados || 1));
 
-  // ✅ Texto de “ya confirmaste” + usar J si existe
   const pasesFromSheet = Number(guestData?.pasesConfirmados || 0);
   const pasesMostrados =
     asistenciaActual === "Sí"
@@ -731,15 +706,8 @@ export default function Home() {
         : Number(pasesConfirmados || 1)
       : 0;
 
-  // eslint-disable-next-line no-unused-vars
-  const nombreMostrado = guestData?.nombre
-    ? String(guestData.nombre)
-    : "¡Gracias!";
-
-  // ✅ Abrir sobre
   function abrirSobre() {
     setEnvelopeOpen(true);
-    // por si el usuario está scrolleando raro
     try {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {}
@@ -750,11 +718,7 @@ export default function Home() {
       <Head>
         <title>Andrés & Vanessa — 23 abril 2027</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="true"
-        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&display=swap"
           rel="stylesheet"
@@ -764,19 +728,16 @@ export default function Home() {
       </Head>
 
       <div style={styles.page}>
-        {/* =========================
-            ✅ MODO SOBRE: hasta que se abra, no mostramos nada más
-           ========================= */}
         {!envelopeOpen ? (
           <div style={styles.envelopeStage}>
             <div style={styles.envelopeWrap}>
               <div style={styles.envelope}>
                 <div style={styles.envelopePaper}>
                   <div style={styles.envelopePaperText}>
-                    <div style={styles.monogram}>A&nbsp;V</div>
-                    <div style={{ fontSize: 16, opacity: 0.9 }}>
-                      Andrés &amp; Vanessa
-                    </div>
+                    {/* ✅ Monograma nuevo */}
+                    <MonogramaAV />
+
+                    <div style={{ fontSize: 16, opacity: 0.9 }}>Andrés &amp; Vanessa</div>
                     <div style={{ fontSize: 14, opacity: 0.75, marginTop: 6 }}>
                       23 · abril · 2027
                     </div>
@@ -799,15 +760,10 @@ export default function Home() {
                 </div>
               </div>
 
-              <div style={styles.openHint}>
-                Toca el sello para abrir la invitación ✨
-              </div>
+              <div style={styles.openHint}>Toca el sello para abrir la invitación ✨</div>
             </div>
           </div>
         ) : (
-          // =========================
-          // ✅ CONTENIDO ORIGINAL (tu invitación completa)
-          // =========================
           <div style={styles.card}>
             <div style={styles.smallCaps}>Nuestra boda</div>
 
@@ -865,10 +821,6 @@ export default function Home() {
               />
             </div>
 
-            {/* =========================
-                ✅ NUEVAS SECCIONES
-                ========================= */}
-
             <div style={styles.photoStrip}>
               <img alt="Foto 1" src={GALLERY_PHOTOS[0]} style={styles.photo} />
             </div>
@@ -877,19 +829,8 @@ export default function Home() {
               <div style={styles.sectionTitle}>Nuestra historia</div>
               <div style={styles.softBox}>
                 {NUESTRA_HISTORIA.map((b, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 12,
-                    }}
-                  >
-                    <div
-                      style={{
-                        ...styles.sectionTitle,
-                        fontSize: 17,
-                        margin: "0 0 4px",
-                      }}
-                    >
+                  <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 12 }}>
+                    <div style={{ ...styles.sectionTitle, fontSize: 17, margin: "0 0 4px" }}>
                       {b.title}
                     </div>
                     <p style={styles.sectionText}>{b.text}</p>
@@ -929,24 +870,12 @@ export default function Home() {
             <div style={styles.section}>
               <div style={styles.sectionTitle}>Ubicación</div>
               <div style={styles.softBox}>
-                <p style={styles.sectionText}>
-                  Jardín Maroma · Jiutepec, Morelos
-                </p>
+                <p style={styles.sectionText}>Jardín Maroma · Jiutepec, Morelos</p>
                 <div style={styles.chipsRow}>
-                  <a
-                    href={MAPS_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={styles.linkBtnPrimary}
-                  >
+                  <a href={MAPS_URL} target="_blank" rel="noreferrer" style={styles.linkBtnPrimary}>
                     📍 Google Maps
                   </a>
-                  <a
-                    href={WAZE_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={styles.linkBtn}
-                  >
+                  <a href={WAZE_URL} target="_blank" rel="noreferrer" style={styles.linkBtn}>
                     🚗 Waze
                   </a>
                 </div>
@@ -972,13 +901,7 @@ export default function Home() {
                 </p>
                 <div style={styles.chipsRow}>
                   {MESA_REGALOS.map((x, i) => (
-                    <a
-                      key={i}
-                      href={x.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={styles.linkBtn}
-                    >
+                    <a key={i} href={x.url} target="_blank" rel="noreferrer" style={styles.linkBtn}>
                       🎁 {x.label}
                     </a>
                   ))}
@@ -995,9 +918,7 @@ export default function Home() {
                   <div style={styles.sectionText}>
                     💰 <b>{REGALO_MONETARIO.accountLabel}:</b>
                   </div>
-                  <div style={styles.monoLine}>
-                    {REGALO_MONETARIO.accountValue}
-                  </div>
+                  <div style={styles.monoLine}>{REGALO_MONETARIO.accountValue}</div>
                 </div>
 
                 <div style={{ marginTop: 10 }}>
@@ -1009,15 +930,10 @@ export default function Home() {
               </div>
             </div>
 
-            {/* =========================
-                RSVP (tu bloque)
-                ========================= */}
             <div style={styles.rsvpWrap}>
               <div style={styles.rsvpTitle}>
                 {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
-                <span style={styles.idBadge}>
-                  {guestId ? `ID: ${guestId}` : "ID no detectado"}
-                </span>
+                <span style={styles.idBadge}>{guestId ? `ID: ${guestId}` : "ID no detectado"}</span>
               </div>
 
               {guestData?.nombre && (
@@ -1033,9 +949,7 @@ export default function Home() {
               )}
 
               {guestLoadError && (
-                <div style={styles.statusErr}>
-                  No se pudo cargar tu invitación: {guestLoadError}
-                </div>
+                <div style={styles.statusErr}>No se pudo cargar tu invitación: {guestLoadError}</div>
               )}
 
               {yaConfirmo && (
@@ -1063,37 +977,32 @@ export default function Home() {
                     disabled={rsvpStatus === "saving"}
                   />
 
-                  {guestData?.pasesAsignados &&
-                    String(guestData.pasesAsignados).trim() !== "" && (
-                      <div style={{ marginTop: 10 }}>
-                        <div
-                          style={{
-                            fontFamily: '"Cormorant Garamond", serif',
-                            marginBottom: 6,
-                            color: "#0b0f14",
-                          }}
-                        >
-                          Pases a confirmar:
-                        </div>
-
-                        <select
-                          value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
-                          onChange={(e) =>
-                            setPasesConfirmados(Number(e.target.value))
-                          }
-                          style={styles.select}
-                          disabled={rsvpStatus === "saving"}
-                        >
-                          {Array.from({ length: maxPases }, (_, i) => i + 1).map(
-                            (n) => (
-                              <option key={n} value={n}>
-                                {n} {n === 1 ? "pase" : "pases"}
-                              </option>
-                            )
-                          )}
-                        </select>
+                  {guestData?.pasesAsignados && String(guestData.pasesAsignados).trim() !== "" && (
+                    <div style={{ marginTop: 10 }}>
+                      <div
+                        style={{
+                          fontFamily: '"Cormorant Garamond", serif',
+                          marginBottom: 6,
+                          color: "#0b0f14",
+                        }}
+                      >
+                        Pases a confirmar:
                       </div>
-                    )}
+
+                      <select
+                        value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
+                        onChange={(e) => setPasesConfirmados(Number(e.target.value))}
+                        style={styles.select}
+                        disabled={rsvpStatus === "saving"}
+                      >
+                        {Array.from({ length: maxPases }, (_, i) => i + 1).map((n) => (
+                          <option key={n} value={n}>
+                            {n} {n === 1 ? "pase" : "pases"}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
 
                   <div style={styles.rsvpRow}>
                     <button
@@ -1115,20 +1024,15 @@ export default function Home() {
                 </>
               )}
 
-              {rsvpStatus === "saving" && (
-                <div style={styles.hint}>Guardando tu confirmación…</div>
-              )}
+              {rsvpStatus === "saving" && <div style={styles.hint}>Guardando tu confirmación…</div>}
 
               {rsvpStatus === "ok" && !yaConfirmo && (
                 <div style={styles.statusOk}>
-                  ¡Listo! Quedó registrado. ✅{" "}
-                  {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
+                  ¡Listo! Quedó registrado. ✅ {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
                 </div>
               )}
 
-              {rsvpStatus === "error" && (
-                <div style={styles.statusErr}>{rsvpError}</div>
-              )}
+              {rsvpStatus === "error" && <div style={styles.statusErr}>{rsvpError}</div>}
 
               <div style={styles.hint}>
                 Tip: tu enlace debe incluir <code>?id=AV001</code> (cada invitado tiene un ID).
