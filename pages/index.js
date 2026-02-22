@@ -18,8 +18,8 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
   return data;
 }
 
-// ✅ Monograma AV (entrelazado / un solo trazo)
-function MonogramaAV({ size = 78, stroke = "rgba(19,32,45,0.82)" }) {
+/** ✅ Monograma AV (nuevo: limpio, elegante, tipo sello) */
+function MonogramaAV({ size = 64, color = "rgba(19,32,45,0.86)" }) {
   return (
     <svg
       width={size}
@@ -27,46 +27,186 @@ function MonogramaAV({ size = 78, stroke = "rgba(19,32,45,0.82)" }) {
       viewBox="0 0 120 120"
       aria-hidden="true"
       focusable="false"
-      style={{ display: "block", margin: "0 auto 6px" }}
+      style={{ display: "block" }}
     >
-      <path
-        d="
-          M 18 92
-          C 30 62, 42 34, 58 26
-          C 72 19, 86 30, 92 52
-          C 97 71, 83 84, 66 78
-          C 52 73, 44 55, 52 44
-          C 59 34, 76 36, 86 49
-          C 96 62, 93 84, 78 94
-          C 62 105, 44 103, 34 90
-        "
+      <defs>
+        <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="rgba(176,141,87,0.70)" />
+          <stop offset="1" stopColor="rgba(19,32,45,0.22)" />
+        </linearGradient>
+      </defs>
+
+      {/* anillo */}
+      <circle
+        cx="60"
+        cy="60"
+        r="48"
         fill="none"
-        stroke={stroke}
-        strokeWidth="4.6"
+        stroke="url(#ring)"
+        strokeWidth="2.2"
+        opacity="0.9"
+      />
+      <circle
+        cx="60"
+        cy="60"
+        r="44"
+        fill="none"
+        stroke="rgba(255,255,255,0.28)"
+        strokeWidth="1.2"
+      />
+
+      {/* AV monograma sobrio */}
+      <path
+        d="M34 78 L46 38 L58 78"
+        fill="none"
+        stroke={color}
+        strokeWidth="3.2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M 38 86 C 50 97, 70 97, 84 84"
+        d="M40 62 H52"
         fill="none"
-        stroke={stroke}
-        strokeWidth="2.2"
+        stroke={color}
+        strokeWidth="3.0"
+        strokeLinecap="round"
+      />
+      <path
+        d="M66 40 L80 78 L94 40"
+        fill="none"
+        stroke={color}
+        strokeWidth="3.2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        opacity="0.75"
       />
     </svg>
   );
 }
 
-// ✅ Íconos sobrios (línea)
-function TimelineIcon({ type = "ceremony" }) {
+/** ✅ Sello de cera “realista” (borde irregular + relieve + brillo) */
+function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 100 }) {
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      aria-label="Abrir invitación"
+      onClick={disabled ? undefined : onClick}
+      onKeyDown={(e) => {
+        if (disabled) return;
+        if (e.key === "Enter" || e.key === " ") onClick?.();
+      }}
+      style={{
+        width: size,
+        height: size,
+        cursor: disabled ? "default" : "pointer",
+        userSelect: "none",
+        position: "relative",
+        display: "grid",
+        placeItems: "center",
+      }}
+    >
+      <svg width={size} height={size} viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <filter id="sShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="10" stdDeviation="7" floodColor="rgba(0,0,0,0.24)" />
+            <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="rgba(0,0,0,0.22)" />
+          </filter>
+
+          <radialGradient id="wax" cx="30%" cy="25%" r="80%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
+            <stop offset="18%" stopColor="rgba(255,255,255,0.10)" />
+            <stop offset="55%" stopColor="rgba(173,34,44,0.96)" />
+            <stop offset="100%" stopColor="rgba(92,14,24,1)" />
+          </radialGradient>
+
+          <radialGradient id="shine" cx="22%" cy="18%" r="45%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.75)" />
+            <stop offset="70%" stopColor="rgba(255,255,255,0)" />
+          </radialGradient>
+
+          {/* forma irregular tipo cera */}
+          <path
+            id="blob"
+            d="M60 7
+               C76 8, 96 16, 107 30
+               C118 44, 118 62, 111 79
+               C104 96, 88 110, 69 113
+               C50 116, 31 111, 19 98
+               C7 85, 4 66, 9 49
+               C14 32, 27 18, 44 11
+               C50 9, 55 7, 60 7Z"
+          />
+        </defs>
+
+        <g filter="url(#sShadow)">
+          <use href="#blob" fill="url(#wax)" />
+          <use href="#blob" fill="url(#shine)" opacity="0.55" />
+          <use href="#blob" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="2" />
+
+          {/* relieve central (grabado AV) */}
+          <path
+            d="M42 76 L52 44 L62 76"
+            fill="none"
+            stroke="rgba(255,255,255,0.28)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.85"
+          />
+          <path
+            d="M47 64 H57"
+            fill="none"
+            stroke="rgba(255,255,255,0.28)"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            opacity="0.85"
+          />
+          <path
+            d="M66 46 L78 76 L90 46"
+            fill="none"
+            stroke="rgba(255,255,255,0.28)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.85"
+          />
+        </g>
+      </svg>
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "grid",
+          placeItems: "center",
+          pointerEvents: "none",
+          transform: "translateY(-1px)",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: '"Great Vibes", cursive',
+            fontSize: 32,
+            color: "rgba(255,255,255,0.92)",
+            textShadow: "0 1px 0 rgba(0,0,0,0.18), 0 10px 24px rgba(0,0,0,0.28)",
+            letterSpacing: "0.01em",
+          }}
+        >
+          {label}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** ✅ Íconos sobrios (línea) */
+function TimelineIcon({ type = "ceremony", size = 36 }) {
   const common = {
-    width: 20,
-    height: 20,
+    width: size,
+    height: size,
     viewBox: "0 0 24 24",
     fill: "none",
-    stroke: "rgba(19,32,45,0.85)",
+    stroke: "rgba(19,32,45,0.86)",
     strokeWidth: 1.6,
     strokeLinecap: "round",
     strokeLinejoin: "round",
@@ -75,46 +215,44 @@ function TimelineIcon({ type = "ceremony" }) {
   if (type === "ceremony") {
     return (
       <svg {...common} aria-hidden="true">
-        <path d="M4 10h16" />
         <path d="M6 10V8a6 6 0 0 1 12 0v2" />
+        <path d="M4 10h16" />
         <path d="M7 10v9" />
         <path d="M17 10v9" />
         <path d="M5 19h14" />
         <path d="M12 4v2" />
-        <path d="M10.7 5.5 12 4l1.3 1.5" />
       </svg>
     );
   }
   if (type === "reception") {
     return (
       <svg {...common} aria-hidden="true">
-        <path d="M8 2v9" />
-        <path d="M12 2v9" />
-        <path d="M16 2v9" />
-        <path d="M7 11h10" />
-        <path d="M9 22l3-11 3 11" />
+        <path d="M7 3h10v4a5 5 0 0 1-10 0V3Z" />
+        <path d="M12 12v5" />
+        <path d="M8.5 21h7" />
       </svg>
     );
   }
   if (type === "dinner") {
     return (
       <svg {...common} aria-hidden="true">
-        <path d="M7 2v7" />
-        <path d="M5 2v7" />
-        <path d="M9 2v7" />
-        <path d="M7 9v13" />
-        <path d="M15 2v20" />
-        <path d="M15 2c2 2 2 6 0 8" />
+        <path d="M7 3v7" />
+        <path d="M5.5 3v7" />
+        <path d="M8.5 3v7" />
+        <path d="M7 10v11" />
+        <path d="M14 3v18" />
+        <path d="M18.5 3c-1.7 0-3 1.3-3 3v4h3V6" />
       </svg>
     );
   }
   if (type === "party") {
     return (
       <svg {...common} aria-hidden="true">
-        <path d="M12 2v10" />
-        <path d="M8 6l8 4" />
-        <path d="M8 10l8-4" />
-        <path d="M6 22l6-10 6 10" />
+        <path d="M12 2v4" />
+        <path d="M12 18v4" />
+        <path d="M2 12h4" />
+        <path d="M18 12h4" />
+        <path d="M12 8l1.2 2.5L16 12l-2.8 1.5L12 16l-1.2-2.5L8 12l2.8-1.5L12 8Z" />
       </svg>
     );
   }
@@ -123,119 +261,136 @@ function TimelineIcon({ type = "ceremony" }) {
     <svg {...common} aria-hidden="true">
       <path d="M21 12a9 9 0 1 1-9-9" />
       <path d="M12 7v6l4 2" />
-      <path d="M17 3h4v4" />
-      <path d="M21 3l-5 5" />
     </svg>
   );
 }
 
-function DressIcon() {
+/** ✅ Flores primavera elegantes (overlay en esquinas) */
+function FloralCorners() {
   return (
-    <svg
-      width="120"
-      height="44"
-      viewBox="0 0 240 88"
-      aria-hidden="true"
-      style={{ display: "block", margin: "10px auto 10px" }}
-    >
-      <g
-        fill="none"
-        stroke="rgba(19,32,45,0.78)"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+    <>
+      {/* esquina superior izquierda */}
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        width="220"
+        height="220"
+        viewBox="0 0 220 220"
+        style={{
+          position: "absolute",
+          left: -20,
+          top: -30,
+          opacity: 0.55,
+          pointerEvents: "none",
+          filter: "blur(0px)",
+        }}
       >
-        {/* Vestido */}
-        <path d="M60 16c6 10 6 14 0 24" />
-        <path d="M60 16c-10 6-18 16-22 28" />
-        <path d="M60 16c10 6 18 16 22 28" />
-        <path d="M38 44c10 10 16 18 22 36" />
-        <path d="M82 44c-10 10-16 18-22 36" />
-        <path d="M44 62h32" />
-        {/* Smoking */}
-        <path d="M160 20c-10 10-14 20-14 34v24" />
-        <path d="M160 20c10 10 14 20 14 34v24" />
-        <path d="M146 54h28" />
-        <path d="M152 34h16" />
-        <path d="M156 34l4 8 4-8" />
-        <path d="M154 78h12" />
-      </g>
-    </svg>
-  );
-}
+        <defs>
+          <linearGradient id="petalA" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="rgba(255,200,64,0.95)" />
+            <stop offset="1" stopColor="rgba(255,140,64,0.95)" />
+          </linearGradient>
+          <linearGradient id="petalB" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="rgba(80,165,255,0.90)" />
+            <stop offset="1" stopColor="rgba(40,110,210,0.90)" />
+          </linearGradient>
+          <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="rgba(75,170,130,0.70)" />
+            <stop offset="1" stopColor="rgba(35,120,90,0.70)" />
+          </linearGradient>
+        </defs>
 
-// ✅ Logos sobrios (SVG) como botones
-function BrandLogo({ type = "liverpool" }) {
-  if (type === "amazon") {
-    return (
-      <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
-        <rect
-          x="1"
-          y="1"
-          width="418"
-          height="110"
-          rx="18"
-          fill="rgba(255,255,255,0.92)"
-          stroke="rgba(31,65,95,0.16)"
-        />
-        <text
-          x="210"
-          y="64"
-          textAnchor="middle"
-          fontFamily="system-ui, -apple-system, Segoe UI, Roboto, Arial"
-          fontSize="44"
-          fill="rgba(19,32,45,0.88)"
-        >
-          amazon
-        </text>
+        {/* ramas */}
         <path
-          d="M140 78c40 22 100 22 140 0"
+          d="M30 150 C60 120, 92 92, 140 70"
           fill="none"
-          stroke="rgba(176,141,87,0.95)"
-          strokeWidth="6"
+          stroke="rgba(19,32,45,0.20)"
+          strokeWidth="2"
           strokeLinecap="round"
         />
         <path
-          d="M274 76l14 5-9 12"
+          d="M48 170 C75 140, 110 110, 168 86"
           fill="none"
-          stroke="rgba(176,141,87,0.95)"
-          strokeWidth="6"
+          stroke="rgba(19,32,45,0.18)"
+          strokeWidth="2"
           strokeLinecap="round"
-          strokeLinejoin="round"
         />
+
+        {/* hojas */}
+        <path d="M78 118 C70 98, 92 92, 98 110 C90 124, 84 126, 78 118Z" fill="url(#leaf)" opacity="0.65" />
+        <path d="M110 92 C100 74, 124 70, 130 86 C122 100, 116 102, 110 92Z" fill="url(#leaf)" opacity="0.55" />
+
+        {/* flor 1 */}
+        <g transform="translate(78 120)">
+          <circle cx="0" cy="0" r="8" fill="rgba(255,255,255,0.70)" />
+          <circle cx="0" cy="0" r="4" fill="rgba(176,141,87,0.70)" />
+          <ellipse cx="-14" cy="0" rx="16" ry="10" fill="url(#petalA)" opacity="0.85" />
+          <ellipse cx="14" cy="0" rx="16" ry="10" fill="url(#petalA)" opacity="0.85" />
+          <ellipse cx="0" cy="-14" rx="10" ry="16" fill="url(#petalB)" opacity="0.75" />
+          <ellipse cx="0" cy="14" rx="10" ry="16" fill="url(#petalB)" opacity="0.75" />
+        </g>
+
+        {/* flor 2 */}
+        <g transform="translate(132 84) scale(0.9)">
+          <circle cx="0" cy="0" r="7" fill="rgba(255,255,255,0.65)" />
+          <circle cx="0" cy="0" r="3.5" fill="rgba(176,141,87,0.65)" />
+          <ellipse cx="-12" cy="0" rx="14" ry="9" fill="rgba(255,170,90,0.85)" />
+          <ellipse cx="12" cy="0" rx="14" ry="9" fill="rgba(255,170,90,0.85)" />
+          <ellipse cx="0" cy="-12" rx="9" ry="14" fill="rgba(255,210,70,0.85)" />
+          <ellipse cx="0" cy="12" rx="9" ry="14" fill="rgba(255,210,70,0.85)" />
+        </g>
       </svg>
-    );
-  }
 
-  // liverpool
-  return (
-    <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
-      <rect
-        x="1"
-        y="1"
-        width="418"
-        height="110"
-        rx="18"
-        fill="rgba(255,255,255,0.92)"
-        stroke="rgba(31,65,95,0.16)"
-      />
-      <text
-        x="210"
-        y="66"
-        textAnchor="middle"
-        fontFamily='"Cormorant Garamond", serif'
-        fontSize="50"
-        fill="rgba(19,32,45,0.88)"
-        style={{ letterSpacing: "0.02em" }}
+      {/* esquina inferior derecha */}
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        width="240"
+        height="240"
+        viewBox="0 0 240 240"
+        style={{
+          position: "absolute",
+          right: -30,
+          bottom: -40,
+          opacity: 0.45,
+          pointerEvents: "none",
+        }}
       >
-        liverpool
-      </text>
-      <path
-        d="M92 30c10 0 16 6 16 14 0 10-8 18-18 18-8 0-14-6-14-14 0-10 6-18 16-18z"
-        fill="rgba(214,178,94,0.18)"
-        stroke="rgba(176,141,87,0.50)"
-      />
-    </svg>
+        <defs>
+          <linearGradient id="petalC" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="rgba(255,195,80,0.90)" />
+            <stop offset="1" stopColor="rgba(255,120,80,0.90)" />
+          </linearGradient>
+          <linearGradient id="petalD" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="rgba(70,170,255,0.85)" />
+            <stop offset="1" stopColor="rgba(60,120,220,0.85)" />
+          </linearGradient>
+          <linearGradient id="leaf2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="rgba(85,185,140,0.65)" />
+            <stop offset="1" stopColor="rgba(35,120,90,0.65)" />
+          </linearGradient>
+        </defs>
+
+        <path
+          d="M210 80 C180 110, 150 145, 92 175"
+          fill="none"
+          stroke="rgba(19,32,45,0.18)"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+
+        <path d="M150 150 C165 130, 190 144, 176 166 C160 172, 154 168, 150 150Z" fill="url(#leaf2)" opacity="0.6" />
+
+        <g transform="translate(160 150)">
+          <circle cx="0" cy="0" r="8" fill="rgba(255,255,255,0.65)" />
+          <circle cx="0" cy="0" r="4" fill="rgba(176,141,87,0.65)" />
+          <ellipse cx="-14" cy="0" rx="16" ry="10" fill="url(#petalC)" opacity="0.80" />
+          <ellipse cx="14" cy="0" rx="16" ry="10" fill="url(#petalC)" opacity="0.80" />
+          <ellipse cx="0" cy="-14" rx="10" ry="16" fill="url(#petalD)" opacity="0.72" />
+          <ellipse cx="0" cy="14" rx="10" ry="16" fill="url(#petalD)" opacity="0.72" />
+        </g>
+      </svg>
+    </>
   );
 }
 
@@ -249,8 +404,9 @@ export default function Home() {
   // ✅ SOBRE
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
 
-  // ✅ Forzar reload del embed para intentar autoplay tras el click (user gesture)
+  // ✅ Spotify: montar después del click (gesto usuario)
   const [spotifyNonce, setSpotifyNonce] = useState(0);
+  const [spotifyEnabled, setSpotifyEnabled] = useState(false);
 
   // RSVP states
   const [guestId, setGuestId] = useState("");
@@ -416,7 +572,7 @@ export default function Home() {
     },
   ];
 
-  // ✅ Íconos sobrios por etapa (sin emoji)
+  // ✅ Itinerario (layout: icono izquierda, texto y hora debajo)
   const TIMELINE = [
     { time: "4:00 PM", title: "Ceremonia", iconType: "ceremony" },
     { time: "5:00 PM", title: "Recepción", iconType: "reception" },
@@ -424,26 +580,6 @@ export default function Home() {
     { time: "9:00 PM", title: "Fiesta", iconType: "party" },
     { time: "3:00 AM", title: "Cierre", iconType: "close" },
   ];
-
-  const DRESS_CODE = {
-    title: "Dress code",
-    text:
-      "Formal / jardín elegante. Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
-  };
-
-  // ✅ Mesa de regalos (logos)
-  const MESA_REGALOS = [
-    { type: "liverpool", url: "https://www.liverpool.com.mx/" },
-    { type: "amazon", url: "https://www.amazon.com.mx/" },
-  ];
-
-  // ✅ Regalo monetario (unido a mesa de regalos, sin encabezado ni beneficiario label)
-  const REGALO_MONETARIO = {
-    subtitle: "Si deseas apoyarnos en esta nueva etapa:",
-    accountLabel: "CLABE / Cuenta",
-    accountValue: "000000000000000000",
-    nameValue: "Andrés y Vanessa",
-  };
 
   const styles = {
     page: {
@@ -465,35 +601,50 @@ export default function Home() {
       padding: "52px 22px",
       textAlign: "center",
       backdropFilter: "blur(6px)",
+
+      // ✅ para flores
+      position: "relative",
+      overflow: "hidden",
     },
+
+    // ✅ “Nuestra boda” más grande
     smallCaps: {
       fontFamily: '"Cormorant Garamond", serif',
       letterSpacing: "0.22em",
       textTransform: "uppercase",
-      fontSize: 12,
-      color: "rgba(19, 32, 45, 0.65)",
+      fontSize: 16,
+      color: "rgba(19, 32, 45, 0.70)",
       marginBottom: 10,
     },
+
+    // ✅ Ajustes para que NO se corten letras grandes (A/V)
     namesGold: {
       fontFamily: '"Great Vibes", cursive',
-      fontSize: 64,
-      lineHeight: 1.0,
-      margin: "8px 0 10px",
+      fontSize: 68,
+      lineHeight: 1.10,
+      paddingTop: 10,
+      margin: "8px 0 12px",
       backgroundImage:
         "linear-gradient(90deg, #7a5b22 0%, #d6b25e 25%, #f3e2a6 50%, #d6b25e 75%, #7a5b22 100%)",
       WebkitBackgroundClip: "text",
       backgroundClip: "text",
       color: "transparent",
       textShadow: "0 8px 22px rgba(0,0,0,0.10)",
+      display: "inline-block",
+      overflow: "visible",
     },
     namesBlack: {
       fontFamily: '"Great Vibes", cursive',
-      fontSize: 64,
-      lineHeight: 1.0,
-      margin: "8px 0 10px",
+      fontSize: 68,
+      lineHeight: 1.10,
+      paddingTop: 10,
+      margin: "8px 0 12px",
       color: "#0b0f14",
       textShadow: "0 10px 28px rgba(0,0,0,0.10)",
+      display: "inline-block",
+      overflow: "visible",
     },
+
     subtitle: {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: 18,
@@ -552,14 +703,222 @@ export default function Home() {
       display: "flex",
       justifyContent: "center",
     },
-    note: {
-      marginTop: 14,
+
+    // Secciones
+    section: { maxWidth: 560, margin: "28px auto 0", textAlign: "left", padding: "0 6px" },
+    sectionTitleCenterBig: {
       fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 13,
-      color: "rgba(19, 32, 45, 0.55)",
+      fontSize: 24,
+      fontWeight: 700,
+      textAlign: "center",
+      margin: "0 0 12px",
+      color: "rgba(19, 32, 45, 0.90)",
+    },
+    sectionText: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      color: "rgba(19, 32, 45, 0.72)",
+      margin: 0,
+      lineHeight: 1.5,
+    },
+    softBox: {
+      borderRadius: 16,
+      border: "1px solid rgba(31, 65, 95, 0.12)",
+      background: "rgba(248, 251, 255, 0.85)",
+      padding: 14,
     },
 
-    // RSVP UI
+    photoStrip: {
+      maxWidth: 560,
+      margin: "22px auto 0",
+      borderRadius: 18,
+      overflow: "hidden",
+      border: "1px solid rgba(31, 65, 95, 0.10)",
+      boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
+    },
+    photo: { width: "100%", height: 220, objectFit: "cover", display: "block" },
+
+    // ✅ ITINERARIO: centrado + layout icono izquierda, texto/hora derecha (icono 2.5cm aprox)
+    timelineOuter: { maxWidth: 560, margin: "10px auto 0" },
+    timelineCard: {
+      borderRadius: 18,
+      overflow: "hidden",
+      border: "1px solid rgba(31,65,95,0.10)",
+      background: "rgba(255,255,255,0.55)",
+    },
+    timelineRow: {
+      display: "grid",
+      gridTemplateColumns: "112px 1fr",
+      gap: 14,
+      alignItems: "center",
+      padding: "16px 16px",
+      borderBottom: "1px solid rgba(31,65,95,0.10)",
+    },
+    timelineIconBox: {
+      width: 96, // ~ 2.5cm
+      height: 96, // ~ 2.5cm
+      borderRadius: "50%",
+      background: "rgba(214, 178, 94, 0.14)",
+      border: "1px solid rgba(176,141,87,0.32)",
+      display: "grid",
+      placeItems: "center",
+      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.55), 0 10px 24px rgba(0,0,0,0.06)",
+    },
+    timelineTextCol: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-start",
+      justifyContent: "center",
+    },
+    timelineTitle: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 19,
+      fontWeight: 700,
+      margin: 0,
+      color: "rgba(19,32,45,0.90)",
+    },
+    timelineTime: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 14,
+      marginTop: 6,
+      color: "rgba(19,32,45,0.62)",
+      letterSpacing: "0.10em",
+      textTransform: "uppercase",
+    },
+
+    // ✅ Sobre
+    envelopeStage: {
+      width: "100%",
+      maxWidth: 760,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "12px 0",
+    },
+    envelopeWrap: {
+      width: "100%",
+      maxWidth: 560,
+      position: "relative",
+      borderRadius: 26,
+      padding: "18px 16px 18px",
+      background: "rgba(255,255,255,0.55)",
+      border: "1px solid rgba(31,65,95,0.10)",
+      boxShadow: "0 18px 50px rgba(12, 22, 33, 0.10)",
+      backdropFilter: "blur(6px)",
+    },
+    envelope: {
+      width: "100%",
+      height: 340,
+      position: "relative",
+      borderRadius: 22,
+      overflow: "hidden",
+      border: "1px solid rgba(31,65,95,0.14)",
+      background: "linear-gradient(180deg, rgba(160,176,190,0.92), rgba(140,160,178,0.92))",
+      perspective: 1200,
+      transformStyle: "preserve-3d",
+    },
+
+    // ✅ Flap content (mejor lectura fecha)
+    envelopeFlap: {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: 0,
+      height: 210,
+      transformOrigin: "top center",
+      transformStyle: "preserve-3d",
+      transform: envelopeOpen ? "rotateX(180deg)" : "rotateX(0deg)",
+      transition: "transform 980ms cubic-bezier(0.2, 0.85, 0.2, 1)",
+      background: "linear-gradient(180deg, rgba(165,182,198,0.95), rgba(135,156,176,0.95))",
+      clipPath: "polygon(0 0, 100% 0, 50% 80%)",
+      borderBottom: "1px solid rgba(31,65,95,0.14)",
+      backfaceVisibility: "hidden",
+      zIndex: 4,
+    },
+    flapContent: {
+      position: "absolute",
+      top: 18,
+      left: 0,
+      right: 0,
+      textAlign: "center",
+      zIndex: 6,
+      pointerEvents: "none",
+      display: "grid",
+      placeItems: "center",
+      gap: 8,
+    },
+    flapNames: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      fontWeight: 700,
+      letterSpacing: "0.04em",
+      color: "rgba(19,32,45,0.88)",
+      textTransform: "uppercase",
+      textShadow: "0 1px 0 rgba(255,255,255,0.35)",
+    },
+    flapDatePill: {
+      display: "inline-block",
+      padding: "6px 10px",
+      borderRadius: 999,
+      background: "rgba(255,255,255,0.42)",
+      border: "1px solid rgba(31,65,95,0.14)",
+      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.55)",
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 13,
+      letterSpacing: "0.14em",
+      textTransform: "uppercase",
+      color: "rgba(19,32,45,0.82)",
+    },
+
+    // ✅ Carta (leyenda abajo para que NO la tape el sello)
+    envelopePaper: {
+      position: "absolute",
+      left: 18,
+      right: 18,
+      bottom: 18,
+      top: 52,
+      borderRadius: 16,
+      background: "linear-gradient(180deg, rgba(252,248,240,0.98), rgba(248,242,232,0.98))",
+      border: "1px solid rgba(176,141,87,0.25)",
+      boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 18,
+      transform: envelopeOpen ? "translateY(-12px)" : "translateY(26px)",
+      transition: "transform 900ms cubic-bezier(0.2, 0.85, 0.2, 1)",
+      zIndex: 1,
+    },
+    envelopePaperText: {
+      textAlign: "center",
+      fontFamily: '"Cormorant Garamond", serif',
+      color: "rgba(19,32,45,0.82)",
+      width: "100%",
+    },
+    envelopeLegend: {
+      marginTop: 14,
+      fontSize: 14,
+      color: "rgba(19,32,45,0.62)",
+    },
+
+    // ✅ Sello (posición ajustada para no tapar texto)
+    sealStage: {
+      position: "absolute",
+      left: "50%",
+      top: 192,
+      transform: "translateX(-50%)",
+      zIndex: 8,
+    },
+
+    openHint: {
+      marginTop: 12,
+      textAlign: "center",
+      fontFamily: '"Cormorant Garamond", serif',
+      color: "rgba(19,32,45,0.70)",
+      fontSize: 14,
+    },
+
+    // RSVP UI (igual que tu base)
     rsvpWrap: {
       maxWidth: 520,
       margin: "24px auto 0",
@@ -654,343 +1013,16 @@ export default function Home() {
       outline: "none",
     },
 
-    // Secciones
-    section: {
-      maxWidth: 560,
-      margin: "28px auto 0",
-      textAlign: "left",
-      padding: "0 6px",
-    },
-    sectionTitle: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 20,
-      margin: "0 0 10px",
-      color: "rgba(19, 32, 45, 0.88)",
-    },
-    sectionTitleCenterBig: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 24,
-      fontWeight: 700,
-      textAlign: "center",
-      margin: "0 0 12px",
-      color: "rgba(19, 32, 45, 0.90)",
-      letterSpacing: "0.01em",
-    },
-    sectionText: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16,
-      color: "rgba(19, 32, 45, 0.72)",
-      margin: 0,
-      lineHeight: 1.5,
-    },
-    softBox: {
-      borderRadius: 16,
-      border: "1px solid rgba(31, 65, 95, 0.12)",
-      background: "rgba(248, 251, 255, 0.85)",
-      padding: 14,
-    },
-    chipsCol: {
-      display: "flex",
-      flexDirection: "column",
-      gap: 10,
-      alignItems: "center",
-      marginTop: 12,
-    },
-    linkBtn: {
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 8,
-      padding: "10px 12px",
-      borderRadius: 12,
-      border: "1px solid rgba(31, 65, 95, 0.16)",
-      background: "white",
-      cursor: "pointer",
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16,
-      color: "#0b0f14",
-      textDecoration: "none",
-      width: "100%",
-      maxWidth: 360,
-    },
-    linkBtnPrimary: {
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 8,
-      padding: "10px 12px",
-      borderRadius: 12,
-      border: "1px solid rgba(31, 65, 95, 0.16)",
-      background: "rgba(214, 178, 94, 0.22)",
-      cursor: "pointer",
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16,
-      color: "#0b0f14",
-      textDecoration: "none",
-      width: "100%",
-      maxWidth: 360,
-    },
-    photoStrip: {
-      maxWidth: 560,
-      margin: "22px auto 0",
-      borderRadius: 18,
-      overflow: "hidden",
-      border: "1px solid rgba(31, 65, 95, 0.10)",
-      boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
-    },
-    photo: { width: "100%", height: 220, objectFit: "cover", display: "block" },
-    adultsOnly: {
-      maxWidth: 560,
-      margin: "22px auto 0",
-      borderRadius: 16,
-      padding: 14,
-      border: "1px solid rgba(176,141,87,0.35)",
-      background: "rgba(214, 178, 94, 0.10)",
-      textAlign: "left",
-    },
-    adultsOnlyTitle: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 18,
-      margin: "0 0 6px",
-      color: "rgba(19, 32, 45, 0.90)",
-    },
-
-    // ✅ Itinerario centrado y más elegante
-    timelineWrap: { maxWidth: 560, margin: "10px auto 0", textAlign: "center" },
-    timelineItem: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: 8,
-      padding: "14px 0",
-      borderBottom: "1px solid rgba(31, 65, 95, 0.10)",
-    },
-    iconCircle: {
-      width: 42,
-      height: 42,
-      borderRadius: "50%",
-      background: "rgba(214, 178, 94, 0.14)",
-      border: "1px solid rgba(176,141,87,0.30)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45)",
-    },
-    timeCol: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16,
-      color: "rgba(19, 32, 45, 0.70)",
-      letterSpacing: "0.04em",
-    },
-    eventTitle: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 18,
-      margin: 0,
-      color: "rgba(19, 32, 45, 0.88)",
-      lineHeight: 1.25,
-      fontWeight: 600,
-    },
-
-    // ✅ Regalo monetario box
-    moneyBox: {
-      borderRadius: 16,
-      border: "1px solid rgba(31, 65, 95, 0.12)",
-      background: "rgba(248, 251, 255, 0.85)",
-      padding: 14,
+    note: {
       marginTop: 14,
-    },
-    monoLine: {
       fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16,
-      color: "rgba(19, 32, 45, 0.82)",
-      margin: "6px 0 0",
-      wordBreak: "break-word",
-      textAlign: "center",
-    },
-
-    // ✅ Sobre
-    envelopeStage: {
-      width: "100%",
-      maxWidth: 760,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: "12px 0",
-    },
-    envelopeWrap: {
-      width: "100%",
-      maxWidth: 520,
-      position: "relative",
-      borderRadius: 26,
-      padding: "22px 16px 16px",
-      background: "rgba(255,255,255,0.55)",
-      border: "1px solid rgba(31,65,95,0.10)",
-      boxShadow: "0 18px 50px rgba(12, 22, 33, 0.10)",
-      backdropFilter: "blur(6px)",
-    },
-    envelope: {
-      width: "100%",
-      height: 340,
-      position: "relative",
-      borderRadius: 22,
-      overflow: "hidden",
-      border: "1px solid rgba(31,65,95,0.14)",
-      background: "linear-gradient(180deg, rgba(160,176,190,0.92), rgba(140,160,178,0.92))",
-      perspective: 1200,
-      transformStyle: "preserve-3d",
-    },
-
-    // ✅ Carta que “sale” al abrir
-    envelopePaper: {
-      position: "absolute",
-      left: 18,
-      right: 18,
-      bottom: 18,
-      top: 42,
-      borderRadius: 16,
-      background: "linear-gradient(180deg, rgba(252,248,240,0.98), rgba(248,242,232,0.98))",
-      border: "1px solid rgba(176,141,87,0.25)",
-      boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 18,
-      transform: envelopeOpen ? "translateY(-18px)" : "translateY(28px)",
-      transition: "transform 900ms cubic-bezier(0.2, 0.85, 0.2, 1)",
-      zIndex: 1,
-    },
-    envelopePaperText: {
-      textAlign: "center",
-      fontFamily: '"Cormorant Garamond", serif',
-      color: "rgba(19,32,45,0.80)",
-      lineHeight: 1.4,
-      width: "100%",
-      opacity: envelopeOpen ? 0.0 : 1,
-      transition: "opacity 240ms ease",
-    },
-
-    // ✅ Solapa con contenido “arriba” (encima del sello)
-    envelopeFlap: {
-      position: "absolute",
-      left: 0,
-      right: 0,
-      top: 0,
-      height: 200,
-      transformOrigin: "top center",
-      transformStyle: "preserve-3d",
-      transform: envelopeOpen ? "rotateX(180deg)" : "rotateX(0deg)",
-      transition: "transform 980ms cubic-bezier(0.2, 0.85, 0.2, 1)",
-      background: "linear-gradient(180deg, rgba(165,182,198,0.95), rgba(135,156,176,0.95))",
-      clipPath: "polygon(0 0, 100% 0, 50% 80%)",
-      borderBottom: "1px solid rgba(31,65,95,0.14)",
-      backfaceVisibility: "hidden",
-      zIndex: 4,
-    },
-    flapContent: {
-      position: "absolute",
-      top: 18,
-      left: 0,
-      right: 0,
-      textAlign: "center",
-      zIndex: 6,
-      pointerEvents: "none",
-    },
-    flapNames: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16,
-      fontWeight: 600,
-      letterSpacing: "0.02em",
-      color: "rgba(19,32,45,0.86)",
-      textShadow: "0 1px 0 rgba(255,255,255,0.35)",
-    },
-    flapDate: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 14,
-      color: "rgba(19,32,45,0.74)",
-      marginTop: 4,
-      letterSpacing: "0.06em",
-      textTransform: "uppercase",
-    },
-
-    // ✅ Sello “cera realista”
-    seal: {
-      position: "absolute",
-      left: "50%",
-      top: 198,
-      transform: "translateX(-50%)",
-      width: 98,
-      height: 98,
-      borderRadius: "46% 54% 52% 48% / 48% 50% 50% 52%",
-      background:
-        "radial-gradient(circle at 30% 28%, rgba(255,255,255,0.40), rgba(255,255,255,0.00) 42%)," +
-        "radial-gradient(circle at 70% 75%, rgba(0,0,0,0.20), rgba(0,0,0,0.00) 55%)," +
-        "radial-gradient(circle at 40% 60%, rgba(255,255,255,0.14), rgba(255,255,255,0.00) 60%)," +
-        "radial-gradient(circle at 52% 52%, rgba(214,178,94,0.96), rgba(176,141,87,0.98) 70%, rgba(122,91,34,0.92) 100%)",
-      border: "1px solid rgba(122,91,34,0.40)",
-      boxShadow:
-        "0 16px 34px rgba(0,0,0,0.22), inset 0 3px 10px rgba(255,255,255,0.22), inset 0 -10px 16px rgba(0,0,0,0.18)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      cursor: envelopeOpen ? "default" : "pointer",
-      userSelect: "none",
-      zIndex: 5,
-    },
-    sealGrain: {
-      position: "absolute",
-      inset: 0,
-      borderRadius: "inherit",
-      background:
-        "repeating-radial-gradient(circle at 35% 40%, rgba(255,255,255,0.08) 0 2px, rgba(255,255,255,0.0) 2px 6px)",
-      opacity: 0.45,
-      mixBlendMode: "overlay",
-      pointerEvents: "none",
-    },
-    sealRim: {
-      position: "absolute",
-      inset: 8,
-      borderRadius: "inherit",
-      border: "1px solid rgba(0,0,0,0.10)",
-      boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.12)",
-      pointerEvents: "none",
-      opacity: 0.8,
-    },
-    sealText: {
-      fontFamily: '"Great Vibes", cursive',
-      fontSize: 30,
-      color: "rgba(20,20,20,0.88)",
-      textShadow: "0 1px 0 rgba(255,255,255,0.30), 0 2px 10px rgba(0,0,0,0.18)",
-      transform: "translateY(-1px)",
-      zIndex: 2,
-    },
-    openHint: {
-      marginTop: 12,
-      textAlign: "center",
-      fontFamily: '"Cormorant Garamond", serif',
-      color: "rgba(19,32,45,0.70)",
-      fontSize: 14,
-    },
-
-    // ✅ Botones/logo vertical
-    logoBtn: {
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      textDecoration: "none",
-      cursor: "pointer",
-      borderRadius: 18,
-      overflow: "hidden",
-      boxShadow: "0 10px 26px rgba(0,0,0,0.08)",
-      transform: "translateZ(0)",
-    },
-    logoBtnHover: {
-      transform: "translateY(-1px)",
+      fontSize: 13,
+      color: "rgba(19, 32, 45, 0.55)",
     },
   };
 
   const nameStyleObj = NAME_STYLE === "black" ? styles.namesBlack : styles.namesGold;
   const maxPases = Math.max(1, Number(guestData?.pasesAsignados || 1));
-
   const pasesFromSheet = Number(guestData?.pasesConfirmados || 0);
   const pasesMostrados =
     asistenciaActual === "Sí"
@@ -1000,9 +1032,19 @@ export default function Home() {
       : 0;
 
   function abrirSobre() {
-    // ✅ user gesture: abrimos y “re-cargamos” el embed para intentar autoplay
-    setSpotifyNonce(Date.now());
+    // ✅ gesto del usuario: abrimos el sobre
     setEnvelopeOpen(true);
+
+    // ✅ Autoplay: montamos spotify DESPUÉS del click (y forzamos reload)
+    setSpotifyEnabled(false);
+    const nonce = Date.now();
+    setSpotifyNonce(nonce);
+
+    // mount en el siguiente tick (a veces ayuda en iOS)
+    setTimeout(() => {
+      setSpotifyEnabled(true);
+    }, 30);
+
     try {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {}
@@ -1030,44 +1072,34 @@ export default function Home() {
                 {/* ✅ Carta */}
                 <div style={styles.envelopePaper}>
                   <div style={styles.envelopePaperText}>
-                    (Invitación)
-                    <div style={{ fontSize: 13, opacity: 0.7, marginTop: 6 }}>
-                      Toca el sello para abrir ✨
-                    </div>
+                    <div style={{ fontSize: 16, opacity: 0.9 }}>(Invitación)</div>
+                    <div style={styles.envelopeLegend}>Toca el sello para abrir ✨</div>
                   </div>
                 </div>
 
-                {/* ✅ Solapa (con monograma y nombres arriba, encima del sello) */}
+                {/* ✅ Solapa (monograma + nombres + FECHA visible) */}
                 <div style={styles.envelopeFlap}>
                   <div style={styles.flapContent}>
-                    <MonogramaAV size={70} />
+                    <MonogramaAV size={64} />
                     <div style={styles.flapNames}>Andrés &amp; Vanessa</div>
-                    <div style={styles.flapDate}>23 · abril · 2027</div>
+                    <div style={styles.flapDatePill}>23 · abril · 2027</div>
                   </div>
                 </div>
 
-                {/* ✅ Sello de cera */}
-                <div
-                  style={styles.seal}
-                  onClick={envelopeOpen ? undefined : abrirSobre}
-                  role="button"
-                  aria-label="Abrir invitación"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") abrirSobre();
-                  }}
-                >
-                  <div style={styles.sealGrain} />
-                  <div style={styles.sealRim} />
-                  <div style={styles.sealText}>Abrir</div>
+                {/* ✅ Sello de cera realista */}
+                <div style={styles.sealStage}>
+                  <WaxSeal onClick={abrirSobre} disabled={false} label="Abrir" size={104} />
                 </div>
               </div>
 
-              <div style={styles.openHint}>Toca el sello para abrir la invitación ✨</div>
+              <div style={styles.openHint}> </div>
             </div>
           </div>
         ) : (
           <div style={styles.card}>
+            {/* ✅ flores */}
+            <FloralCorners />
+
             <div style={styles.smallCaps}>Nuestra boda</div>
 
             <h1 style={nameStyleObj}>Andrés &amp; Vanessa</h1>
@@ -1112,25 +1144,26 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ✅ Spotify: se renderiza tras abrir + nonce para “intentar” autoplay */}
+            {/* ✅ Spotify: solo se monta después del click */}
             <div style={styles.spotifyWrap}>
-              <iframe
-                key={spotifyNonce || "spotify"}
-                style={{ borderRadius: 14 }}
-                src={SPOTIFY_EMBED_URL}
-                width="340"
-                height="92"
-                frameBorder="0"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="eager"
-              />
+              {spotifyEnabled ? (
+                <iframe
+                  key={spotifyNonce || "spotify"}
+                  style={{ borderRadius: 14 }}
+                  src={SPOTIFY_EMBED_URL}
+                  width="340"
+                  height="92"
+                  frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="eager"
+                />
+              ) : null}
             </div>
 
             <div style={styles.photoStrip}>
               <img alt="Foto 1" src={GALLERY_PHOTOS[0]} style={styles.photo} />
             </div>
 
-            {/* ✅ (5) “Nuestra historia” centrado, bold, más grande */}
             <div style={styles.section}>
               <div style={styles.sectionTitleCenterBig}>Nuestra historia</div>
               <div style={styles.softBox}>
@@ -1158,94 +1191,31 @@ export default function Home() {
               <img alt="Foto 2" src={GALLERY_PHOTOS[1]} style={styles.photo} />
             </div>
 
-            <div style={styles.adultsOnly}>
-              <div style={styles.adultsOnlyTitle}>Importante</div>
-              <div style={styles.sectionText}>
-                Evento exclusivo para mayores de <b>16 años</b>. Sin excepciones.
-              </div>
-            </div>
-
-            {/* ✅ (6)(7) Itinerario centrado, bold, más grande + íconos sobrios */}
+            {/* ✅ Itinerario: centrado + icono izquierda + texto + hora debajo */}
             <div style={styles.section}>
               <div style={styles.sectionTitleCenterBig}>Itinerario</div>
-              <div style={styles.timelineWrap}>
-                {TIMELINE.map((t, i) => (
-                  <div key={i} style={styles.timelineItem}>
-                    <div style={styles.iconCircle}>
-                      <TimelineIcon type={t.iconType} />
-                    </div>
-                    <div style={styles.timeCol}>{t.time}</div>
-                    <p style={styles.eventTitle}>{t.title}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            {/* ✅ (8) Ubicación centrado + botones en vertical */}
-            <div style={styles.section}>
-              <div style={styles.sectionTitleCenterBig}>Ubicación</div>
-              <div style={styles.softBox}>
-                <p style={{ ...styles.sectionText, textAlign: "center" }}>
-                  Jardín Maroma · Jiutepec, Morelos
-                </p>
-                <div style={styles.chipsCol}>
-                  <a href={MAPS_URL} target="_blank" rel="noreferrer" style={styles.linkBtnPrimary}>
-                    Google Maps
-                  </a>
-                  <a href={WAZE_URL} target="_blank" rel="noreferrer" style={styles.linkBtn}>
-                    Waze
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div style={styles.photoStrip}>
-              <img alt="Foto 3" src={GALLERY_PHOTOS[2]} style={styles.photo} />
-            </div>
-
-            {/* ✅ (9) Dress code centrado + ilustración + descripción centrada */}
-            <div style={styles.section}>
-              <div style={styles.sectionTitleCenterBig}>{DRESS_CODE.title}</div>
-              <div style={styles.softBox}>
-                <DressIcon />
-                <p style={{ ...styles.sectionText, textAlign: "center" }}>{DRESS_CODE.text}</p>
-              </div>
-            </div>
-
-            {/* ✅ (10)(11) Mesa de regalos centrado + logos vertical + regalo monetario unido */}
-            <div style={styles.section}>
-              <div style={styles.sectionTitleCenterBig}>Mesa de regalos</div>
-              <div style={styles.softBox}>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
-                  {MESA_REGALOS.map((x, i) => (
-                    <a
+              <div style={styles.timelineOuter}>
+                <div style={styles.timelineCard}>
+                  {TIMELINE.map((t, i) => (
+                    <div
                       key={i}
-                      href={x.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={styles.logoBtn}
+                      style={{
+                        ...styles.timelineRow,
+                        borderBottom:
+                          i === TIMELINE.length - 1 ? "none" : styles.timelineRow.borderBottom,
+                      }}
                     >
-                      <BrandLogo type={x.type} />
-                    </a>
-                  ))}
-                </div>
+                      <div style={styles.timelineIconBox}>
+                        <TimelineIcon type={t.iconType} size={44} />
+                      </div>
 
-                {/* ✅ Regalo monetario (sin encabezado, sin “Beneficiario”) */}
-                <div style={styles.moneyBox}>
-                  <p style={{ ...styles.sectionText, textAlign: "center" }}>
-                    {REGALO_MONETARIO.subtitle}
-                  </p>
-
-                  <div style={{ marginTop: 10, textAlign: "center" }}>
-                    <div style={{ ...styles.sectionText, textAlign: "center" }}>
-                      <b>{REGALO_MONETARIO.accountLabel}:</b>
+                      <div style={styles.timelineTextCol}>
+                        <p style={styles.timelineTitle}>{t.title}</p>
+                        <div style={styles.timelineTime}>{t.time}</div>
+                      </div>
                     </div>
-                    <div style={styles.monoLine}>{REGALO_MONETARIO.accountValue}</div>
-                  </div>
-
-                  <div style={{ marginTop: 10 }}>
-                    <div style={styles.monoLine}>{REGALO_MONETARIO.nameValue}</div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1346,14 +1316,6 @@ export default function Home() {
               )}
 
               {rsvpStatus === "saving" && <div style={styles.hint}>Guardando tu confirmación…</div>}
-
-              {rsvpStatus === "ok" && !yaConfirmo && (
-                <div style={styles.statusOk}>
-                  ¡Listo! Quedó registrado. ✅{" "}
-                  {rsvpResult?.updatedRow ? `(Fila ${rsvpResult.updatedRow})` : ""}
-                </div>
-              )}
-
               {rsvpStatus === "error" && <div style={styles.statusErr}>{rsvpError}</div>}
 
               <div style={styles.hint}>
