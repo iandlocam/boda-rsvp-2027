@@ -1404,6 +1404,9 @@ export default function Home() {
       margin: "18px 0 10px",
     }}
   >
+    <div style={{ frontSize: 12, opacity: 0.6, textAlign: "center" }}>
+    Intentando cargar: /dress-code.png
+      </div>
     <img
       src="/dress-code.png"
       alt="Dress code formal"
@@ -1412,7 +1415,7 @@ export default function Home() {
         maxWidth: "100%",
         height: "auto",
         opacity: 0.90,
-        filter: "grayscale(20%) contrast (105%)",
+        filter: "grayscale(20%) contrast(105%)",
       }}
     />
   </div>
