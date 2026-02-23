@@ -965,122 +965,62 @@ export default function Home() {
       padding: "12px 0",
     },
     envelopeWrap: {
-      width: "100%",
-      maxWidth: 560,
-      position: "relative",
-      borderRadius: 26,
-      padding: "18px 16px 18px",
-      background: "rgba(255,255,255,0.55)",
-      border: "1px solid rgba(31,65,95,0.10)",
-      boxShadow: "0 18px 50px rgba(12, 22, 33, 0.10)",
-      backdropFilter: "blur(6px)",
-    },
-    envelope: {
-      width: "100%",
-      height: 340,
-      position: "relative",
-      borderRadius: 22,
-      overflow: "hidden",
-      border: "1px solid rgba(31,65,95,0.14)",
-      background: "linear-gradient(180deg, rgba(160,176,190,0.92), rgba(140,160,178,0.92))",
-      perspective: 1200,
-      transformStyle: "preserve-3d",
-    },
+  width: "100%",
+  maxWidth: 520,
+  position: "relative",
+  margin: "0 auto",
+  textAlign: "center",
+},
 
-    // ✅ Flap: MÁS alto + clipPath menos agresivo para que NO corte nombres/fecha
-    envelopeFlap: {
-      position: "absolute",
-      left: 0,
-      right: 0,
-      top: 0,
-      height: 232, // ✅ más alto
-      transformOrigin: "top center",
-      transformStyle: "preserve-3d",
-      transform: envelopeOpen ? "rotateX(180deg)" : "rotateX(0deg)",
-      transition: "transform 980ms cubic-bezier(0.2, 0.85, 0.2, 1)",
-      background: "linear-gradient(180deg, rgba(165,182,198,0.96), rgba(135,156,176,0.96))",
-      clipPath: "polygon(0 0, 100% 0, 50% 92%)", // ✅ más “abierto”
-      borderBottom: "1px solid rgba(31,65,95,0.14)",
-      backfaceVisibility: "hidden",
-      zIndex: 4,
-    },
-    flapContent: {
-      position: "absolute",
-      top: 22,
-      left: 0,
-      right: 0,
-      textAlign: "center",
-      zIndex: 6,
-      pointerEvents: "none",
-      display: "grid",
-      placeItems: "center",
-      gap: 8,
-      padding: "0 16px", // ✅ evita cortes laterales
-    },
-    flapNames: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 15,
-      fontWeight: 700,
-      letterSpacing: "0.08em",
-      color: "rgba(19,32,45,0.88)",
-      textTransform: "uppercase",
-      textShadow: "0 1px 0 rgba(255,255,255,0.35)",
-      whiteSpace: "nowrap",
-    },
-    flapDatePill: {
-      display: "inline-block",
-      padding: "6px 10px",
-      borderRadius: 999,
-      background: "rgba(255,255,255,0.46)",
-      border: "1px solid rgba(31,65,95,0.14)",
-      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.55)",
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 13,
-      letterSpacing: "0.14em",
-      textTransform: "uppercase",
-      color: "rgba(19,32,45,0.82)",
-      whiteSpace: "nowrap",
-    },
+envelope: {
+  width: "100%",
+  height: 260,
+  position: "relative",
+  borderRadius: 18,
+  background: "linear-gradient(180deg, #eef2f6, #dce3ea)", // azul grisáceo suave
+  boxShadow:
+    "0 30px 60px rgba(0,0,0,0.12), 0 8px 18px rgba(0,0,0,0.08)",
+  overflow: "hidden",
+},
 
-    // ✅ Carta (leyenda abajo)
-    envelopePaper: {
-      position: "absolute",
-      left: 18,
-      right: 18,
-      bottom: 18,
-      top: 58,
-      borderRadius: 16,
-      background: "linear-gradient(180deg, rgba(252,248,240,0.98), rgba(248,242,232,0.98))",
-      border: "1px solid rgba(176,141,87,0.25)",
-      boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 18,
-      transform: envelopeOpen ? "translateY(-12px)" : "translateY(26px)",
-      transition: "transform 900ms cubic-bezier(0.2, 0.85, 0.2, 1)",
-      zIndex: 1,
-    },
-    envelopePaperText: {
-      textAlign: "center",
-      fontFamily: '"Cormorant Garamond", serif',
-      color: "rgba(19,32,45,0.82)",
-      width: "100%",
-    },
-    envelopeLegend: {
-      marginTop: 14,
-      fontSize: 14,
-      color: "rgba(19,32,45,0.62)",
-    },
+envelopeFlap: {
+  position: "absolute",
+  left: 0,
+  right: 0,
+  top: 0,
+  height: 160,
+  background: "linear-gradient(180deg, #e4ebf2, #cfd9e3)",
+  clipPath: "polygon(0 0, 100% 0, 50% 100%)",
+  transition: "transform 900ms cubic-bezier(0.2,0.85,0.2,1)",
+  transformOrigin: "top",
+  transform: envelopeOpen ? "rotateX(180deg)" : "rotateX(0deg)",
+  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+},
 
-    // ✅ Sello (un poco más abajo para NO tapar texto)
-    sealStage: {
-      position: "absolute",
-      left: "50%",
-      top: 208, // ✅ bajado
-      transform: "translateX(-50%)",
-      zIndex: 8,
-    },
+envelopePaper: {
+  position: "absolute",
+  left: 18,
+  right: 18,
+  bottom: 18,
+  top: 40,
+  borderRadius: 14,
+  background:
+    "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(248,242,232,0.95))",
+  boxShadow: "0 12px 24px rgba(0,0,0,0.12)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  transform: envelopeOpen ? "translateY(-18px)" : "translateY(20px)",
+  transition: "transform 900ms cubic-bezier(0.2,0.85,0.2,1)",
+},
+
+sealStage: {
+  position: "absolute",
+  left: "50%",
+  top: 140,
+  transform: "translateX(-50%)",
+  zIndex: 5,
+},
 
     // Mesa regalos / money
     logoBtn: {
@@ -1264,6 +1204,11 @@ export default function Home() {
                   <div style={styles.envelopePaperText}>
                     <div style={{ fontSize: 16, opacity: 0.9 }}>(Invitación)</div>
                     <div style={styles.envelopeLegend}>Toca el sello para abrir ✨</div>
+  <div style={{ marginBottom: 30 }}>
+  <div style={{ ...styles.smallCaps }}>Nuestra boda</div>
+  <h1 style={nameStyleObj}>Andrés & Vanessa</h1>
+  <div style={styles.subtitle}>23 · abril · 2027</div>
+</div>
                   </div>
                 </div>
 
