@@ -1408,10 +1408,11 @@ export default function Home() {
       src="/dress-code.png"
       alt="Dress code formal"
       style={{
-        width: 220,
+        width: 200,
         maxWidth: "100%",
         height: "auto",
-        opacity: 0.85,
+        opacity: 0.90,
+        filter: "grayscale(20%) contrast (105%)",
       }}
     />
   </div>
