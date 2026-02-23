@@ -1405,7 +1405,7 @@ export default function Home() {
     }}
   >
     <div style={{ frontSize: 12, opacity: 0.6, textAlign: "center" }}>
-    Intentando cargar: /dress-code.png
+    Intentando cargar: /dress-code.PNG
       </div>
     <img
       src="/dress-code.png"
