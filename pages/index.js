@@ -711,7 +711,7 @@ export default function Home() {
     subtitle: "Si deseas apoyarnos en esta nueva etapa:",
     accountLabel: "CLABE / Cuenta",
     accountValue: "000000000000000000",
-    nameValue: "Andrés y Vanessa",
+    nameValue: "Vanessa y Andrés",
   };
 
   const styles = {
@@ -1183,7 +1183,7 @@ sealStage: {
   return (
     <>
       <Head>
-        <title>Andrés & Vanessa — 23 abril 2027</title>
+        <title>Vanessa & Andrés — 23 abril 2027</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link
@@ -1206,7 +1206,7 @@ sealStage: {
                     <div style={styles.envelopeLegend}>Toca el sello para abrir ✨</div>
   <div style={{ marginBottom: 30 }}>
   <div style={{ ...styles.smallCaps }}>Nuestra boda</div>
-  <h1 style={nameStyleObj}>Andrés & Vanessa</h1>
+  <h1 style={nameStyleObj}>Vanessa & Andrés</h1>
   <div style={styles.subtitle}>23 · abril · 2027</div>
 </div>
                   </div>
@@ -1216,7 +1216,7 @@ sealStage: {
                 <div style={styles.envelopeFlap}>
                   <div style={styles.flapContent}>
                     <MonogramaAV size={58} />
-                    <div style={styles.flapNames}>Andrés &amp; Vanessa</div>
+                    <div style={styles.flapNames}>Vanessa &amp; Andrés</div>
                     <div style={styles.flapDatePill}>23 · abril · 2027</div>
                   </div>
                 </div>
@@ -1234,7 +1234,7 @@ sealStage: {
             <FloralCorners />
 
             <div style={styles.smallCaps}>Nuestra boda</div>
-            <h1 style={nameStyleObj}>Andrés &amp; Vanessa</h1>
+            <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
             <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
 
             <div style={styles.quote}>
