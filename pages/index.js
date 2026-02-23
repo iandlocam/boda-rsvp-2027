@@ -1194,7 +1194,6 @@ sealStage: {
         <style>{`textarea::placeholder { color: #000; opacity: 0.6; }`}</style>
       </Head>
 
-      <
       <div style={styles.page}>
   {!envelopeOpen ? (
     <div style={styles.hero}>
