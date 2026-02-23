@@ -1395,8 +1395,31 @@ export default function Home() {
 {/* ✅ Dress code */}
 <div style={{ ...styles.section, position: "relative", zIndex: 2 }}>
   <div style={styles.sectionTitleCenterBig}>{DRESS_CODE.title}</div>
+
+  {/* Imagen Dress Code */}
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      margin: "18px 0 10px",
+    }}
+  >
+    <img
+      src="/dress-code.png"
+      alt="Dress code formal"
+      style={{
+        width: 220,
+        maxWidth: "100%",
+        height: "auto",
+        opacity: 0.85,
+      }}
+    />
+  </div>
+
   <div style={styles.softBox}>
-    <p style={{ ...styles.sectionText, textAlign: "center" }}>{DRESS_CODE.text}</p>
+    <p style={{ ...styles.sectionText, textAlign: "center" }}>
+      {DRESS_CODE.text}
+    </p>
   </div>
 </div>
 
