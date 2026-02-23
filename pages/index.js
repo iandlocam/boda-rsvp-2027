@@ -1409,7 +1409,7 @@ export default function Home() {
       </div>
     <img
       src="/dress-code.PNG"
-      alt="Dress code formal"
+      alt=" "
       style={{
         width: 200,
         maxWidth: "100%",
