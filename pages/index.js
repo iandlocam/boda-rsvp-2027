@@ -1406,9 +1406,6 @@ export default function Home() {
       margin: "18px 0 10px",
     }}
   >
-    <div style={{ frontSize: 12, opacity: 0.6, textAlign: "center" }}>
-    Intentando cargar: /dress-code.png
-      </div>
     <img
       src="/dress-code.png"
       alt=" "
