@@ -720,7 +720,7 @@ export default function Home() {
       padding: "120px 18px",
       backgroundImage: "url('/floral-frame.jpg')",
       backgroundSize: "cover",
-      backgroundPosition: "center top",
+      backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       display: "flex",
       justifyContent: "center",
@@ -1195,56 +1195,340 @@ sealStage: {
       </Head>
 
       <div style={styles.page}>
-  {!envelopeOpen ? (
-    <div style={styles.hero}>
-      {/* Encabezado como referencia */}
-      <div style={{ marginBottom: 22 }}>
-        <div style={styles.smallCaps}>Nuestra boda</div>
-        <h1 style={nameStyleObj}>Andrés &amp; Vanessa</h1>
-        <div style={styles.subtitle}>23 · abril · 2027</div>
-      </div>
-
-      {/* Sobre editorial */}
-      <div
-        style={styles.envelope3D}
-        onClick={abrirSobre}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && abrirSobre()}
-        aria-label="Abrir invitación"
-      >
-        <div style={styles.envShadow} />
-        <div style={styles.envBody} />
-        <div style={styles.envFlap} />
-        <div style={styles.envSeal}>
-          <WaxSeal onClick={abrirSobre} disabled={false} label="Abrir" size={112} />
-        </div>
-      </div>
-
-      <div style={{ marginTop: 18, ...styles.smallCaps, fontSize: 13, letterSpacing: "0.18em" }}>
-        Click para abrir la invitación
-      </div>
-    </div>
-  ) : (
-    <div style={styles.card}>
-      {/* ✅ flores (más abundantes) */}
-      <FloralCorners />
-
-      <div style={styles.smallCaps}>Nuestra boda</div>
-      <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
-      <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
-
-      <div style={styles.quote}>
-        “El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección.”
-      </div>
-
-      <div style={styles.divider} />
-
-      {/* ⬇️ AQUÍ va TODO tu contenido restante: contador, spotify, historia, itinerario, dress code, ubicación, mesa, rsvp, etc. */}
-      {/* Pégalo tal cual lo tienes hoy, pero dentro de este <div style={styles.card}> */}
-    </div>
-  )}
+        {!envelopeOpen ? (
+          <div style={styles.envelopeStage}>
+            <div style={styles.envelopeWrap}>
+              <div style={styles.envelope}>
+                {/* ✅ Carta */}
+                <div style={styles.envelopePaper}>
+                  <div style={styles.envelopePaperText}>
+                    <div style={{ fontSize: 16, opacity: 0.9 }}>(Invitación)</div>
+                    <div style={styles.envelopeLegend}>Toca el sello para abrir ✨</div>
+  <div style={{ marginBottom: 30 }}>
+  <div style={{ ...styles.smallCaps }}>Nuestra boda</div>
+  <h1 style={nameStyleObj}>Vanessa & Andrés</h1>
+  <div style={styles.subtitle}>23 · abril · 2027</div>
 </div>
+                  </div>
+                </div>
+
+                {/* ✅ Solapa (monograma + nombres + FECHA visible) */}
+                <div style={styles.envelopeFlap}>
+                  <div style={styles.flapContent}>
+                    <MonogramaAV size={58} />
+                    <div style={styles.flapNames}>Vanessa &amp; Andrés</div>
+                    <div style={styles.flapDatePill}>23 · abril · 2027</div>
+                  </div>
+                </div>
+
+                {/* ✅ Sello dorado */}
+                <div style={styles.sealStage}>
+                  <WaxSeal onClick={abrirSobre} disabled={false} label="Abrir" size={112} />
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={styles.card}>
+            {/* ✅ flores (más abundantes) */}
+            <FloralCorners />
+
+            <div style={styles.smallCaps}>Nuestra boda</div>
+            <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
+            <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
+
+            <div style={styles.quote}>
+              “El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma
+              dirección.”
+            </div>
+
+            <div style={styles.divider} />
+
+            <div style={styles.grid}>
+              <div style={styles.pill}>
+                <div style={styles.pillNum}>{timeLeft.days}</div>
+                <div style={styles.pillLbl}>Días</div>
+              </div>
+              <div style={styles.pill}>
+                <div style={styles.pillNum}>{timeLeft.hours}</div>
+                <div style={styles.pillLbl}>Horas</div>
+              </div>
+              <div style={styles.pill}>
+                <div style={styles.pillNum}>{timeLeft.minutes}</div>
+                <div style={styles.pillLbl}>Min</div>
+              </div>
+              <div style={styles.pill}>
+                <div style={styles.pillNum}>{timeLeft.seconds}</div>
+                <div style={styles.pillLbl}>Seg</div>
+              </div>
+            </div>
+
+            {/* ✅ (3) Quitado el bloque “Ceremonia / Recepción / Cierre” bajo el contador */}
+
+            {/* ✅ Spotify: solo se monta después del click */}
+            <div style={styles.spotifyWrap}>
+              {spotifyEnabled ? (
+                <iframe
+                  key={spotifyNonce || "spotify"}
+                  style={{ borderRadius: 14 }}
+                  src={SPOTIFY_EMBED_URL}
+                  width="340"
+                  height="92"
+                  frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="eager"
+                />
+              ) : null}
+            </div>
+
+            <div style={styles.photoStrip}>
+              <img alt="Foto 1" src={GALLERY_PHOTOS[0]} style={styles.photo} />
+            </div>
+
+            <div style={styles.section}>
+              <div style={styles.sectionTitleCenterBig}>Nuestra historia</div>
+              <div style={styles.softBox}>
+                {NUESTRA_HISTORIA.map((b, i) => (
+                  <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 12 }}>
+                    <div
+                      style={{
+                        fontFamily: '"Cormorant Garamond", serif',
+                        fontSize: 18,
+                        fontWeight: 700,
+                        margin: "0 0 4px",
+                        color: "rgba(19, 32, 45, 0.88)",
+                        textAlign: "center",
+                      }}
+                    >
+                      {b.title}
+                    </div>
+                    <p style={{ ...styles.sectionText, textAlign: "center" }}>{b.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={styles.photoStrip}>
+              <img alt="Foto 2" src={GALLERY_PHOTOS[1]} style={styles.photo} />
+            </div>
+
+            {/* ✅ Itinerario */}
+            <div style={styles.section}>
+              <div style={styles.sectionTitleCenterBig}>Itinerario</div>
+
+              <div style={styles.timelineOuter}>
+                <div style={styles.timelineCard}>
+                  {TIMELINE.map((t, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        ...styles.timelineRow,
+                        borderBottom: i === TIMELINE.length - 1 ? "none" : styles.timelineRow.borderBottom,
+                      }}
+                    >
+                      <div style={styles.timelineIconBox}>
+                        <TimelineIcon type={t.iconType} size={44} />
+                      </div>
+
+                      <div style={styles.timelineTextCol}>
+                        <p style={styles.timelineTitle}>{t.title}</p>
+                        <div style={styles.timelineTime}>{t.time}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+{/* ✅ Dress code */}
+<div style={{ ...styles.section, position: "relative", zIndex: 2 }}>
+  <div style={styles.sectionTitleCenterBig}>{DRESS_CODE.title}</div>
+
+  {/* Imagen Dress Code */}
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      margin: "18px 0 10px",
+    }}
+  >
+    <img
+      src="/dress-code.png"
+      alt=" "
+      style={{
+        width: 200,
+        maxWidth: "100%",
+        height: "auto",
+        opacity: 0.90,
+        filter: "grayscale(20%) contrast(105%)",
+      }}
+    />
+  </div>
+
+  <div style={styles.softBox}>
+    <p style={{ ...styles.sectionText, textAlign: "center" }}>
+      {DRESS_CODE.text}
+    </p>
+  </div>
+</div>
+
+            {/* ✅ (4) Ubicación con LINKS restaurados */}
+            <div style={styles.section}>
+              <div style={styles.sectionTitleCenterBig}>Ubicación</div>
+              <div style={styles.softBox}>
+                <p style={{ ...styles.sectionText, textAlign: "center" }}>
+                  Jardín Maroma · Jiutepec, Morelos
+                </p>
+                <div style={styles.chipsCol}>
+                  <a href={MAPS_URL} target="_blank" rel="noreferrer" style={styles.linkBtnPrimary}>
+                    Google Maps
+                  </a>
+                  <a href={WAZE_URL} target="_blank" rel="noreferrer" style={styles.linkBtn}>
+                    Waze
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* ✅ (4) Mesa de regalos + cuenta bancaria restaurados */}
+            <div style={styles.section}>
+              <div style={styles.sectionTitleCenterBig}>Mesa de regalos</div>
+              <div style={styles.softBox}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+                  {MESA_REGALOS.map((x, i) => (
+                    <a key={i} href={x.url} target="_blank" rel="noreferrer" style={styles.logoBtn}>
+                      <BrandLogo type={x.type} />
+                    </a>
+                  ))}
+                </div>
+
+                <div style={styles.moneyBox}>
+                  <p style={{ ...styles.sectionText, textAlign: "center" }}>
+                    {REGALO_MONETARIO.subtitle}
+                  </p>
+
+                  <div style={{ marginTop: 10, textAlign: "center" }}>
+                    <div style={{ ...styles.sectionText, textAlign: "center" }}>
+                      <b>{REGALO_MONETARIO.accountLabel}:</b>
+                    </div>
+                    <div style={styles.monoLine}>{REGALO_MONETARIO.accountValue}</div>
+                  </div>
+
+                  <div style={{ marginTop: 10 }}>
+                    <div style={styles.monoLine}>{REGALO_MONETARIO.nameValue}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* RSVP */}
+            <div style={styles.rsvpWrap}>
+              <div style={styles.rsvpTitle}>
+                {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
+                <span style={styles.idBadge}>{guestId ? `ID: ${guestId}` : "ID no detectado"}</span>
+              </div>
+
+              {guestData?.nombre && (
+                <div style={styles.hint}>
+                  <b>{guestData.nombre}</b>, nos dará mucho gusto verte. ✨
+                  {guestData.pasesAsignados ? (
+                    <>
+                      {" "}
+                      · Pases asignados: <b>{guestData.pasesAsignados}</b>
+                    </>
+                  ) : null}
+                </div>
+              )}
+
+              {guestLoadError && (
+                <div style={styles.statusErr}>No se pudo cargar tu invitación: {guestLoadError}</div>
+              )}
+
+              {yaConfirmo && (
+                <div style={styles.statusOk}>
+                  {asistenciaActual === "Sí" ? (
+                    <>
+                      Gracias por confirmar <b>{pasesMostrados}</b>{" "}
+                      {pasesMostrados === 1 ? "pase" : "pases"} 🥳
+                      <br />
+                      Los esperamos con toda la actitud ✨
+                    </>
+                  ) : (
+                    <>Gracias por avisarnos, te vamos a extrañar 💔</>
+                  )}
+                </div>
+              )}
+
+              {!yaConfirmo && (
+                <>
+                  <textarea
+                    style={styles.input}
+                    value={mensaje}
+                    onChange={(e) => setMensaje(e.target.value)}
+                    placeholder="Escribe un mensaje de buenos deseos (opcional)"
+                    disabled={rsvpStatus === "saving"}
+                  />
+
+                  {guestData?.pasesAsignados && String(guestData.pasesAsignados).trim() !== "" && (
+                    <div style={{ marginTop: 10 }}>
+                      <div
+                        style={{
+                          fontFamily: '"Cormorant Garamond", serif',
+                          marginBottom: 6,
+                          color: "#0b0f14",
+                        }}
+                      >
+                        Pases a confirmar:
+                      </div>
+
+                      <select
+                        value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
+                        onChange={(e) => setPasesConfirmados(Number(e.target.value))}
+                        style={styles.select}
+                        disabled={rsvpStatus === "saving"}
+                      >
+                        {Array.from({ length: maxPases }, (_, i) => i + 1).map((n) => (
+                          <option key={n} value={n}>
+                            {n} {n === 1 ? "pase" : "pases"}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  <div style={styles.rsvpRow}>
+                    <button
+                      style={styles.btnPrimary}
+                      onClick={() => confirmar("Sí")}
+                      disabled={rsvpStatus === "saving"}
+                    >
+                      Sí asistiré
+                    </button>
+
+                    <button
+                      style={styles.btn}
+                      onClick={() => confirmar("No")}
+                      disabled={rsvpStatus === "saving"}
+                    >
+                      No podré asistir
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {rsvpStatus === "saving" && <div style={styles.hint}>Guardando tu confirmación…</div>}
+              {rsvpStatus === "error" && <div style={styles.statusErr}>{rsvpError}</div>}
+
+              <div style={styles.hint}>
+                Tip: tu enlace debe incluir <code>?id=AV001</code> (cada invitado tiene un ID).
+              </div>
+            </div>
+
+            <div style={styles.note}>
+              *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }
