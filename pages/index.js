@@ -717,12 +717,14 @@ export default function Home() {
   const styles = {
     page: {
       minHeight: "100vh",
-      padding: "72px 18px",
-      background:
-        "radial-gradient(1200px 600px at 50% -10%, rgba(122, 170, 220, 0.25), rgba(248, 251, 255, 1) 60%)",
-      color: "#13202D",
+      padding: "120px 18px",
+      backgroundImage: "url('/floral-frame.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
       display: "flex",
       justifyContent: "center",
+      alignItems: "center",
     },
     card: {
       width: "100%",
