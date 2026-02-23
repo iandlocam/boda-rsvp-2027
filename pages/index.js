@@ -1392,6 +1392,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
+{/* ✅ Dress code */}
+<div style={{ ...styles.section, position: "relative", zIndex: 2 }}>
+  <div style={styles.sectionTitleCenterBig}>{DRESS_CODE.title}</div>
+  <div style={styles.softBox}>
+    <p style={{ ...styles.sectionText, textAlign: "center" }}>{DRESS_CODE.text}</p>
+  </div>
+</div>
 
             {/* ✅ (4) Ubicación con LINKS restaurados */}
             <div style={styles.section}>
