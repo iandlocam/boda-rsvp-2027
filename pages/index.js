@@ -18,598 +18,312 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
   return data;
 }
 
-/* ================================
-   MONOGRAMA ELEGANTE ENTRELAZADO
-================================ */
-
-function MonogramaAV({ size = 70 }) {
+/** ✅ Monograma AV (limpio, elegante, tipo sello) */
+function MonogramaAV({ size = 60, color = "rgba(19,32,45,0.86)" }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 120 120">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 120 120"
+      aria-hidden="true"
+      focusable="false"
+      style={{ display: "block" }}
+    >
       <defs>
-        <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="rgba(176,141,87,0.8)" />
-          <stop offset="100%" stopColor="rgba(19,32,45,0.25)" />
+        <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="rgba(176,141,87,0.78)" />
+          <stop offset="1" stopColor="rgba(19,32,45,0.18)" />
         </linearGradient>
       </defs>
 
+      {/* anillo */}
       <circle
         cx="60"
         cy="60"
-        r="54"
+        r="48"
         fill="none"
-        stroke="url(#ringGrad)"
-        strokeWidth="2"
+        stroke="url(#ring)"
+        strokeWidth="2.2"
+        opacity="0.9"
+      />
+      <circle
+        cx="60"
+        cy="60"
+        r="44"
+        fill="none"
+        stroke="rgba(255,255,255,0.30)"
+        strokeWidth="1.2"
       />
 
-      {/* A curva */}
+      {/* AV monograma sobrio */}
       <path
-        d="M34 82 Q60 28 86 82"
+        d="M34 78 L46 38 L58 78"
         fill="none"
-        stroke="rgba(19,32,45,0.9)"
-        strokeWidth="3"
+        stroke={color}
+        strokeWidth="3.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M40 62 H52"
+        fill="none"
+        stroke={color}
+        strokeWidth="3.0"
         strokeLinecap="round"
       />
-
-      {/* V entrelazada */}
       <path
-        d="M46 58 Q60 90 74 58"
+        d="M66 40 L80 78 L94 40"
         fill="none"
-        stroke="rgba(19,32,45,0.9)"
-        strokeWidth="3"
+        stroke={color}
+        strokeWidth="3.2"
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
 }
 
-/* ================================
-   SELLO DORADO REALISTA
-================================ */
-
-function WaxSeal({ onClick, size = 120 }) {
+/** ✅ Sello “dorado” (borde irregular + relieve + brillo) */
+function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   return (
     <div
-      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      aria-label="Abrir invitación"
+      onClick={disabled ? undefined : onClick}
+      onKeyDown={(e) => {
+        if (disabled) return;
+        if (e.key === "Enter" || e.key === " ") onClick?.();
+      }}
       style={{
         width: size,
         height: size,
-        cursor: "pointer",
+        cursor: disabled ? "default" : "pointer",
+        userSelect: "none",
         position: "relative",
+        display: "grid",
+        placeItems: "center",
       }}
     >
-      <svg width={size} height={size} viewBox="0 0 120 120">
+      <svg width={size} height={size} viewBox="0 0 120 120" aria-hidden="true">
         <defs>
-          <radialGradient id="goldGrad" cx="35%" cy="30%" r="70%">
-            <stop offset="0%" stopColor="#fff9d6" />
-            <stop offset="40%" stopColor="#e3c46a" />
-            <stop offset="70%" stopColor="#c9a44b" />
-            <stop offset="100%" stopColor="#8f6b22" />
+          <filter id="sShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="10" stdDeviation="7" floodColor="rgba(0,0,0,0.24)" />
+            <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="rgba(0,0,0,0.18)" />
+          </filter>
+
+          {/* dorado realista */}
+          <radialGradient id="goldWax" cx="28%" cy="22%" r="85%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.70)" />
+            <stop offset="14%" stopColor="rgba(255,255,255,0.14)" />
+            <stop offset="44%" stopColor="rgba(243,226,166,1)" />
+            <stop offset="70%" stopColor="rgba(214,178,94,1)" />
+            <stop offset="100%" stopColor="rgba(122,91,34,1)" />
           </radialGradient>
+
+          <radialGradient id="goldShine" cx="20%" cy="18%" r="48%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.90)" />
+            <stop offset="70%" stopColor="rgba(255,255,255,0)" />
+          </radialGradient>
+
+          {/* forma irregular tipo cera */}
+          <path
+            id="blob"
+            d="M60 7
+               C76 8, 96 16, 107 30
+               C118 44, 118 62, 111 79
+               C104 96, 88 110, 69 113
+               C50 116, 31 111, 19 98
+               C7 85, 4 66, 9 49
+               C14 32, 27 18, 44 11
+               C50 9, 55 7, 60 7Z"
+          />
         </defs>
 
-        <path
-          d="M60 6
-             C82 8 108 24 112 50
-             C116 76 94 104 64 110
-             C34 116 8 96 6 66
-             C4 36 26 10 60 6Z"
-          fill="url(#goldGrad)"
-        />
+        <g filter="url(#sShadow)">
+          <use href="#blob" fill="url(#goldWax)" />
+          <use href="#blob" fill="url(#goldShine)" opacity="0.55" />
+          <use href="#blob" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" />
+          <use href="#blob" fill="none" stroke="rgba(122,91,34,0.28)" strokeWidth="1.3" />
 
-        <text
-          x="60"
-          y="68"
-          textAnchor="middle"
-          fontFamily='"Great Vibes", cursive'
-          fontSize="32"
-          fill="rgba(19,32,45,0.9)"
-        >
-          Abrir
-        </text>
+          {/* relieve central (grabado AV) */}
+          <path
+            d="M42 76 L52 44 L62 76"
+            fill="none"
+            stroke="rgba(60,45,18,0.40)"
+            strokeWidth="2.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.9"
+          />
+          <path
+            d="M47 64 H57"
+            fill="none"
+            stroke="rgba(60,45,18,0.40)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            opacity="0.9"
+          />
+          <path
+            d="M66 46 L78 76 L90 46"
+            fill="none"
+            stroke="rgba(60,45,18,0.40)"
+            strokeWidth="2.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.9"
+          />
+
+          {/* highlight fino para “metal” */}
+          <path
+            d="M26 44 C38 26, 58 18, 78 22"
+            fill="none"
+            stroke="rgba(255,255,255,0.35)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            opacity="0.55"
+          />
+        </g>
       </svg>
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "grid",
+          placeItems: "center",
+          pointerEvents: "none",
+          transform: "translateY(-1px)",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: '"Great Vibes", cursive',
+            fontSize: 32,
+            color: "rgba(19,32,45,0.85)", // ✅ texto oscuro sobre dorado
+            textShadow: "0 1px 0 rgba(255,255,255,0.25), 0 10px 22px rgba(0,0,0,0.20)",
+            letterSpacing: "0.01em",
+          }}
+        >
+          {label}
+        </div>
+      </div>
     </div>
   );
 }
 
-/* ================================
-   FLORES ORGÁNICAS + FONDO MARFIL
-================================ */
+/** ✅ Íconos sobrios (línea) */
+function TimelineIcon({ type = "ceremony", size = 44 }) {
+  const common = {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "rgba(19,32,45,0.86)",
+    strokeWidth: 1.6,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+  };
 
-function FloralBackground() {
-  return (
-    <>
-      {/* Esquina superior izquierda */}
-      <img
-        src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=600&q=60"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: 260,
-          opacity: 0.55,
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Esquina superior derecha */}
-      <img
-        src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=600&q=60"
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: 260,
-          opacity: 0.55,
-          pointerEvents: "none",
-          transform: "scaleX(-1)",
-        }}
-      />
-
-      {/* Inferior izquierda */}
-      <img
-        src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=600&q=60"
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: 300,
-          opacity: 0.55,
-          pointerEvents: "none",
-          transform: "scaleY(-1)",
-        }}
-      />
-
-      {/* Inferior derecha */}
-      <img
-        src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=600&q=60"
-        style={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          width: 300,
-          opacity: 0.55,
-          pointerEvents: "none",
-          transform: "scale(-1,-1)",
-        }}
-      />
-    </>
-  );
-}
-
-/* ================================
-   COMPONENTE PRINCIPAL
-================================ */
-
-export default function Home() {
-  const router = useRouter();
-
-  const weddingDateMs = useMemo(
-    () => new Date("2027-04-23T16:00:00").getTime(),
-    []
-  );
-
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-
-  const [envelopeOpen, setEnvelopeOpen] = useState(false);
-  const [spotifyEnabled, setSpotifyEnabled] = useState(false);
-
-  const SPOTIFY_URL =
-    "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv?autoplay=1";
-
-  function abrirSobre() {
-    setEnvelopeOpen(true);
-    setTimeout(() => setSpotifyEnabled(true), 100);
+  if (type === "ceremony") {
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M6 10V8a6 6 0 0 1 12 0v2" />
+        <path d="M4 10h16" />
+        <path d="M7 10v9" />
+        <path d="M17 10v9" />
+        <path d="M5 19h14" />
+        <path d="M12 4v2" />
+      </svg>
+    );
   }
-
-  useEffect(() => {
-    const tick = () => {
-      const now = Date.now();
-      const distance = Math.max(0, weddingDateMs - now);
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((distance / 1000 / 60) % 60);
-      const seconds = Math.floor((distance / 1000) % 60);
-
-      setTimeLeft({
-        days: clamp(days),
-        hours: clamp(hours),
-        minutes: clamp(minutes),
-        seconds: clamp(seconds),
-      });
-    };
-
-    tick();
-    const interval = setInterval(tick, 1000);
-    return () => clearInterval(interval);
-  }, [weddingDateMs]);
-
-
+  if (type === "reception") {
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M7 3h10v4a5 5 0 0 1-10 0V3Z" />
+        <path d="M12 12v5" />
+        <path d="M8.5 21h7" />
+      </svg>
+    );
+  }
+  if (type === "dinner") {
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M7 3v7" />
+        <path d="M5.5 3v7" />
+        <path d="M8.5 3v7" />
+        <path d="M7 10v11" />
+        <path d="M14 3v18" />
+        <path d="M18.5 3c-1.7 0-3 1.3-3 3v4h3V6" />
+      </svg>
+    );
+  }
+  if (type === "party") {
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M12 2v4" />
+        <path d="M12 18v4" />
+        <path d="M2 12h4" />
+        <path d="M18 12h4" />
+        <path d="M12 8l1.2 2.5L16 12l-2.8 1.5L12 16l-1.2-2.5L8 12l2.8-1.5L12 8Z" />
+      </svg>
+    );
+  }
+  // close
   return (
-    <>
-      <Head>
-        <title>Andrés & Vanessa — 23 abril 2027</title>
-
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Great+Vibes&display=swap"
-          rel="stylesheet"
-        />
-
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-
-      <div
-        style={{
-          minHeight: "100vh",
-          background: "#f8f3ea",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 20,
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {!envelopeOpen ? (
-          /* ================================
-             SOBRE
-          ================================= */
-          <div
-            style={{
-              width: 560,
-              height: 400,
-              position: "relative",
-              borderRadius: 24,
-              overflow: "hidden",
-              background:
-                "linear-gradient(180deg,#9fb2c4,#889fb5)",
-              boxShadow: "0 30px 60px rgba(0,0,0,0.2)",
-            }}
-          >
-            {/* Papel interno */}
-            <div
-              style={{
-                position: "absolute",
-                top: 80,
-                left: 30,
-                right: 30,
-                bottom: 30,
-                background: "#f8f3ea",
-                borderRadius: 16,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 20,
-                boxShadow: "0 15px 30px rgba(0,0,0,0.15)",
-                transform: envelopeOpen
-                  ? "translateY(-20px)"
-                  : "translateY(20px)",
-                transition: "0.8s ease",
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: '"Cormorant Garamond", serif',
-                  fontSize: 16,
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  color: "#13202D",
-                }}
-              >
-                Andrés & Vanessa
-              </div>
-
-              <div
-                style={{
-                  marginTop: 10,
-                  fontFamily: '"Cormorant Garamond", serif',
-                  fontSize: 14,
-                  letterSpacing: "0.15em",
-                }}
-              >
-                23 · abril · 2027
-              </div>
-
-              <div style={{ marginTop: 20 }}>
-                <MonogramaAV size={70} />
-              </div>
-
-              <div
-                style={{
-                  marginTop: 20,
-                  fontFamily: '"Cormorant Garamond", serif',
-                  fontSize: 14,
-                  opacity: 0.7,
-                }}
-              >
-                Toca el sello para abrir ✨
-              </div>
-            </div>
-
-            {/* Solapa */}
-            <div
-              style={{
-                position: "absolute",
-                width: "100%",
-                height: 260,
-                background:
-                  "linear-gradient(180deg,#a9bbcb,#8fa5ba)",
-                clipPath: "polygon(0 0,100% 0,50% 100%)",
-                transformOrigin: "top",
-                transform: envelopeOpen
-                  ? "rotateX(180deg)"
-                  : "rotateX(0deg)",
-                transition: "transform 1s ease",
-                zIndex: 4,
-              }}
-            />
-
-            {/* Sello */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: 60,
-                left: "50%",
-                transform: "translateX(-50%)",
-                zIndex: 5,
-              }}
-            >
-              <WaxSeal onClick={abrirSobre} />
-            </div>
-          </div>
-        ) : (
-          /* ================================
-             INVITACIÓN ABIERTA
-          ================================= */
-          <div
-            style={{
-              width: 760,
-              maxWidth: "95%",
-              background: "#ffffffdd",
-              borderRadius: 28,
-              padding: 50,
-              textAlign: "center",
-              position: "relative",
-              boxShadow: "0 30px 80px rgba(0,0,0,0.15)",
-            }}
-          >
-            <FloralBackground />
-
-            <div
-              style={{
-                fontFamily: '"Cormorant Garamond", serif',
-                fontSize: 26,
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                marginBottom: 10,
-              }}
-            >
-              Nuestra boda
-            </div>
-
-            <div
-              style={{
-                fontFamily: '"Great Vibes", cursive',
-                fontSize: 76,
-                marginBottom: 10,
-              }}
-            >
-              Andrés & Vanessa
-            </div>
-
-            <div
-              style={{
-                fontFamily: '"Cormorant Garamond", serif',
-                fontSize: 18,
-                marginBottom: 30,
-              }}
-            >
-              Jiutepec, Morelos · Jardín Maroma
-            </div>
-
-            {/* Contador */}
-            <div style={{ display: "flex", justifyContent: "center", gap: 20 }}>
-              {["days", "hours", "minutes", "seconds"].map((k, i) => (
-                <div key={i}>
-                  <div style={{ fontSize: 30 }}>
-                    {timeLeft[k]}
-                  </div>
-                  <div style={{ fontSize: 12 }}>
-                    {k.toUpperCase()}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {spotifyEnabled && (
-              <div style={{ marginTop: 30 }}>
-                <iframe
-                  src={SPOTIFY_URL}
-                  width="300"
-                  height="80"
-                  frameBorder="0"
-                  allow="autoplay; encrypted-media"
-                />
-              </div>
-            )}
-
-
-            {/* =========================
-                ITINERARIO
-            ========================== */}
-
-            <div style={{ marginTop: 60 }}>
-              <div
-                style={{
-                  fontFamily: '"Cormorant Garamond", serif',
-                  fontSize: 26,
-                  marginBottom: 30,
-                }}
-              >
-                Itinerario
-              </div>
-
-              {[
-                { icon: "⛪", title: "Ceremonia", time: "4:00 PM" },
-                { icon: "🥂", title: "Recepción", time: "5:00 PM" },
-                { icon: "🍽", title: "Cena", time: "7:30 PM" },
-                { icon: "🎉", title: "Fiesta", time: "9:00 PM" },
-                { icon: "✨", title: "Cierre", time: "3:00 AM" },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "120px 1fr",
-                    alignItems: "center",
-                    marginBottom: 30,
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: 60,
-                      textAlign: "center",
-                    }}
-                  >
-                    {item.icon}
-                  </div>
-
-                  <div style={{ textAlign: "left" }}>
-                    <div
-                      style={{
-                        fontFamily: '"Cormorant Garamond", serif',
-                        fontSize: 22,
-                        fontWeight: 700,
-                      }}
-                    >
-                      {item.title}
-                    </div>
-
-                    <div
-                      style={{
-                        marginTop: 6,
-                        fontSize: 14,
-                        letterSpacing: "0.15em",
-                      }}
-                    >
-                      {item.time}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* =========================
-                UBICACIÓN
-            ========================== */}
-
-            <div style={{ marginTop: 60 }}>
-              <div
-                style={{
-                  fontFamily: '"Cormorant Garamond", serif',
-                  fontSize: 26,
-                  marginBottom: 20,
-                }}
-              >
-                Ubicación
-              </div>
-
-              <div style={{ display: "flex", gap: 15, justifyContent: "center" }}>
-                <a
-                  href="https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos"
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    padding: "10px 20px",
-                    background: "#d6b25e",
-                    borderRadius: 12,
-                    textDecoration: "none",
-                    color: "#000",
-                  }}
-                >
-                  Google Maps
-                </a>
-
-                <a
-                  href="https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos"
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    padding: "10px 20px",
-                    background: "#eee",
-                    borderRadius: 12,
-                    textDecoration: "none",
-                    color: "#000",
-                  }}
-                >
-                  Waze
-                </a>
-              </div>
-            </div>
-
-            {/* =========================
-                MESA DE REGALOS
-            ========================== */}
-
-            <div style={{ marginTop: 60 }}>
-              <div
-                style={{
-                  fontFamily: '"Cormorant Garamond", serif',
-                  fontSize: 26,
-                  marginBottom: 20,
-                }}
-              >
-                Mesa de regalos
-              </div>
-
-              <div style={{ marginBottom: 20 }}>
-                <a
-                  href="https://www.liverpool.com.mx/"
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ marginRight: 20 }}
-                >
-                  Liverpool
-                </a>
-
-                <a
-                  href="https://www.amazon.com.mx/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Amazon
-                </a>
-              </div>
-
-              <div
-                style={{
-                  background: "#f3f3f3",
-                  padding: 20,
-                  borderRadius: 16,
-                }}
-              >
-                <div>Si deseas apoyarnos en esta nueva etapa:</div>
-                <div style={{ marginTop: 10, fontWeight: 600 }}>
-                  CLABE / Cuenta:
-                </div>
-                <div>000000000000000000</div>
-                <div style={{ marginTop: 10 }}>
-                  Andrés y Vanessa
-                </div>
-              </div>
-            </div>
-
-          </div>
-        )}
-      </div>
-    </>
+    <svg {...common} aria-hidden="true">
+      <path d="M21 12a9 9 0 1 1-9-9" />
+      <path d="M12 7v6l4 2" />
+    </svg>
   );
 }
+
+/**
+ * ✅ Flores MÁS abundantes y “más reales” (sin imágenes externas):
+ * - más clusters
+ * - más hojas
+ * - sombras suaves
+ * - 4 esquinas + sprigs laterales
+ */
+function FloralCorners() {
+  const commonStyle = {
+    position: "absolute",
+    pointerEvents: "none",
+    opacity: 0.62,
+    filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.10))",
+  };
+
+  const defs = (
+    <defs>
+      <linearGradient id="leafG" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stopColor="rgba(75,170,130,0.85)" />
+        <stop offset="1" stopColor="rgba(25,110,80,0.85)" />
+      </linearGradient>
+      <radialGradient id="centerG" cx="40%" cy="35%" r="70%">
+        <stop offset="0" stopColor="rgba(255,255,255,0.95)" />
+        <stop offset="30%" stopColor="rgba(255,255,255,0.60)" />
+        <stop offset="100%" stopColor="rgba(176,141,87,0.80)" />
+      </radialGradient>
+
+      <radialGradient id="petalY" cx="35%" cy="30%" r="85%">
+        <stop offset="0" stopColor="rgba(255,255,255,0.75)" />
+        <stop offset="22%" stopColor="rgba(255,240,180,0.95)" />
+        <stop offset="72%" stopColor="rgba(255,200,64,0.95)" />
+        <stop offset="100%" stopColor="rgba(214,178,94,0.95)" />
+      </radialGradient>
+
+      <radialGradient id="petalB" cx="35%" cy="30%" r="85%">
+        <stop offset="0" stopColor="rgba(255,255,255,0.65)" />
+        <stop offset="28%" stopColor="rgba(170,220,255,0.95)" />
+        <stop offset="78%" stopColor="rgba(80,165,255,0.95)" />
+        <stop offset="100%" stopColor="rgba(40,110,210,0.95)" />
+      </radialGradient>
+
+      <radialGradient id="petalO" cx="35%" cy="30%" r="85%">
+        <stop offset="0" stopColor="rgba(255,255,255,0.65)" />
+        <stop offset="30%" stopColor="rgba(255,210,170,0.95)" />
+        <stop offset="80%" stopColor="rgba(255,150,90,0.95)" />
+        <stop offset="100%" stopColor="rgba(210,95,55,0.95)" />
+      </radialGradient>
+
+      <filter id="softBlur" x="-20%" y="-20%" width="140%" height="140%">
