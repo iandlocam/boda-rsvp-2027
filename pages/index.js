@@ -1407,10 +1407,10 @@ export default function Home() {
     }}
   >
     <div style={{ frontSize: 12, opacity: 0.6, textAlign: "center" }}>
-    Intentando cargar: /dress-code.PNG
+    Intentando cargar: /dress-code.png
       </div>
     <img
-      src="/dress-code.PNG"
+      src="/dress-code.png"
       alt=" "
       style={{
         width: 200,
