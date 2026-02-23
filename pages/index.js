@@ -720,7 +720,7 @@ export default function Home() {
       padding: "120px 18px",
       backgroundImage: "url('/floral-frame.jpg')",
       backgroundSize: "cover",
-      backgroundPosition: "center",
+      backgroundPosition: "center top",
       backgroundRepeat: "no-repeat",
       display: "flex",
       justifyContent: "center",
@@ -1195,41 +1195,46 @@ sealStage: {
       </Head>
 
       <div style={styles.page}>
-        {!envelopeOpen ? (
-          <div style={styles.envelopeStage}>
-            <div style={styles.envelopeWrap}>
-              <div style={styles.envelope}>
-                {/* ✅ Carta */}
-                <div style={styles.envelopePaper}>
-                  <div style={styles.envelopePaperText}>
-                    <div style={{ fontSize: 16, opacity: 0.9 }}>(Invitación)</div>
-                    <div style={styles.envelopeLegend}>Toca el sello para abrir ✨</div>
-  <div style={{ marginBottom: 30 }}>
-  <div style={{ ...styles.smallCaps }}>Nuestra boda</div>
-  <h1 style={nameStyleObj}>Vanessa & Andrés</h1>
-  <div style={styles.subtitle}>23 · abril · 2027</div>
-</div>
-                  </div>
-                </div>
 
-                {/* ✅ Solapa (monograma + nombres + FECHA visible) */}
-                <div style={styles.envelopeFlap}>
-                  <div style={styles.flapContent}>
-                    <MonogramaAV size={58} />
-                    <div style={styles.flapNames}>Vanessa &amp; Andrés</div>
-                    <div style={styles.flapDatePill}>23 · abril · 2027</div>
-                  </div>
-                </div>
+{!envelopeOpen ? (
+  <div style={styles.hero}>
+    {/* Encabezado como referencia */}
+    <div style={{ marginBottom: 22 }}>
+      <div style={styles.smallCaps}>Nuestra boda</div>
+      <h1 style={nameStyleObj}>Andrés &amp; Vanessa</h1>
+      <div style={styles.subtitle}>23 · abril · 2027</div>
+    </div>
 
-                {/* ✅ Sello dorado */}
-                <div style={styles.sealStage}>
-                  <WaxSeal onClick={abrirSobre} disabled={false} label="Abrir" size={112} />
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div style={styles.card}>
+    {/* Sobre editorial */}
+    <div style={styles.envelope3D} onClick={abrirSobre} role="button" tabIndex={0}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && abrirSobre()}
+      aria-label="Abrir invitación"
+    >
+      {/* sombra del sobre */}
+      <div style={styles.envShadow} />
+
+      {/* cuerpo */}
+      <div style={styles.envBody} />
+
+      {/* solapa */}
+      <div style={styles.envFlap} />
+
+      {/* sello */}
+      <div style={styles.envSeal}>
+        <WaxSeal onClick={abrirSobre} disabled={false} label="Abrir" size={112} />
+      </div>
+    </div>
+
+    <div style={{ marginTop: 18, ...styles.smallCaps, fontSize: 13, letterSpacing: "0.18em" }}>
+      Click para abrir la invitación
+    </div>
+  </div>
+) : (
+  <div style={styles.card}>
+    ...
+  </div>
+)}
+  
             {/* ✅ flores (más abundantes) */}
             <FloralCorners />
 
