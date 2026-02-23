@@ -693,6 +693,11 @@ export default function Home() {
     { time: "7:30 PM", title: "Cena", iconType: "dinner" },
     { time: "9:00 PM", title: "Fiesta", iconType: "party" },
     { time: "3:00 AM", title: "Cierre", iconType: "close" },
+    const DRESS_CODE = {
+    title: "Dress code",
+    text:
+      "Formal / jardín elegante. Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
+  };
   ];
 
   // ✅ Mesa de regalos (logos)
