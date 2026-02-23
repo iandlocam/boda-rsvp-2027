@@ -1233,7 +1233,6 @@ sealStage: {
   <div style={styles.card}>
     ...
   </div>
-)}
   
             {/* ✅ flores (más abundantes) */}
             <FloralCorners />
