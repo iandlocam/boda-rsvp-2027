@@ -1408,7 +1408,7 @@ export default function Home() {
     Intentando cargar: /dress-code.PNG
       </div>
     <img
-      src="/dress-code.png"
+      src="/dress-code.PNG"
       alt="Dress code formal"
       style={{
         width: 200,
