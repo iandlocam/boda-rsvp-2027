@@ -1304,7 +1304,7 @@ envelopeLegend: {
 </div>
     
     
-            {/* ✅ flores (más abundantes) */}
+            {/*✅ flores (más abundantes)*/}
             <FloralCorners />
 
             <div style={styles.smallCaps}>Nuestra boda</div>
