@@ -1255,7 +1255,7 @@ envelopeLegend: {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`textarea::placeholder { color: #000; opacity: 0.6; }`}</style>
       </Head>
-
+  
       <div style={styles.page}>
         {!envelopeOpen ? (
     <div style={styles.envelopeStage}>
@@ -1302,6 +1302,8 @@ envelopeLegend: {
     </div>
   </div>
 </div>
+) : (
+  <div style={styles.card}>
     
     {/* ✅ flores (más abundantes) */}
 <FloralCorners />
@@ -1597,6 +1599,8 @@ envelopeLegend: {
 
             <div style={styles.note}>
               *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
+                </div>
+                )}
             </div>
           </div>
         )}
