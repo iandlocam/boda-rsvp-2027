@@ -1077,6 +1077,12 @@ sealStage: {
   transform: "translateX(-50%)",
   zIndex: 10,
 },
+envelopeLegend: {
+  marginTop: 10,
+  fontFamily: '"Cormorant Garamond", serif',
+  fontSize: 14,
+  color: "rgba(19,32,45,0.62)",
+},
 
     // Mesa regalos / money
     logoBtn: {
