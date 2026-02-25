@@ -1303,10 +1303,8 @@ envelopeLegend: {
   </div>
 </div>
     
-    
-            {/*✅ flores (más abundantes)*/}
-            <FloralCorners />
-
+    {/* ✅ flores (más abundantes) */}
+<FloralCorners />
             <div style={styles.smallCaps}>Nuestra boda</div>
             <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
             <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
