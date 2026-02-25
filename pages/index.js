@@ -960,27 +960,36 @@ export default function Home() {
       width: "100%",
       maxWidth: 760,
       display: "flex",
+      flexDirection: "colum",
       justifyContent: "center",
       alignItems: "center",
       padding: "12px 0",
     },
     envelopeWrap: {
   width: "100%",
-  maxWidth: 520,
+  maxWidth: 560,
   position: "relative",
-  margin: "0 auto",
   textAlign: "center",
+  cursor: "pointer",
 },
 
 envelope: {
   width: "100%",
-  height: 260,
+  height: 2320,
   position: "relative",
-  borderRadius: 18,
-  background: "linear-gradient(180deg, #eef2f6, #dce3ea)", // azul grisáceo suave
-  boxShadow:
-    "0 30px 60px rgba(0,0,0,0.12), 0 8px 18px rgba(0,0,0,0.08)",
+  borderRadius: 22,
   overflow: "hidden",
+  border: "1px solid rgba(31,65,95,0.14)",
+  background: "linear-gradient(180deg, rgba(160,176,190,0.92),rgba(140,160,178,0.92))",
+  boxShadow: "0 24px 60px rgba(12,22,33,0.14)",
+  perspective: 1200,
+},
+envShadow: {
+  position: "absolute",
+  inset: 0,
+  background: "radial-gradient(60% 60% at 50% 85%, rgba(0,0,0,0.18), transparent 60%)",
+  opacity: 0.55,
+  pointerEvents: "none",
 },
 
 envelopeFlap: {
@@ -1197,38 +1206,62 @@ sealStage: {
       <div style={styles.page}>
         {!envelopeOpen ? (
           <div style={styles.envelopeStage}>
-            <div style={styles.envelopeWrap}>
-              <div style={styles.envelope}>
-                {/* ✅ Carta */}
-                <div style={styles.envelopePaper}>
-                  <div style={styles.envelopePaperText}>
-                    <div style={{ fontSize: 16, opacity: 0.9 }}>(Invitación)</div>
-                    <div style={styles.envelopeLegend}>Toca el sello para abrir ✨</div>
-  <div style={{ marginBottom: 30 }}>
-  <div style={{ ...styles.smallCaps }}>Nuestra boda</div>
-  <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
-  <div style={styles.subtitle}>23 · abril · 2027</div>
-</div>
-                  </div>
-                </div>
+    {/* Encabezado arriba (NO dentro de la carta) */}
+    <div style={{ marginBottom: 22, textAlign: "center" }}>
+      <div style={styles.smallCaps}>Nuestra boda</div>
+      <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
+      <div style={styles.subtitle}>23 · abril · 2027</div>
+    </div>
 
-                {/* ✅ Solapa (monograma + nombres + FECHA visible) */}
-                <div style={styles.envelopeFlap}>
-                  <div style={styles.flapContent}>
-                    <MonogramaAV size={58} />
-                    <div style={styles.flapNames}>Vanessa &amp; Andrés</div>
-                    <div style={styles.flapDatePill}>23 · abril · 2027</div>
-                  </div>
-                </div>
+    {/* Sobre “realista” */}
+    <div
+      style={styles.envelopeWrap}
+      role="button"
+      tabIndex={0}
+      onClick={abrirSobre}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") abrirSobre();
+      }}
+      aria-label="Abrir invitación"
+    >
+      <div style={styles.envelope}>
+        {/* sombra suave */}
+        <div style={styles.envShadow} />
 
-                {/* ✅ Sello dorado */}
-                <div style={styles.sealStage}>
-                  <WaxSeal onClick={abrirSobre} disabled={false} label="Abrir" size={112} />
-                </div>
-              </div>
-            </div>
+        {/* “carta” asomándose */}
+        <div style={styles.envPaperPeek}>
+          <div style={styles.envPaperPeekInner}>
+            <div style={{ fontSize: 14, opacity: 0.9 }}>(Invitación)</div>
+            <div style={styles.envelopeLegend}>Toca el sello para abrir ✨</div>
           </div>
-        ) : (
+        </div>
+
+        {/* bolsillo del sobre (frente) */}
+        <div style={styles.envPocket} />
+        <div style={styles.envPocketSideLeft} />
+        <div style={styles.envPocketSideRight} />
+
+        {/* solapa que abre */}
+        <div style={styles.envelopeFlap}>
+          <div style={styles.flapContent}>
+            <MonogramaAV size={56} />
+            <div style={styles.flapNames}>Vanessa &amp; Andrés</div>
+            <div style={styles.flapDatePill}>23 · abril · 2027</div>
+          </div>
+        </div>
+
+        {/* sello */}
+        <div style={styles.sealStage} onClick={(e) => e.stopPropagation()}>
+          <WaxSeal onClick={abrirSobre} disabled={false} label="Abrir" size={112} />
+        </div>
+      </div>
+
+      <div style={{ marginTop: 14, ...styles.smallCaps, fontSize: 13, letterSpacing: "0.18em" }}>
+        Click para abrir la invitación
+      </div>
+    </div>
+  </div>
+) : (
           <div style={styles.card}>
             {/* ✅ flores (más abundantes) */}
             <FloralCorners />
