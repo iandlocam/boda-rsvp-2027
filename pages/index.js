@@ -1295,7 +1295,7 @@ sealStage: {
       </div>
     </div>
   </div>
-</div>
+
     
     
             {/* ✅ flores (más abundantes) */}
