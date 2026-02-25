@@ -1275,7 +1275,7 @@ sealStage: {
             Vanessa &amp; Andrés
           </div>
           <div style={styles.subtitle}>23 · abril · 2027</div>
-      
+          <div style={{ ...styles.envelopeLegend, marginTop:10 }}>
             Toca el sello para abrir ✨
           </div>
         </div>
