@@ -957,15 +957,16 @@ export default function Home() {
 
     // ✅ Sobre
     envelopeStage: {
-      width: "100%",
-      maxWidth: 760,
-      display: "flex",
-      flexDirection: "colum",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: "12px 0",
-    },
-    envelopeWrap: {
+  width: "100%",
+  maxWidth: 760,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "12px 0",
+},
+
+envelopeWrap: {
   width: "100%",
   maxWidth: 560,
   position: "relative",
@@ -975,15 +976,16 @@ export default function Home() {
 
 envelope: {
   width: "100%",
-  height: 2320,
+  height: 320,
   position: "relative",
   borderRadius: 22,
   overflow: "hidden",
   border: "1px solid rgba(31,65,95,0.14)",
-  background: "linear-gradient(180deg, rgba(160,176,190,0.92),rgba(140,160,178,0.92))",
+  background: "linear-gradient(180deg, rgba(160,176,190,0.92), rgba(140,160,178,0.92))",
   boxShadow: "0 24px 60px rgba(12,22,33,0.14)",
   perspective: 1200,
 },
+
 envShadow: {
   position: "absolute",
   inset: 0,
@@ -992,43 +994,88 @@ envShadow: {
   pointerEvents: "none",
 },
 
+envPaperPeek: {
+  position: "absolute",
+  left: 22,
+  right: 22,
+  top: 26,
+  height: 170,
+  borderRadius: 16,
+  background: "linear-gradient(180deg, rgba(252,248,240,0.98), rgba(248,242,232,0.98))",
+  border: "1px solid rgba(176,141,87,0.22)",
+  boxShadow: "0 10px 26px rgba(0,0,0,0.10)",
+  transform: envelopeOpen ? "translateY(-18px)" : "translateY(0px)",
+  transition: "transform 900ms cubic-bezier(0.2,0.85,0.2,1)",
+  zIndex: 1,
+  display: "grid",
+  placeItems: "center",
+  padding: 14,
+},
+
+envPaperPeekInner: {
+  textAlign: "center",
+  fontFamily: '"Cormorant Garamond", serif',
+  color: "rgba(19,32,45,0.80)",
+},
+
+envPocket: {
+  position: "absolute",
+  left: 0,
+  right: 0,
+  bottom: 0,
+  height: 190,
+  background: "linear-gradient(180deg, rgba(150,168,186,0.98), rgba(122,144,166,0.98))",
+  zIndex: 3,
+  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.35)",
+},
+
+envPocketSideLeft: {
+  position: "absolute",
+  left: 0,
+  bottom: 0,
+  width: "55%",
+  height: 190,
+  background: "linear-gradient(180deg, rgba(160,176,190,0.95), rgba(128,150,172,0.95))",
+  clipPath: "polygon(0 0, 100% 100%, 0 100%)",
+  zIndex: 4,
+  opacity: 0.85,
+},
+
+envPocketSideRight: {
+  position: "absolute",
+  right: 0,
+  bottom: 0,
+  width: "55%",
+  height: 190,
+  background: "linear-gradient(180deg, rgba(160,176,190,0.95), rgba(128,150,172,0.95))",
+  clipPath: "polygon(100% 0, 100% 100%, 0 100%)",
+  zIndex: 4,
+  opacity: 0.80,
+},
+
 envelopeFlap: {
   position: "absolute",
   left: 0,
   right: 0,
   top: 0,
-  height: 160,
-  background: "linear-gradient(180deg, #e4ebf2, #cfd9e3)",
-  clipPath: "polygon(0 0, 100% 0, 50% 100%)",
-  transition: "transform 900ms cubic-bezier(0.2,0.85,0.2,1)",
-  transformOrigin: "top",
+  height: 190,
+  transformOrigin: "top center",
+  transformStyle: "preserve-3d",
   transform: envelopeOpen ? "rotateX(180deg)" : "rotateX(0deg)",
-  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-},
-
-envelopePaper: {
-  position: "absolute",
-  left: 18,
-  right: 18,
-  bottom: 18,
-  top: 40,
-  borderRadius: 14,
-  background:
-    "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(248,242,232,0.95))",
-  boxShadow: "0 12px 24px rgba(0,0,0,0.12)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  transform: envelopeOpen ? "translateY(-18px)" : "translateY(20px)",
-  transition: "transform 900ms cubic-bezier(0.2,0.85,0.2,1)",
+  transition: "transform 980ms cubic-bezier(0.2, 0.85, 0.2, 1)",
+  background: "linear-gradient(180deg, rgba(170,186,202,0.98), rgba(140,160,178,0.98))",
+  clipPath: "polygon(0 0, 100% 0, 50% 100%)",
+  borderBottom: "1px solid rgba(31,65,95,0.14)",
+  backfaceVisibility: "hidden",
+  zIndex: 6,
 },
 
 sealStage: {
   position: "absolute",
   left: "50%",
-  top: 140,
+  top: 168,
   transform: "translateX(-50%)",
-  zIndex: 5,
+  zIndex: 10,
 },
 
     // Mesa regalos / money
