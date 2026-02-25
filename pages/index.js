@@ -1598,10 +1598,9 @@ envelopeLegend: {
 
             <div style={styles.note}>
               *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
-                </div>
-                )}
+              
             </div>
-         
+          </div>
         )}
       </div>
     </>
