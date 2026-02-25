@@ -1077,12 +1077,7 @@ sealStage: {
   transform: "translateX(-50%)",
   zIndex: 10,
 },
-envelopeLegend: {
-  marginTop: 10,
-  fontFamily: '"Cormorant Garamond", serif',
-  fontSize: 14,
-  color: "rgba(19,32,45,0.62)",
-},
+
 
     // Mesa regalos / money
     logoBtn: {
@@ -1281,7 +1276,7 @@ envelopeLegend: {
             Vanessa &amp; Andrés
           </div>
           <div style={styles.subtitle}>23 · abril · 2027</div>
-          <div style={{ ...styles.envelopeLegend, marginTop:10 }}>
+       
             Toca el sello para abrir ✨
           </div>
         </div>
