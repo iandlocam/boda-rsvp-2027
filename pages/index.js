@@ -1296,7 +1296,6 @@ sealStage: {
       </div>
     </div>
   </div>
-</div>
 ) : (
   <div style={styles.card}>
     {/* ✅ flores (más abundantes) */}
