@@ -1183,7 +1183,7 @@ sealStage: {
   return (
     <>
       <Head>
-        <title>Vanessa & Andrés — 23 abril 2027</title>
+        <title>Vanessa &amp; Andrés — 23 abril 2027</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link
@@ -1206,7 +1206,7 @@ sealStage: {
                     <div style={styles.envelopeLegend}>Toca el sello para abrir ✨</div>
   <div style={{ marginBottom: 30 }}>
   <div style={{ ...styles.smallCaps }}>Nuestra boda</div>
-  <h1 style={nameStyleObj}>Vanessa & Andrés</h1>
+  <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
   <div style={styles.subtitle}>23 · abril · 2027</div>
 </div>
                   </div>
