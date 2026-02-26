@@ -511,7 +511,8 @@ function BrandLogo({ type = "liverpool" }) {
 export default function Home() {
   const router = useRouter();
 
-  const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
+  // 🔴 CAMBIA ESTO POR TU FECHA REAL
+  const weddingDateMs = useMemo(() => new Date("2026-01-24T16:00:00").getTime(), []);
 
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -955,118 +956,122 @@ export default function Home() {
       textTransform: "uppercase",
     },
 
-   // ✅ Sobre (upgrade realista)
-envelope: {
-  width: "100%",
-  height: 340,
-  position: "relative",
-  borderRadius: 22,
-  overflow: "hidden",
-  border: "1px solid rgba(31,65,95,0.12)",
-  background: "linear-gradient(180deg, rgba(245,246,248,0.92), rgba(236,238,242,0.92))",
-  boxShadow: "0 30px 70px rgba(12,22,33,0.16)",
-  perspective: 1400,
-},
-
-envShadow: {
-  position: "absolute",
-  inset: 0,
-  background: "radial-gradient(65% 55% at 50% 86%, rgba(0,0,0,0.22), transparent 62%)",
-  opacity: 0.55,
-  pointerEvents: "none",
-  zIndex: 0,
-},
-
-// Papel asomando (más “carta”)
-envPaperPeek: {
-  position: "absolute",
-  left: 22,
-  right: 22,
-  top: 18,
-  height: 200,
-  borderRadius: 18,
-  background: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,242,232,0.98))",
-  border: "1px solid rgba(176,141,87,0.22)",
-  boxShadow: "0 12px 28px rgba(0,0,0,0.12)",
-  transform: envelopeOpen ? "translateY(-26px)" : "translateY(0px)",
-  transition: "transform 980ms cubic-bezier(0.2,0.85,0.2,1)",
-  zIndex: 2,
-  display: "grid",
-  placeItems: "center",
-  padding: 16,
-},
-
-envPaperPeekInner: {
-  textAlign: "center",
-  fontFamily: '"Cormorant Garamond", serif',
-  color: "rgba(19,32,45,0.82)",
-},
-
-// Bolsillo del sobre (verde oliva)
-envPocket: {
-  position: "absolute",
-  left: 0,
-  right: 0,
-  bottom: 0,
-  height: 210,
-  background: "linear-gradient(180deg, rgba(126,138,118,0.98), rgba(97,112,90,0.98))",
-  zIndex: 5,
-  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.30)",
-},
-
-// Laterales (dan pliegue)
-envPocketSideLeft: {
-  position: "absolute",
-  left: 0,
-  bottom: 0,
-  width: "56%",
-  height: 210,
-  background: "linear-gradient(180deg, rgba(140,152,132,0.95), rgba(92,108,86,0.95))",
-  clipPath: "polygon(0 0, 100% 100%, 0 100%)",
-  zIndex: 6,
-  opacity: 0.88,
-},
-envPocketSideRight: {
-  position: "absolute",
-  right: 0,
-  bottom: 0,
-  width: "56%",
-  height: 210,
-  background: "linear-gradient(180deg, rgba(140,152,132,0.95), rgba(92,108,86,0.95))",
-  clipPath: "polygon(100% 0, 100% 100%, 0 100%)",
-  zIndex: 6,
-  opacity: 0.82,
-},
-
-// Solapa (la “tapa” con brillo realista)
-envelopeFlap: {
-  position: "absolute",
-  left: 0,
-  right: 0,
-  top: 0,
-  height: 205,
-  transformOrigin: "top center",
-  transformStyle: "preserve-3d",
-  transform: envelopeOpen ? "rotateX(180deg)" : "rotateX(0deg)",
-  transition: "transform 980ms cubic-bezier(0.2, 0.85, 0.2, 1)",
-  background:
-    "linear-gradient(180deg, rgba(155,165,145,0.98), rgba(103,118,94,0.98))",
-  clipPath: "polygon(0 0, 100% 0, 50% 100%)",
-  borderBottom: "1px solid rgba(31,65,95,0.10)",
-  backfaceVisibility: "hidden",
-  zIndex: 8,
-  boxShadow: "0 10px 18px rgba(0,0,0,0.10)",
-},
-
-// Coloca el sello donde “cierra” la solapa
-sealStage: {
-  position: "absolute",
-  left: "50%",
-  top: 170,
-  transform: "translateX(-50%)",
-  zIndex: 12,
-},
-
+    // ✅ SOBRE PERSONALIZADO - NUEVO DISEÑO (como en tu imagen)
+    envelopeWrap: {
+      width: "100%",
+      maxWidth: 600,
+      margin: "0 auto",
+      cursor: "pointer",
+      position: "relative",
+      zIndex: 10,
+      transition: "transform 0.3s ease",
+    },
+    envelope: {
+      width: "100%",
+      aspectRatio: "0.85/1",
+      position: "relative",
+      borderRadius: 30,
+      overflow: "hidden",
+      background: "#F9E5D2",
+      boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)",
+      border: "4px solid #FFFFFF",
+      padding: "25px 20px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "center",
+      textAlign: "center",
+    },
+    envelopeContent: {
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "20px 0",
+    },
+    envelopeTopText: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 18,
+      letterSpacing: "4px",
+      textTransform: "uppercase",
+      color: "rgba(19,32,45,0.7)",
+      marginTop: 20,
+    },
+    envelopeNames: {
+      fontFamily: '"Great Vibes", cursive',
+      fontSize: 52,
+      lineHeight: 1.1,
+      margin: "10px 0",
+      color: "#13202D",
+      textShadow: "0 2px 4px rgba(0,0,0,0.1)",
+    },
+    envelopeDate: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 24,
+      fontWeight: 600,
+      letterSpacing: "2px",
+      color: "#B86B6B",
+      margin: "5px 0",
+    },
+    envelopeClickText: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      color: "rgba(19,32,45,0.6)",
+      margin: "10px 0",
+      borderTop: "1px dashed rgba(184,107,107,0.3)",
+      borderBottom: "1px dashed rgba(184,107,107,0.3)",
+      padding: "12px 0",
+      width: "100%",
+    },
+    reservedSection: {
+      marginTop: 10,
+      marginBottom: 20,
+      textAlign: "center",
+    },
+    reservedText: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      color: "rgba(19,32,45,0.7)",
+      marginBottom: 5,
+    },
+    reservedNumber: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 48,
+      fontWeight: 700,
+      color: "#B86B6B",
+      lineHeight: 1,
+      margin: "5px 0",
+    },
+    reservedSubtext: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 14,
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      color: "rgba(19,32,45,0.6)",
+    },
+    envelopeSeal: {
+      position: "absolute",
+      bottom: 30,
+      right: 30,
+      width: 50,
+      height: 50,
+      borderRadius: "50%",
+      background: "linear-gradient(135deg, #E6C7A8, #D4AF8C)",
+      border: "2px solid #FFFFFF",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "#13202D",
+      fontSize: 20,
+      opacity: 0.7,
+    },
 
     // Mesa regalos / money
     logoBtn: {
@@ -1229,7 +1234,7 @@ sealStage: {
   return (
     <>
       <Head>
-        <title>Vanessa &amp; Andrés — 23 abril 2027</title>
+        <title>Alejandro &amp; Valeria — 24 enero 2026</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link
@@ -1241,56 +1246,69 @@ sealStage: {
       </Head>
   
       <div style={styles.page}>
-        {!envelopeOpen ? (
-    <div style={styles.envelopeStage}>
-  <div
-    style={styles.envelopeWrap}
-    role="button"
-    tabIndex={0}
-    aria-label="Abrir invitación"
-    onClick={abrirSobre}
-    onKeyDown={(e) => {
-      if (e.key === "Enter" || e.key === " ") abrirSobre();
-    }}
-  >
-    <div style={styles.envelope}>
-      {/* sombra suave */}
-      <div style={styles.envShadow} />
-
-      {/* papel asomando */}
-      <div style={styles.envPaperPeek}>
-        <div style={styles.envPaperPeekInner}>
-          <div style={{ ...styles.smallCaps, marginBottom: 8 }}>Nuestra boda</div>
-          <div style={{ ...nameStyleObj, fontSize: 54, margin: "0 0 6px" }}>
-            Vanessa &amp; Andrés
+        {/* SOBRE CERRADO - Exactamente como en tu imagen */}
+        {!envelopeOpen && (
+          <div
+            style={styles.envelopeWrap}
+            role="button"
+            tabIndex={0}
+            aria-label="Abrir invitación"
+            onClick={abrirSobre}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") abrirSobre();
+            }}
+          >
+            <div style={styles.envelope}>
+              <div style={styles.envelopeContent}>
+                {/* NUESTRA BODA */}
+                <div style={styles.envelopeTopText}>
+                  NUESTRA BODA
+                </div>
+                
+                {/* 🔴 CAMBIA ESTOS NOMBRES */}
+                <div style={styles.envelopeNames}>
+                  Alejandro & Valeria
+                </div>
+                
+                {/* 🔴 CAMBIA ESTA FECHA */}
+                <div style={styles.envelopeDate}>
+                  24 · ENERO · 2026
+                </div>
+                
+                {/* CLICK PARA ABRIR */}
+                <div style={styles.envelopeClickText}>
+                  CLICK PARA ABRIR LA INVITACIÓN
+                </div>
+                
+                {/* HEMOS RESERVADO X LUGARES */}
+                <div style={styles.reservedSection}>
+                  <div style={styles.reservedText}>
+                    HEMOS RESERVADO
+                  </div>
+                  <div style={styles.reservedNumber}>
+                    {guestData?.pasesAsignados || 2}
+                  </div>
+                  <div style={styles.reservedSubtext}>
+                    LUGARES EN SU HONOR
+                  </div>
+                </div>
+              </div>
+              
+              {/* Sello decorativo pequeño (opcional) */}
+              <div style={styles.envelopeSeal}>
+                ✦
+              </div>
+            </div>
           </div>
-          <div style={styles.subtitle}>23 · abril · 2027</div>
-       
-            Toca el sello para abrir ✨
-          </div>
-        </div>
-      </div>
+        )}
 
-      {/* bolsillo del sobre */}
-      <div style={styles.envPocket} />
-      <div style={styles.envPocketSideLeft} />
-      <div style={styles.envPocketSideRight} />
-
-      {/* solapa */}
-      <div style={styles.envelopeFlap} />
-
-      {/* sello */}
-      <div style={styles.sealStage}>
-        <WaxSeal onClick={abrirSobre} disabled={false} label="Abrir" size={112} />
-      </div>
-    </div>
-  </div>
-) : (
-  <div style={styles.card}>
-    {/* ✅ flores (más abundantes) */}
-<FloralCorners />
+        {/* INVITACIÓN - Se muestra después de hacer clic */}
+        {envelopeOpen && (
+          <div style={styles.card}>
+            <FloralCorners />
             <div style={styles.smallCaps}>Nuestra boda</div>
-            <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
+            {/* 🔴 CAMBIA ESTOS NOMBRES TAMBIÉN */}
+            <h1 style={nameStyleObj}>Alejandro &amp; Valeria</h1>
             <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
 
             <div style={styles.quote}>
@@ -1319,9 +1337,7 @@ sealStage: {
               </div>
             </div>
 
-            {/* ✅ (3) Quitado el bloque “Ceremonia / Recepción / Cierre” bajo el contador */}
-
-            {/* ✅ Spotify: solo se monta después del click */}
+            {/* Spotify */}
             <div style={styles.spotifyWrap}>
               {spotifyEnabled ? (
                 <iframe
@@ -1368,7 +1384,7 @@ sealStage: {
               <img alt="Foto 2" src={GALLERY_PHOTOS[1]} style={styles.photo} />
             </div>
 
-            {/* ✅ Itinerario */}
+            {/* Itinerario */}
             <div style={styles.section}>
               <div style={styles.sectionTitleCenterBig}>Itinerario</div>
 
@@ -1395,39 +1411,39 @@ sealStage: {
                 </div>
               </div>
             </div>
-{/* ✅ Dress code */}
-<div style={{ ...styles.section, position: "relative", zIndex: 2 }}>
-  <div style={styles.sectionTitleCenterBig}>{DRESS_CODE.title}</div>
 
-  {/* Imagen Dress Code */}
-  <div
-    style={{
-      display: "flex",
-      justifyContent: "center",
-      margin: "18px 0 10px",
-    }}
-  >
-    <img
-      src="/dress-code.png"
-      alt=" "
-      style={{
-        width: 200,
-        maxWidth: "100%",
-        height: "auto",
-        opacity: 0.90,
-        filter: "grayscale(20%) contrast(105%)",
-      }}
-    />
-  </div>
+            {/* Dress code */}
+            <div style={{ ...styles.section, position: "relative", zIndex: 2 }}>
+              <div style={styles.sectionTitleCenterBig}>{DRESS_CODE.title}</div>
 
-  <div style={styles.softBox}>
-    <p style={{ ...styles.sectionText, textAlign: "center" }}>
-      {DRESS_CODE.text}
-    </p>
-  </div>
-</div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "18px 0 10px",
+                }}
+              >
+                <img
+                  src="/dress-code.png"
+                  alt=" "
+                  style={{
+                    width: 200,
+                    maxWidth: "100%",
+                    height: "auto",
+                    opacity: 0.90,
+                    filter: "grayscale(20%) contrast(105%)",
+                  }}
+                />
+              </div>
 
-            {/* ✅ (4) Ubicación con LINKS restaurados */}
+              <div style={styles.softBox}>
+                <p style={{ ...styles.sectionText, textAlign: "center" }}>
+                  {DRESS_CODE.text}
+                </p>
+              </div>
+            </div>
+
+            {/* Ubicación */}
             <div style={styles.section}>
               <div style={styles.sectionTitleCenterBig}>Ubicación</div>
               <div style={styles.softBox}>
@@ -1445,7 +1461,7 @@ sealStage: {
               </div>
             </div>
 
-            {/* ✅ (4) Mesa de regalos + cuenta bancaria restaurados */}
+            {/* Mesa de regalos */}
             <div style={styles.section}>
               <div style={styles.sectionTitleCenterBig}>Mesa de regalos</div>
               <div style={styles.softBox}>
@@ -1581,7 +1597,6 @@ sealStage: {
 
             <div style={styles.note}>
               *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
-              
             </div>
           </div>
         )}
