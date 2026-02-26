@@ -512,7 +512,7 @@ export default function Home() {
   const router = useRouter();
 
   // 🔴 CAMBIA ESTO POR TU FECHA REAL
-  const weddingDateMs = useMemo(() => new Date("2026-01-24T16:00:00").getTime(), []);
+  const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
 
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -1234,7 +1234,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Alejandro &amp; Valeria — 24 enero 2026</title>
+        <title>Vanessa &amp; Andrés — 23 Abril 2027</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link
@@ -1267,12 +1267,12 @@ export default function Home() {
                 
                 {/* 🔴 CAMBIA ESTOS NOMBRES */}
                 <div style={styles.envelopeNames}>
-                  Alejandro & Valeria
+                  Vanessa & Andrés
                 </div>
                 
                 {/* 🔴 CAMBIA ESTA FECHA */}
                 <div style={styles.envelopeDate}>
-                  24 · ENERO · 2026
+                  23 · ABRIL · 2027
                 </div>
                 
                 {/* CLICK PARA ABRIR */}
@@ -1308,7 +1308,7 @@ export default function Home() {
             <FloralCorners />
             <div style={styles.smallCaps}>Nuestra boda</div>
             {/* 🔴 CAMBIA ESTOS NOMBRES TAMBIÉN */}
-            <h1 style={nameStyleObj}>Alejandro &amp; Valeria</h1>
+            <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
             <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
 
             <div style={styles.quote}>
