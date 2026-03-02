@@ -956,7 +956,7 @@ export default function Home() {
       textTransform: "uppercase",
     },
 
-    // ✅ SOBRE PERSONALIZADO - NUEVO DISEÑO (como en tu imagen)
+    // ✅ SOBRE PERSONALIZADO - Manteniendo estructura pero con imagen en la parte superior
     envelopeWrap: {
       width: "100%",
       maxWidth: 600,
@@ -975,45 +975,25 @@ export default function Home() {
       background: "#F9E5D2",
       boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)",
       border: "4px solid #FFFFFF",
-      padding: "25px 20px",
+      display: "flex",
+      flexDirection: "column",
+    },
+    envelopeTopImage: {
+      width: "100%",
+      height: "45%", // Ajusta este porcentaje según necesites
+      objectFit: "cover",
+      objectPosition: "center",
+      display: "block",
+      borderBottom: "2px solid rgba(184,107,107,0.2)",
+    },
+    envelopeContent: {
+      flex: 1,
+      padding: "15px 20px",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
       alignItems: "center",
       textAlign: "center",
-    },
-    envelopeContent: {
-      width: "100%",
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "20px 0",
-    },
-    envelopeTopText: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 18,
-      letterSpacing: "4px",
-      textTransform: "uppercase",
-      color: "rgba(19,32,45,0.7)",
-      marginTop: 20,
-    },
-    envelopeNames: {
-      fontFamily: '"Great Vibes", cursive',
-      fontSize: 52,
-      lineHeight: 1.1,
-      margin: "10px 0",
-      color: "#13202D",
-      textShadow: "0 2px 4px rgba(0,0,0,0.1)",
-    },
-    envelopeDate: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 24,
-      fontWeight: 600,
-      letterSpacing: "2px",
-      color: "#B86B6B",
-      margin: "5px 0",
     },
     envelopeClickText: {
       fontFamily: '"Cormorant Garamond", serif',
@@ -1028,8 +1008,8 @@ export default function Home() {
       width: "100%",
     },
     reservedSection: {
-      marginTop: 10,
-      marginBottom: 20,
+      marginTop: "auto",
+      marginBottom: 10,
       textAlign: "center",
     },
     reservedText: {
@@ -1246,7 +1226,7 @@ export default function Home() {
       </Head>
   
       <div style={styles.page}>
-        {/* SOBRE CERRADO - Exactamente como en tu imagen */}
+        {/* SOBRE CERRADO - CON IMAGEN EN LA PARTE SUPERIOR */}
         {!envelopeOpen && (
           <div
             style={styles.envelopeWrap}
@@ -1259,22 +1239,15 @@ export default function Home() {
             }}
           >
             <div style={styles.envelope}>
+              {/* 🔴 IMAGEN EN LA PARTE SUPERIOR - REEMPLAZA LA RUTA */}
+              <img 
+                src="/ruta-de-tu-imagen.jpg" 
+                alt="Vanessa & Andrés 23/04/2027" 
+                style={styles.envelopeTopImage}
+              />
+              
+              {/* Contenido inferior del sobre (se mantiene) */}
               <div style={styles.envelopeContent}>
-                {/* NUESTRA BODA */}
-                <div style={styles.envelopeTopText}>
-                  NUESTRA BODA
-                </div>
-                
-                {/* 🔴 CAMBIA ESTOS NOMBRES */}
-                <div style={styles.envelopeNames}>
-                  Vanessa & Andrés
-                </div>
-                
-                {/* 🔴 CAMBIA ESTA FECHA */}
-                <div style={styles.envelopeDate}>
-                  23 · ABRIL · 2027
-                </div>
-                
                 {/* CLICK PARA ABRIR */}
                 <div style={styles.envelopeClickText}>
                   CLICK PARA ABRIR LA INVITACIÓN
