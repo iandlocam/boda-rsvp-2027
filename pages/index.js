@@ -1003,7 +1003,7 @@ export default function Home() {
       letterSpacing: "2px",
       textTransform: "uppercase",
       color: "rgba(19,32,45,0.6)",
-      margin: "30px 0 15px 0",
+      margin: "60px 0 15px 0",
       borderTop: "1px dashed rgba(184,107,107,0.3)",
       borderBottom: "1px dashed rgba(184,107,107,0.3)",
       padding: "12px 0",
