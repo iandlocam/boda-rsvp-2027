@@ -956,7 +956,7 @@ export default function Home() {
       textTransform: "uppercase",
     },
 
-    // ✅ SOBRE PERSONALIZADO - Manteniendo estructura pero con imagen en la parte superior
+    // ✅ SOBRE PERSONALIZADO - Con imagen arriba y texto más abajo
     envelopeWrap: {
       width: "100%",
       maxWidth: 600,
@@ -978,22 +978,22 @@ export default function Home() {
       display: "flex",
       flexDirection: "column",
     },
-envelopeTopImage: {
-  width: "calc(100% - 40px)", // Resta 40px del ancho total (20px de cada lado)
-  height: "auto",
-  maxHeight: "160px",
-  objectFit: "contain",
-  objectPosition: "center",
-  display: "block",
-  margin: "20px auto",
-  borderBottom: "2px solid rgba(184,107,107,0.2)",
-},
+    envelopeTopImage: {
+      width: "calc(100% - 40px)",
+      height: "auto",
+      maxHeight: "160px",
+      objectFit: "contain",
+      objectPosition: "center",
+      display: "block",
+      margin: "20px auto 10px",
+      borderBottom: "2px solid rgba(184,107,107,0.2)",
+    },
     envelopeContent: {
       flex: 1,
-      padding: "15px 20px",
+      padding: "0 20px 20px 20px",
       display: "flex",
       flexDirection: "column",
-      justifyContent: "space-between",
+      justifyContent: "flex-end",
       alignItems: "center",
       textAlign: "center",
     },
@@ -1003,7 +1003,7 @@ envelopeTopImage: {
       letterSpacing: "2px",
       textTransform: "uppercase",
       color: "rgba(19,32,45,0.6)",
-      margin: "10px 0",
+      margin: "30px 0 15px 0",
       borderTop: "1px dashed rgba(184,107,107,0.3)",
       borderBottom: "1px dashed rgba(184,107,107,0.3)",
       padding: "12px 0",
@@ -1228,7 +1228,7 @@ envelopeTopImage: {
       </Head>
   
       <div style={styles.page}>
-        {/* SOBRE CERRADO - CON IMAGEN EN LA PARTE SUPERIOR */}
+        {/* SOBRE CERRADO - CON IMAGEN EN LA PARTE SUPERIOR Y TEXTO MÁS ABAJO */}
         {!envelopeOpen && (
           <div
             style={styles.envelopeWrap}
@@ -1241,16 +1241,16 @@ envelopeTopImage: {
             }}
           >
             <div style={styles.envelope}>
-              {/* 🔴 IMAGEN EN LA PARTE SUPERIOR - REEMPLAZA LA RUTA */}
+              {/* IMAGEN EN LA PARTE SUPERIOR */}
               <img 
                 src="/sobre-boda.jpg" 
                 alt="Vanessa & Andrés 23/04/2027" 
                 style={styles.envelopeTopImage}
               />
               
-              {/* Contenido inferior del sobre (se mantiene) */}
+              {/* Contenido inferior del sobre - AHORA MÁS ABAJO */}
               <div style={styles.envelopeContent}>
-                {/* CLICK PARA ABRIR */}
+                {/* CLICK PARA ABRIR - CON MÁS ESPACIO ARRIBA */}
                 <div style={styles.envelopeClickText}>
                   CLICK PARA ABRIR LA INVITACIÓN
                 </div>
