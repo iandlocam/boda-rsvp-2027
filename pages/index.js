@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+  import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -278,139 +278,6 @@ function TimelineIcon({ type = "ceremony", size = 44 }) {
   );
 }
 
-/** ✅ NUEVAS FLORES - Más sutiles, elegantes y delicadas */
-function FloralCorners() {
-  const commonStyle = {
-    position: "absolute",
-    pointerEvents: "none",
-    opacity: 0.4,
-    filter: "drop-shadow(0 5px 8px rgba(0,0,0,0.03))",
-  };
-
-  const defs = (
-    <defs>
-      <linearGradient id="leafSoft" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stopColor="rgba(140, 160, 120, 0.5)" />
-        <stop offset="1" stopColor="rgba(100, 120, 80, 0.4)" />
-      </linearGradient>
-      
-      <radialGradient id="flowerCenter" cx="40%" cy="35%" r="70%">
-        <stop offset="0" stopColor="rgba(255,245,220,0.8)" />
-        <stop offset="70%" stopColor="rgba(220,200,160,0.3)" />
-        <stop offset="100%" stopColor="rgba(180,150,110,0.1)" />
-      </radialGradient>
-
-      <radialGradient id="petalCream" cx="35%" cy="30%" r="85%">
-        <stop offset="0" stopColor="rgba(255,255,240,0.7)" />
-        <stop offset="60%" stopColor="rgba(240,230,200,0.5)" />
-        <stop offset="100%" stopColor="rgba(220,200,170,0.3)" />
-      </radialGradient>
-
-      <radialGradient id="petalLavender" cx="35%" cy="30%" r="85%">
-        <stop offset="0" stopColor="rgba(240,230,255,0.6)" />
-        <stop offset="60%" stopColor="rgba(220,200,240,0.4)" />
-        <stop offset="100%" stopColor="rgba(190,170,210,0.2)" />
-      </radialGradient>
-
-      <radialGradient id="petalPeach" cx="35%" cy="30%" r="85%">
-        <stop offset="0" stopColor="rgba(255,235,220,0.7)" />
-        <stop offset="60%" stopColor="rgba(240,210,180,0.5)" />
-        <stop offset="100%" stopColor="rgba(210,170,140,0.3)" />
-      </radialGradient>
-
-      <filter id="softBlurLow" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur stdDeviation="0.15" />
-      </filter>
-    </defs>
-  );
-
-  const delicateFlower = (x, y, s = 0.5, variant = "cream") => {
-    const petalColor = variant === "lavender" ? "url(#petalLavender)" : 
-                       variant === "peach" ? "url(#petalPeach)" : 
-                       "url(#petalCream)";
-    
-    return (
-      <g transform={`translate(${x} ${y}) scale(${s})`} filter="url(#softBlurLow)">
-        <ellipse cx="0" cy="-12" rx="8" ry="12" fill={petalColor} opacity="0.7" />
-        <ellipse cx="10" cy="-6" rx="8" ry="10" fill={petalColor} opacity="0.7" />
-        <ellipse cx="-10" cy="-6" rx="8" ry="10" fill={petalColor} opacity="0.7" />
-        <ellipse cx="0" cy="8" rx="8" ry="10" fill={petalColor} opacity="0.6" />
-        <ellipse cx="8" cy="2" rx="8" ry="8" fill={petalColor} opacity="0.6" />
-        <ellipse cx="-8" cy="2" rx="8" ry="8" fill={petalColor} opacity="0.6" />
-        <circle cx="0" cy="0" r="5" fill="url(#flowerCenter)" />
-        <circle cx="0" cy="0" r="2" fill="rgba(220,200,150,0.3)" />
-      </g>
-    );
-  };
-
-  const delicateLeaf = (x, y, s = 0.4, rotation = 0) => {
-    return (
-      <g transform={`translate(${x} ${y}) rotate(${rotation}) scale(${s})`}>
-        <path 
-          d="M0,0 C-15,-20 15,-30 0,-40 C-15,-30 15,-20 0,0Z" 
-          fill="url(#leafSoft)" 
-          opacity="0.4"
-        />
-      </g>
-    );
-  };
-
-  const smallBranch = (x, y, scale = 0.6, flip = false) => {
-    const flipTransform = flip ? "scale(-1,1)" : "";
-    
-    return (
-      <g transform={`translate(${x} ${y}) scale(${scale}) ${flipTransform}`}>
-        <path 
-          d="M0,0 C20,-20 40,-30 60,-20" 
-          fill="none" 
-          stroke="rgba(120,140,100,0.3)" 
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-        {delicateFlower(15, -12, 0.5, "cream")}
-        {delicateFlower(35, -25, 0.45, "lavender")}
-        {delicateFlower(50, -18, 0.4, "peach")}
-        {delicateLeaf(25, -20, 0.4, -20)}
-        {delicateLeaf(45, -25, 0.35, 15)}
-      </g>
-    );
-  };
-
-  return (
-    <>
-      <svg width="250" height="200" viewBox="0 0 250 200" aria-hidden="true" style={{ ...commonStyle, left: -20, top: -20 }}>
-        {defs}
-        {smallBranch(30, 150, 0.7, false)}
-      </svg>
-
-      <svg width="250" height="200" viewBox="0 0 250 200" aria-hidden="true" style={{ ...commonStyle, right: -20, top: -20 }}>
-        {defs}
-        {smallBranch(220, 150, 0.7, true)}
-      </svg>
-
-      <svg width="250" height="200" viewBox="0 0 250 200" aria-hidden="true" style={{ ...commonStyle, left: -20, bottom: -20 }}>
-        {defs}
-        {smallBranch(30, 50, 0.7, false)}
-      </svg>
-
-      <svg width="250" height="200" viewBox="0 0 250 200" aria-hidden="true" style={{ ...commonStyle, right: -20, bottom: -20 }}>
-        {defs}
-        {smallBranch(220, 50, 0.7, true)}
-      </svg>
-
-      <svg width="100" height="100" viewBox="0 0 100 100" aria-hidden="true" style={{ ...commonStyle, left: 100, top: 50, opacity: 0.3 }}>
-        {defs}
-        {delicateFlower(20, 30, 0.35, "cream")}
-      </svg>
-
-      <svg width="100" height="100" viewBox="0 0 100 100" aria-hidden="true" style={{ ...commonStyle, right: 100, bottom: 40, opacity: 0.3 }}>
-        {defs}
-        {delicateFlower(20, 30, 0.3, "lavender")}
-      </svg>
-    </>
-  );
-}
-
 /** ✅ Logos sobrios (SVG) como botones */
 function BrandLogo({ type = "liverpool" }) {
   if (type === "amazon") {
@@ -680,10 +547,7 @@ export default function Home() {
     page: {
       minHeight: "100vh",
       padding: "120px 18px",
-      backgroundImage: "url('/floral-frame.jpg')",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
+      backgroundColor: "#ffffff", // Cambiado a blanco sólido
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -691,15 +555,13 @@ export default function Home() {
     card: {
       width: "100%",
       maxWidth: 760,
-      background: "rgba(255,255,255,0.78)",
+      background: "#ffffff", // Fondo blanco sólido
       border: "1px solid rgba(31, 65, 95, 0.12)",
       borderRadius: 22,
       boxShadow: "0 18px 50px rgba(12, 22, 33, 0.10)",
       padding: "52px 22px",
       textAlign: "center",
-      backdropFilter: "blur(6px)",
       position: "relative",
-      overflow: "hidden",
     },
     smallCaps: {
       fontFamily: '"Cormorant Garamond", serif',
@@ -1214,7 +1076,6 @@ export default function Home() {
 
         {envelopeOpen && (
           <div style={styles.card}>
-            <FloralCorners />
             <div style={styles.smallCaps}>Nuestra boda</div>
             <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
             <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
@@ -1499,4 +1360,4 @@ export default function Home() {
       </div>
     </>
   );
-}  
+}
