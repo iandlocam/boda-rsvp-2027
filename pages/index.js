@@ -978,15 +978,14 @@ export default function Home() {
       display: "flex",
       flexDirection: "column",
     },
-   envelopeTopImage: {
-  width: "100%",
-  height: "auto", // Cambiado de porcentaje a auto
-  maxHeight: "180px", // Puedes ajustar este valor (120px, 150px, 180px, 200px)
-  objectFit: "contain", // Cambiado de 'cover' a 'contain' para que se vea COMPLETA
+envelopeTopImage: {
+  width: "calc(100% - 40px)", // Resta 40px del ancho total (20px de cada lado)
+  height: "auto",
+  maxHeight: "160px",
+  objectFit: "contain",
   objectPosition: "center",
   display: "block",
-  margin: "20px auto 0", // Margen superior e inferior
-  padding: "0 20px", // Espacio a los lados
+  margin: "20px auto",
   borderBottom: "2px solid rgba(184,107,107,0.2)",
 },
     envelopeContent: {
