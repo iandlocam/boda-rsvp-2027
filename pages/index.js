@@ -980,7 +980,7 @@ export default function Home() {
     },
     envelopeTopImage: {
       width: "100%",
-      height: "30%", // Ajusta este porcentaje según necesites
+      height: "15%", // Ajusta este porcentaje según necesites
       objectFit: "cover",
       objectPosition: "center",
       display: "block",
