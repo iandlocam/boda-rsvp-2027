@@ -1241,7 +1241,7 @@ export default function Home() {
             <div style={styles.envelope}>
               {/* 🔴 IMAGEN EN LA PARTE SUPERIOR - REEMPLAZA LA RUTA */}
               <img 
-                src="/ruta-de-tu-imagen.jpg" 
+                src="/sobre-boda.jpg" 
                 alt="Vanessa & Andrés 23/04/2027" 
                 style={styles.envelopeTopImage}
               />
