@@ -279,155 +279,138 @@ function TimelineIcon({ type = "ceremony", size = 44 }) {
 }
 
 /**
- * ✅ Flores MÁS abundantes y “más reales” (sin imágenes externas):
- * - más clusters
- * - más hojas
- * - sombras suaves
- * - 4 esquinas + sprigs laterales
+ * ✅ NUEVAS FLORES - Más sutiles, elegantes y delicadas
+ * - Estilo botánico/dibujado a mano
+ * - Dispersas y minimalistas
+ * - Colores suaves
  */
 function FloralCorners() {
   const commonStyle = {
     position: "absolute",
     pointerEvents: "none",
-    opacity: 0.62,
-    filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.10))",
+    opacity: 0.4,
+    filter: "drop-shadow(0 5px 8px rgba(0,0,0,0.03))",
   };
 
   const defs = (
     <defs>
-      <linearGradient id="leafG" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stopColor="rgba(75,170,130,0.85)" />
-        <stop offset="1" stopColor="rgba(25,110,80,0.85)" />
+      <linearGradient id="leafSoft" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stopColor="rgba(140, 160, 120, 0.5)" />
+        <stop offset="1" stopColor="rgba(100, 120, 80, 0.4)" />
       </linearGradient>
-      <radialGradient id="centerG" cx="40%" cy="35%" r="70%">
-        <stop offset="0" stopColor="rgba(255,255,255,0.95)" />
-        <stop offset="30%" stopColor="rgba(255,255,255,0.60)" />
-        <stop offset="100%" stopColor="rgba(176,141,87,0.80)" />
+      
+      <radialGradient id="flowerCenter" cx="40%" cy="35%" r="70%">
+        <stop offset="0" stopColor="rgba(255,245,220,0.8)" />
+        <stop offset="70%" stopColor="rgba(220,200,160,0.3)" />
+        <stop offset="100%" stopColor="rgba(180,150,110,0.1)" />
       </radialGradient>
 
-      <radialGradient id="petalY" cx="35%" cy="30%" r="85%">
-        <stop offset="0" stopColor="rgba(255,255,255,0.75)" />
-        <stop offset="22%" stopColor="rgba(255,240,180,0.95)" />
-        <stop offset="72%" stopColor="rgba(255,200,64,0.95)" />
-        <stop offset="100%" stopColor="rgba(214,178,94,0.95)" />
+      <radialGradient id="petalCream" cx="35%" cy="30%" r="85%">
+        <stop offset="0" stopColor="rgba(255,255,240,0.7)" />
+        <stop offset="60%" stopColor="rgba(240,230,200,0.5)" />
+        <stop offset="100%" stopColor="rgba(220,200,170,0.3)" />
       </radialGradient>
 
-      <radialGradient id="petalB" cx="35%" cy="30%" r="85%">
-        <stop offset="0" stopColor="rgba(255,255,255,0.65)" />
-        <stop offset="28%" stopColor="rgba(170,220,255,0.95)" />
-        <stop offset="78%" stopColor="rgba(80,165,255,0.95)" />
-        <stop offset="100%" stopColor="rgba(40,110,210,0.95)" />
+      <radialGradient id="petalLavender" cx="35%" cy="30%" r="85%">
+        <stop offset="0" stopColor="rgba(240,230,255,0.6)" />
+        <stop offset="60%" stopColor="rgba(220,200,240,0.4)" />
+        <stop offset="100%" stopColor="rgba(190,170,210,0.2)" />
       </radialGradient>
 
-      <radialGradient id="petalO" cx="35%" cy="30%" r="85%">
-        <stop offset="0" stopColor="rgba(255,255,255,0.65)" />
-        <stop offset="30%" stopColor="rgba(255,210,170,0.95)" />
-        <stop offset="80%" stopColor="rgba(255,150,90,0.95)" />
-        <stop offset="100%" stopColor="rgba(210,95,55,0.95)" />
+      <radialGradient id="petalPeach" cx="35%" cy="30%" r="85%">
+        <stop offset="0" stopColor="rgba(255,235,220,0.7)" />
+        <stop offset="60%" stopColor="rgba(240,210,180,0.5)" />
+        <stop offset="100%" stopColor="rgba(210,170,140,0.3)" />
       </radialGradient>
 
-      <filter id="softBlur" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur stdDeviation="0.25" />
+      <filter id="softBlurLow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="0.15" />
       </filter>
     </defs>
   );
 
-  const flower = (x, y, s, palette = "Y") => {
-    const petal = palette === "B" ? "url(#petalB)" : palette === "O" ? "url(#petalO)" : "url(#petalY)";
+  const delicateFlower = (x, y, s = 0.5, variant = "cream") => {
+    const petalColor = variant === "lavender" ? "url(#petalLavender)" : 
+                       variant === "peach" ? "url(#petalPeach)" : 
+                       "url(#petalCream)";
+    
     return (
-      <g transform={`translate(${x} ${y}) scale(${s})`} filter="url(#softBlur)">
-        {/* hojas */}
-        <path d="M-36 10 C-55 -10, -22 -28, -12 -10 C-18 10, -26 16, -36 10Z" fill="url(#leafG)" opacity="0.72" />
-        <path d="M34 16 C58 2, 34 -26, 12 -10 C10 10, 18 18, 34 16Z" fill="url(#leafG)" opacity="0.60" />
-        {/* pétalos */}
-        <ellipse cx="-18" cy="0" rx="24" ry="14" fill={petal} opacity="0.95" />
-        <ellipse cx="18" cy="0" rx="24" ry="14" fill={petal} opacity="0.95" />
-        <ellipse cx="0" cy="-18" rx="14" ry="24" fill={petal} opacity="0.90" />
-        <ellipse cx="0" cy="18" rx="14" ry="24" fill={petal} opacity="0.90" />
-        <ellipse cx="-12" cy="-12" rx="12" ry="18" fill={petal} opacity="0.70" />
-        <ellipse cx="12" cy="-12" rx="12" ry="18" fill={petal} opacity="0.70" />
-        {/* centro */}
-        <circle cx="0" cy="0" r="10" fill="url(#centerG)" />
-        <circle cx="0" cy="0" r="4.5" fill="rgba(122,91,34,0.55)" />
+      <g transform={`translate(${x} ${y}) scale(${s})`} filter="url(#softBlurLow)">
+        <ellipse cx="0" cy="-12" rx="8" ry="12" fill={petalColor} opacity="0.7" />
+        <ellipse cx="10" cy="-6" rx="8" ry="10" fill={petalColor} opacity="0.7" />
+        <ellipse cx="-10" cy="-6" rx="8" ry="10" fill={petalColor} opacity="0.7" />
+        <ellipse cx="0" cy="8" rx="8" ry="10" fill={petalColor} opacity="0.6" />
+        <ellipse cx="8" cy="2" rx="8" ry="8" fill={petalColor} opacity="0.6" />
+        <ellipse cx="-8" cy="2" rx="8" ry="8" fill={petalColor} opacity="0.6" />
+        <circle cx="0" cy="0" r="5" fill="url(#flowerCenter)" />
+        <circle cx="0" cy="0" r="2" fill="rgba(220,200,150,0.3)" />
       </g>
     );
   };
 
-  const sprig = (x1, y1, x2, y2, x3, y3) => (
-    <g>
-      <path
-        d={`M${x1} ${y1} C ${x2} ${y2}, ${x3} ${y3}, ${x3 + 50} ${y3 - 40}`}
-        fill="none"
-        stroke="rgba(19,32,45,0.18)"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path d={`M${x3 + 6} ${y3 - 10} C ${x3 - 4} ${y3 - 30}, ${x3 + 20} ${y3 - 32}, ${x3 + 26} ${y3 - 16} C ${x3 + 20} ${y3 - 6}, ${x3 + 12} ${y3 - 4}, ${x3 + 6} ${y3 - 10}Z`} fill="url(#leafG)" opacity="0.55" />
-      <path d={`M${x3 + 34} ${y3 - 28} C ${x3 + 24} ${y3 - 48}, ${x3 + 50} ${y3 - 52}, ${x3 + 56} ${y3 - 36} C ${x3 + 50} ${y3 - 24}, ${x3 + 40} ${y3 - 22}, ${x3 + 34} ${y3 - 28}Z`} fill="url(#leafG)" opacity="0.45" />
-    </g>
-  );
+  const delicateLeaf = (x, y, s = 0.4, rotation = 0) => {
+    return (
+      <g transform={`translate(${x} ${y}) rotate(${rotation}) scale(${s})`}>
+        <path 
+          d="M0,0 C-15,-20 15,-30 0,-40 C-15,-30 15,-20 0,0Z" 
+          fill="url(#leafSoft)" 
+          opacity="0.4"
+        />
+      </g>
+    );
+  };
+
+  const smallBranch = (x, y, scale = 0.6, flip = false) => {
+    const flipTransform = flip ? "scale(-1,1)" : "";
+    
+    return (
+      <g transform={`translate(${x} ${y}) scale(${scale}) ${flipTransform}`}>
+        <path 
+          d="M0,0 C20,-20 40,-30 60,-20" 
+          fill="none" 
+          stroke="rgba(120,140,100,0.3)" 
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+        {delicateFlower(15, -12, 0.5, "cream")}
+        {delicateFlower(35, -25, 0.45, "lavender")}
+        {delicateFlower(50, -18, 0.4, "peach")}
+        {delicateLeaf(25, -20, 0.4, -20)}
+        {delicateLeaf(45, -25, 0.35, 15)}
+      </g>
+    );
+  };
 
   return (
     <>
-      {/* Superior izquierda */}
-      <svg width="320" height="300" viewBox="0 0 320 300" aria-hidden="true" style={{ ...commonStyle, left: -58, top: -70 }}>
+      <svg width="250" height="200" viewBox="0 0 250 200" aria-hidden="true" style={{ ...commonStyle, left: -20, top: -20 }}>
         {defs}
-        {sprig(30, 250, 70, 200, 120, 170)}
-        {flower(120, 170, 1.0, "Y")}
-        {flower(200, 120, 0.85, "B")}
-        {flower(170, 220, 0.70, "O")}
-        {flower(70, 220, 0.60, "B")}
+        {smallBranch(30, 150, 0.7, false)}
       </svg>
 
-      {/* Superior derecha */}
-      <svg width="320" height="300" viewBox="0 0 320 300" aria-hidden="true" style={{ ...commonStyle, right: -70, top: -78, transform: "scaleX(-1)" }}>
+      <svg width="250" height="200" viewBox="0 0 250 200" aria-hidden="true" style={{ ...commonStyle, right: -20, top: -20 }}>
         {defs}
-        {sprig(30, 250, 70, 200, 120, 170)}
-        {flower(120, 170, 1.0, "Y")}
-        {flower(200, 120, 0.85, "B")}
-        {flower(170, 220, 0.70, "O")}
-        {flower(70, 220, 0.60, "B")}
+        {smallBranch(220, 150, 0.7, true)}
       </svg>
 
-      {/* Inferior izquierda */}
-      <svg width="340" height="320" viewBox="0 0 340 320" aria-hidden="true" style={{ ...commonStyle, left: -78, bottom: -90, transform: "scaleY(-1)" }}>
+      <svg width="250" height="200" viewBox="0 0 250 200" aria-hidden="true" style={{ ...commonStyle, left: -20, bottom: -20 }}>
         {defs}
-        {sprig(40, 260, 85, 210, 135, 175)}
-        {flower(135, 175, 1.0, "B")}
-        {flower(220, 130, 0.85, "O")}
-        {flower(190, 230, 0.72, "Y")}
-        {flower(85, 230, 0.62, "Y")}
+        {smallBranch(30, 50, 0.7, false)}
       </svg>
 
-      {/* Inferior derecha */}
-      <svg width="340" height="320" viewBox="0 0 340 320" aria-hidden="true" style={{ ...commonStyle, right: -78, bottom: -92, transform: "scale(-1, -1)" }}>
+      <svg width="250" height="200" viewBox="0 0 250 200" aria-hidden="true" style={{ ...commonStyle, right: -20, bottom: -20 }}>
         {defs}
-        {sprig(40, 260, 85, 210, 135, 175)}
-        {flower(135, 175, 1.0, "B")}
-        {flower(220, 130, 0.85, "O")}
-        {flower(190, 230, 0.72, "Y")}
-        {flower(85, 230, 0.62, "Y")}
+        {smallBranch(220, 50, 0.7, true)}
       </svg>
 
-      {/* sprigs laterales (para que se sienta “marco floral”) */}
-      <svg width="120" height="520" viewBox="0 0 120 520" aria-hidden="true" style={{ ...commonStyle, left: -32, top: 120, opacity: 0.35 }}>
+      <svg width="100" height="100" viewBox="0 0 100 100" aria-hidden="true" style={{ ...commonStyle, left: 100, top: 50, opacity: 0.3 }}>
         {defs}
-        <path d="M80 30 C 30 120, 55 250, 30 380 C 22 420, 28 470, 50 500" fill="none" stroke="rgba(19,32,45,0.16)" strokeWidth="2" strokeLinecap="round" />
-        <path d="M62 120 C40 102, 35 132, 52 144 C66 144, 70 132, 62 120Z" fill="url(#leafG)" opacity="0.55" />
-        <path d="M52 240 C30 222, 26 252, 44 264 C58 264, 62 252, 52 240Z" fill="url(#leafG)" opacity="0.50" />
-        <path d="M58 360 C36 342, 32 372, 50 384 C64 384, 68 372, 58 360Z" fill="url(#leafG)" opacity="0.48" />
-        {flower(74, 170, 0.40, "Y")}
-        {flower(70, 300, 0.36, "B")}
+        {delicateFlower(20, 30, 0.35, "cream")}
       </svg>
 
-      <svg width="120" height="520" viewBox="0 0 120 520" aria-hidden="true" style={{ ...commonStyle, right: -32, top: 120, opacity: 0.35, transform: "scaleX(-1)" }}>
+      <svg width="100" height="100" viewBox="0 0 100 100" aria-hidden="true" style={{ ...commonStyle, right: 100, bottom: 40, opacity: 0.3 }}>
         {defs}
-        <path d="M80 30 C 30 120, 55 250, 30 380 C 22 420, 28 470, 50 500" fill="none" stroke="rgba(19,32,45,0.16)" strokeWidth="2" strokeLinecap="round" />
-        <path d="M62 120 C40 102, 35 132, 52 144 C66 144, 70 132, 62 120Z" fill="url(#leafG)" opacity="0.55" />
-        <path d="M52 240 C30 222, 26 252, 44 264 C58 264, 62 252, 52 240Z" fill="url(#leafG)" opacity="0.50" />
-        <path d="M58 360 C36 342, 32 372, 50 384 C64 384, 68 372, 58 360Z" fill="url(#leafG)" opacity="0.48" />
-        {flower(74, 170, 0.40, "Y")}
-        {flower(70, 300, 0.36, "B")}
+        {delicateFlower(20, 30, 0.3, "lavender")}
       </svg>
     </>
   );
@@ -956,7 +939,7 @@ export default function Home() {
       textTransform: "uppercase",
     },
 
-    // ✅ SOBRE PERSONALIZADO - Con imagen arriba y texto más abajo
+    // ✅ SOBRE PERSONALIZADO
     envelopeWrap: {
       width: "100%",
       maxWidth: 600,
@@ -1228,7 +1211,7 @@ export default function Home() {
       </Head>
   
       <div style={styles.page}>
-        {/* SOBRE CERRADO - CON IMAGEN EN LA PARTE SUPERIOR Y TEXTO MÁS ABAJO */}
+        {/* SOBRE CERRADO */}
         {!envelopeOpen && (
           <div
             style={styles.envelopeWrap}
@@ -1241,21 +1224,17 @@ export default function Home() {
             }}
           >
             <div style={styles.envelope}>
-              {/* IMAGEN EN LA PARTE SUPERIOR */}
               <img 
                 src="/sobre-boda.jpg" 
                 alt="Vanessa & Andrés 23/04/2027" 
                 style={styles.envelopeTopImage}
               />
               
-              {/* Contenido inferior del sobre - AHORA MÁS ABAJO */}
               <div style={styles.envelopeContent}>
-                {/* CLICK PARA ABRIR - CON MÁS ESPACIO ARRIBA */}
                 <div style={styles.envelopeClickText}>
                   CLICK PARA ABRIR LA INVITACIÓN
                 </div>
                 
-                {/* HEMOS RESERVADO X LUGARES */}
                 <div style={styles.reservedSection}>
                   <div style={styles.reservedText}>
                     HEMOS RESERVADO
@@ -1269,7 +1248,6 @@ export default function Home() {
                 </div>
               </div>
               
-              {/* Sello decorativo pequeño (opcional) */}
               <div style={styles.envelopeSeal}>
                 ✦
               </div>
@@ -1277,12 +1255,11 @@ export default function Home() {
           </div>
         )}
 
-        {/* INVITACIÓN - Se muestra después de hacer clic */}
+        {/* INVITACIÓN */}
         {envelopeOpen && (
           <div style={styles.card}>
             <FloralCorners />
             <div style={styles.smallCaps}>Nuestra boda</div>
-            {/* 🔴 CAMBIA ESTOS NOMBRES TAMBIÉN */}
             <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
             <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
 
@@ -1312,7 +1289,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Spotify */}
             <div style={styles.spotifyWrap}>
               {spotifyEnabled ? (
                 <iframe
@@ -1359,10 +1335,8 @@ export default function Home() {
               <img alt="Foto 2" src={GALLERY_PHOTOS[1]} style={styles.photo} />
             </div>
 
-            {/* Itinerario */}
             <div style={styles.section}>
               <div style={styles.sectionTitleCenterBig}>Itinerario</div>
-
               <div style={styles.timelineOuter}>
                 <div style={styles.timelineCard}>
                   {TIMELINE.map((t, i) => (
@@ -1376,7 +1350,6 @@ export default function Home() {
                       <div style={styles.timelineIconBox}>
                         <TimelineIcon type={t.iconType} size={44} />
                       </div>
-
                       <div style={styles.timelineTextCol}>
                         <p style={styles.timelineTitle}>{t.title}</p>
                         <div style={styles.timelineTime}>{t.time}</div>
@@ -1387,10 +1360,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Dress code */}
             <div style={{ ...styles.section, position: "relative", zIndex: 2 }}>
               <div style={styles.sectionTitleCenterBig}>{DRESS_CODE.title}</div>
-
               <div
                 style={{
                   display: "flex",
@@ -1410,7 +1381,6 @@ export default function Home() {
                   }}
                 />
               </div>
-
               <div style={styles.softBox}>
                 <p style={{ ...styles.sectionText, textAlign: "center" }}>
                   {DRESS_CODE.text}
@@ -1418,7 +1388,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Ubicación */}
             <div style={styles.section}>
               <div style={styles.sectionTitleCenterBig}>Ubicación</div>
               <div style={styles.softBox}>
@@ -1436,7 +1405,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Mesa de regalos */}
             <div style={styles.section}>
               <div style={styles.sectionTitleCenterBig}>Mesa de regalos</div>
               <div style={styles.softBox}>
@@ -1452,14 +1420,12 @@ export default function Home() {
                   <p style={{ ...styles.sectionText, textAlign: "center" }}>
                     {REGALO_MONETARIO.subtitle}
                   </p>
-
                   <div style={{ marginTop: 10, textAlign: "center" }}>
                     <div style={{ ...styles.sectionText, textAlign: "center" }}>
                       <b>{REGALO_MONETARIO.accountLabel}:</b>
                     </div>
                     <div style={styles.monoLine}>{REGALO_MONETARIO.accountValue}</div>
                   </div>
-
                   <div style={{ marginTop: 10 }}>
                     <div style={styles.monoLine}>{REGALO_MONETARIO.nameValue}</div>
                   </div>
@@ -1467,7 +1433,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* RSVP */}
             <div style={styles.rsvpWrap}>
               <div style={styles.rsvpTitle}>
                 {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
