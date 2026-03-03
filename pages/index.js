@@ -981,7 +981,7 @@ export default function Home() {
     envelopeTopImage: {
       width: "calc(100% - 40px)",
       height: "auto",
-      maxHeight: "500px",
+      maxHeight: "480px",
       objectFit: "contain",
       objectPosition: "center",
       display: "block",
