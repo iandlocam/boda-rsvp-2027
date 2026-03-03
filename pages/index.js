@@ -200,7 +200,7 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
           style={{
             fontFamily: '"Great Vibes", cursive',
             fontSize: 32,
-            color: "rgba(19,32,45,0.85)", // ✅ texto oscuro sobre dorado
+            color: "rgba(19,32,45,0.85)",
             textShadow: "0 1px 0 rgba(255,255,255,0.25), 0 10px 22px rgba(0,0,0,0.20)",
             letterSpacing: "0.01em",
           }}
@@ -278,12 +278,7 @@ function TimelineIcon({ type = "ceremony", size = 44 }) {
   );
 }
 
-/**
- * ✅ NUEVAS FLORES - Más sutiles, elegantes y delicadas
- * - Estilo botánico/dibujado a mano
- * - Dispersas y minimalistas
- * - Colores suaves
- */
+/** ✅ NUEVAS FLORES - Más sutiles, elegantes y delicadas */
 function FloralCorners() {
   const commonStyle = {
     position: "absolute",
@@ -459,7 +454,6 @@ function BrandLogo({ type = "liverpool" }) {
     );
   }
 
-  // liverpool
   return (
     <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
       <rect
@@ -494,42 +488,30 @@ function BrandLogo({ type = "liverpool" }) {
 export default function Home() {
   const router = useRouter();
 
-  // 🔴 CAMBIA ESTO POR TU FECHA REAL
   const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
 
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
-  // ✅ SOBRE
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
-
-  // ✅ Spotify: montar después del click (gesto usuario)
   const [spotifyNonce, setSpotifyNonce] = useState(0);
   const [spotifyEnabled, setSpotifyEnabled] = useState(false);
-
-  // RSVP states
   const [guestId, setGuestId] = useState("");
   const [mensaje, setMensaje] = useState("");
-  const [rsvpStatus, setRsvpStatus] = useState("idle"); // idle | saving | ok | error
+  const [rsvpStatus, setRsvpStatus] = useState("idle");
   const [rsvpError, setRsvpError] = useState("");
   const [rsvpResult, setRsvpResult] = useState(null);
-
   const [guestData, setGuestData] = useState(null);
   const [guestLoading, setGuestLoading] = useState(false);
   const [guestLoadError, setGuestLoadError] = useState("");
   const [yaConfirmo, setYaConfirmo] = useState(false);
   const [asistenciaActual, setAsistenciaActual] = useState("");
-
-  // ✅ selector de pases
   const [pasesConfirmados, setPasesConfirmados] = useState(1);
 
-  // Lee ?id=AV001
   useEffect(() => {
     if (!router.isReady) return;
     const id = router.query.id;
     if (typeof id === "string") setGuestId(id.trim());
   }, [router.isReady, router.query.id]);
 
-  // Cargar invitado
   useEffect(() => {
     if (!guestId) return;
 
@@ -577,10 +559,8 @@ export default function Home() {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guestId]);
 
-  // Contador
   useEffect(() => {
     const tick = () => {
       const now = Date.now();
@@ -670,7 +650,6 @@ export default function Home() {
     },
   ];
 
-  // ✅ Itinerario
   const TIMELINE = [
     { time: "4:00 PM", title: "Ceremonia", iconType: "ceremony" },
     { time: "5:00 PM", title: "Recepción", iconType: "reception" },
@@ -678,19 +657,18 @@ export default function Home() {
     { time: "9:00 PM", title: "Fiesta", iconType: "party" },
     { time: "3:00 AM", title: "Cierre", iconType: "close" },
   ];
-   const DRESS_CODE = {
+  
+  const DRESS_CODE = {
     title: "Dress code",
     text:
       "Formal / jardín elegante. Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
   };
 
-  // ✅ Mesa de regalos (logos)
   const MESA_REGALOS = [
     { type: "liverpool", url: "https://www.liverpool.com.mx/" },
     { type: "amazon", url: "https://www.amazon.com.mx/" },
   ];
 
-  // ✅ Regalo monetario (con el mismo estilo que traías antes)
   const REGALO_MONETARIO = {
     subtitle: "Si deseas apoyarnos en esta nueva etapa:",
     accountLabel: "CLABE / Cuenta",
@@ -723,7 +701,6 @@ export default function Home() {
       position: "relative",
       overflow: "hidden",
     },
-
     smallCaps: {
       fontFamily: '"Cormorant Garamond", serif',
       letterSpacing: "0.22em",
@@ -732,7 +709,6 @@ export default function Home() {
       color: "rgba(19, 32, 45, 0.70)",
       marginBottom: 10,
     },
-
     namesGold: {
       fontFamily: '"Great Vibes", cursive',
       fontSize: 68,
@@ -759,7 +735,6 @@ export default function Home() {
       display: "inline-block",
       overflow: "visible",
     },
-
     subtitle: {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: 18,
@@ -812,8 +787,6 @@ export default function Home() {
       display: "flex",
       justifyContent: "center",
     },
-
-    // Secciones
     section: { maxWidth: 560, margin: "28px auto 0", textAlign: "left", padding: "0 6px" },
     sectionTitleCenterBig: {
       fontFamily: '"Cormorant Garamond", serif',
@@ -836,8 +809,6 @@ export default function Home() {
       background: "rgba(248, 251, 255, 0.85)",
       padding: 14,
     },
-
-    // Links UI
     chipsCol: {
       display: "flex",
       flexDirection: "column",
@@ -879,8 +850,6 @@ export default function Home() {
       width: "100%",
       maxWidth: 360,
     },
-
-    // Fotos
     photoStrip: {
       maxWidth: 560,
       margin: "22px auto 0",
@@ -890,8 +859,6 @@ export default function Home() {
       boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
     },
     photo: { width: "100%", height: 220, objectFit: "cover", display: "block" },
-
-    // ✅ ITINERARIO
     timelineOuter: { maxWidth: 560, margin: "10px auto 0" },
     timelineCard: {
       borderRadius: 18,
@@ -938,8 +905,6 @@ export default function Home() {
       letterSpacing: "0.10em",
       textTransform: "uppercase",
     },
-
-    // ✅ SOBRE PERSONALIZADO
     envelopeWrap: {
       width: "100%",
       maxWidth: 600,
@@ -1037,8 +1002,6 @@ export default function Home() {
       fontSize: 20,
       opacity: 0.7,
     },
-
-    // Mesa regalos / money
     logoBtn: {
       display: "inline-flex",
       alignItems: "center",
@@ -1065,8 +1028,6 @@ export default function Home() {
       wordBreak: "break-word",
       textAlign: "center",
     },
-
-    // RSVP UI
     rsvpWrap: {
       maxWidth: 520,
       margin: "24px auto 0",
@@ -1160,7 +1121,6 @@ export default function Home() {
       color: "#0b0f14",
       outline: "none",
     },
-
     note: {
       marginTop: 14,
       fontFamily: '"Cormorant Garamond", serif',
@@ -1181,8 +1141,6 @@ export default function Home() {
 
   function abrirSobre() {
     setEnvelopeOpen(true);
-
-    // ✅ Autoplay: montamos spotify DESPUÉS del click (y forzamos reload)
     setSpotifyEnabled(false);
     const nonce = Date.now();
     setSpotifyNonce(nonce);
@@ -1211,7 +1169,6 @@ export default function Home() {
       </Head>
   
       <div style={styles.page}>
-        {/* SOBRE CERRADO */}
         {!envelopeOpen && (
           <div
             style={styles.envelopeWrap}
@@ -1255,7 +1212,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* INVITACIÓN */}
         {envelopeOpen && (
           <div style={styles.card}>
             <FloralCorners />
@@ -1543,4 +1499,4 @@ export default function Home() {
       </div>
     </>
   );
-}
+}  
