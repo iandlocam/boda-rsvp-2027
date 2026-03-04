@@ -492,7 +492,7 @@ export default function Home() {
   const MAPS_URL =
     "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
   const WAZE_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
-const BACKGROUND_IMAGE = "/marco-boda.jpg"; // coloca tu imagen en /public/marco-boda.jpg
+const BACKGROUND_IMAGE = "/marco-boda.png"; // coloca tu imagen en /public/marco-boda.png
 
   const GALLERY_PHOTOS = [
     "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70",
