@@ -1,4 +1,4 @@
-  import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -492,6 +492,7 @@ export default function Home() {
   const MAPS_URL =
     "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
   const WAZE_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
+const BACKGROUND_IMAGE = "/bg-invitacion.jpg"; // coloca tu imagen en /public/bg-invitacion.jpg
 
   const GALLERY_PHOTOS = [
     "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70",
@@ -545,13 +546,16 @@ export default function Home() {
 
   const styles = {
     page: {
-      minHeight: "100vh",
+    minHeight: "100vh",
       padding: "120px 18px",
-      backgroundColor: "#ffffff", // Cambiado a blanco sólido
-      display: "flex",
+    backgroundImage: `linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.88)), url(${BACKGROUND_IMAGE})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    display: "flex",
       justifyContent: "center",
       alignItems: "center",
-    },
+  },
     card: {
       width: "100%",
       maxWidth: 760,
