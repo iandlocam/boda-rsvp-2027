@@ -278,6 +278,103 @@ function TimelineIcon({ type = "ceremony", size = 44 }) {
   );
 }
 
+/** ✅ FLORES NUEVAS - Estilo elegante y discreto */
+function FloresDecorativas() {
+  const commonStyle = {
+    position: "absolute",
+    pointerEvents: "none",
+    zIndex: 1,
+    opacity: 0.35,
+  };
+
+  return (
+    <>
+      {/* Flores esquina superior izquierda */}
+      <svg width="180" height="180" viewBox="0 0 200 200" style={{ ...commonStyle, left: -30, top: -30 }}>
+        <defs>
+          <radialGradient id="petalGrad" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stopColor="#f8e3d0" stopOpacity="0.9" />
+            <stop offset="70%" stopColor="#d4b68a" stopOpacity="0.4" />
+          </radialGradient>
+          <radialGradient id="centerGrad" cx="40%" cy="40%" r="60%">
+            <stop offset="0%" stopColor="#f5d0b0" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#b88b5e" stopOpacity="0.3" />
+          </radialGradient>
+        </defs>
+        
+        {/* Flor 1 */}
+        <g transform="translate(40,40) scale(0.8)">
+          <ellipse cx="0" cy="-12" rx="10" ry="16" fill="url(#petalGrad)" />
+          <ellipse cx="12" cy="-4" rx="10" ry="14" fill="url(#petalGrad)" />
+          <ellipse cx="-12" cy="-4" rx="10" ry="14" fill="url(#petalGrad)" />
+          <ellipse cx="0" cy="10" rx="10" ry="12" fill="url(#petalGrad)" />
+          <circle cx="0" cy="0" r="8" fill="url(#centerGrad)" />
+        </g>
+        
+        {/* Flor 2 */}
+        <g transform="translate(100,70) scale(0.6)">
+          <ellipse cx="0" cy="-10" rx="8" ry="12" fill="url(#petalGrad)" />
+          <ellipse cx="10" cy="-2" rx="8" ry="10" fill="url(#petalGrad)" />
+          <ellipse cx="-10" cy="-2" rx="8" ry="10" fill="url(#petalGrad)" />
+          <ellipse cx="0" cy="8" rx="8" ry="8" fill="url(#petalGrad)" />
+          <circle cx="0" cy="0" r="6" fill="url(#centerGrad)" />
+        </g>
+        
+        {/* Hojas */}
+        <path d="M20,80 Q40,60 60,70" stroke="#9caf88" strokeWidth="1.5" fill="none" opacity="0.4" />
+        <path d="M130,40 Q150,20 170,30" stroke="#9caf88" strokeWidth="1.5" fill="none" opacity="0.4" />
+      </svg>
+
+      {/* Flores esquina superior derecha */}
+      <svg width="180" height="180" viewBox="0 0 200 200" style={{ ...commonStyle, right: -30, top: -30 }}>
+        <defs>
+          <radialGradient id="petalGrad2" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stopColor="#f0d8c0" stopOpacity="0.9" />
+            <stop offset="70%" stopColor="#c4a27a" stopOpacity="0.4" />
+          </radialGradient>
+        </defs>
+        
+        <g transform="translate(60,40) scale(0.7)">
+          <ellipse cx="0" cy="-12" rx="10" ry="16" fill="url(#petalGrad2)" />
+          <ellipse cx="12" cy="-4" rx="10" ry="14" fill="url(#petalGrad2)" />
+          <ellipse cx="-12" cy="-4" rx="10" ry="14" fill="url(#petalGrad2)" />
+          <ellipse cx="0" cy="10" rx="10" ry="12" fill="url(#petalGrad2)" />
+          <circle cx="0" cy="0" r="8" fill="url(#centerGrad)" />
+        </g>
+        
+        <g transform="translate(130,80) scale(0.5)">
+          <ellipse cx="0" cy="-10" rx="8" ry="12" fill="url(#petalGrad2)" />
+          <ellipse cx="8" cy="-2" rx="8" ry="10" fill="url(#petalGrad2)" />
+          <ellipse cx="-8" cy="-2" rx="8" ry="10" fill="url(#petalGrad2)" />
+          <circle cx="0" cy="0" r="6" fill="url(#centerGrad)" />
+        </g>
+      </svg>
+
+      {/* Flores esquina inferior izquierda */}
+      <svg width="180" height="180" viewBox="0 0 200 200" style={{ ...commonStyle, left: -30, bottom: -30 }}>
+        <g transform="translate(40,120) scale(0.7)">
+          <ellipse cx="0" cy="-12" rx="10" ry="16" fill="url(#petalGrad)" />
+          <ellipse cx="12" cy="-4" rx="10" ry="14" fill="url(#petalGrad)" />
+          <ellipse cx="-12" cy="-4" rx="10" ry="14" fill="url(#petalGrad)" />
+          <circle cx="0" cy="0" r="8" fill="url(#centerGrad)" />
+        </g>
+        <path d="M100,140 Q120,160 140,150" stroke="#9caf88" strokeWidth="1.5" fill="none" opacity="0.4" />
+      </svg>
+
+      {/* Flores esquina inferior derecha */}
+      <svg width="180" height="180" viewBox="0 0 200 200" style={{ ...commonStyle, right: -30, bottom: -30 }}>
+        <g transform="translate(130,120) scale(0.6)">
+          <ellipse cx="0" cy="-12" rx="10" ry="16" fill="url(#petalGrad2)" />
+          <ellipse cx="10" cy="-4" rx="10" ry="14" fill="url(#petalGrad2)" />
+          <ellipse cx="-10" cy="-4" rx="10" ry="14" fill="url(#petalGrad2)" />
+          <circle cx="0" cy="0" r="7" fill="url(#centerGrad)" />
+        </g>
+        <path d="M50,140 Q70,160 90,150" stroke="#9caf88" strokeWidth="1.5" fill="none" opacity="0.4" />
+      </svg>
+    </>
+  );
+}
+
 /** ✅ Logos sobrios (SVG) como botones */
 function BrandLogo({ type = "liverpool" }) {
   if (type === "amazon") {
@@ -492,7 +589,7 @@ export default function Home() {
   const MAPS_URL =
     "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
   const WAZE_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
-const BACKGROUND_IMAGE = "/marco-boda.jpeg"; // coloca tu imagen en /public/marco-boda.jpeg
+  const BACKGROUND_IMAGE = "/marco-boda.jpeg";
 
   const GALLERY_PHOTOS = [
     "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70",
@@ -547,27 +644,28 @@ const BACKGROUND_IMAGE = "/marco-boda.jpeg"; // coloca tu imagen en /public/marc
   const styles = {
     page: {
       position: "relative",
-    minHeight: "100vh",
-    backgroundColor: "#ffffff",
-    backgroundImage: `linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.88)), url(${BACKGROUND_IMAGE})`,
-    backgroundSize: "contain",
-    backgroundPosition: "center top",
-    backgroundRepeat: "repeat-y",
+      minHeight: "100vh",
+      backgroundColor: "#ffffff",
+      backgroundImage: `linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.88)), url(${BACKGROUND_IMAGE})`,
+      backgroundSize: "contain",
+      backgroundPosition: "center top",
+      backgroundRepeat: "repeat-y",
       backgroundAttachment: "scroll",
-    display: "flex",
+      display: "flex",
       justifyContent: "center",
       alignItems: "center",
-     },
+    },
     card: {
       width: "100%",
       maxWidth: 760,
-      background: "#ffffff", // Fondo blanco sólido
+      background: "#ffffff",
       border: "1px solid rgba(31, 65, 95, 0.12)",
       borderRadius: 22,
       boxShadow: "0 18px 50px rgba(12, 22, 33, 0.10)",
       padding: "52px 22px",
       textAlign: "center",
       position: "relative",
+      overflow: "hidden",
     },
     smallCaps: {
       fontFamily: '"Cormorant Garamond", serif',
@@ -1049,6 +1147,9 @@ const BACKGROUND_IMAGE = "/marco-boda.jpeg"; // coloca tu imagen en /public/marc
             }}
           >
             <div style={styles.envelope}>
+              {/* FLORES EN EL SOBRE - PRIMERA PANTALLA */}
+              <FloresDecorativas />
+              
               <img 
                 src="/sobre-boda.jpg" 
                 alt="Vanessa & Andrés 23/04/2027" 
@@ -1082,6 +1183,9 @@ const BACKGROUND_IMAGE = "/marco-boda.jpeg"; // coloca tu imagen en /public/marc
 
         {envelopeOpen && (
           <div style={styles.card}>
+            {/* FLORES EN LA INVITACIÓN - SEGUNDA PANTALLA */}
+            <FloresDecorativas />
+            
             <div style={styles.smallCaps}>Nuestra boda</div>
             <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
             <div style={styles.subtitle}>Jiutepec, Morelos · Jardín Maroma</div>
