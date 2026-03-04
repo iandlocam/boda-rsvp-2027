@@ -554,6 +554,9 @@ const BACKGROUND_IMAGE = "/marco-boda.jpeg"; // coloca tu imagen en /public/marc
     backgroundPosition: "center top",
     backgroundRepeat: "repeat-y",
       backgroundAttachment: "scroll",
+    display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
      },
     card: {
       width: "100%",
