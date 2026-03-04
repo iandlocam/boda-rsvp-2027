@@ -546,7 +546,9 @@ const BACKGROUND_IMAGE = "/marco-boda.jpeg"; // coloca tu imagen en /public/marc
 
   const styles = {
     page: {
+      position: "relative",
     minHeight: "100vh",
+      backgroundColor: "#ffffff",
       padding: "120px 18px",
     backgroundImage: `linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.88)), url(${BACKGROUND_IMAGE})`,
     backgroundSize: "cover",
