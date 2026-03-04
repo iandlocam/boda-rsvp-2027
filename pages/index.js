@@ -278,103 +278,6 @@ function TimelineIcon({ type = "ceremony", size = 44 }) {
   );
 }
 
-/** ✅ FLORES NUEVAS - Estilo elegante y discreto */
-function FloresDecorativas() {
-  const commonStyle = {
-    position: "absolute",
-    pointerEvents: "none",
-    zIndex: 1,
-    opacity: 0.35,
-  };
-
-  return (
-    <>
-      {/* Flores esquina superior izquierda */}
-      <svg width="180" height="180" viewBox="0 0 200 200" style={{ ...commonStyle, left: -30, top: -30 }}>
-        <defs>
-          <radialGradient id="petalGrad" cx="30%" cy="30%" r="70%">
-            <stop offset="0%" stopColor="#f8e3d0" stopOpacity="0.9" />
-            <stop offset="70%" stopColor="#d4b68a" stopOpacity="0.4" />
-          </radialGradient>
-          <radialGradient id="centerGrad" cx="40%" cy="40%" r="60%">
-            <stop offset="0%" stopColor="#f5d0b0" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#b88b5e" stopOpacity="0.3" />
-          </radialGradient>
-        </defs>
-        
-        {/* Flor 1 */}
-        <g transform="translate(40,40) scale(0.8)">
-          <ellipse cx="0" cy="-12" rx="10" ry="16" fill="url(#petalGrad)" />
-          <ellipse cx="12" cy="-4" rx="10" ry="14" fill="url(#petalGrad)" />
-          <ellipse cx="-12" cy="-4" rx="10" ry="14" fill="url(#petalGrad)" />
-          <ellipse cx="0" cy="10" rx="10" ry="12" fill="url(#petalGrad)" />
-          <circle cx="0" cy="0" r="8" fill="url(#centerGrad)" />
-        </g>
-        
-        {/* Flor 2 */}
-        <g transform="translate(100,70) scale(0.6)">
-          <ellipse cx="0" cy="-10" rx="8" ry="12" fill="url(#petalGrad)" />
-          <ellipse cx="10" cy="-2" rx="8" ry="10" fill="url(#petalGrad)" />
-          <ellipse cx="-10" cy="-2" rx="8" ry="10" fill="url(#petalGrad)" />
-          <ellipse cx="0" cy="8" rx="8" ry="8" fill="url(#petalGrad)" />
-          <circle cx="0" cy="0" r="6" fill="url(#centerGrad)" />
-        </g>
-        
-        {/* Hojas */}
-        <path d="M20,80 Q40,60 60,70" stroke="#9caf88" strokeWidth="1.5" fill="none" opacity="0.4" />
-        <path d="M130,40 Q150,20 170,30" stroke="#9caf88" strokeWidth="1.5" fill="none" opacity="0.4" />
-      </svg>
-
-      {/* Flores esquina superior derecha */}
-      <svg width="180" height="180" viewBox="0 0 200 200" style={{ ...commonStyle, right: -30, top: -30 }}>
-        <defs>
-          <radialGradient id="petalGrad2" cx="30%" cy="30%" r="70%">
-            <stop offset="0%" stopColor="#f0d8c0" stopOpacity="0.9" />
-            <stop offset="70%" stopColor="#c4a27a" stopOpacity="0.4" />
-          </radialGradient>
-        </defs>
-        
-        <g transform="translate(60,40) scale(0.7)">
-          <ellipse cx="0" cy="-12" rx="10" ry="16" fill="url(#petalGrad2)" />
-          <ellipse cx="12" cy="-4" rx="10" ry="14" fill="url(#petalGrad2)" />
-          <ellipse cx="-12" cy="-4" rx="10" ry="14" fill="url(#petalGrad2)" />
-          <ellipse cx="0" cy="10" rx="10" ry="12" fill="url(#petalGrad2)" />
-          <circle cx="0" cy="0" r="8" fill="url(#centerGrad)" />
-        </g>
-        
-        <g transform="translate(130,80) scale(0.5)">
-          <ellipse cx="0" cy="-10" rx="8" ry="12" fill="url(#petalGrad2)" />
-          <ellipse cx="8" cy="-2" rx="8" ry="10" fill="url(#petalGrad2)" />
-          <ellipse cx="-8" cy="-2" rx="8" ry="10" fill="url(#petalGrad2)" />
-          <circle cx="0" cy="0" r="6" fill="url(#centerGrad)" />
-        </g>
-      </svg>
-
-      {/* Flores esquina inferior izquierda */}
-      <svg width="180" height="180" viewBox="0 0 200 200" style={{ ...commonStyle, left: -30, bottom: -30 }}>
-        <g transform="translate(40,120) scale(0.7)">
-          <ellipse cx="0" cy="-12" rx="10" ry="16" fill="url(#petalGrad)" />
-          <ellipse cx="12" cy="-4" rx="10" ry="14" fill="url(#petalGrad)" />
-          <ellipse cx="-12" cy="-4" rx="10" ry="14" fill="url(#petalGrad)" />
-          <circle cx="0" cy="0" r="8" fill="url(#centerGrad)" />
-        </g>
-        <path d="M100,140 Q120,160 140,150" stroke="#9caf88" strokeWidth="1.5" fill="none" opacity="0.4" />
-      </svg>
-
-      {/* Flores esquina inferior derecha */}
-      <svg width="180" height="180" viewBox="0 0 200 200" style={{ ...commonStyle, right: -30, bottom: -30 }}>
-        <g transform="translate(130,120) scale(0.6)">
-          <ellipse cx="0" cy="-12" rx="10" ry="16" fill="url(#petalGrad2)" />
-          <ellipse cx="10" cy="-4" rx="10" ry="14" fill="url(#petalGrad2)" />
-          <ellipse cx="-10" cy="-4" rx="10" ry="14" fill="url(#petalGrad2)" />
-          <circle cx="0" cy="0" r="7" fill="url(#centerGrad)" />
-        </g>
-        <path d="M50,140 Q70,160 90,150" stroke="#9caf88" strokeWidth="1.5" fill="none" opacity="0.4" />
-      </svg>
-    </>
-  );
-}
-
 /** ✅ Logos sobrios (SVG) como botones */
 function BrandLogo({ type = "liverpool" }) {
   if (type === "amazon") {
@@ -968,6 +871,19 @@ export default function Home() {
       fontSize: 20,
       opacity: 0.7,
     },
+    // ✅ NUEVO: Marco floral para ambas pantallas
+    floralFrame: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      objectPosition: "center",
+      pointerEvents: "none",
+      zIndex: 1,
+      opacity: 0.4, // Ajusta este valor: 0.3 = más sutil, 0.6 = más visible
+    },
     logoBtn: {
       display: "inline-flex",
       alignItems: "center",
@@ -1135,6 +1051,7 @@ export default function Home() {
       </Head>
   
       <div style={styles.page}>
+        {/* SOBRE CERRADO - PRIMERA PANTALLA */}
         {!envelopeOpen && (
           <div
             style={styles.envelopeWrap}
@@ -1147,8 +1064,12 @@ export default function Home() {
             }}
           >
             <div style={styles.envelope}>
-              {/* FLORES EN EL SOBRE - PRIMERA PANTALLA */}
-              <FloresDecorativas />
+              {/* MARCO FLORAL EN EL SOBRE */}
+              <img 
+                src="/marco-boda.jpeg" 
+                alt="Marco floral" 
+                style={styles.floralFrame}
+              />
               
               <img 
                 src="/sobre-boda.jpg" 
@@ -1181,10 +1102,15 @@ export default function Home() {
           </div>
         )}
 
+        {/* INVITACIÓN - SEGUNDA PANTALLA */}
         {envelopeOpen && (
           <div style={styles.card}>
-            {/* FLORES EN LA INVITACIÓN - SEGUNDA PANTALLA */}
-            <FloresDecorativas />
+            {/* MARCO FLORAL EN LA INVITACIÓN */}
+            <img 
+              src="/marco-boda.jpeg" 
+              alt="Marco floral" 
+              style={styles.floralFrame}
+            />
             
             <div style={styles.smallCaps}>Nuestra boda</div>
             <h1 style={nameStyleObj}>Vanessa &amp; Andrés</h1>
