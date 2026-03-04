@@ -551,7 +551,7 @@ const BACKGROUND_IMAGE = "/marco-boda.jpeg"; // coloca tu imagen en /public/marc
       backgroundColor: "#ffffff",
       padding: "120px 18px",
     backgroundImage: `linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.88)), url(${BACKGROUND_IMAGE})`,
-    backgroundSize: "cover",
+    backgroundSize: "1100px auto",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     display: "flex",
