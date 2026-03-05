@@ -757,13 +757,12 @@ export default function Home() {
       border: "1px solid rgba(31,65,95,0.10)",
       background: "rgba(255,255,255,0.55)",
     },
-   timelineRow: {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr", // Dos columnas iguales
-  gap: 10,
+  timelineRow: {
+  display: "flex",
+  flexDirection: "column",
   alignItems: "center",
-  justifyItems: "center",
-  padding: "16px 16px",
+  textAlign: "center",
+  padding: "20px 16px",
   borderBottom: "1px solid rgba(31,65,95,0.10)",
 },
 timelineIconBox: {
@@ -775,30 +774,32 @@ timelineIconBox: {
   display: "grid",
   placeItems: "center",
   boxShadow: "inset 0 1px 0 rgba(255,255,255,0.55), 0 10px 24px rgba(0,0,0,0.06)",
-  justifySelf: "center",
+  marginBottom: "12px", // Espacio entre el icono y el texto
 },
 timelineTextCol: {
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
+  alignItems: "center", // Centrar el texto
   justifyContent: "center",
+  width: "100%",
+},
+timelineTitle: {
+  fontFamily: '"Cormorant Garamond", serif',
+  fontSize: 21,
+  fontWeight: 700,
+  margin: "0 0 4px 0", // Espacio entre título y hora
+  color: "rgba(19,32,45,0.90)",
   textAlign: "center",
 },
-    timelineTitle: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 25, // Aumentado de 21 a 25 (2 puntos más)
-      fontWeight: 700,
-      margin: 0,
-      color: "rgba(19,32,45,0.90)",
-    },
-    timelineTime: {
-      fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 20, // Aumentado de 16 a 20 (2 puntos más)
-      marginTop: 6,
-      color: "rgba(19,32,45,0.90)",
-      letterSpacing: "0.10em",
-      textTransform: "uppercase",
-    },
+timelineTime: {
+  fontFamily: '"Cormorant Garamond", serif',
+  fontSize: 16,
+  margin: 0,
+  color: "rgba(19,32,45,0.62)",
+  letterSpacing: "0.10em",
+  textTransform: "uppercase",
+  textAlign: "center",
+},
     envelopeWrap: {
       width: "100%",
       maxWidth: 600,
