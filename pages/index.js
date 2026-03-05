@@ -221,11 +221,11 @@ function TimelineIcon({ type = "ceremony", size = 48 }) {
   // Puedes cambiar estas URLs por las imágenes que quieras usar
   // Las imágenes deben estar en la carpeta /public de tu proyecto
   const ICONOS = {
-    ceremony: "/iconos/ceremonia.png",     // Ícono para Ceremonia
-    reception: "/iconos/recepcion.png",     // Ícono para Recepción
-    dinner: "/iconos/cena.png",             // Ícono para Cena
-    party: "/iconos/fiesta.png",             // Ícono para Fiesta
-    close: "/iconos/cierre.png",             // Ícono para Cierre
+    ceremony: "/iconos/Ceremonia.png",     // Ícono para Ceremonia
+    reception: "/iconos/Cocteel.png",     // Ícono para Coctel
+    dinner: "/iconos/Cena.png",             // Ícono para Cena
+    party: "/iconos/Fiesta.png",             // Ícono para Fiesta
+    close: "/iconos/Cierre.png",             // Ícono para Cierre
   };
   
   // ====================================================
@@ -361,7 +361,7 @@ export default function Home() {
   const SOBRE_IMAGE = "/sobre-boda.jpg";
   
   // Imagen del dress code (código de vestimenta)
-  const DRESS_CODE_IMAGE = "/dress-code.png";
+  const DRESS_CODE_IMAGE = "/Dress-code.png";
   
   // Imágenes de la galería (fotos de la pareja)
   const GALLERY_IMAGES = [
@@ -540,7 +540,7 @@ export default function Home() {
 
   const TIMELINE = [
     { time: "4:00 PM", title: "Ceremonia", iconType: "ceremony" },
-    { time: "5:00 PM", title: "Recepción", iconType: "reception" },
+    { time: "5:00 PM", title: "Coctel", iconType: "reception" },
     { time: "7:30 PM", title: "Cena", iconType: "dinner" },
     { time: "9:00 PM", title: "Fiesta", iconType: "party" },
     { time: "3:00 AM", title: "Cierre", iconType: "close" },
@@ -549,7 +549,7 @@ export default function Home() {
   const DRESS_CODE = {
     title: "Dress code",
     text:
-      "Formal / jardín elegante. Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
+      "Formal / jardín elegante \n Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
   };
 
   const MESA_REGALOS = [
