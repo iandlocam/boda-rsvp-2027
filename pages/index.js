@@ -556,14 +556,14 @@ export default function Home() {
 
   const MESA_REGALOS = [
     { type: "liverpool", url: "https://www.liverpool.com.mx/" },
-    { type: "amazon", url: "https://www.amazon.com.mx/" },
+    { type: "amazon", url: "https://www.amazon.com.mx/wedding/share/VanessaAndres/" },
   ];
 
   const REGALO_MONETARIO = {
     subtitle: "Si deseas apoyarnos en esta nueva etapa:",
     accountLabel: "CLABE / Cuenta",
-    accountValue: "000000000000000000",
-    nameValue: "Vanessa y Andrés",
+    accountValue: "012 180 0152 2563 3524",
+    nameValue: "Andrés López",
   };
 
   const styles = {
