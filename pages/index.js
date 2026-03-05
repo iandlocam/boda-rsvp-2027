@@ -378,7 +378,7 @@ export default function Home() {
   const FLORAL_FRAME_OPACITY = 0.4;
   
   // Tamaño de los íconos del itinerario (en píxeles)
-  const TIMELINE_ICON_SIZE = 80; // Aumentado de 44 a 52
+  const TIMELINE_ICON_SIZE = 80; // Aumentado de 52 a 80
   
   // ====================================================
 
@@ -783,16 +783,16 @@ export default function Home() {
     },
     timelineTitle: {
       fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 21, // Aumentado de 19 a 21 (2 puntos más)
+      fontSize: 25, // Aumentado de 21 a 25 (2 puntos más)
       fontWeight: 700,
       margin: 0,
       color: "rgba(19,32,45,0.90)",
     },
     timelineTime: {
       fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16, // Aumentado de 14 a 16 (2 puntos más)
+      fontSize: 20, // Aumentado de 16 a 20 (2 puntos más)
       marginTop: 6,
-      color: "rgba(19,32,45,0.62)",
+      color: "rgba(19,32,45,0.90)",
       letterSpacing: "0.10em",
       textTransform: "uppercase",
     },
