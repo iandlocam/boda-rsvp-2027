@@ -223,7 +223,7 @@ function TimelineIcon({ type = "ceremony", size = 48 }) {
   const ICONOS = {
     ceremony: "/iconos/Ceremonia.png",     // Ícono para Ceremonia
     reception: "/iconos/Cocteel.png",     // Ícono para Coctel
-    dinner: "/iconos/Cena.png",             // Ícono para Cena
+    dinner: "/iconos/cena.png",             // Ícono para Cena
     party: "/iconos/Fiesta.png",             // Ícono para Fiesta
     close: "/iconos/Cierre.png",             // Ícono para Cierre
   };
@@ -361,7 +361,7 @@ export default function Home() {
   const SOBRE_IMAGE = "/sobre-boda.jpg";
   
   // Imagen del dress code (código de vestimenta)
-  const DRESS_CODE_IMAGE = "/Dress-code.png";
+  const DRESS_CODE_IMAGE = "/dress-code.png";
   
   // Imágenes de la galería (fotos de la pareja)
   const GALLERY_IMAGES = [
