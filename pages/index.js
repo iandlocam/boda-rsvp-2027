@@ -221,7 +221,7 @@ function TimelineIcon({ type = "ceremony", size = 48 }) {
   // Puedes cambiar estas URLs por las imágenes que quieras usar
   // Las imágenes deben estar en la carpeta /public de tu proyecto
   const ICONOS = {
-    ceremony: "/iconos/Ceremonia.png",     // Ícono para Ceremonia
+    ceremony: "/iconos/Ceremony.png",     // Ícono para Ceremonia
     reception: "/iconos/Cocteel.png",     // Ícono para Coctel
     dinner: "/iconos/cena.png",             // Ícono para Cena
     party: "/iconos/Fiesta.png",             // Ícono para Fiesta
