@@ -550,7 +550,7 @@ export default function Home() {
     title: "Dress code",
     text:
       `Formal / jardín elegante
-      Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.`
+      Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.`,
   };
 
   const MESA_REGALOS = [
