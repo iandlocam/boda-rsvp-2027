@@ -212,69 +212,64 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   );
 }
 
-/** ✅ Íconos sobrios (línea) */
-function TimelineIcon({ type = "ceremony", size = 44 }) {
-  const common = {
-    width: size,
-    height: size,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "rgba(19,32,45,0.86)",
-    strokeWidth: 1.6,
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
+/** ✅ NUEVO: Componente de íconos personalizables para el itinerario */
+function TimelineIcon({ type = "ceremony", size = 48 }) {
+  // ====================================================
+  // 🖼️ CONFIGURACIÓN DE ÍCONOS DEL ITINERARIO - CÁMBIALOS AQUÍ
+  // ====================================================
+  
+  // Puedes cambiar estas URLs por las imágenes que quieras usar
+  // Las imágenes deben estar en la carpeta /public de tu proyecto
+  const ICONOS = {
+    ceremony: "/iconos/ceremonia.png",     // Ícono para Ceremonia
+    reception: "/iconos/recepcion.png",     // Ícono para Recepción
+    dinner: "/iconos/cena.png",             // Ícono para Cena
+    party: "/iconos/fiesta.png",             // Ícono para Fiesta
+    close: "/iconos/cierre.png",             // Ícono para Cierre
   };
+  
+  // ====================================================
 
-  if (type === "ceremony") {
+  // Si no se encuentra el ícono, mostrar un círculo con la inicial como fallback
+  const iconSrc = ICONOS[type];
+  
+  if (!iconSrc) {
+    // Fallback: mostrar un círculo con la inicial
+    const initial = type === "ceremony" ? "C" : 
+                    type === "reception" ? "R" : 
+                    type === "dinner" ? "N" : 
+                    type === "party" ? "F" : "X";
+    
     return (
-      <svg {...common} aria-hidden="true">
-        <path d="M6 10V8a6 6 0 0 1 12 0v2" />
-        <path d="M4 10h16" />
-        <path d="M7 10v9" />
-        <path d="M17 10v9" />
-        <path d="M5 19h14" />
-        <path d="M12 4v2" />
-      </svg>
+      <div style={{
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        background: "rgba(214, 178, 94, 0.3)",
+        border: "2px solid rgba(176,141,87,0.5)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: size * 0.4,
+        fontWeight: "bold",
+        color: "rgba(19,32,45,0.8)",
+      }}>
+        {initial}
+      </div>
     );
   }
-  if (type === "reception") {
-    return (
-      <svg {...common} aria-hidden="true">
-        <path d="M7 3h10v4a5 5 0 0 1-10 0V3Z" />
-        <path d="M12 12v5" />
-        <path d="M8.5 21h7" />
-      </svg>
-    );
-  }
-  if (type === "dinner") {
-    return (
-      <svg {...common} aria-hidden="true">
-        <path d="M7 3v7" />
-        <path d="M5.5 3v7" />
-        <path d="M8.5 3v7" />
-        <path d="M7 10v11" />
-        <path d="M14 3v18" />
-        <path d="M18.5 3c-1.7 0-3 1.3-3 3v4h3V6" />
-      </svg>
-    );
-  }
-  if (type === "party") {
-    return (
-      <svg {...common} aria-hidden="true">
-        <path d="M12 2v4" />
-        <path d="M12 18v4" />
-        <path d="M2 12h4" />
-        <path d="M18 12h4" />
-        <path d="M12 8l1.2 2.5L16 12l-2.8 1.5L12 16l-1.2-2.5L8 12l2.8-1.5L12 8Z" />
-      </svg>
-    );
-  }
-  // close
+
   return (
-    <svg {...common} aria-hidden="true">
-      <path d="M21 12a9 9 0 1 1-9-9" />
-      <path d="M12 7v6l4 2" />
-    </svg>
+    <img 
+      src={iconSrc}
+      alt={`Ícono ${type}`}
+      style={{
+        width: size,
+        height: size,
+        objectFit: "contain",
+        borderRadius: "50%",
+      }}
+    />
   );
 }
 
@@ -381,6 +376,9 @@ export default function Home() {
   
   // Opacidad del marco floral (0.0 = invisible, 1.0 = sólido)
   const FLORAL_FRAME_OPACITY = 0.4;
+  
+  // Tamaño de los íconos del itinerario (en píxeles)
+  const TIMELINE_ICON_SIZE = 52; // Aumentado de 44 a 52
   
   // ====================================================
 
@@ -783,14 +781,14 @@ export default function Home() {
     },
     timelineTitle: {
       fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 19,
+      fontSize: 21, // Aumentado de 19 a 21 (2 puntos más)
       fontWeight: 700,
       margin: 0,
       color: "rgba(19,32,45,0.90)",
     },
     timelineTime: {
       fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 14,
+      fontSize: 16, // Aumentado de 14 a 16 (2 puntos más)
       marginTop: 6,
       color: "rgba(19,32,45,0.62)",
       letterSpacing: "0.10em",
@@ -1223,7 +1221,7 @@ export default function Home() {
                       }}
                     >
                       <div style={styles.timelineIconBox}>
-                        <TimelineIcon type={t.iconType} size={44} />
+                        <TimelineIcon type={t.iconType} size={TIMELINE_ICON_SIZE} />
                       </div>
                       <div style={styles.timelineTextCol}>
                         <p style={styles.timelineTitle}>{t.title}</p>
