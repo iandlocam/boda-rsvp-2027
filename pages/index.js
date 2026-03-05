@@ -549,7 +549,8 @@ export default function Home() {
   const DRESS_CODE = {
     title: "Dress code",
     text:
-      "Formal / jardín elegante \n Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
+      `Formal / jardín elegante
+      Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.`
   };
 
   const MESA_REGALOS = [
