@@ -378,7 +378,7 @@ export default function Home() {
   const FLORAL_FRAME_OPACITY = 0.4;
   
   // Tamaño de los íconos del itinerario (en píxeles)
-  const TIMELINE_ICON_SIZE = 52; // Aumentado de 44 a 52
+  const TIMELINE_ICON_SIZE = 80; // Aumentado de 44 a 52
   
   // ====================================================
 
