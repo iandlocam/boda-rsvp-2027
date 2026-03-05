@@ -361,7 +361,7 @@ export default function Home() {
   const SOBRE_IMAGE = "/sobre-boda.jpg";
   
   // Imagen del dress code (código de vestimenta)
-  const DRESS_CODE_IMAGE = "/dress-code.png";
+  const DRESS_CODE_IMAGE = "/Dress-code.png";
   
   // Imágenes de la galería (fotos de la pareja)
   const GALLERY_IMAGES = [
