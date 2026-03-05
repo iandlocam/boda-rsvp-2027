@@ -547,11 +547,12 @@ export default function Home() {
   ];
   
   const DRESS_CODE = {
-    title: "Dress code",
-    text:
-      `Formal / jardín elegante
-      Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.`,
-  };
+  title: "Dress code",
+  text: [
+    "Formal / jardín elegante",
+    "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno."
+  ],
+};
 
   const MESA_REGALOS = [
     { type: "liverpool", url: "https://www.liverpool.com.mx/" },
@@ -1256,10 +1257,21 @@ export default function Home() {
                 />
               </div>
               <div style={styles.softBox}>
-                <p style={{ ...styles.sectionText, textAlign: "center" }}>
-                  {DRESS_CODE.text}
-                </p>
-              </div>
+  {Array.isArray(DRESS_CODE.text) ? (
+    <>
+      <p style={{ ...styles.sectionText, textAlign: "center", marginBottom: "8px" }}>
+        {DRESS_CODE.text[0]}
+      </p>
+      <p style={{ ...styles.sectionText, textAlign: "center", marginTop: 0 }}>
+        {DRESS_CODE.text[1]}
+      </p>
+    </>
+  ) : (
+    <p style={{ ...styles.sectionText, textAlign: "center" }}>
+      {DRESS_CODE.text}
+    </p>
+  )}
+</div>
             </div>
 
             <div style={styles.section}>
