@@ -355,6 +355,35 @@ function BrandLogo({ type = "liverpool" }) {
 export default function Home() {
   const router = useRouter();
 
+  // ====================================================
+  // 🖼️ CONFIGURACIÓN DE IMÁGENES - CÁMBIALAS AQUÍ
+  // ====================================================
+  
+  // Imagen de fondo principal (marco floral que aparece en AMBAS pantallas)
+  const BACKGROUND_IMAGE = "/marco-boda.jpeg";
+  
+  // Imagen del sobre (primera pantalla)
+  const SOBRE_IMAGE = "/sobre-boda.jpg";
+  
+  // Imagen del dress code (código de vestimenta)
+  const DRESS_CODE_IMAGE = "/dress-code.png";
+  
+  // Imágenes de la galería (fotos de la pareja)
+  const GALLERY_IMAGES = [
+    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70", // Foto 1
+    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=70", // Foto 2
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=70", // Foto 3
+  ];
+  
+  // ====================================================
+  // 🎨 OPCIONES DE ESTILO
+  // ====================================================
+  
+  // Opacidad del marco floral (0.0 = invisible, 1.0 = sólido)
+  const FLORAL_FRAME_OPACITY = 0.4;
+  
+  // ====================================================
+
   const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
 
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -492,13 +521,6 @@ export default function Home() {
   const MAPS_URL =
     "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
   const WAZE_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
-  const BACKGROUND_IMAGE = "/marco-boda.jpeg";
-
-  const GALLERY_PHOTOS = [
-    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70",
-    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=70",
-    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=70",
-  ];
 
   const NUESTRA_HISTORIA = [
     {
@@ -871,7 +893,7 @@ export default function Home() {
       fontSize: 20,
       opacity: 0.7,
     },
-    // ✅ NUEVO: Marco floral para ambas pantallas
+    // Marco floral para ambas pantallas
     floralFrame: {
       position: "absolute",
       top: 0,
@@ -882,7 +904,7 @@ export default function Home() {
       objectPosition: "center",
       pointerEvents: "none",
       zIndex: 1,
-      opacity: 0.4, // Ajusta este valor: 0.3 = más sutil, 0.6 = más visible
+      opacity: FLORAL_FRAME_OPACITY,
     },
     logoBtn: {
       display: "inline-flex",
@@ -1066,13 +1088,13 @@ export default function Home() {
             <div style={styles.envelope}>
               {/* MARCO FLORAL EN EL SOBRE */}
               <img 
-                src="/marco-boda.jpeg" 
+                src={BACKGROUND_IMAGE}
                 alt="Marco floral" 
                 style={styles.floralFrame}
               />
               
               <img 
-                src="/sobre-boda.jpg" 
+                src={SOBRE_IMAGE}
                 alt="Vanessa & Andrés 23/04/2027" 
                 style={styles.envelopeTopImage}
               />
@@ -1107,7 +1129,7 @@ export default function Home() {
           <div style={styles.card}>
             {/* MARCO FLORAL EN LA INVITACIÓN */}
             <img 
-              src="/marco-boda.jpeg" 
+              src={BACKGROUND_IMAGE}
               alt="Marco floral" 
               style={styles.floralFrame}
             />
@@ -1158,7 +1180,7 @@ export default function Home() {
             </div>
 
             <div style={styles.photoStrip}>
-              <img alt="Foto 1" src={GALLERY_PHOTOS[0]} style={styles.photo} />
+              <img alt="Foto 1" src={GALLERY_IMAGES[0]} style={styles.photo} />
             </div>
 
             <div style={styles.section}>
@@ -1185,7 +1207,7 @@ export default function Home() {
             </div>
 
             <div style={styles.photoStrip}>
-              <img alt="Foto 2" src={GALLERY_PHOTOS[1]} style={styles.photo} />
+              <img alt="Foto 2" src={GALLERY_IMAGES[1]} style={styles.photo} />
             </div>
 
             <div style={styles.section}>
@@ -1223,7 +1245,7 @@ export default function Home() {
                 }}
               >
                 <img
-                  src="/dress-code.png"
+                  src={DRESS_CODE_IMAGE}
                   alt=" "
                   style={{
                     width: 200,
