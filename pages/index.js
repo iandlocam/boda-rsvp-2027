@@ -366,9 +366,9 @@ export default function Home() {
   
   // Imágenes de la galería (fotos de la pareja)
   const GALLERY_IMAGES = [
-    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70", // Foto 1
-    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=70", // Foto 2
-    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=70", // Foto 3
+    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70",
+    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=70",
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=70",
   ];
   
   // ====================================================
@@ -379,7 +379,7 @@ export default function Home() {
   const FLORAL_FRAME_OPACITY = 0.4;
   
   // Tamaño de los íconos del itinerario (en píxeles)
-  const TIMELINE_ICON_SIZE = 80; // Aumentado de 52 a 80
+  const TIMELINE_ICON_SIZE = 80;
   
   // ====================================================
 
@@ -548,12 +548,12 @@ export default function Home() {
   ];
   
   const DRESS_CODE = {
-  title: "Dress code",
-  text: [
-    "Formal / jardín elegante",
-    "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno."
-  ],
-};
+    title: "Dress code",
+    text: [
+      "Formal / jardín elegante",
+      "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno."
+    ],
+  };
 
   const MESA_REGALOS = [
     { type: "liverpool", url: "https://www.liverpool.com.mx/" },
@@ -571,12 +571,11 @@ export default function Home() {
   // 🎨 ESTILOS CORREGIDOS - con fondo crema para el sobre
   // ====================================================
   
-  // Estilos originales del sobre (PRIMERA PANTALLA) - CON FONDO CORREGIDO
+  // Estilos del sobre (PRIMERA PANTALLA)
   const envelopeStyles = {
-    // NUEVO: Contenedor principal con fondo crema
     pageContainer: {
       minHeight: "100vh",
-      backgroundColor: "#fef9f0", // Mismo color crema que la invitación
+      backgroundColor: "#fef9f0",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -597,7 +596,7 @@ export default function Home() {
       position: "relative",
       borderRadius: 30,
       overflow: "hidden",
-      background: "#F9E5D2", // Color del sobre
+      background: "#F9E5D2",
       boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)",
       border: "4px solid #FFFFFF",
       display: "flex",
@@ -693,9 +692,8 @@ export default function Home() {
     },
   };
 
-  // NUEVOS ESTILOS para la segunda pantalla (inspirados en invboda.com/20/) - CON CONTADOR CORREGIDO
+  // Estilos para la segunda pantalla
   const invitationStyles = {
-    // Contenedor principal con fondo color crema
     page: {
       minHeight: "100vh",
       backgroundColor: "#fef9f0",
@@ -706,7 +704,6 @@ export default function Home() {
       alignItems: "center",
       padding: "20px",
     },
-    // Tarjeta principal con fondo blanco y bordes redondeados
     card: {
       width: "100%",
       maxWidth: 800,
@@ -715,12 +712,7 @@ export default function Home() {
       boxShadow: "0 15px 40px rgba(0,0,0,0.05)",
       padding: "50px 40px",
       border: "1px solid rgba(255,255,255,0.5)",
-      "@media (max-width: 600px)": {
-        padding: "30px 20px",
-        borderRadius: 40,
-      },
     },
-    // Nombres de los novios
     names: {
       fontFamily: '"Great Vibes", cursive',
       fontSize: "clamp(3.5rem, 10vw, 5.5rem)",
@@ -730,7 +722,6 @@ export default function Home() {
       marginBottom: 10,
       lineHeight: 1.2,
     },
-    // Subtítulo
     subtitle: {
       fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
       color: "#a17a6b",
@@ -739,7 +730,6 @@ export default function Home() {
       fontFamily: "'Quicksand', sans-serif",
       fontWeight: 400,
     },
-    // Contenedor del contador - CORREGIDO para centrar en móviles
     countdownContainer: {
       display: "grid",
       gridTemplateColumns: "repeat(4, 1fr)",
@@ -767,7 +757,6 @@ export default function Home() {
       letterSpacing: "1px",
       color: "#a17a6b",
     },
-    // Títulos de sección
     sectionTitle: {
       fontFamily: '"Great Vibes", cursive',
       fontSize: "clamp(2.2rem, 8vw, 3rem)",
@@ -777,7 +766,6 @@ export default function Home() {
       marginBottom: "clamp(20px, 5vw, 30px)",
       letterSpacing: "1px",
     },
-    // Tarjetas
     cardItem: {
       background: "#fff",
       borderRadius: 40,
@@ -786,7 +774,6 @@ export default function Home() {
       boxShadow: "0 8px 25px rgba(183,110,121,0.08)",
       border: "1px solid #f0e4d7",
     },
-    // Formulario RSVP
     formContainer: {
       background: "#fff",
       borderRadius: 60,
@@ -846,7 +833,6 @@ export default function Home() {
       boxShadow: "0 10px 25px rgba(183,110,121,0.4)",
       fontFamily: "'Quicksand', sans-serif",
     },
-    // Galería
     galleryGrid: {
       display: "grid",
       gridTemplateColumns: "repeat(3, 1fr)",
@@ -860,7 +846,6 @@ export default function Home() {
       boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
       border: "2px solid white",
     },
-    // Timeline
     timelineGrid: {
       display: "grid",
       gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
@@ -883,14 +868,12 @@ export default function Home() {
       marginBottom: 5,
       color: "#4a4a4a",
     },
-    // Soft box
     softBox: {
       borderRadius: 40,
       border: "1px solid #f0e4d7",
       background: "#fff",
       padding: "clamp(15px, 4vw, 20px)",
     },
-    // Links
     linkBtnPrimary: {
       display: "inline-block",
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
@@ -913,7 +896,6 @@ export default function Home() {
       border: "1px solid #f0e4d7",
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
     },
-    // Regalos
     regalosContainer: {
       display: "flex",
       justifyContent: "center",
@@ -934,7 +916,6 @@ export default function Home() {
     },
   };
 
-  const nameStyleObj = NAME_STYLE === "black" ? invitationStyles.names : invitationStyles.names;
   const maxPases = Math.max(1, Number(guestData?.pasesAsignados || 1));
   const pasesFromSheet = Number(guestData?.pasesConfirmados || 0);
   const pasesMostrados =
@@ -973,7 +954,7 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap"
           rel="stylesheet"
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`
           textarea::placeholder { 
             color: #000; 
@@ -985,12 +966,11 @@ export default function Home() {
         `}</style>
       </Head>
   
-      {/* SOBRE CERRADO - PRIMERA PANTALLA - AHORA CON FONDO CREMA */}
+      {/* SOBRE CERRADO - PRIMERA PANTALLA */}
       {!envelopeOpen && (
         <div style={envelopeStyles.pageContainer}>
           <div style={envelopeStyles.wrap}>
             <div style={envelopeStyles.envelope}>
-              {/* MARCO FLORAL EN EL SOBRE */}
               <img 
                 src={BACKGROUND_IMAGE}
                 alt="Marco floral" 
@@ -1038,7 +1018,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* INVITACIÓN - SEGUNDA PANTALLA (CON NUEVOS ESTILOS Y CONTADOR CORREGIDO) */}
+      {/* INVITACIÓN - SEGUNDA PANTALLA */}
       {envelopeOpen && (
         <div style={invitationStyles.page}>
           <div style={invitationStyles.card}>
@@ -1096,7 +1076,7 @@ export default function Home() {
               <div style={invitationStyles.softBox}>
                 {NUESTRA_HISTORIA.map((b, i) => (
                   <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 20 }}>
-                    <div style={{ fontFamily: '"Great Vibes", cursive', fontSize: "clamp(1.5rem, 6vw, 1.8rem)', color: "#b76e79", marginBottom: 5, textAlign: "center" }}>
+                    <div style={{ fontFamily: '"Great Vibes", cursive', fontSize: "clamp(1.5rem, 6vw, 1.8rem)", color: "#b76e79", marginBottom: 5, textAlign: "center" }}>
                       {b.title}
                     </div>
                     <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: "#4a4a4a", textAlign: "center", lineHeight: 1.6 }}>{b.text}</p>
@@ -1112,7 +1092,7 @@ export default function Home() {
                 {TIMELINE.map((t, i) => (
                   <div key={i} style={invitationStyles.cardItem}>
                     <div style={invitationStyles.timelineIconBox}>
-                      <TimelineIcon type={t.iconType} size={TIMELINE_ICON_SIZE} />
+                      <TimelineIcon type={t.iconType} size={80} />
                     </div>
                     <div style={invitationStyles.timelineTime}>{t.time}</div>
                     <div style={invitationStyles.timelineTitle}>{t.title}</div>
