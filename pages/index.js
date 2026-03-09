@@ -446,7 +446,7 @@ export default function Home() {
   
   // 🎵 RUTA DE TU CANCIÓN - Coloca tu archivo MP3 en /public
   // Puedes descargar un MP3 de cualquier canción y ponerlo en /public/mi-cancion.mp3
-  const SONG_URL = "/mi-cancion.mp3"; // Cambia esto por el nombre de tu archivo
+  const SONG_URL = "/Post-quimica.mp3"; // Cambia esto por el nombre de tu archivo
   
   const GALLERY_IMAGES = [
     "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80",
