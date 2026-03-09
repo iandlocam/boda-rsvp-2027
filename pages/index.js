@@ -7,11 +7,11 @@ function clamp(n) {
   return Number.isFinite(n) && n > 0 ? n : 0;
 }
 
-async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
+async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados, bebidas, alergias }) {
   const resp = await fetch("/api/guest", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id, asistencia, mensaje, pasesConfirmados }),
+    body: JSON.stringify({ id, asistencia, mensaje, pasesConfirmados, bebidas, alergias }),
   });
 
   const data = await resp.json();
@@ -437,7 +437,6 @@ function MusicFloatingButton({ isPlaying, onClick }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Mostrar el botón después de un pequeño delay
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 1000);
@@ -490,13 +489,11 @@ function MusicFloatingButton({ isPlaying, onClick }) {
       `}</style>
       
       {isPlaying ? (
-        // Icono de pausa
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
           <rect x="6" y="4" width="4" height="16" rx="1" fill="white" />
           <rect x="14" y="4" width="4" height="16" rx="1" fill="white" />
         </svg>
       ) : (
-        // Icono de play
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
           <path d="M8 5v14l11-7z" fill="white" />
         </svg>
@@ -516,10 +513,15 @@ export default function Home() {
   const BACKGROUND_IMAGE = "/marco-boda.jpeg";
   const SOBRE_IMAGE = "/sobre-boda.jpg";
   const DRESS_CODE_IMAGE = "/Dress-code.png";
+  const DIVIDER_IMAGE = "/divider-floral.png"; // Imagen para separar secciones
+  const LIVERPOOL_LOGO = "/liverpool-logo.png"; // Logo de Liverpool
+  const AMAZON_LOGO = "/amazon-logo.png"; // Logo de Amazon
+  const BANK_ICON = "/bank-icon.png"; // Icono de banco/transferencias
   
   // 🎵 RUTA DE TU CANCIÓN
   const SONG_URL = "/Post-quimica.mp3";
   
+  // Galería principal (6 imágenes - carrusel)
   const GALLERY_IMAGES = [
     "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=80",
@@ -527,6 +529,16 @@ export default function Home() {
     "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80",
+  ];
+
+  // Galería secundaria (6 imágenes - cuadrícula 2x3)
+  const SECONDARY_GALLERY_IMAGES = [
+    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
   ];
   
   // ====================================================
@@ -536,10 +548,21 @@ export default function Home() {
   const FLORAL_FRAME_OPACITY = 0.4;
   const TIMELINE_ICON_SIZE = 80;
   
+  // Paleta de colores (5 bolitas)
+  const COLOR_PALETTE = [
+    "#b76e79", // Rosa/miel principal
+    "#d4af37", // Dorado
+    "#8b5a2b", // Marrón
+    "#4a704a", // Verde oliva
+    "#2c3e50", // Azul oscuro
+  ];
+  
   // ====================================================
 
   const [carouselOpen, setCarouselOpen] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [secondaryCarouselOpen, setSecondaryCarouselOpen] = useState(false);
+  const [secondaryCarouselIndex, setSecondaryCarouselIndex] = useState(0);
 
   const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
 
@@ -557,6 +580,27 @@ export default function Home() {
   const [asistenciaActual, setAsistenciaActual] = useState("");
   const [pasesConfirmados, setPasesConfirmados] = useState(1);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  
+  // Nuevos estados para bebidas y alergias
+  const [bebidasSeleccionadas, setBebidasSeleccionadas] = useState([]);
+  const [alergias, setAlergias] = useState("");
+
+  const bebidasOptions = [
+    { id: "ron", label: "Ron" },
+    { id: "whiskey", label: "Whiskey" },
+    { id: "tequila", label: "Tequila" },
+    { id: "vodka", label: "Vodka" },
+    { id: "cerveza", label: "Cerveza" },
+    { id: "vino", label: "Vino" },
+  ];
+
+  const toggleBebida = (bebidaId) => {
+    setBebidasSeleccionadas(prev => 
+      prev.includes(bebidaId)
+        ? prev.filter(id => id !== bebidaId)
+        : [...prev, bebidaId]
+    );
+  };
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -590,6 +634,14 @@ export default function Home() {
 
         if (g?.mensaje && !mensaje) {
           setMensaje(String(g.mensaje));
+        }
+
+        // Cargar bebidas y alergias si existen
+        if (g?.bebidas) {
+          setBebidasSeleccionadas(g.bebidas);
+        }
+        if (g?.alergias) {
+          setAlergias(g.alergias);
         }
 
         const maxPases = Math.max(1, Number(g?.pasesAsignados || 1));
@@ -651,6 +703,8 @@ export default function Home() {
         asistencia,
         mensaje,
         pasesConfirmados: pasesAEnviar,
+        bebidas: asistencia === "Sí" ? bebidasSeleccionadas : [],
+        alergias: asistencia === "Sí" ? alergias : "",
       });
 
       setRsvpResult(result);
@@ -669,9 +723,10 @@ export default function Home() {
     }
   }
 
-  const MAPS_URL =
-    "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
-  const WAZE_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
+  const MAPS_CEREMONY_URL = "https://maps.google.com/?q=Parroquia%20de%20San%20Miguel%20Arcangel%2C%20Jiutepec%2C%20Morelos";
+  const MAPS_RECEPTION_URL = "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
+  const WAZE_CEREMONY_URL = "https://waze.com/ul?q=Parroquia%20de%20San%20Miguel%20Arcangel%20Jiutepec%20Morelos";
+  const WAZE_RECEPTION_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
 
   const NUESTRA_HISTORIA = [
     {
@@ -876,9 +931,157 @@ export default function Home() {
       fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
       color: "#a17a6b",
       textAlign: "center",
-      marginBottom: 30,
+      marginBottom: 20,
       fontFamily: "'Quicksand', sans-serif",
       fontWeight: 400,
+    },
+    invitationText: {
+      fontSize: "clamp(1rem, 3.5vw, 1.1rem)",
+      color: "#4a4a4a",
+      textAlign: "center",
+      marginBottom: 25,
+      lineHeight: 1.6,
+      fontFamily: "'Quicksand', sans-serif",
+    },
+    familySection: {
+      display: "grid",
+      gridTemplateColumns: "repeat(3, 1fr)",
+      gap: "20px",
+      margin: "30px 0 40px",
+    },
+    familyCard: {
+      background: "#fef9f0",
+      borderRadius: 30,
+      padding: "20px 15px",
+      textAlign: "center",
+      border: "1px solid #f0e4d7",
+    },
+    familyLabel: {
+      fontSize: "0.9rem",
+      color: "#b76e79",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: "1px",
+      marginBottom: 10,
+    },
+    familyName: {
+      fontSize: "1.1rem",
+      color: "#4a4a4a",
+      fontWeight: 500,
+    },
+    dividerImage: {
+      width: "100%",
+      maxWidth: "600px",
+      height: "auto",
+      margin: "40px auto",
+      display: "block",
+      opacity: 0.7,
+    },
+    colorPalette: {
+      display: "flex",
+      justifyContent: "center",
+      gap: "15px",
+      margin: "20px 0 30px",
+      flexWrap: "wrap",
+    },
+    colorDot: {
+      width: "50px",
+      height: "50px",
+      borderRadius: "50%",
+      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+      border: "2px solid white",
+      transition: "transform 0.2s",
+      cursor: "pointer",
+    },
+    ubicacionesContainer: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "20px",
+      marginTop: "20px",
+    },
+    ubicacionCard: {
+      background: "#fef9f0",
+      borderRadius: 40,
+      padding: "25px 20px",
+      textAlign: "center",
+      border: "1px solid #f0e4d7",
+    },
+    ubicacionTitle: {
+      fontSize: "1.3rem",
+      fontWeight: 600,
+      color: "#b76e79",
+      marginBottom: 10,
+    },
+    ubicacionAddress: {
+      fontSize: "1rem",
+      color: "#4a4a4a",
+      marginBottom: 15,
+    },
+    storeLogo: {
+      width: "120px",
+      height: "auto",
+      marginBottom: "10px",
+      display: "block",
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+    bankIcon: {
+      width: "60px",
+      height: "60px",
+      marginBottom: "15px",
+      display: "block",
+      marginLeft: "auto",
+      marginRight: "auto",
+      opacity: 0.8,
+    },
+    secondaryGallery: {
+      display: "grid",
+      gridTemplateColumns: "repeat(3, 1fr)",
+      gap: "15px",
+      marginTop: "30px",
+    },
+    secondaryGalleryImage: {
+      width: "100%",
+      aspectRatio: "1/1",
+      objectFit: "cover",
+      borderRadius: 20,
+      cursor: "pointer",
+      transition: "transform 0.2s",
+      border: "2px solid white",
+      boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
+    },
+    bebidasContainer: {
+      display: "grid",
+      gridTemplateColumns: "repeat(2, 1fr)",
+      gap: "12px",
+      marginTop: "20px",
+    },
+    bebidaOption: {
+      background: "#fef9f0",
+      borderRadius: 40,
+      padding: "12px",
+      textAlign: "center",
+      cursor: "pointer",
+      border: "2px solid #f0e4d7",
+      transition: "all 0.2s",
+      fontSize: "1rem",
+      fontWeight: 500,
+      color: "#4a4a4a",
+    },
+    bebidaOptionSelected: {
+      background: "#b76e79",
+      borderColor: "#b76e79",
+      color: "white",
+    },
+    alergiasInput: {
+      width: "100%",
+      padding: "15px 20px",
+      border: "2px solid #f0e4d7",
+      borderRadius: 50,
+      fontSize: "1rem",
+      background: "#fefcf9",
+      fontFamily: "'Quicksand', sans-serif",
+      marginTop: "15px",
     },
     countdownContainer: {
       display: "grid",
@@ -1077,21 +1280,38 @@ export default function Home() {
     },
     regalosContainer: {
       display: "flex",
-      justifyContent: "center",
-      gap: "clamp(15px, 4vw, 30px)",
-      flexWrap: "wrap",
+      flexDirection: "column",
+      gap: "30px",
+      marginTop: "20px",
+    },
+    regaloItem: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
     },
     regaloLink: {
       background: "#fff",
-      padding: "clamp(15px, 4vw, 20px) clamp(25px, 8vw, 50px)",
+      padding: "15px 30px",
       borderRadius: 60,
       textDecoration: "none",
       color: "#4a4a4a",
       fontWeight: 600,
-      fontSize: "clamp(1.1rem, 4vw, 1.4rem)",
+      fontSize: "1.2rem",
       boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
       border: "1px solid #f0e4d7",
       transition: "all 0.2s",
+      width: "100%",
+      maxWidth: 300,
+      textAlign: "center",
+      marginTop: "10px",
+    },
+    moneyBox: {
+      borderRadius: 40,
+      border: "1px solid #f0e4d7",
+      background: "#fef9f0",
+      padding: "30px 20px",
+      textAlign: "center",
+      marginTop: "20px",
     },
   };
 
@@ -1169,6 +1389,11 @@ export default function Home() {
   const openCarousel = (index) => {
     setCarouselIndex(index);
     setCarouselOpen(true);
+  };
+
+  const openSecondaryCarousel = (index) => {
+    setSecondaryCarouselIndex(index);
+    setSecondaryCarouselOpen(true);
   };
 
   return (
@@ -1268,6 +1493,30 @@ export default function Home() {
             <div style={invitationStyles.names}>Vanessa & Andrés</div>
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
+            {/* Nuevo bloque de invitación */}
+            <div style={invitationStyles.invitationText}>
+              Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
+            </div>
+
+            {/* Bloque de familias y padrinos */}
+            <div style={invitationStyles.familySection}>
+              <div style={invitationStyles.familyCard}>
+                <div style={invitationStyles.familyLabel}>Papás de la novia</div>
+                <div style={invitationStyles.familyName}>María González</div>
+                <div style={invitationStyles.familyName}>Juan Pérez</div>
+              </div>
+              <div style={invitationStyles.familyCard}>
+                <div style={invitationStyles.familyLabel}>Papás del novio</div>
+                <div style={invitationStyles.familyName}>Laura Martínez</div>
+                <div style={invitationStyles.familyName}>Pedro Sánchez</div>
+              </div>
+              <div style={invitationStyles.familyCard}>
+                <div style={invitationStyles.familyLabel}>Padrinos de velación</div>
+                <div style={invitationStyles.familyName}>Sofía Ramírez</div>
+                <div style={invitationStyles.familyName}>Diego López</div>
+              </div>
+            </div>
+
             {/* Contador */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
@@ -1288,7 +1537,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* NUEVO CARRUSEL DE IMÁGENES */}
+            {/* CARRUSEL DE IMÁGENES PRINCIPAL */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Galería</div>
               
@@ -1343,8 +1592,15 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Imagen separadora */}
+            <img 
+              src={DIVIDER_IMAGE}
+              alt="Separador floral"
+              style={invitationStyles.dividerImage}
+            />
+
             {/* Itinerario */}
-            <div style={{ marginTop: 40 }}>
+            <div style={{ marginTop: 20 }}>
               <div style={invitationStyles.sectionTitle}>Itinerario</div>
               <div style={invitationStyles.timelineGrid}>
                 {TIMELINE.map((t, i) => (
@@ -1359,7 +1615,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Dress code */}
+            {/* Dress code con paleta de colores */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Dress code</div>
               <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
@@ -1369,24 +1625,64 @@ export default function Home() {
                   style={{ width: "min(200px, 60%)", maxWidth: "100%", height: "auto", margin: "0 auto 20px", display: "block" }}
                 />
                 <div style={{ fontSize: "clamp(1rem, 4vw, 1.1rem)", color: "#b76e79", marginBottom: 5 }}>{DRESS_CODE.text[0]}</div>
-                <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: "#4a4a4a" }}>{DRESS_CODE.text[1]}</div>
+                <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: "#4a4a4a", marginBottom: 25 }}>{DRESS_CODE.text[1]}</div>
+                
+                {/* Paleta de colores */}
+                <div style={invitationStyles.colorPalette}>
+                  {COLOR_PALETTE.map((color, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        ...invitationStyles.colorDot,
+                        backgroundColor: color,
+                      }}
+                      title={`Color ${idx + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Ubicación */}
-            <div style={{ marginTop: 40 }}>
-              <div style={invitationStyles.sectionTitle}>Ubicación</div>
-              <div style={invitationStyles.softBox}>
-                <p style={{ fontSize: "clamp(1rem, 4vw, 1.1rem)", color: "#4a4a4a", textAlign: "center", marginBottom: 20 }}>
-                  Jardín Maroma · Jiutepec, Morelos
-                </p>
-                <div style={{ display: "flex", gap: "clamp(10px, 3vw, 15px)", justifyContent: "center", flexWrap: "wrap" }}>
-                  <a href={MAPS_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtnPrimary}>
-                    Google Maps
-                  </a>
-                  <a href={WAZE_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtn}>
-                    Waze
-                  </a>
+            {/* Imagen separadora */}
+            <img 
+              src={DIVIDER_IMAGE}
+              alt="Separador floral"
+              style={invitationStyles.dividerImage}
+            />
+
+            {/* Ubicaciones - Ceremonia y Recepción */}
+            <div style={{ marginTop: 20 }}>
+              <div style={invitationStyles.sectionTitle}>Ubicaciones</div>
+              <div style={invitationStyles.ubicacionesContainer}>
+                <div style={invitationStyles.ubicacionCard}>
+                  <div style={invitationStyles.ubicacionTitle}>Ceremonia</div>
+                  <div style={invitationStyles.ubicacionAddress}>
+                    Parroquia de San Miguel Arcángel<br />
+                    Jiutepec, Morelos
+                  </div>
+                  <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
+                    <a href={MAPS_CEREMONY_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtnPrimary}>
+                      Google Maps
+                    </a>
+                    <a href={WAZE_CEREMONY_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtn}>
+                      Waze
+                    </a>
+                  </div>
+                </div>
+                <div style={invitationStyles.ubicacionCard}>
+                  <div style={invitationStyles.ubicacionTitle}>Recepción</div>
+                  <div style={invitationStyles.ubicacionAddress}>
+                    Jardín Maroma<br />
+                    Jiutepec, Morelos
+                  </div>
+                  <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
+                    <a href={MAPS_RECEPTION_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtnPrimary}>
+                      Google Maps
+                    </a>
+                    <a href={WAZE_RECEPTION_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtn}>
+                      Waze
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1396,14 +1692,38 @@ export default function Home() {
               <div style={invitationStyles.sectionTitle}>Mesa de regalos</div>
               <div style={invitationStyles.softBox}>
                 <div style={invitationStyles.regalosContainer}>
-                  {MESA_REGALOS.map((x, i) => (
-                    <a key={i} href={x.url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
-                      {x.type === "amazon" ? "Amazon" : "Liverpool"}
+                  {/* Liverpool */}
+                  <div style={invitationStyles.regaloItem}>
+                    <img 
+                      src={LIVERPOOL_LOGO}
+                      alt="Liverpool"
+                      style={invitationStyles.storeLogo}
+                    />
+                    <a href={MESA_REGALOS[0].url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
+                      Ver lista
                     </a>
-                  ))}
+                  </div>
+                  
+                  {/* Amazon */}
+                  <div style={invitationStyles.regaloItem}>
+                    <img 
+                      src={AMAZON_LOGO}
+                      alt="Amazon"
+                      style={invitationStyles.storeLogo}
+                    />
+                    <a href={MESA_REGALOS[1].url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
+                      Ver lista
+                    </a>
+                  </div>
                 </div>
 
-                <div style={{ ...invitationStyles.softBox, marginTop: 20 }}>
+                {/* Datos bancarios con icono */}
+                <div style={invitationStyles.moneyBox}>
+                  <img 
+                    src={BANK_ICON}
+                    alt="Transferencia bancaria"
+                    style={invitationStyles.bankIcon}
+                  />
                   <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: "#4a4a4a", textAlign: "center" }}>
                     {REGALO_MONETARIO.subtitle}
                   </p>
@@ -1419,6 +1739,74 @@ export default function Home() {
                     {REGALO_MONETARIO.nameValue}
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Galería secundaria (2x3) */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Más momentos</div>
+              <div style={invitationStyles.secondaryGallery}>
+                {SECONDARY_GALLERY_IMAGES.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt={`Foto secundaria ${idx + 1}`}
+                    style={invitationStyles.secondaryGalleryImage}
+                    onClick={() => openSecondaryCarousel(idx)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Sección de reservaciones (existente) */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Reservaciones</div>
+              <div style={envelopeStyles.reservedSection}>
+                <div style={envelopeStyles.reservedText}>
+                  HEMOS RESERVADO
+                </div>
+                <div style={envelopeStyles.reservedNumber}>
+                  {guestData?.pasesAsignados || 2}
+                </div>
+                <div style={envelopeStyles.reservedSubtext}>
+                  LUGARES EN SU HONOR
+                </div>
+              </div>
+            </div>
+
+            {/* Bloque de bebidas */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>¿Qué se toman los chicos?</div>
+              <div style={invitationStyles.softBox}>
+                <div style={invitationStyles.bebidasContainer}>
+                  {bebidasOptions.map((bebida) => (
+                    <div
+                      key={bebida.id}
+                      style={{
+                        ...invitationStyles.bebidaOption,
+                        ...(bebidasSeleccionadas.includes(bebida.id) ? invitationStyles.bebidaOptionSelected : {}),
+                      }}
+                      onClick={() => toggleBebida(bebida.id)}
+                    >
+                      {bebida.label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Bloque de alergias */}
+            <div style={{ marginTop: 30 }}>
+              <div style={invitationStyles.sectionTitle}>¿Alergias?</div>
+              <div style={invitationStyles.softBox}>
+                <input
+                  type="text"
+                  style={invitationStyles.alergiasInput}
+                  placeholder="Ej. Alergia al marisco, gluten, etc."
+                  value={alergias}
+                  onChange={(e) => setAlergias(e.target.value)}
+                  disabled={yaConfirmo || rsvpStatus === "saving"}
+                />
               </div>
             </div>
 
@@ -1536,12 +1924,21 @@ export default function Home() {
         />
       )}
 
-      {/* Carrusel a pantalla completa */}
+      {/* Carrusel principal a pantalla completa */}
       {carouselOpen && (
         <ImageCarousel
           images={GALLERY_IMAGES}
           initialIndex={carouselIndex}
           onClose={() => setCarouselOpen(false)}
+        />
+      )}
+
+      {/* Carrusel secundario a pantalla completa */}
+      {secondaryCarouselOpen && (
+        <ImageCarousel
+          images={SECONDARY_GALLERY_IMAGES}
+          initialIndex={secondaryCarouselIndex}
+          onClose={() => setSecondaryCarouselOpen(false)}
         />
       )}
     </>
