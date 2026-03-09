@@ -515,7 +515,7 @@ export default function Home() {
   const DRESS_CODE_IMAGE = "/Dress-code.png";
   
   // Dos imágenes separadoras independientes
-  const DIVIDER_IMAGE_1 = "/divider-floral-1.png"; // Primera imagen separadora
+  const DIVIDER_IMAGE_1 = "/familia.jpeg"; // Primera imagen separadora
   const DIVIDER_IMAGE_2 = "/divider-floral-2.png"; // Segunda imagen separadora
   
   const LIVERPOOL_LOGO = "/liverpool-logo.png";
