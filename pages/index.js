@@ -1,5 +1,5 @@
 // /pages/index.js
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -215,27 +215,17 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
 
 /** ✅ Componente de íconos personalizables para el itinerario */
 function TimelineIcon({ type = "ceremony", size = 48 }) {
-  // ====================================================
-  // 🖼️ CONFIGURACIÓN DE ÍCONOS DEL ITINERARIO - CÁMBIALOS AQUÍ
-  // ====================================================
-  
-  // Puedes cambiar estas URLs por las imágenes que quieras usar
-  // Las imágenes deben estar en la carpeta /public de tu proyecto
   const ICONOS = {
-    ceremony: "/iconos/Ceremony.png",     // Ícono para Ceremonia
-    reception: "/iconos/Cocteel.png",     // Ícono para Coctel
-    dinner: "/iconos/cena.png",             // Ícono para Cena
-    party: "/iconos/Fiesta.png",             // Ícono para Fiesta
-    close: "/iconos/Cierre.png",             // Ícono para Cierre
+    ceremony: "/iconos/Ceremony.png",
+    reception: "/iconos/Cocteel.png",
+    dinner: "/iconos/cena.png",
+    party: "/iconos/Fiesta.png",
+    close: "/iconos/Cierre.png",
   };
   
-  // ====================================================
-
-  // Si no se encuentra el ícono, mostrar un círculo con la inicial como fallback
   const iconSrc = ICONOS[type];
   
   if (!iconSrc) {
-    // Fallback: mostrar un círculo con la inicial
     const initial = type === "ceremony" ? "C" : 
                     type === "reception" ? "R" : 
                     type === "dinner" ? "N" : 
@@ -274,80 +264,6 @@ function TimelineIcon({ type = "ceremony", size = 48 }) {
   );
 }
 
-/** ✅ Logos sobrios (SVG) como botones */
-function BrandLogo({ type = "liverpool" }) {
-  if (type === "amazon") {
-    return (
-      <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
-        <rect
-          x="1"
-          y="1"
-          width="418"
-          height="110"
-          rx="18"
-          fill="rgba(255,255,255,0.92)"
-          stroke="rgba(31,65,95,0.16)"
-        />
-        <text
-          x="210"
-          y="64"
-          textAnchor="middle"
-          fontFamily="system-ui, -apple-system, Segoe UI, Roboto, Arial"
-          fontSize="44"
-          fill="rgba(19,32,45,0.88)"
-        >
-          amazon
-        </text>
-        <path
-          d="M140 78c40 22 100 22 140 0"
-          fill="none"
-          stroke="rgba(176,141,87,0.95)"
-          strokeWidth="6"
-          strokeLinecap="round"
-        />
-        <path
-          d="M274 76l14 5-9 12"
-          fill="none"
-          stroke="rgba(176,141,87,0.95)"
-          strokeWidth="6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    );
-  }
-
-  return (
-    <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
-      <rect
-        x="1"
-        y="1"
-        width="418"
-        height="110"
-        rx="18"
-        fill="rgba(255,255,255,0.92)"
-        stroke="rgba(31,65,95,0.16)"
-      />
-      <text
-        x="210"
-        y="66"
-        textAnchor="middle"
-        fontFamily='"Cormorant Garamond", serif'
-        fontSize="50"
-        fill="rgba(19,32,45,0.88)"
-        style={{ letterSpacing: "0.02em" }}
-      >
-        liverpool
-      </text>
-      <path
-        d="M92 30c10 0 16 6 16 14 0 10-8 18-18 18-8 0-14-6-14-14 0-10 6-18 16-18z"
-        fill="rgba(214,178,94,0.18)"
-        stroke="rgba(176,141,87,0.50)"
-      />
-    </svg>
-  );
-}
-
 /** ✅ Componente Carrusel de Imágenes */
 function ImageCarousel({ images, initialIndex = 0, onClose }) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
@@ -364,10 +280,8 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
 
   const handleTouchEnd = () => {
     if (touchStart - touchEnd > 50) {
-      // Deslizar a la izquierda - siguiente imagen
       setCurrentIndex((prev) => (prev + 1) % images.length);
     } else if (touchStart - touchEnd < -50) {
-      // Deslizar a la derecha - imagen anterior
       setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
     }
   };
@@ -404,7 +318,6 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
       }}
       onClick={onClose}
     >
-      {/* Botón de cerrar */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -427,15 +340,11 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
           justifyContent: "center",
           zIndex: 10000,
           backdropFilter: "blur(5px)",
-          transition: "background 0.3s",
         }}
-        onMouseEnter={(e) => e.target.style.background = "rgba(255,255,255,0.3)"}
-        onMouseLeave={(e) => e.target.style.background = "rgba(255,255,255,0.2)"}
       >
         ✕
       </button>
 
-      {/* Contador de imágenes */}
       <div
         style={{
           position: "absolute",
@@ -452,7 +361,6 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
         {currentIndex + 1} / {images.length}
       </div>
 
-      {/* Controles de navegación */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -505,7 +413,6 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
         ›
       </button>
 
-      {/* Imagen actual */}
       <img
         src={images[currentIndex]}
         alt={`Imagen ${currentIndex + 1}`}
@@ -527,43 +434,38 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
 
 export default function Home() {
   const router = useRouter();
+  const audioRef = useRef(null); // Referencia para el audio
 
   // ====================================================
   // 🖼️ CONFIGURACIÓN DE IMÁGENES - CÁMBIALAS AQUÍ
   // ====================================================
   
-  // Imagen de fondo principal (marco floral que aparece en AMBAS pantallas)
   const BACKGROUND_IMAGE = "/marco-boda.jpeg";
-  
-  // Imagen del sobre (primera pantalla)
   const SOBRE_IMAGE = "/sobre-boda.jpg";
-  
-  // Imagen del dress code (código de vestimenta)
   const DRESS_CODE_IMAGE = "/Dress-code.png";
   
-  // Imágenes de la galería (fotos de la pareja) - AHORA CON 6 IMÁGENES
+  // 🎵 RUTA DE TU CANCIÓN - Coloca tu archivo MP3 en /public
+  // Puedes descargar un MP3 de cualquier canción y ponerlo en /public/mi-cancion.mp3
+  const SONG_URL = "/mi-cancion.mp3"; // Cambia esto por el nombre de tu archivo
+  
   const GALLERY_IMAGES = [
-    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80", // Foto 1
-    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=80", // Foto 2
-    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80", // Foto 3
-    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80", // Foto 4 (nueva)
-    "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80", // Foto 5 (nueva)
-    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80", // Foto 6 (nueva)
+    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80",
   ];
   
   // ====================================================
   // 🎨 OPCIONES DE ESTILO
   // ====================================================
   
-  // Opacidad del marco floral (0.0 = invisible, 1.0 = sólido)
   const FLORAL_FRAME_OPACITY = 0.4;
-  
-  // Tamaño de los íconos del itinerario (en píxeles)
   const TIMELINE_ICON_SIZE = 80;
   
   // ====================================================
 
-  // Estado para el carrusel de imágenes
   const [carouselOpen, setCarouselOpen] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
 
@@ -571,8 +473,6 @@ export default function Home() {
 
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
-  const [spotifyNonce, setSpotifyNonce] = useState(0);
-  const [spotifyEnabled, setSpotifyEnabled] = useState(false);
   const [guestId, setGuestId] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [rsvpStatus, setRsvpStatus] = useState("idle");
@@ -584,6 +484,7 @@ export default function Home() {
   const [yaConfirmo, setYaConfirmo] = useState(false);
   const [asistenciaActual, setAsistenciaActual] = useState("");
   const [pasesConfirmados, setPasesConfirmados] = useState(1);
+  const [audioPlaying, setAudioPlaying] = useState(false);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -696,11 +597,6 @@ export default function Home() {
     }
   }
 
-  const NAME_STYLE = "gold";
-  const SPOTIFY_EMBED_BASE =
-    "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv?autoplay=1";
-  const SPOTIFY_EMBED_URL = `${SPOTIFY_EMBED_BASE}&_=${spotifyNonce}`;
-
   const MAPS_URL =
     "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
   const WAZE_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
@@ -752,10 +648,9 @@ export default function Home() {
   };
 
   // ====================================================
-  // 🎨 ESTILOS CORREGIDOS - con fondo crema para el sobre
+  // 🎨 ESTILOS
   // ====================================================
   
-  // Estilos del sobre (PRIMERA PANTALLA)
   const envelopeStyles = {
     pageContainer: {
       minHeight: "100vh",
@@ -876,7 +771,6 @@ export default function Home() {
     },
   };
 
-  // Estilos para la segunda pantalla
   const invitationStyles = {
     page: {
       minHeight: "100vh",
@@ -1017,7 +911,6 @@ export default function Home() {
       boxShadow: "0 10px 25px rgba(183,110,121,0.4)",
       fontFamily: "'Quicksand', sans-serif",
     },
-    // Carrusel de imágenes - AHORA CON 1 IMAGEN A LA VEZ Y 1/3 MÁS GRANDE
     carouselContainer: {
       width: "100%",
       maxWidth: 800,
@@ -1036,7 +929,7 @@ export default function Home() {
       width: "100%",
       flexShrink: 0,
       height: "auto",
-      aspectRatio: "1.2/1", // Proporción más grande
+      aspectRatio: "1.2/1",
       objectFit: "cover",
       borderRadius: 30,
     },
@@ -1059,17 +952,6 @@ export default function Home() {
       width: "20px",
       borderRadius: "10px",
       background: "#b76e79",
-    },
-    // Galería (estilo anterior, ya no se usa pero lo mantengo por si acaso)
-    galleryGrid: {
-      display: "none", // Ocultamos el grid anterior
-    },
-    galleryImage: {
-      borderRadius: 30,
-      overflow: "hidden",
-      aspectRatio: "1 / 1",
-      boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
-      border: "2px solid white",
     },
     timelineGrid: {
       display: "grid",
@@ -1152,20 +1034,37 @@ export default function Home() {
 
   function abrirSobre() {
     setEnvelopeOpen(true);
-    setSpotifyEnabled(false);
-    const nonce = Date.now();
-    setSpotifyNonce(nonce);
-
+    
+    // 🎵 Reproducir audio automáticamente al abrir la invitación
     setTimeout(() => {
-      setSpotifyEnabled(true);
-    }, 30);
+      if (audioRef.current) {
+        audioRef.current.play()
+          .then(() => {
+            setAudioPlaying(true);
+            console.log("Audio reproduciéndose");
+          })
+          .catch(error => {
+            console.log("Autoplay bloqueado por el navegador:", error);
+            // En móviles, el autoplay con sonido está restringido
+            // Se reproducirá cuando el usuario interactúe con la página
+          });
+      }
+    }, 500); // Pequeño delay para asegurar que el DOM está listo
 
     try {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {}
   }
 
-  // Estado para el carrusel de la galería
+  // Función para intentar reproducir cuando el usuario hace clic en algún lado
+  const handleUserInteraction = () => {
+    if (envelopeOpen && audioRef.current && !audioPlaying) {
+      audioRef.current.play()
+        .then(() => setAudioPlaying(true))
+        .catch(e => console.log("Error al reproducir:", e));
+    }
+  };
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
@@ -1180,10 +1079,8 @@ export default function Home() {
 
   const handleTouchEnd = () => {
     if (touchStart - touchEnd > 50) {
-      // Deslizar a la izquierda - siguiente imagen
       setCurrentImageIndex((prev) => (prev + 1) % GALLERY_IMAGES.length);
     } else if (touchStart - touchEnd < -50) {
-      // Deslizar a la derecha - imagen anterior
       setCurrentImageIndex((prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
     }
   };
@@ -1273,8 +1170,20 @@ export default function Home() {
 
       {/* INVITACIÓN - SEGUNDA PANTALLA */}
       {envelopeOpen && (
-        <div style={invitationStyles.page}>
+        <div 
+          style={invitationStyles.page}
+          onClick={handleUserInteraction} // Para capturar clics en móviles
+        >
           <div style={invitationStyles.card}>
+            {/* 🎵 REPRODUCTOR DE AUDIO OCULTO */}
+            <audio
+              ref={audioRef}
+              src={SONG_URL}
+              loop
+              preload="auto"
+              style={{ display: 'none' }} // Oculto completamente
+            />
+
             <div style={invitationStyles.names}>Vanessa & Andrés</div>
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
@@ -1298,27 +1207,10 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Spotify */}
-            <div style={{ display: "flex", justifyContent: "center", margin: "20px 0" }}>
-              {spotifyEnabled ? (
-                <iframe
-                  key={spotifyNonce || "spotify"}
-                  style={{ borderRadius: 14, maxWidth: "100%" }}
-                  src={SPOTIFY_EMBED_URL}
-                  width="340"
-                  height="92"
-                  frameBorder="0"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="eager"
-                />
-              ) : null}
-            </div>
-
-            {/* NUEVO CARRUSEL DE IMÁGENES - 6 imágenes, 1 a la vez, 1/3 más grande */}
+            {/* NUEVO CARRUSEL DE IMÁGENES */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Galería</div>
               
-              {/* Contenedor del carrusel */}
               <div style={invitationStyles.carouselContainer}>
                 <div
                   style={{
@@ -1341,7 +1233,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Indicadores (dots) */}
               <div style={invitationStyles.carouselDots}>
                 {GALLERY_IMAGES.map((_, idx) => (
                   <div
