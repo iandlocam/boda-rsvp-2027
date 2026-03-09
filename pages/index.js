@@ -1,26 +1,25 @@
 // /pages/index.js
 import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
+import { useRouter } from "next/router";
 
-// Función para el contador (sin cambios)
-function calcularTiempoRestante(fechaObjetivoMs) {
-  const ahora = Date.now();
-  const diferencia = fechaObjetivoMs - ahora;
-
-  if (diferencia <= 0) {
-    return { dias: 0, horas: 0, minutos: 0, segundos: 0 };
-  }
-
-  const segundos = Math.floor((diferencia / 1000) % 60);
-  const minutos = Math.floor((diferencia / 1000 / 60) % 60);
-  const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
-  const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-
-  return { dias, horas, minutos, segundos };
+function clamp(n) {
+  return Number.isFinite(n) && n > 0 ? n : 0;
 }
 
-// ✅ Monograma AV (componente existente)
+async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados }) {
+  const resp = await fetch("/api/guest", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, asistencia, mensaje, pasesConfirmados }),
+  });
+
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data?.error || "Error desconocido");
+  return data;
+}
+
+/** ✅ Monograma AV (limpio, elegante, tipo sello) */
 function MonogramaAV({ size = 60, color = "rgba(19,32,45,0.86)" }) {
   return (
     <svg
@@ -37,6 +36,8 @@ function MonogramaAV({ size = 60, color = "rgba(19,32,45,0.86)" }) {
           <stop offset="1" stopColor="rgba(19,32,45,0.18)" />
         </linearGradient>
       </defs>
+
+      {/* anillo */}
       <circle
         cx="60"
         cy="60"
@@ -54,6 +55,8 @@ function MonogramaAV({ size = 60, color = "rgba(19,32,45,0.86)" }) {
         stroke="rgba(255,255,255,0.30)"
         strokeWidth="1.2"
       />
+
+      {/* AV monograma sobrio */}
       <path
         d="M34 78 L46 38 L58 78"
         fill="none"
@@ -81,7 +84,7 @@ function MonogramaAV({ size = 60, color = "rgba(19,32,45,0.86)" }) {
   );
 }
 
-// ✅ Sello de cera (componente existente)
+/** ✅ Sello “dorado” (borde irregular + relieve + brillo) */
 function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   return (
     <div
@@ -109,6 +112,8 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
             <feDropShadow dx="0" dy="10" stdDeviation="7" floodColor="rgba(0,0,0,0.24)" />
             <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="rgba(0,0,0,0.18)" />
           </filter>
+
+          {/* dorado realista */}
           <radialGradient id="goldWax" cx="28%" cy="22%" r="85%">
             <stop offset="0%" stopColor="rgba(255,255,255,0.70)" />
             <stop offset="14%" stopColor="rgba(255,255,255,0.14)" />
@@ -116,10 +121,13 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
             <stop offset="70%" stopColor="rgba(214,178,94,1)" />
             <stop offset="100%" stopColor="rgba(122,91,34,1)" />
           </radialGradient>
+
           <radialGradient id="goldShine" cx="20%" cy="18%" r="48%">
             <stop offset="0%" stopColor="rgba(255,255,255,0.90)" />
             <stop offset="70%" stopColor="rgba(255,255,255,0)" />
           </radialGradient>
+
+          {/* forma irregular tipo cera */}
           <path
             id="blob"
             d="M60 7
@@ -132,11 +140,14 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
                C50 9, 55 7, 60 7Z"
           />
         </defs>
+
         <g filter="url(#sShadow)">
           <use href="#blob" fill="url(#goldWax)" />
           <use href="#blob" fill="url(#goldShine)" opacity="0.55" />
           <use href="#blob" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" />
           <use href="#blob" fill="none" stroke="rgba(122,91,34,0.28)" strokeWidth="1.3" />
+
+          {/* relieve central (grabado AV) */}
           <path
             d="M42 76 L52 44 L62 76"
             fill="none"
@@ -163,6 +174,8 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
             strokeLinejoin="round"
             opacity="0.9"
           />
+
+          {/* highlight fino para “metal” */}
           <path
             d="M26 44 C38 26, 58 18, 78 22"
             fill="none"
@@ -173,6 +186,7 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
           />
         </g>
       </svg>
+
       <div
         style={{
           position: "absolute",
@@ -199,23 +213,34 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   );
 }
 
-// ✅ Componente de íconos personalizables para el itinerario
-function TimelineIcon({ type = "ceremony", size = 80 }) {
+/** ✅ Componente de íconos personalizables para el itinerario */
+function TimelineIcon({ type = "ceremony", size = 48 }) {
+  // ====================================================
+  // 🖼️ CONFIGURACIÓN DE ÍCONOS DEL ITINERARIO - CÁMBIALOS AQUÍ
+  // ====================================================
+  
+  // Puedes cambiar estas URLs por las imágenes que quieras usar
+  // Las imágenes deben estar en la carpeta /public de tu proyecto
   const ICONOS = {
-    ceremony: "/iconos/Ceremony.png",
-    reception: "/iconos/Cocteel.png",
-    dinner: "/iconos/cena.png",
-    party: "/iconos/Fiesta.png",
-    close: "/iconos/Cierre.png",
+    ceremony: "/iconos/Ceremony.png",     // Ícono para Ceremonia
+    reception: "/iconos/Cocteel.png",     // Ícono para Coctel
+    dinner: "/iconos/cena.png",             // Ícono para Cena
+    party: "/iconos/Fiesta.png",             // Ícono para Fiesta
+    close: "/iconos/Cierre.png",             // Ícono para Cierre
   };
+  
+  // ====================================================
 
+  // Si no se encuentra el ícono, mostrar un círculo con la inicial como fallback
   const iconSrc = ICONOS[type];
-
+  
   if (!iconSrc) {
+    // Fallback: mostrar un círculo con la inicial
     const initial = type === "ceremony" ? "C" : 
                     type === "reception" ? "R" : 
                     type === "dinner" ? "N" : 
                     type === "party" ? "F" : "X";
+    
     return (
       <div style={{
         width: size,
@@ -249,493 +274,652 @@ function TimelineIcon({ type = "ceremony", size = 80 }) {
   );
 }
 
-export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  // ====================================================
-  // 🖼️ CONFIGURACIÓN - CÁMBIALO AQUÍ
-  // ====================================================
-  const NOMBRES = {
-    el: "Ana",
-    ella: "Carlos",
-  };
-
-  const FECHA_BODA = "2027-04-23T16:00:00";
-
-  // Imagen de fondo para la primera pantalla (TUS FLORES)
-  const FLORES_BACKGROUND = "/flores-fondo.jpg"; // 🔴 Ajusta esta ruta a tu imagen de flores
-
-  // Imágenes de la galería (fotos de la pareja)
-  const GALLERY_IMAGES = [
-    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
-  ];
-
-  // Itinerario del evento
-  const ITINERARY = [
-    { time: "16:00", icon: "ceremony", label: "Ceremonia", desc: "Hacienda Los Olivos" },
-    { time: "17:30", icon: "reception", label: "Cóctel de Bienvenida", desc: "Jardín" },
-    { time: "19:00", icon: "dinner", label: "Cena", desc: "Salón Principal" },
-    { time: "22:00", icon: "party", label: "Fiesta", desc: "Pista de Baile" },
-    { time: "00:00", icon: "close", label: "Cierre", desc: "Despedida" },
-  ];
-
-  // Padrinos
-  const PADRINOS = [
-    { rol: "Padrinos de Arras", nombres: ["María González", "Juan Pérez"] },
-    { rol: "Padrinos de Velación", nombres: ["Laura Martínez", "Pedro Sánchez"] },
-    { rol: "Padrinos de Anillos", nombres: ["Sofía Ramírez", "Diego López"] },
-  ];
-
-  // Mesas de regalos
-  const REGALOS = [
-    { nombre: "Amazon", url: "#" },
-    { nombre: "Liverpool", url: "#" },
-  ];
-  // ====================================================
-
-  const weddingDateMs = useMemo(() => new Date(FECHA_BODA).getTime(), []);
-  const [timeLeft, setTimeLeft] = useState(() => calcularTiempoRestante(weddingDateMs));
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeLeft(calcularTiempoRestante(weddingDateMs));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [weddingDateMs]);
-
-  const [formData, setFormData] = useState({
-    familia: "",
-    mesa: "",
-    adultos: 1,
-    ninos: 0,
-    asistira: "si",
-    nombresAsistentes: "",
-    comentarios: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`¡Gracias por confirmar, familia ${formData.familia || "invitada"}!`);
-  };
-
-  const confirmacionesEjemplo = [
-    { familia: "Familia Rodríguez", adultos: 3, ninos: 1 },
-    { familia: "María López", adultos: 1, ninos: 0 },
-    { familia: "Juan y Ana García", adultos: 2, ninos: 0 },
-    { familia: "Familia Martínez", adultos: 2, ninos: 2 },
-  ];
+/** ✅ Logos sobrios (SVG) como botones */
+function BrandLogo({ type = "liverpool" }) {
+  if (type === "amazon") {
+    return (
+      <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
+        <rect
+          x="1"
+          y="1"
+          width="418"
+          height="110"
+          rx="18"
+          fill="rgba(255,255,255,0.92)"
+          stroke="rgba(31,65,95,0.16)"
+        />
+        <text
+          x="210"
+          y="64"
+          textAnchor="middle"
+          fontFamily="system-ui, -apple-system, Segoe UI, Roboto, Arial"
+          fontSize="44"
+          fill="rgba(19,32,45,0.88)"
+        >
+          amazon
+        </text>
+        <path
+          d="M140 78c40 22 100 22 140 0"
+          fill="none"
+          stroke="rgba(176,141,87,0.95)"
+          strokeWidth="6"
+          strokeLinecap="round"
+        />
+        <path
+          d="M274 76l14 5-9 12"
+          fill="none"
+          stroke="rgba(176,141,87,0.95)"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
 
   return (
-    <>
-      <Head>
-        <title>{`${NOMBRES.el} & ${NOMBRES.ella} - Boda`}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet" />
-      </Head>
-
-      {/* PANTALLA 1: SOBRE CON TUS FLORES Y TEXTO ORIGINAL */}
-      {!isOpen && (
-        <div style={{
-          minHeight: "100vh",
-          background: "#faf3ec", // Color de respaldo
-          backgroundImage: `url(${FLORES_BACKGROUND})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-          textAlign: "center",
-          padding: "20px",
-        }}>
-          {/* Capa oscura semitransparente para mejorar legibilidad del texto */}
-          <div style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0,0,0,0.2)",
-            zIndex: 1,
-          }} />
-          
-          {/* Contenido textual - EXACTAMENTE como en tu imagen */}
-          <div style={{
-            position: "relative",
-            zIndex: 2,
-            color: "white",
-            textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
-          }}>
-            <div style={{
-              fontSize: "3rem",
-              fontWeight: "300",
-              marginBottom: "40px",
-              fontFamily: "'Great Vibes', cursive",
-            }}>
-              23/04/2027
-            </div>
-            
-            <div style={{
-              fontSize: "1.8rem",
-              fontWeight: "400",
-              marginBottom: "30px",
-              letterSpacing: "4px",
-            }}>
-              +ICK PARA ABRIR LA INVITACIÓN
-            </div>
-            
-            <div style={{
-              fontSize: "2.5rem",
-              fontWeight: "600",
-              marginBottom: "40px",
-              fontFamily: "'Great Vibes', cursive",
-            }}>
-              #MOS RESERVADO
-            </div>
-            
-            <div style={{
-              fontSize: "1.8rem",
-              fontWeight: "400",
-              borderTop: "2px solid rgba(255,255,255,0.5)",
-              borderBottom: "2px solid rgba(255,255,255,0.5)",
-              padding: "15px 30px",
-              display: "inline-block",
-            }}>
-              2 LUGARES EN SU HONOR
-            </div>
-          </div>
-
-          {/* Sello de cera (opcional, puedes mantenerlo o quitarlo) */}
-          <div style={{
-            position: "relative",
-            zIndex: 2,
-            marginTop: "60px",
-          }}>
-            <WaxSeal onClick={() => setIsOpen(true)} label="Abrir" size={120} />
-          </div>
-        </div>
-      )}
-
-      {/* PANTALLA 2: INVITACIÓN (con ESTILO NUEVO del ejemplo) */}
-      {isOpen && (
-        <div style={{
-          background: "#fef9f0", // Color crema del ejemplo
-          minHeight: "100vh",
-          fontFamily: "'Quicksand', sans-serif",
-          color: "#4a4a4a",
-        }}>
-          <main style={{
-            maxWidth: "1100px",
-            margin: "0 auto",
-            padding: "40px 20px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "60px",
-          }}>
-
-            {/* PORTADA INTERIOR: Nombres y Contador */}
-            <section style={{
-              textAlign: "center",
-              background: "rgba(255, 255, 255, 0.8)",
-              backdropFilter: "blur(8px)",
-              borderRadius: "60px",
-              padding: "60px 30px",
-              boxShadow: "0 15px 40px rgba(0,0,0,0.05)",
-              border: "1px solid rgba(255,255,255,0.5)",
-            }}>
-              <h1 style={{
-                fontFamily: "'Great Vibes', cursive",
-                fontSize: "clamp(4rem, 15vw, 6rem)",
-                fontWeight: 400,
-                color: "#b76e79",
-                marginBottom: "20px",
-                lineHeight: 1.2,
-              }}>
-                {NOMBRES.el} & {NOMBRES.ella}
-              </h1>
-              <p style={{ fontSize: "1.5rem", color: "#a17a6b", marginBottom: "40px" }}>¡Nos casamos!</p>
-
-              {/* Contador estilo ejemplo */}
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: "15px",
-                maxWidth: "500px",
-                margin: "0 auto",
-                background: "#fff",
-                borderRadius: "100px",
-                padding: "25px 20px",
-                boxShadow: "0 5px 20px rgba(183,110,121,0.1)",
-              }}>
-                {[
-                  { valor: timeLeft.dias, label: "Días" },
-                  { valor: timeLeft.horas, label: "Horas" },
-                  { valor: timeLeft.minutos, label: "Minutos" },
-                  { valor: timeLeft.segundos, label: "Segundos" },
-                ].map((item) => (
-                  <div key={item.label} style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: "2.5rem", fontWeight: 600, color: "#b76e79", lineHeight: 1 }}>{item.valor}</div>
-                    <div style={{ fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "1px", color: "#a17a6b" }}>{item.label}</div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* ITINERARIO (con íconos) */}
-            <section style={sectionStyle}>
-              <h2 style={sectionTitleStyle}>Itinerario</h2>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-                gap: "20px",
-              }}>
-                {ITINERARY.map((item, idx) => (
-                  <div key={idx} style={{
-                    background: "#fff",
-                    borderRadius: "40px",
-                    padding: "30px 20px",
-                    textAlign: "center",
-                    boxShadow: "0 8px 25px rgba(183,110,121,0.08)",
-                    border: "1px solid #f0e4d7",
-                  }}>
-                    <div style={{ width: 80, height: 80, margin: "0 auto 20px" }}>
-                      <TimelineIcon type={item.icon} size={80} />
-                    </div>
-                    <div style={{ fontSize: "1.8rem", fontWeight: 500, color: "#b76e79", marginBottom: "5px" }}>{item.time}</div>
-                    <div style={{ fontWeight: 700, fontSize: "1.2rem", marginBottom: "5px", color: "#4a4a4a" }}>{item.label}</div>
-                    <div style={{ fontSize: "0.95rem", color: "#a17a6b" }}>{item.desc}</div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* PADRINOS */}
-            <section style={sectionStyle}>
-              <h2 style={sectionTitleStyle}>Padrinos</h2>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                gap: "25px",
-              }}>
-                {PADRINOS.map((padrino, idx) => (
-                  <div key={idx} style={{
-                    background: "#fff",
-                    borderRadius: "40px",
-                    padding: "30px 20px",
-                    textAlign: "center",
-                    boxShadow: "0 5px 20px rgba(0,0,0,0.02)",
-                    border: "1px solid #f0e4d7",
-                  }}>
-                    <div style={{ color: "#b76e79", textTransform: "uppercase", letterSpacing: "1.5px", fontSize: "0.9rem", marginBottom: "15px", fontWeight: 600 }}>{padrino.rol}</div>
-                    {padrino.nombres.map((nombre, i) => (
-                      <div key={i} style={{ fontSize: "1.3rem", fontWeight: 500, color: "#4a4a4a", marginBottom: i === 0 ? "5px" : "0" }}>{nombre}</div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* GALERÍA */}
-            <section style={sectionStyle}>
-              <h2 style={sectionTitleStyle}>Galería</h2>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "20px",
-              }}>
-                {GALLERY_IMAGES.map((img, idx) => (
-                  <div key={idx} style={{
-                    borderRadius: "30px",
-                    overflow: "hidden",
-                    aspectRatio: "1 / 1",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
-                    border: "2px solid white",
-                  }}>
-                    <img src={img} alt={`Foto ${idx + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* RSVP - Formulario estilo ejemplo */}
-            <section style={sectionStyle}>
-              <h2 style={sectionTitleStyle}>Confirma tu asistencia</h2>
-              <form onSubmit={handleSubmit} style={{
-                background: "#fff",
-                borderRadius: "60px",
-                padding: "50px 40px",
-                boxShadow: "0 8px 30px rgba(0,0,0,0.03)",
-              }}>
-                <div style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(2, 1fr)",
-                  gap: "25px",
-                }}>
-                  <div style={formGroupStyle}>
-                    <label style={labelStyle}>Nombre(s) / Familia</label>
-                    <input type="text" name="familia" value={formData.familia} onChange={handleInputChange} style={inputStyle} required />
-                  </div>
-                  <div style={formGroupStyle}>
-                    <label style={labelStyle}>Número de mesa (opcional)</label>
-                    <input type="text" name="mesa" value={formData.mesa} onChange={handleInputChange} style={inputStyle} />
-                  </div>
-                  <div style={formGroupStyle}>
-                    <label style={labelStyle}>Adultos</label>
-                    <select name="adultos" value={formData.adultos} onChange={handleInputChange} style={inputStyle}>
-                      {[0,1,2,3,4,5].map(n => <option key={n} value={n}>{n}</option>)}
-                    </select>
-                  </div>
-                  <div style={formGroupStyle}>
-                    <label style={labelStyle}>Niños</label>
-                    <select name="ninos" value={formData.ninos} onChange={handleInputChange} style={inputStyle}>
-                      {[0,1,2,3,4].map(n => <option key={n} value={n}>{n}</option>)}
-                    </select>
-                  </div>
-                  <div style={{ gridColumn: "span 2", ...formGroupStyle }}>
-                    <label style={labelStyle}>¿Asistirá?</label>
-                    <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
-                      <label style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <input type="radio" name="asistira" value="si" checked={formData.asistira === "si"} onChange={handleInputChange} /> Sí
-                      </label>
-                      <label style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <input type="radio" name="asistira" value="no" checked={formData.asistira === "no"} onChange={handleInputChange} /> No
-                      </label>
-                    </div>
-                  </div>
-                  <div style={{ gridColumn: "span 2", ...formGroupStyle }}>
-                    <label style={labelStyle}>Nombres de las personas que asisten</label>
-                    <textarea name="nombresAsistentes" value={formData.nombresAsistentes} onChange={handleInputChange} rows="3" style={{ ...inputStyle, resize: "vertical" }}></textarea>
-                  </div>
-                  <div style={{ gridColumn: "span 2", ...formGroupStyle }}>
-                    <label style={labelStyle}>Felicitaciones o comentarios</label>
-                    <textarea name="comentarios" value={formData.comentarios} onChange={handleInputChange} rows="2" style={{ ...inputStyle, resize: "vertical" }}></textarea>
-                  </div>
-                </div>
-                <button type="submit" style={{
-                  background: "#b76e79",
-                  color: "white",
-                  border: "none",
-                  padding: "18px 40px",
-                  fontSize: "1.3rem",
-                  borderRadius: "60px",
-                  fontWeight: 600,
-                  letterSpacing: "2px",
-                  width: "100%",
-                  marginTop: "30px",
-                  cursor: "pointer",
-                  transition: "background 0.3s",
-                  boxShadow: "0 10px 25px rgba(183,110,121,0.4)",
-                }}>Confirmar Asistencia</button>
-              </form>
-            </section>
-
-            {/* CONFIRMACIONES (Lista de invitados) */}
-            <section style={sectionStyle}>
-              <h2 style={sectionTitleStyle}>Confirmaciones</h2>
-              <div style={{
-                background: "#fff",
-                borderRadius: "60px",
-                padding: "40px",
-                boxShadow: "0 8px 30px rgba(0,0,0,0.03)",
-              }}>
-                {confirmacionesEjemplo.map((conf, idx) => (
-                  <div key={idx} style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "15px 0",
-                    borderBottom: idx < confirmacionesEjemplo.length - 1 ? "1px dashed #f0e4d7" : "none",
-                  }}>
-                    <span style={{ fontWeight: 600, fontSize: "1.1rem", color: "#4a4a4a" }}>{conf.familia}</span>
-                    <div style={{ display: "flex", gap: "15px", color: "#b76e79" }}>
-                      <span>{conf.adultos} adulto{conf.adultos !== 1 ? 's' : ''}</span>
-                      {conf.ninos > 0 && <span>{conf.ninos} niño{conf.ninos !== 1 ? 's' : ''}</span>}
-                      <span style={{ color: "#27ae60", fontWeight: 600 }}>✔ Asistirán</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* MESAS DE REGALOS */}
-            <section style={sectionStyle}>
-              <h2 style={sectionTitleStyle}>Mesas de Regalos</h2>
-              <div style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "30px",
-                flexWrap: "wrap",
-              }}>
-                {REGALOS.map((regalo, idx) => (
-                  <a key={idx} href={regalo.url} target="_blank" rel="noopener noreferrer" style={{
-                    background: "#fff",
-                    padding: "20px 50px",
-                    borderRadius: "60px",
-                    textDecoration: "none",
-                    color: "#4a4a4a",
-                    fontWeight: 600,
-                    fontSize: "1.4rem",
-                    boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
-                    border: "1px solid #f0e4d7",
-                    transition: "all 0.2s",
-                  }}>
-                    {regalo.nombre}
-                  </a>
-                ))}
-              </div>
-            </section>
-
-          </main>
-        </div>
-      )}
-    </>
+    <svg width="210" height="56" viewBox="0 0 420 112" aria-hidden="true">
+      <rect
+        x="1"
+        y="1"
+        width="418"
+        height="110"
+        rx="18"
+        fill="rgba(255,255,255,0.92)"
+        stroke="rgba(31,65,95,0.16)"
+      />
+      <text
+        x="210"
+        y="66"
+        textAnchor="middle"
+        fontFamily='"Cormorant Garamond", serif'
+        fontSize="50"
+        fill="rgba(19,32,45,0.88)"
+        style={{ letterSpacing: "0.02em" }}
+      >
+        liverpool
+      </text>
+      <path
+        d="M92 30c10 0 16 6 16 14 0 10-8 18-18 18-8 0-14-6-14-14 0-10 6-18 16-18z"
+        fill="rgba(214,178,94,0.18)"
+        stroke="rgba(176,141,87,0.50)"
+      />
+    </svg>
   );
 }
 
-// Estilos reutilizables
-const sectionStyle = {
-  scrollMarginTop: "80px",
+export default function Home() {
+  const router = useRouter();
+
+  // ====================================================
+  // 🖼️ CONFIGURACIÓN DE IMÁGENES - CÁMBIALAS AQUÍ
+  // ====================================================
+  
+  // Imagen de fondo principal (marco floral que aparece en AMBAS pantallas)
+  const BACKGROUND_IMAGE = "/marco-boda.jpeg";
+  
+  // Imagen del sobre (primera pantalla)
+  const SOBRE_IMAGE = "/sobre-boda.jpg";
+  
+  // Imagen del dress code (código de vestimenta)
+  const DRESS_CODE_IMAGE = "/Dress-code.png";
+  
+  // Imágenes de la galería (fotos de la pareja)
+  const GALLERY_IMAGES = [
+    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70", // Foto 1
+    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=70", // Foto 2
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=70", // Foto 3
+  ];
+  
+  // ====================================================
+  // 🎨 OPCIONES DE ESTILO
+  // ====================================================
+  
+  // Opacidad del marco floral (0.0 = invisible, 1.0 = sólido)
+  const FLORAL_FRAME_OPACITY = 0.4;
+  
+  // Tamaño de los íconos del itinerario (en píxeles)
+  const TIMELINE_ICON_SIZE = 80; // Aumentado de 52 a 80
+  
+  // ====================================================
+
+  const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
+
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [envelopeOpen, setEnvelopeOpen] = useState(false);
+  const [spotifyNonce, setSpotifyNonce] = useState(0);
+  const [spotifyEnabled, setSpotifyEnabled] = useState(false);
+  const [guestId, setGuestId] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [rsvpStatus, setRsvpStatus] = useState("idle");
+  const [rsvpError, setRsvpError] = useState("");
+  const [rsvpResult, setRsvpResult] = useState(null);
+  const [guestData, setGuestData] = useState(null);
+  const [guestLoading, setGuestLoading] = useState(false);
+  const [guestLoadError, setGuestLoadError] = useState("");
+  const [yaConfirmo, setYaConfirmo] = useState(false);
+  const [asistenciaActual, setAsistenciaActual] = useState("");
+  const [pasesConfirmados, setPasesConfirmados] = useState(1);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const id = router.query.id;
+    if (typeof id === "string") setGuestId(id.trim());
+  }, [router.isReady, router.query.id]);
+
+  useEffect(() => {
+    if (!guestId) return;
+
+    let cancelled = false;
+
+    async function loadGuest() {
+      try {
+        setGuestLoading(true);
+        setGuestLoadError("");
+
+        const resp = await fetch(`/api/guest?id=${encodeURIComponent(guestId)}`);
+        const data = await resp.json();
+
+        if (!resp.ok) throw new Error(data?.error || "No se pudo cargar el invitado");
+        if (cancelled) return;
+
+        const g = data.guest || null;
+        setGuestData(g);
+
+        const a = String(g?.asistencia || "").trim();
+        setAsistenciaActual(a);
+        const confirmed = a === "Sí" || a === "No";
+        setYaConfirmo(confirmed);
+
+        if (g?.mensaje && !mensaje) {
+          setMensaje(String(g.mensaje));
+        }
+
+        const maxPases = Math.max(1, Number(g?.pasesAsignados || 1));
+        const j = Number(g?.pasesConfirmados || 0);
+        const precarga = j > 0 ? Math.min(Math.max(1, j), maxPases) : 1;
+        setPasesConfirmados(precarga);
+      } catch (e) {
+        if (cancelled) return;
+        setGuestLoadError(e?.message || String(e));
+        setGuestData(null);
+        setYaConfirmo(false);
+        setAsistenciaActual("");
+      } finally {
+        if (!cancelled) setGuestLoading(false);
+      }
+    }
+
+    loadGuest();
+    return () => {
+      cancelled = true;
+    };
+  }, [guestId]);
+
+  useEffect(() => {
+    const tick = () => {
+      const now = Date.now();
+      const distance = Math.max(0, weddingDateMs - now);
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / 1000 / 60) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      setTimeLeft({
+        days: clamp(days),
+        hours: clamp(hours),
+        minutes: clamp(minutes),
+        seconds: clamp(seconds),
+      });
+    };
+
+    tick();
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, [weddingDateMs]);
+
+  async function confirmar(asistencia) {
+    try {
+      setRsvpStatus("saving");
+      setRsvpError("");
+      setRsvpResult(null);
+
+      if (!guestId) throw new Error("Falta el ID en el enlace. Ejemplo: ?id=AV001");
+
+      const pasesAEnviar = asistencia === "Sí" ? pasesConfirmados : 0;
+
+      const result = await enviarRSVP({
+        id: guestId,
+        asistencia,
+        mensaje,
+        pasesConfirmados: pasesAEnviar,
+      });
+
+      setRsvpResult(result);
+      setRsvpStatus("ok");
+      setYaConfirmo(true);
+      setAsistenciaActual(asistencia);
+
+      if (typeof result?.pasesConfirmados !== "undefined") {
+        setPasesConfirmados(
+          Number(result.pasesConfirmados) || (asistencia === "Sí" ? pasesAEnviar : 0)
+        );
+      }
+    } catch (e) {
+      setRsvpStatus("error");
+      setRsvpError(e?.message || String(e));
+    }
+  }
+
+  const NAME_STYLE = "gold";
+  const SPOTIFY_EMBED_BASE =
+    "https://open.spotify.com/embed/track/727sZDy6Dlyo4gniOMKUhv?autoplay=1";
+  const SPOTIFY_EMBED_URL = `${SPOTIFY_EMBED_BASE}&_=${spotifyNonce}`;
+
+  const MAPS_URL =
+    "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
+  const WAZE_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
+
+  const NUESTRA_HISTORIA = [
+    {
+      title: "Cómo empezó",
+      text:
+        "Un día cualquiera se volvió especial. Entre risas, pláticas largas y complicidad, entendimos que esto iba en serio.",
+    },
+    {
+      title: "Lo que nos une",
+      text:
+        "Amor por lo simple, por la familia, por viajar y por crear un hogar donde siempre haya paz (y música).",
+    },
+    {
+      title: "El gran día",
+      text:
+        "Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo.",
+    },
+  ];
+
+  const TIMELINE = [
+    { time: "4:00 PM", title: "Ceremonia", iconType: "ceremony" },
+    { time: "5:00 PM", title: "Coctel", iconType: "reception" },
+    { time: "7:30 PM", title: "Cena", iconType: "dinner" },
+    { time: "9:00 PM", title: "Fiesta", iconType: "party" },
+    { time: "3:00 AM", title: "Cierre", iconType: "close" },
+  ];
+  
+  const DRESS_CODE = {
+  title: "Dress code",
+  text: [
+    "Formal / jardín elegante",
+    "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno."
+  ],
 };
 
-const sectionTitleStyle = {
-  fontFamily: "'Great Vibes', cursive",
-  fontSize: "3.5rem",
-  fontWeight: 400,
-  color: "#b76e79",
-  textAlign: "center",
-  marginBottom: "40px",
-  letterSpacing: "1px",
-};
+  const MESA_REGALOS = [
+    { type: "liverpool", url: "https://www.liverpool.com.mx/" },
+    { type: "amazon", url: "https://www.amazon.com.mx/wedding/share/VanessaAndres/" },
+  ];
 
-const formGroupStyle = {
-  display: "flex",
-  flexDirection: "column",
-};
+  const REGALO_MONETARIO = {
+    subtitle: "Si deseas apoyarnos en esta nueva etapa:",
+    accountLabel: "CLABE / Cuenta",
+    accountValue: "012 180 0152 2563 3524",
+    nameValue: "Andrés López",
+  };
 
-const labelStyle = {
-  fontSize: "0.9rem",
-  color: "#a17a6b",
-  marginBottom: "8px",
-  fontWeight: 600,
-  textTransform: "uppercase",
-  letterSpacing: "1px",
-};
+  // ====================================================
+  // 🎨 NUEVOS ESTILOS PARA LA SEGUNDA PANTALLA (inspirados en invboda.com/20/)
+  // ====================================================
+  
+  // Estilos originales del sobre (PRIMERA PANTALLA) - SE MANTIENEN IGUAL
+  const envelopeStyles = {
+    wrap: {
+      width: "100%",
+      maxWidth: 600,
+      margin: "0 auto",
+      cursor: "pointer",
+      position: "relative",
+      zIndex: 10,
+      transition: "transform 0.3s ease",
+    },
+    envelope: {
+      width: "100%",
+      aspectRatio: "0.85/1",
+      position: "relative",
+      borderRadius: 30,
+      overflow: "hidden",
+      background: "#F9E5D2",
+      boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)",
+      border: "4px solid #FFFFFF",
+      display: "flex",
+      flexDirection: "column",
+    },
+    topImage: {
+      width: "calc(100% - 40px)",
+      height: "auto",
+      maxHeight: "480px",
+      objectFit: "contain",
+      objectPosition: "center",
+      display: "block",
+      margin: "20px auto 10px",
+      borderBottom: "2px solid rgba(184,107,107,0.2)",
+    },
+    content: {
+      flex: 1,
+      padding: "0 20px 20px 20px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-end",
+      alignItems: "center",
+      textAlign: "center",
+    },
+    clickText: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      color: "rgba(19,32,45,0.6)",
+      margin: "20px 0 15px 0",
+      borderTop: "1px dashed rgba(184,107,107,0.3)",
+      borderBottom: "1px dashed rgba(184,107,107,0.3)",
+      padding: "12px 0",
+      width: "100%",
+    },
+    reservedSection: {
+      marginTop: "auto",
+      marginBottom: 10,
+      textAlign: "center",
+    },
+    reservedText: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      color: "rgba(19,32,45,0.7)",
+      marginBottom: 5,
+    },
+    reservedNumber: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 48,
+      fontWeight: 700,
+      color: "#B86B6B",
+      lineHeight: 1,
+      margin: "5px 0",
+    },
+    reservedSubtext: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 14,
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      color: "rgba(19,32,45,0.6)",
+    },
+    seal: {
+      position: "absolute",
+      bottom: 30,
+      right: 30,
+      width: 50,
+      height: 50,
+      borderRadius: "50%",
+      background: "linear-gradient(135deg, #E6C7A8, #D4AF8C)",
+      border: "2px solid #FFFFFF",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "#13202D",
+      fontSize: 20,
+      opacity: 0.7,
+    },
+    floralFrame: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      objectPosition: "center",
+      pointerEvents: "none",
+      zIndex: 1,
+      opacity: FLORAL_FRAME_OPACITY,
+    },
+  };
 
-const inputStyle = {
-  padding: "15px 20px",
-  border: "2px solid #f0e4d7",
-  borderRadius: "50px",
-  fontSize: "1rem",
-  background: "#fefcf9",
-  fontFamily: "'Quicksand', sans-serif",
-};
+  // NUEVOS ESTILOS para la segunda pantalla (inspirados en invboda.com/20/)
+  const invitationStyles = {
+    // Contenedor principal con fondo color crema (sin marco floral)
+    page: {
+      minHeight: "100vh",
+      backgroundColor: "#fef9f0", // Color crema del ejemplo
+      fontFamily: "'Quicksand', sans-serif",
+      color: "#4a4a4a",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "20px",
+    },
+    // Tarjeta principal con fondo blanco y bordes redondeados
+    card: {
+      width: "100%",
+      maxWidth: 800,
+      background: "#ffffff",
+      borderRadius: 60,
+      boxShadow: "0 15px 40px rgba(0,0,0,0.05)",
+      padding: "50px 40px",
+      border: "1px solid rgba(255,255,255,0.5)",
+    },
+    // Nombres de los novios (estilo Great Vibes)
+    names: {
+      fontFamily: '"Great Vibes", cursive',
+      fontSize: "clamp(3.5rem, 10vw, 5.5rem)",
+      fontWeight: 400,
+      color: "#b76e79",
+      textAlign: "center",
+      marginBottom: 10,
+      lineHeight: 1.2,
+    },
+    // Subtítulo "¡Nos casamos!"
+    subtitle: {
+      fontSize: "1.3rem",
+      color: "#a17a6b",
+      textAlign: "center",
+      marginBottom: 30,
+      fontFamily: "'Quicksand', sans-serif",
+      fontWeight: 400,
+    },
+    // Contenedor del contador
+    countdownContainer: {
+      display: "grid",
+      gridTemplateColumns: "repeat(4, 1fr)",
+      gap: 15,
+      maxWidth: 500,
+      margin: "0 auto 40px",
+      background: "#fff",
+      borderRadius: 100,
+      padding: "25px 20px",
+      boxShadow: "0 5px 20px rgba(183,110,121,0.1)",
+    },
+    countdownItem: {
+      textAlign: "center",
+    },
+    countdownNumber: {
+      fontSize: "2.5rem",
+      fontWeight: 600,
+      color: "#b76e79",
+      lineHeight: 1,
+    },
+    countdownLabel: {
+      fontSize: "0.9rem",
+      textTransform: "uppercase",
+      letterSpacing: "1px",
+      color: "#a17a6b",
+    },
+    // Títulos de sección
+    sectionTitle: {
+      fontFamily: '"Great Vibes", cursive',
+      fontSize: "3rem",
+      fontWeight: 400,
+      color: "#b76e79",
+      textAlign: "center",
+      marginBottom: 30,
+      letterSpacing: "1px",
+    },
+    // Tarjetas para itinerario, padrinos, etc.
+    cardItem: {
+      background: "#fff",
+      borderRadius: 40,
+      padding: "30px 20px",
+      textAlign: "center",
+      boxShadow: "0 8px 25px rgba(183,110,121,0.08)",
+      border: "1px solid #f0e4d7",
+    },
+    // Formulario RSVP
+    formContainer: {
+      background: "#fff",
+      borderRadius: 60,
+      padding: "40px 30px",
+      boxShadow: "0 8px 30px rgba(0,0,0,0.03)",
+    },
+    formGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(2, 1fr)",
+      gap: 20,
+    },
+    formGroup: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    label: {
+      fontSize: "0.9rem",
+      color: "#a17a6b",
+      marginBottom: 8,
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: "1px",
+    },
+    input: {
+      padding: "15px 20px",
+      border: "2px solid #f0e4d7",
+      borderRadius: 50,
+      fontSize: "1rem",
+      background: "#fefcf9",
+      fontFamily: "'Quicksand', sans-serif",
+    },
+    select: {
+      padding: "15px 20px",
+      border: "2px solid #f0e4d7",
+      borderRadius: 50,
+      fontSize: "1rem",
+      background: "#fefcf9",
+      fontFamily: "'Quicksand', sans-serif",
+    },
+    textarea: {
+      padding: "15px 20px",
+      border: "2px solid #f0e4d7",
+      borderRadius: 25,
+      fontSize: "1rem",
+      background: "#fefcf9",
+      fontFamily: "'Quicksand', sans-serif",
+      resize: "vertical",
+    },
+    radioGroup: {
+      display: "flex",
+      gap: 30,
+      alignItems: "center",
+    },
+    button: {
+      background: "#b76e79",
+      color: "white",
+      border: "none",
+      padding: "18px 40px",
+      fontSize: "1.3rem",
+      borderRadius: 60,
+      fontWeight: 600,
+      letterSpacing: "2px",
+      width: "100%",
+      marginTop: 30,
+      cursor: "pointer",
+      transition: "background 0.3s",
+      boxShadow: "0 10px 25px rgba(183,110,121,0.4)",
+      fontFamily: "'Quicksand', sans-serif",
+    },
+    // Confirmaciones
+    confirmacionesList: {
+      background: "#fff",
+      borderRadius: 60,
+      padding: 30,
+      boxShadow: "0 8px 30px rgba(0,0,0,0.03)",
+    },
+    confirmacionItem: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "15px 0",
+      borderBottom: "1px dashed #f0e4d7",
+    },
+    guestName: {
+      fontWeight: 600,
+      fontSize: "1.1rem",
+      color: "#4a4a4a",
+    },
+    guestDetails: {
+      display: "flex",
+      gap: 15,
+      color: "#b76e79",
+    },
+    // Timeline/Itinerario
+    timelineGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+      gap: 20,
+    },
+    timelineIconBox: {
+      width: TIMELINE_ICON_SIZE,
+      height: TIMELINE_ICON_SIZE,
+      margin: "0 auto 20px",
+    },
+    timelineTime: {
+      fontSize: "1.8rem",
+      fontWeight: 500,
+      color: "#b76e79",
+      marginBottom: 5,
+    },
+    timelineTitle: {
+      fontWeight: 700,
+      fontSize: "1.2rem",
+      marginBottom: 5,
+      color: "#4a4a4a",
+    },
+    timelineDesc: {
+      fontSize: "0.95rem",
+      color: "#a17a6b",
+    },
+    // Padrinos
+    padrinosGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+      gap: 25,
+    },
+    padrinoRol: {
+      color: "#b76e79",
+      textTransform: "uppercase",
+      letterSpacing: "1.5px",
+      fontSize: "0.9rem",
+      marginBottom: 15,
+      fontWeight: 600,
+    },
+    padrinoNombre: {
+      fontSize: "1.3rem",
+      fontWeight: 500,
+      color: "#4a4a4a",
+    },
+    // Galería
+    galleryGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(3, 1fr)",
+      gap: 20,
+    },
+    galleryImage: {
+      borderRadius: 30,
+      overflow: "hidden",
+      aspectRatio: "1 / 1",
+      boxShadow: "0 10px 30px rgba(
