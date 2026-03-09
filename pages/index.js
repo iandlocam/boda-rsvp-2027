@@ -518,7 +518,7 @@ export default function Home() {
   const DRESS_CODE_IMAGE = "/Dress-code.png";
   
   // 🎵 RUTA DE TU CANCIÓN
-  const SONG_URL = "/mi-cancion.mp3";
+  const SONG_URL = "/Post-quimica.mp3";
   
   const GALLERY_IMAGES = [
     "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80",
