@@ -922,4 +922,398 @@ export default function Home() {
       borderRadius: 30,
       overflow: "hidden",
       aspectRatio: "1 / 1",
-      boxShadow: "0 10px 30px rgba(
+      boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+      border: "2px solid white",
+    },
+    // Regalos
+    regalosContainer: {
+      display: "flex",
+      justifyContent: "center",
+      gap: 30,
+      flexWrap: "wrap",
+    },
+    regaloLink: {
+      background: "#fff",
+      padding: "20px 50px",
+      borderRadius: 60,
+      textDecoration: "none",
+      color: "#4a4a4a",
+      fontWeight: 600,
+      fontSize: "1.4rem",
+      boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
+      border: "1px solid #f0e4d7",
+      transition: "all 0.2s",
+    },
+    // Mantener algunos estilos originales para compatibilidad
+    softBox: {
+      borderRadius: 40,
+      border: "1px solid #f0e4d7",
+      background: "#fff",
+      padding: 20,
+    },
+    linkBtnPrimary: {
+      display: "inline-block",
+      padding: "15px 30px",
+      borderRadius: 50,
+      background: "rgba(183,110,121,0.1)",
+      color: "#b76e79",
+      textDecoration: "none",
+      fontWeight: 600,
+      border: "1px solid #b76e79",
+    },
+    linkBtn: {
+      display: "inline-block",
+      padding: "15px 30px",
+      borderRadius: 50,
+      background: "#fff",
+      color: "#4a4a4a",
+      textDecoration: "none",
+      fontWeight: 600,
+      border: "1px solid #f0e4d7",
+    },
+  };
+
+  const nameStyleObj = NAME_STYLE === "black" ? invitationStyles.names : invitationStyles.names;
+  const maxPases = Math.max(1, Number(guestData?.pasesAsignados || 1));
+  const pasesFromSheet = Number(guestData?.pasesConfirmados || 0);
+  const pasesMostrados =
+    asistenciaActual === "Sí"
+      ? pasesFromSheet > 0
+        ? pasesFromSheet
+        : Number(pasesConfirmados || 1)
+      : 0;
+
+  function abrirSobre() {
+    setEnvelopeOpen(true);
+    setSpotifyEnabled(false);
+    const nonce = Date.now();
+    setSpotifyNonce(nonce);
+
+    setTimeout(() => {
+      setSpotifyEnabled(true);
+    }, 30);
+
+    try {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {}
+  }
+
+  return (
+    <>
+      <Head>
+        <title>Vanessa &amp; Andrés — 23 Abril 2027</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
+          rel="stylesheet"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>{`textarea::placeholder { color: #000; opacity: 0.6; }`}</style>
+      </Head>
+  
+      {/* SOBRE CERRADO - PRIMERA PANTALLA (EXACTAMENTE IGUAL) */}
+      {!envelopeOpen && (
+        <div style={envelopeStyles.wrap}>
+          <div style={envelopeStyles.envelope}>
+            {/* MARCO FLORAL EN EL SOBRE */}
+            <img 
+              src={BACKGROUND_IMAGE}
+              alt="Marco floral" 
+              style={envelopeStyles.floralFrame}
+            />
+            
+            <img 
+              src={SOBRE_IMAGE}
+              alt="Vanessa & Andrés 23/04/2027" 
+              style={envelopeStyles.topImage}
+            />
+            
+            <div style={envelopeStyles.content}>
+              <div 
+                style={envelopeStyles.clickText}
+                role="button"
+                tabIndex={0}
+                aria-label="Abrir invitación"
+                onClick={abrirSobre}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") abrirSobre();
+                }}
+              >
+                CLICK PARA ABRIR LA INVITACIÓN
+              </div>
+              
+              <div style={envelopeStyles.reservedSection}>
+                <div style={envelopeStyles.reservedText}>
+                  HEMOS RESERVADO
+                </div>
+                <div style={envelopeStyles.reservedNumber}>
+                  {guestData?.pasesAsignados || 2}
+                </div>
+                <div style={envelopeStyles.reservedSubtext}>
+                  LUGARES EN SU HONOR
+                </div>
+              </div>
+            </div>
+            
+            <div style={envelopeStyles.seal}>
+              ✦
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* INVITACIÓN - SEGUNDA PANTALLA (CON NUEVOS ESTILOS) */}
+      {envelopeOpen && (
+        <div style={invitationStyles.page}>
+          <div style={invitationStyles.card}>
+            <div style={invitationStyles.names}>Vanessa & Andrés</div>
+            <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
+
+            {/* Contador estilo ejemplo */}
+            <div style={invitationStyles.countdownContainer}>
+              <div style={invitationStyles.countdownItem}>
+                <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
+                <div style={invitationStyles.countdownLabel}>Días</div>
+              </div>
+              <div style={invitationStyles.countdownItem}>
+                <div style={invitationStyles.countdownNumber}>{timeLeft.hours}</div>
+                <div style={invitationStyles.countdownLabel}>Horas</div>
+              </div>
+              <div style={invitationStyles.countdownItem}>
+                <div style={invitationStyles.countdownNumber}>{timeLeft.minutes}</div>
+                <div style={invitationStyles.countdownLabel}>Minutos</div>
+              </div>
+              <div style={invitationStyles.countdownItem}>
+                <div style={invitationStyles.countdownNumber}>{timeLeft.seconds}</div>
+                <div style={invitationStyles.countdownLabel}>Segundos</div>
+              </div>
+            </div>
+
+            {/* Spotify (manteniendo funcionalidad) */}
+            <div style={{ display: "flex", justifyContent: "center", margin: "20px 0" }}>
+              {spotifyEnabled ? (
+                <iframe
+                  key={spotifyNonce || "spotify"}
+                  style={{ borderRadius: 14 }}
+                  src={SPOTIFY_EMBED_URL}
+                  width="340"
+                  height="92"
+                  frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="eager"
+                />
+              ) : null}
+            </div>
+
+            {/* Galería - primera foto */}
+            <div style={invitationStyles.galleryGrid}>
+              {GALLERY_IMAGES.slice(0, 3).map((img, idx) => (
+                <div key={idx} style={invitationStyles.galleryImage}>
+                  <img src={img} alt={`Foto ${idx + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </div>
+              ))}
+            </div>
+
+            {/* Nuestra historia */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Nuestra historia</div>
+              <div style={invitationStyles.softBox}>
+                {NUESTRA_HISTORIA.map((b, i) => (
+                  <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 20 }}>
+                    <div style={{ fontFamily: '"Great Vibes", cursive', fontSize: "1.8rem", color: "#b76e79", marginBottom: 5, textAlign: "center" }}>
+                      {b.title}
+                    </div>
+                    <p style={{ fontSize: "1rem", color: "#4a4a4a", textAlign: "center", lineHeight: 1.6 }}>{b.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Itinerario */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Itinerario</div>
+              <div style={invitationStyles.timelineGrid}>
+                {TIMELINE.map((t, i) => (
+                  <div key={i} style={invitationStyles.cardItem}>
+                    <div style={invitationStyles.timelineIconBox}>
+                      <TimelineIcon type={t.iconType} size={TIMELINE_ICON_SIZE} />
+                    </div>
+                    <div style={invitationStyles.timelineTime}>{t.time}</div>
+                    <div style={invitationStyles.timelineTitle}>{t.title}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Dress code */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Dress code</div>
+              <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
+                <img
+                  src={DRESS_CODE_IMAGE}
+                  alt="Dress code"
+                  style={{ width: 200, maxWidth: "100%", height: "auto", margin: "0 auto 20px", display: "block" }}
+                />
+                <div style={{ fontSize: "1.1rem", color: "#b76e79", marginBottom: 5 }}>{DRESS_CODE.text[0]}</div>
+                <div style={{ fontSize: "0.95rem", color: "#4a4a4a" }}>{DRESS_CODE.text[1]}</div>
+              </div>
+            </div>
+
+            {/* Ubicación */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Ubicación</div>
+              <div style={invitationStyles.softBox}>
+                <p style={{ fontSize: "1.1rem", color: "#4a4a4a", textAlign: "center", marginBottom: 20 }}>
+                  Jardín Maroma · Jiutepec, Morelos
+                </p>
+                <div style={{ display: "flex", gap: 15, justifyContent: "center", flexWrap: "wrap" }}>
+                  <a href={MAPS_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtnPrimary}>
+                    Google Maps
+                  </a>
+                  <a href={WAZE_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtn}>
+                    Waze
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Mesa de regalos */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Mesa de regalos</div>
+              <div style={invitationStyles.softBox}>
+                <div style={invitationStyles.regalosContainer}>
+                  {MESA_REGALOS.map((x, i) => (
+                    <a key={i} href={x.url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
+                      {x.type === "amazon" ? "Amazon" : "Liverpool"}
+                    </a>
+                  ))}
+                </div>
+
+                <div style={{ ...invitationStyles.softBox, marginTop: 20 }}>
+                  <p style={{ fontSize: "1rem", color: "#4a4a4a", textAlign: "center" }}>
+                    {REGALO_MONETARIO.subtitle}
+                  </p>
+                  <div style={{ marginTop: 10, textAlign: "center" }}>
+                    <div style={{ fontSize: "0.9rem", color: "#a17a6b" }}>
+                      <b>{REGALO_MONETARIO.accountLabel}:</b>
+                    </div>
+                    <div style={{ fontSize: "1rem", color: "#4a4a4a", wordBreak: "break-word" }}>
+                      {REGALO_MONETARIO.accountValue}
+                    </div>
+                  </div>
+                  <div style={{ marginTop: 10, fontSize: "1rem", color: "#4a4a4a", textAlign: "center" }}>
+                    {REGALO_MONETARIO.nameValue}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* RSVP - Formulario de confirmación */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
+              <div style={invitationStyles.formContainer}>
+                <div style={invitationStyles.formGroup}>
+                  <div style={invitationStyles.label}>
+                    {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
+                    <span style={{ marginLeft: 8, padding: "4px 8px", background: "#f0e4d7", borderRadius: 50, fontSize: "0.8rem" }}>
+                      {guestId ? `ID: ${guestId}` : "ID no detectado"}
+                    </span>
+                  </div>
+
+                  {guestData?.nombre && (
+                    <div style={{ fontSize: "0.9rem", color: "#a17a6b", marginBottom: 10 }}>
+                      <b>{guestData.nombre}</b>, nos dará mucho gusto verte.
+                      {guestData.pasesAsignados ? (
+                        <> · Pases asignados: <b>{guestData.pasesAsignados}</b></>
+                      ) : null}
+                    </div>
+                  )}
+
+                  {guestLoadError && (
+                    <div style={{ color: "#b76e79", marginBottom: 10 }}>No se pudo cargar tu invitación: {guestLoadError}</div>
+                  )}
+
+                  {yaConfirmo && (
+                    <div style={{ color: "#b76e79", marginBottom: 10 }}>
+                      {asistenciaActual === "Sí" ? (
+                        <>
+                          Gracias por confirmar <b>{pasesMostrados}</b> {pasesMostrados === 1 ? "pase" : "pases"} 🥳
+                          <br />
+                          Los esperamos con toda la actitud ✨
+                        </>
+                      ) : (
+                        <>Gracias por avisarnos, te vamos a extrañar 💔</>
+                      )}
+                    </div>
+                  )}
+
+                  {!yaConfirmo && (
+                    <>
+                      <textarea
+                        style={invitationStyles.textarea}
+                        value={mensaje}
+                        onChange={(e) => setMensaje(e.target.value)}
+                        placeholder="Escribe un mensaje de buenos deseos (opcional)"
+                        disabled={rsvpStatus === "saving"}
+                        rows="3"
+                      />
+
+                      {guestData?.pasesAsignados && String(guestData.pasesAsignados).trim() !== "" && (
+                        <div style={{ marginTop: 15 }}>
+                          <div style={invitationStyles.label}>Pases a confirmar:</div>
+                          <select
+                            value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
+                            onChange={(e) => setPasesConfirmados(Number(e.target.value))}
+                            style={invitationStyles.select}
+                            disabled={rsvpStatus === "saving"}
+                          >
+                            {Array.from({ length: maxPases }, (_, i) => i + 1).map((n) => (
+                              <option key={n} value={n}>
+                                {n} {n === 1 ? "pase" : "pases"}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+
+                      <div style={{ display: "flex", gap: 15, marginTop: 20, flexWrap: "wrap" }}>
+                        <button
+                          style={{ ...invitationStyles.button, width: "auto", flex: 1 }}
+                          onClick={() => confirmar("Sí")}
+                          disabled={rsvpStatus === "saving"}
+                        >
+                          Sí asistiré
+                        </button>
+
+                        <button
+                          style={{ ...invitationStyles.button, width: "auto", flex: 1, background: "#a17a6b" }}
+                          onClick={() => confirmar("No")}
+                          disabled={rsvpStatus === "saving"}
+                        >
+                          No podré asistir
+                        </button>
+                      </div>
+                    </>
+                  )}
+
+                  {rsvpStatus === "saving" && <div style={{ marginTop: 10, color: "#a17a6b" }}>Guardando tu confirmación…</div>}
+                  {rsvpStatus === "error" && <div style={{ marginTop: 10, color: "#b76e79" }}>{rsvpError}</div>}
+
+                  <div style={{ marginTop: 15, fontSize: "0.8rem", color: "#a17a6b" }}>
+                    Tip: tu enlace debe incluir <code>?id=AV001</code> (cada invitado tiene un ID).
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Nota final */}
+            <div style={{ marginTop: 30, fontSize: "0.9rem", color: "#a17a6b", textAlign: "center" }}>
+              *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
