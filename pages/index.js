@@ -359,7 +359,7 @@ export default function Home() {
   const BACKGROUND_IMAGE = "/marco-boda.jpeg";
   
   // Imagen del sobre (primera pantalla)
-  const SOBRE_IMAGE = "/sobre-boda.jpg";
+  const SOBRE_IMAGE = "/familia.jpeg";
   
   // Imagen del dress code (código de vestimenta)
   const DRESS_CODE_IMAGE = "/Dress-code.png";
