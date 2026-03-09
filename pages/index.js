@@ -568,11 +568,20 @@ export default function Home() {
   };
 
   // ====================================================
-  // 🎨 NUEVOS ESTILOS PARA LA SEGUNDA PANTALLA (inspirados en invboda.com/20/)
+  // 🎨 ESTILOS CORREGIDOS - con fondo crema para el sobre
   // ====================================================
   
-  // Estilos originales del sobre (PRIMERA PANTALLA) - SE MANTIENEN IGUAL
+  // Estilos originales del sobre (PRIMERA PANTALLA) - CON FONDO CORREGIDO
   const envelopeStyles = {
+    // NUEVO: Contenedor principal con fondo crema
+    pageContainer: {
+      minHeight: "100vh",
+      backgroundColor: "#fef9f0", // Mismo color crema que la invitación
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "20px",
+    },
     wrap: {
       width: "100%",
       maxWidth: 600,
@@ -588,7 +597,7 @@ export default function Home() {
       position: "relative",
       borderRadius: 30,
       overflow: "hidden",
-      background: "#F9E5D2",
+      background: "#F9E5D2", // Color del sobre
       boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)",
       border: "4px solid #FFFFFF",
       display: "flex",
@@ -686,10 +695,10 @@ export default function Home() {
 
   // NUEVOS ESTILOS para la segunda pantalla (inspirados en invboda.com/20/)
   const invitationStyles = {
-    // Contenedor principal con fondo color crema (sin marco floral)
+    // Contenedor principal con fondo color crema
     page: {
       minHeight: "100vh",
-      backgroundColor: "#fef9f0", // Color crema del ejemplo
+      backgroundColor: "#fef9f0",
       fontFamily: "'Quicksand', sans-serif",
       color: "#4a4a4a",
       display: "flex",
@@ -707,7 +716,7 @@ export default function Home() {
       padding: "50px 40px",
       border: "1px solid rgba(255,255,255,0.5)",
     },
-    // Nombres de los novios (estilo Great Vibes)
+    // Nombres de los novios
     names: {
       fontFamily: '"Great Vibes", cursive',
       fontSize: "clamp(3.5rem, 10vw, 5.5rem)",
@@ -717,7 +726,7 @@ export default function Home() {
       marginBottom: 10,
       lineHeight: 1.2,
     },
-    // Subtítulo "¡Nos casamos!"
+    // Subtítulo
     subtitle: {
       fontSize: "1.3rem",
       color: "#a17a6b",
@@ -763,7 +772,7 @@ export default function Home() {
       marginBottom: 30,
       letterSpacing: "1px",
     },
-    // Tarjetas para itinerario, padrinos, etc.
+    // Tarjetas
     cardItem: {
       background: "#fff",
       borderRadius: 40,
@@ -778,11 +787,6 @@ export default function Home() {
       borderRadius: 60,
       padding: "40px 30px",
       boxShadow: "0 8px 30px rgba(0,0,0,0.03)",
-    },
-    formGrid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(2, 1fr)",
-      gap: 20,
     },
     formGroup: {
       display: "flex",
@@ -821,11 +825,6 @@ export default function Home() {
       fontFamily: "'Quicksand', sans-serif",
       resize: "vertical",
     },
-    radioGroup: {
-      display: "flex",
-      gap: 30,
-      alignItems: "center",
-    },
     button: {
       background: "#b76e79",
       color: "white",
@@ -842,31 +841,21 @@ export default function Home() {
       boxShadow: "0 10px 25px rgba(183,110,121,0.4)",
       fontFamily: "'Quicksand', sans-serif",
     },
-    // Confirmaciones
-    confirmacionesList: {
-      background: "#fff",
-      borderRadius: 60,
-      padding: 30,
-      boxShadow: "0 8px 30px rgba(0,0,0,0.03)",
+    // Galería
+    galleryGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(3, 1fr)",
+      gap: 20,
+      marginTop: 20,
     },
-    confirmacionItem: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "15px 0",
-      borderBottom: "1px dashed #f0e4d7",
+    galleryImage: {
+      borderRadius: 30,
+      overflow: "hidden",
+      aspectRatio: "1 / 1",
+      boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+      border: "2px solid white",
     },
-    guestName: {
-      fontWeight: 600,
-      fontSize: "1.1rem",
-      color: "#4a4a4a",
-    },
-    guestDetails: {
-      display: "flex",
-      gap: 15,
-      color: "#b76e79",
-    },
-    // Timeline/Itinerario
+    // Timeline
     timelineGrid: {
       display: "grid",
       gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
@@ -889,68 +878,14 @@ export default function Home() {
       marginBottom: 5,
       color: "#4a4a4a",
     },
-    timelineDesc: {
-      fontSize: "0.95rem",
-      color: "#a17a6b",
-    },
-    // Padrinos
-    padrinosGrid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-      gap: 25,
-    },
-    padrinoRol: {
-      color: "#b76e79",
-      textTransform: "uppercase",
-      letterSpacing: "1.5px",
-      fontSize: "0.9rem",
-      marginBottom: 15,
-      fontWeight: 600,
-    },
-    padrinoNombre: {
-      fontSize: "1.3rem",
-      fontWeight: 500,
-      color: "#4a4a4a",
-    },
-    // Galería
-    galleryGrid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(3, 1fr)",
-      gap: 20,
-    },
-    galleryImage: {
-      borderRadius: 30,
-      overflow: "hidden",
-      aspectRatio: "1 / 1",
-      boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
-      border: "2px solid white",
-    },
-    // Regalos
-    regalosContainer: {
-      display: "flex",
-      justifyContent: "center",
-      gap: 30,
-      flexWrap: "wrap",
-    },
-    regaloLink: {
-      background: "#fff",
-      padding: "20px 50px",
-      borderRadius: 60,
-      textDecoration: "none",
-      color: "#4a4a4a",
-      fontWeight: 600,
-      fontSize: "1.4rem",
-      boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
-      border: "1px solid #f0e4d7",
-      transition: "all 0.2s",
-    },
-    // Mantener algunos estilos originales para compatibilidad
+    // Soft box
     softBox: {
       borderRadius: 40,
       border: "1px solid #f0e4d7",
       background: "#fff",
       padding: 20,
     },
+    // Links
     linkBtnPrimary: {
       display: "inline-block",
       padding: "15px 30px",
@@ -970,6 +905,25 @@ export default function Home() {
       textDecoration: "none",
       fontWeight: 600,
       border: "1px solid #f0e4d7",
+    },
+    // Regalos
+    regalosContainer: {
+      display: "flex",
+      justifyContent: "center",
+      gap: 30,
+      flexWrap: "wrap",
+    },
+    regaloLink: {
+      background: "#fff",
+      padding: "20px 50px",
+      borderRadius: 60,
+      textDecoration: "none",
+      color: "#4a4a4a",
+      fontWeight: 600,
+      fontSize: "1.4rem",
+      boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
+      border: "1px solid #f0e4d7",
+      transition: "all 0.2s",
     },
   };
 
@@ -1008,56 +962,62 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap"
+          rel="stylesheet"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`textarea::placeholder { color: #000; opacity: 0.6; }`}</style>
       </Head>
   
-      {/* SOBRE CERRADO - PRIMERA PANTALLA (EXACTAMENTE IGUAL) */}
+      {/* SOBRE CERRADO - PRIMERA PANTALLA - AHORA CON FONDO CREMA */}
       {!envelopeOpen && (
-        <div style={envelopeStyles.wrap}>
-          <div style={envelopeStyles.envelope}>
-            {/* MARCO FLORAL EN EL SOBRE */}
-            <img 
-              src={BACKGROUND_IMAGE}
-              alt="Marco floral" 
-              style={envelopeStyles.floralFrame}
-            />
-            
-            <img 
-              src={SOBRE_IMAGE}
-              alt="Vanessa & Andrés 23/04/2027" 
-              style={envelopeStyles.topImage}
-            />
-            
-            <div style={envelopeStyles.content}>
-              <div 
-                style={envelopeStyles.clickText}
-                role="button"
-                tabIndex={0}
-                aria-label="Abrir invitación"
-                onClick={abrirSobre}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") abrirSobre();
-                }}
-              >
-                CLICK PARA ABRIR LA INVITACIÓN
+        <div style={envelopeStyles.pageContainer}>
+          <div style={envelopeStyles.wrap}>
+            <div style={envelopeStyles.envelope}>
+              {/* MARCO FLORAL EN EL SOBRE */}
+              <img 
+                src={BACKGROUND_IMAGE}
+                alt="Marco floral" 
+                style={envelopeStyles.floralFrame}
+              />
+              
+              <img 
+                src={SOBRE_IMAGE}
+                alt="Vanessa & Andrés 23/04/2027" 
+                style={envelopeStyles.topImage}
+              />
+              
+              <div style={envelopeStyles.content}>
+                <div 
+                  style={envelopeStyles.clickText}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Abrir invitación"
+                  onClick={abrirSobre}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") abrirSobre();
+                  }}
+                >
+                  CLICK PARA ABRIR LA INVITACIÓN
+                </div>
+                
+                <div style={envelopeStyles.reservedSection}>
+                  <div style={envelopeStyles.reservedText}>
+                    HEMOS RESERVADO
+                  </div>
+                  <div style={envelopeStyles.reservedNumber}>
+                    {guestData?.pasesAsignados || 2}
+                  </div>
+                  <div style={envelopeStyles.reservedSubtext}>
+                    LUGARES EN SU HONOR
+                  </div>
+                </div>
               </div>
               
-              <div style={envelopeStyles.reservedSection}>
-                <div style={envelopeStyles.reservedText}>
-                  HEMOS RESERVADO
-                </div>
-                <div style={envelopeStyles.reservedNumber}>
-                  {guestData?.pasesAsignados || 2}
-                </div>
-                <div style={envelopeStyles.reservedSubtext}>
-                  LUGARES EN SU HONOR
-                </div>
+              <div style={envelopeStyles.seal}>
+                ✦
               </div>
-            </div>
-            
-            <div style={envelopeStyles.seal}>
-              ✦
             </div>
           </div>
         </div>
@@ -1070,7 +1030,7 @@ export default function Home() {
             <div style={invitationStyles.names}>Vanessa & Andrés</div>
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
-            {/* Contador estilo ejemplo */}
+            {/* Contador */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
@@ -1090,7 +1050,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Spotify (manteniendo funcionalidad) */}
+            {/* Spotify */}
             <div style={{ display: "flex", justifyContent: "center", margin: "20px 0" }}>
               {spotifyEnabled ? (
                 <iframe
@@ -1106,7 +1066,7 @@ export default function Home() {
               ) : null}
             </div>
 
-            {/* Galería - primera foto */}
+            {/* Galería */}
             <div style={invitationStyles.galleryGrid}>
               {GALLERY_IMAGES.slice(0, 3).map((img, idx) => (
                 <div key={idx} style={invitationStyles.galleryImage}>
@@ -1209,7 +1169,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* RSVP - Formulario de confirmación */}
+            {/* RSVP */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
               <div style={invitationStyles.formContainer}>
