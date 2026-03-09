@@ -513,10 +513,14 @@ export default function Home() {
   const BACKGROUND_IMAGE = "/marco-boda.jpeg";
   const SOBRE_IMAGE = "/sobre-boda.jpg";
   const DRESS_CODE_IMAGE = "/Dress-code.png";
-  const DIVIDER_IMAGE = "/imagen-5.jpg"; // Imagen para separar secciones
-  const LIVERPOOL_LOGO = "/liverpool-logo.png"; // Logo de Liverpool
-  const AMAZON_LOGO = "/amazon-logo.png"; // Logo de Amazon
-  const BANK_ICON = "/bank-icon.png"; // Icono de banco/transferencias
+  
+  // Dos imágenes separadoras independientes
+  const DIVIDER_IMAGE_1 = "/divider-floral-1.png"; // Primera imagen separadora
+  const DIVIDER_IMAGE_2 = "/divider-floral-2.png"; // Segunda imagen separadora
+  
+  const LIVERPOOL_LOGO = "/liverpool-logo.png";
+  const AMAZON_LOGO = "/amazon-logo.png";
+  const BANK_ICON = "/bank-icon.png";
   
   // 🎵 RUTA DE TU CANCIÓN
   const SONG_URL = "/Post-quimica.mp3";
@@ -531,7 +535,7 @@ export default function Home() {
     "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80",
   ];
 
-  // Galería secundaria (6 imágenes - cuadrícula 2x3)
+  // Galería secundaria (6 imágenes - cuadrícula 2x3) - 10% más grandes
   const SECONDARY_GALLERY_IMAGES = [
     "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
@@ -775,7 +779,7 @@ export default function Home() {
   };
 
   // ====================================================
-  // 🎨 ESTILOS
+  // 🎨 ESTILOS - VERSIÓN CORREGIDA (vertical)
   // ====================================================
   
   const envelopeStyles = {
@@ -943,10 +947,11 @@ export default function Home() {
       lineHeight: 1.6,
       fontFamily: "'Quicksand', sans-serif",
     },
+    // Sección de familias - AHORA VERTICAL
     familySection: {
-      display: "grid",
-      gridTemplateColumns: "repeat(3, 1fr)",
-      gap: "20px",
+      display: "flex",
+      flexDirection: "column",
+      gap: "15px",
       margin: "30px 0 40px",
     },
     familyCard: {
@@ -993,9 +998,10 @@ export default function Home() {
       transition: "transform 0.2s",
       cursor: "pointer",
     },
+    // Ubicaciones - AHORA VERTICAL
     ubicacionesContainer: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
+      display: "flex",
+      flexDirection: "column",
       gap: "20px",
       marginTop: "20px",
     },
@@ -1034,6 +1040,7 @@ export default function Home() {
       marginRight: "auto",
       opacity: 0.8,
     },
+    // Galería secundaria - 10% MÁS GRANDE
     secondaryGallery: {
       display: "grid",
       gridTemplateColumns: "repeat(3, 1fr)",
@@ -1049,6 +1056,7 @@ export default function Home() {
       transition: "transform 0.2s",
       border: "2px solid white",
       boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
+      transform: "scale(1.1)", // 10% más grande
     },
     bebidasContainer: {
       display: "grid",
@@ -1498,7 +1506,7 @@ export default function Home() {
               Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
             </div>
 
-            {/* Bloque de familias y padrinos */}
+            {/* Bloque de familias y padrinos - AHORA VERTICAL */}
             <div style={invitationStyles.familySection}>
               <div style={invitationStyles.familyCard}>
                 <div style={invitationStyles.familyLabel}>Papás de la novia</div>
@@ -1592,10 +1600,10 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Imagen separadora */}
+            {/* Primera imagen separadora - INDEPENDIENTE */}
             <img 
-              src={DIVIDER_IMAGE}
-              alt="Separador floral"
+              src={DIVIDER_IMAGE_1}
+              alt="Separador floral 1"
               style={invitationStyles.dividerImage}
             />
 
@@ -1643,14 +1651,14 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Imagen separadora */}
+            {/* Segunda imagen separadora - INDEPENDIENTE */}
             <img 
-              src={DIVIDER_IMAGE}
-              alt="Separador floral"
+              src={DIVIDER_IMAGE_2}
+              alt="Separador floral 2"
               style={invitationStyles.dividerImage}
             />
 
-            {/* Ubicaciones - Ceremonia y Recepción */}
+            {/* Ubicaciones - Ceremonia y Recepción - AHORA VERTICAL */}
             <div style={{ marginTop: 20 }}>
               <div style={invitationStyles.sectionTitle}>Ubicaciones</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1742,7 +1750,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Galería secundaria (2x3) */}
+            {/* Galería secundaria (2x3) - 10% MÁS GRANDE */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Más momentos</div>
               <div style={invitationStyles.secondaryGallery}>
