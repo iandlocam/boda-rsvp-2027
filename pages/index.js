@@ -348,6 +348,183 @@ function BrandLogo({ type = "liverpool" }) {
   );
 }
 
+/** ✅ Componente Carrusel de Imágenes */
+function ImageCarousel({ images, initialIndex = 0, onClose }) {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      // Deslizar a la izquierda - siguiente imagen
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    } else if (touchStart - touchEnd < -50) {
+      // Deslizar a la derecha - imagen anterior
+      setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowLeft") {
+      setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    } else if (e.key === "ArrowRight") {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    } else if (e.key === "Escape") {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.95)",
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+      }}
+      onClick={onClose}
+    >
+      {/* Botón de cerrar */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          width: "50px",
+          height: "50px",
+          borderRadius: "50%",
+          background: "rgba(255,255,255,0.2)",
+          border: "none",
+          color: "white",
+          fontSize: "30px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 10000,
+          backdropFilter: "blur(5px)",
+          transition: "background 0.3s",
+        }}
+        onMouseEnter={(e) => e.target.style.background = "rgba(255,255,255,0.3)"}
+        onMouseLeave={(e) => e.target.style.background = "rgba(255,255,255,0.2)"}
+      >
+        ✕
+      </button>
+
+      {/* Contador de imágenes */}
+      <div
+        style={{
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          color: "white",
+          fontSize: "16px",
+          background: "rgba(0,0,0,0.5)",
+          padding: "8px 16px",
+          borderRadius: "20px",
+          fontFamily: "'Quicksand', sans-serif",
+        }}
+      >
+        {currentIndex + 1} / {images.length}
+      </div>
+
+      {/* Controles de navegación */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+        }}
+        style={{
+          position: "absolute",
+          left: "20px",
+          width: "50px",
+          height: "50px",
+          borderRadius: "50%",
+          background: "rgba(255,255,255,0.2)",
+          border: "none",
+          color: "white",
+          fontSize: "24px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 10000,
+          backdropFilter: "blur(5px)",
+        }}
+      >
+        ‹
+      </button>
+
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setCurrentIndex((prev) => (prev + 1) % images.length);
+        }}
+        style={{
+          position: "absolute",
+          right: "20px",
+          width: "50px",
+          height: "50px",
+          borderRadius: "50%",
+          background: "rgba(255,255,255,0.2)",
+          border: "none",
+          color: "white",
+          fontSize: "24px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 10000,
+          backdropFilter: "blur(5px)",
+        }}
+      >
+        ›
+      </button>
+
+      {/* Imagen actual */}
+      <img
+        src={images[currentIndex]}
+        alt={`Imagen ${currentIndex + 1}`}
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{
+          maxWidth: "90%",
+          maxHeight: "90%",
+          objectFit: "contain",
+          borderRadius: "10px",
+          cursor: "default",
+        }}
+      />
+    </div>
+  );
+}
+
 export default function Home() {
   const router = useRouter();
 
@@ -364,11 +541,14 @@ export default function Home() {
   // Imagen del dress code (código de vestimenta)
   const DRESS_CODE_IMAGE = "/Dress-code.png";
   
-  // Imágenes de la galería (fotos de la pareja)
+  // Imágenes de la galería (fotos de la pareja) - AHORA CON 6 IMÁGENES
   const GALLERY_IMAGES = [
-    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=70",
-    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=70",
-    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=70",
+    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80", // Foto 1
+    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=80", // Foto 2
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80", // Foto 3
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80", // Foto 4 (nueva)
+    "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80", // Foto 5 (nueva)
+    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80", // Foto 6 (nueva)
   ];
   
   // ====================================================
@@ -382,6 +562,10 @@ export default function Home() {
   const TIMELINE_ICON_SIZE = 80;
   
   // ====================================================
+
+  // Estado para el carrusel de imágenes
+  const [carouselOpen, setCarouselOpen] = useState(false);
+  const [carouselIndex, setCarouselIndex] = useState(0);
 
   const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
 
@@ -833,11 +1017,52 @@ export default function Home() {
       boxShadow: "0 10px 25px rgba(183,110,121,0.4)",
       fontFamily: "'Quicksand', sans-serif",
     },
+    // Carrusel de imágenes - AHORA CON 1 IMAGEN A LA VEZ Y 1/3 MÁS GRANDE
+    carouselContainer: {
+      width: "100%",
+      maxWidth: 800,
+      margin: "20px auto 0",
+      position: "relative",
+      overflow: "hidden",
+      borderRadius: 30,
+      boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+    },
+    carouselSlide: {
+      display: "flex",
+      transition: "transform 0.3s ease",
+      cursor: "pointer",
+    },
+    carouselImage: {
+      width: "100%",
+      flexShrink: 0,
+      height: "auto",
+      aspectRatio: "1.2/1", // Proporción más grande
+      objectFit: "cover",
+      borderRadius: 30,
+    },
+    carouselDots: {
+      display: "flex",
+      justifyContent: "center",
+      gap: "10px",
+      marginTop: "15px",
+      marginBottom: "10px",
+    },
+    carouselDot: {
+      width: "8px",
+      height: "8px",
+      borderRadius: "50%",
+      background: "#f0e4d7",
+      transition: "all 0.3s ease",
+      cursor: "pointer",
+    },
+    carouselDotActive: {
+      width: "20px",
+      borderRadius: "10px",
+      background: "#b76e79",
+    },
+    // Galería (estilo anterior, ya no se usa pero lo mantengo por si acaso)
     galleryGrid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(3, 1fr)",
-      gap: "clamp(10px, 3vw, 20px)",
-      marginTop: 20,
+      display: "none", // Ocultamos el grid anterior
     },
     galleryImage: {
       borderRadius: 30,
@@ -940,6 +1165,34 @@ export default function Home() {
     } catch {}
   }
 
+  // Estado para el carrusel de la galería
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      // Deslizar a la izquierda - siguiente imagen
+      setCurrentImageIndex((prev) => (prev + 1) % GALLERY_IMAGES.length);
+    } else if (touchStart - touchEnd < -50) {
+      // Deslizar a la derecha - imagen anterior
+      setCurrentImageIndex((prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+    }
+  };
+
+  const openCarousel = (index) => {
+    setCarouselIndex(index);
+    setCarouselOpen(true);
+  };
+
   return (
     <>
       <Head>
@@ -1025,7 +1278,7 @@ export default function Home() {
             <div style={invitationStyles.names}>Vanessa & Andrés</div>
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
-            {/* Contador - CORREGIDO Y CENTRADO */}
+            {/* Contador */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
@@ -1061,13 +1314,46 @@ export default function Home() {
               ) : null}
             </div>
 
-            {/* Galería */}
-            <div style={invitationStyles.galleryGrid}>
-              {GALLERY_IMAGES.slice(0, 3).map((img, idx) => (
-                <div key={idx} style={invitationStyles.galleryImage}>
-                  <img src={img} alt={`Foto ${idx + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            {/* NUEVO CARRUSEL DE IMÁGENES - 6 imágenes, 1 a la vez, 1/3 más grande */}
+            <div style={{ marginTop: 30 }}>
+              <div style={invitationStyles.sectionTitle}>Galería</div>
+              
+              {/* Contenedor del carrusel */}
+              <div style={invitationStyles.carouselContainer}>
+                <div
+                  style={{
+                    ...invitationStyles.carouselSlide,
+                    transform: `translateX(-${currentImageIndex * 100}%)`,
+                  }}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
+                  {GALLERY_IMAGES.map((img, idx) => (
+                    <img
+                      key={idx}
+                      src={img}
+                      alt={`Foto ${idx + 1}`}
+                      style={invitationStyles.carouselImage}
+                      onClick={() => openCarousel(idx)}
+                    />
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* Indicadores (dots) */}
+              <div style={invitationStyles.carouselDots}>
+                {GALLERY_IMAGES.map((_, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      ...invitationStyles.carouselDot,
+                      ...(idx === currentImageIndex ? invitationStyles.carouselDotActive : {}),
+                    }}
+                    onClick={() => setCurrentImageIndex(idx)}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Nuestra historia */}
@@ -1268,6 +1554,15 @@ export default function Home() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Carrusel a pantalla completa */}
+      {carouselOpen && (
+        <ImageCarousel
+          images={GALLERY_IMAGES}
+          initialIndex={carouselIndex}
+          onClose={() => setCarouselOpen(false)}
+        />
       )}
     </>
   );
