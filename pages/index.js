@@ -606,7 +606,7 @@ export default function Home() {
     topImage: {
       width: "calc(100% - 40px)",
       height: "auto",
-      maxHeight: "480px",
+      maxHeight: "350px",
       objectFit: "contain",
       objectPosition: "center",
       display: "block",
