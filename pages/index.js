@@ -432,9 +432,82 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
   );
 }
 
+/** ✅ Componente Botón Flotante de Música */
+function MusicFloatingButton({ isPlaying, onClick }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Mostrar el botón después de un pequeño delay
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        position: "fixed",
+        bottom: "30px",
+        right: "30px",
+        width: "60px",
+        height: "60px",
+        borderRadius: "50%",
+        background: "#b76e79",
+        border: "3px solid white",
+        boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 1000,
+        transition: "all 0.3s ease",
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "scale(1)" : "scale(0.8)",
+        animation: isVisible ? "pulse 2s infinite" : "none",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "scale(1.1)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "scale(1)";
+      }}
+    >
+      <style jsx>{`
+        @keyframes pulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(183, 110, 121, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 10px rgba(183, 110, 121, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(183, 110, 121, 0);
+          }
+        }
+      `}</style>
+      
+      {isPlaying ? (
+        // Icono de pausa
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+          <rect x="6" y="4" width="4" height="16" rx="1" fill="white" />
+          <rect x="14" y="4" width="4" height="16" rx="1" fill="white" />
+        </svg>
+      ) : (
+        // Icono de play
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+          <path d="M8 5v14l11-7z" fill="white" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
 export default function Home() {
   const router = useRouter();
-  const audioRef = useRef(null); // Referencia para el audio
+  const audioRef = useRef(null);
 
   // ====================================================
   // 🖼️ CONFIGURACIÓN DE IMÁGENES - CÁMBIALAS AQUÍ
@@ -444,9 +517,8 @@ export default function Home() {
   const SOBRE_IMAGE = "/sobre-boda.jpg";
   const DRESS_CODE_IMAGE = "/Dress-code.png";
   
-  // 🎵 RUTA DE TU CANCIÓN - Coloca tu archivo MP3 en /public
-  // Puedes descargar un MP3 de cualquier canción y ponerlo en /public/mi-cancion.mp3
-  const SONG_URL = "/Post-quimica.mp3"; // Cambia esto por el nombre de tu archivo
+  // 🎵 RUTA DE TU CANCIÓN
+  const SONG_URL = "/mi-cancion.mp3";
   
   const GALLERY_IMAGES = [
     "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80",
@@ -1035,7 +1107,6 @@ export default function Home() {
   function abrirSobre() {
     setEnvelopeOpen(true);
     
-    // 🎵 Reproducir audio automáticamente al abrir la invitación
     setTimeout(() => {
       if (audioRef.current) {
         audioRef.current.play()
@@ -1045,23 +1116,33 @@ export default function Home() {
           })
           .catch(error => {
             console.log("Autoplay bloqueado por el navegador:", error);
-            // En móviles, el autoplay con sonido está restringido
-            // Se reproducirá cuando el usuario interactúe con la página
           });
       }
-    }, 500); // Pequeño delay para asegurar que el DOM está listo
+    }, 500);
 
     try {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {}
   }
 
-  // Función para intentar reproducir cuando el usuario hace clic en algún lado
   const handleUserInteraction = () => {
     if (envelopeOpen && audioRef.current && !audioPlaying) {
       audioRef.current.play()
         .then(() => setAudioPlaying(true))
         .catch(e => console.log("Error al reproducir:", e));
+    }
+  };
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (audioPlaying) {
+        audioRef.current.pause();
+        setAudioPlaying(false);
+      } else {
+        audioRef.current.play()
+          .then(() => setAudioPlaying(true))
+          .catch(e => console.log("Error al reproducir:", e));
+      }
     }
   };
 
@@ -1172,7 +1253,7 @@ export default function Home() {
       {envelopeOpen && (
         <div 
           style={invitationStyles.page}
-          onClick={handleUserInteraction} // Para capturar clics en móviles
+          onClick={handleUserInteraction}
         >
           <div style={invitationStyles.card}>
             {/* 🎵 REPRODUCTOR DE AUDIO OCULTO */}
@@ -1181,7 +1262,7 @@ export default function Home() {
               src={SONG_URL}
               loop
               preload="auto"
-              style={{ display: 'none' }} // Oculto completamente
+              style={{ display: 'none' }}
             />
 
             <div style={invitationStyles.names}>Vanessa & Andrés</div>
@@ -1445,6 +1526,14 @@ export default function Home() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Botón Flotante de Música */}
+      {envelopeOpen && (
+        <MusicFloatingButton
+          isPlaying={audioPlaying}
+          onClick={toggleMusic}
+        />
       )}
 
       {/* Carrusel a pantalla completa */}
