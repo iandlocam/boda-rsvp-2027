@@ -610,7 +610,7 @@ export default function Home() {
       objectFit: "contain",
       objectPosition: "center",
       display: "block",
-      margin: "20px auto 10px",
+      margin: "15px auto 10px",
       borderBottom: "2px solid rgba(184,107,107,0.2)",
     },
     content: {
