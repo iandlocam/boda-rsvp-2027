@@ -262,8 +262,8 @@ export default function Home() {
 
   const FECHA_BODA = "2027-04-23T16:00:00";
 
-  // Imagen del sobre (primera pantalla)
-  const SOBRE_IMAGE = "/sobre-boda.jpg";
+  // Imagen de fondo para la primera pantalla (TUS FLORES)
+  const FLORES_BACKGROUND = "/flores-fondo.jpg"; // 🔴 Ajusta esta ruta a tu imagen de flores
 
   // Imágenes de la galería (fotos de la pareja)
   const GALLERY_IMAGES = [
@@ -342,29 +342,87 @@ export default function Home() {
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet" />
       </Head>
 
-      {/* PANTALLA 1: SOBRE (100% original) */}
+      {/* PANTALLA 1: SOBRE CON TUS FLORES Y TEXTO ORIGINAL */}
       {!isOpen && (
         <div style={{
           minHeight: "100vh",
-          background: "#faf3ec",
-          backgroundImage: `url(${SOBRE_IMAGE})`,
+          background: "#faf3ec", // Color de respaldo
+          backgroundImage: `url(${FLORES_BACKGROUND})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
+          textAlign: "center",
+          padding: "20px",
         }}>
+          {/* Capa oscura semitransparente para mejorar legibilidad del texto */}
           <div style={{
             position: "absolute",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            background: "rgba(0,0,0,0.15)",
-            backdropFilter: "blur(3px)",
+            backgroundColor: "rgba(0,0,0,0.2)",
+            zIndex: 1,
           }} />
-          <WaxSeal onClick={() => setIsOpen(true)} label="Abrir" />
+          
+          {/* Contenido textual - EXACTAMENTE como en tu imagen */}
+          <div style={{
+            position: "relative",
+            zIndex: 2,
+            color: "white",
+            textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
+          }}>
+            <div style={{
+              fontSize: "3rem",
+              fontWeight: "300",
+              marginBottom: "40px",
+              fontFamily: "'Great Vibes', cursive",
+            }}>
+              23/04/2027
+            </div>
+            
+            <div style={{
+              fontSize: "1.8rem",
+              fontWeight: "400",
+              marginBottom: "30px",
+              letterSpacing: "4px",
+            }}>
+              +ICK PARA ABRIR LA INVITACIÓN
+            </div>
+            
+            <div style={{
+              fontSize: "2.5rem",
+              fontWeight: "600",
+              marginBottom: "40px",
+              fontFamily: "'Great Vibes', cursive",
+            }}>
+              #MOS RESERVADO
+            </div>
+            
+            <div style={{
+              fontSize: "1.8rem",
+              fontWeight: "400",
+              borderTop: "2px solid rgba(255,255,255,0.5)",
+              borderBottom: "2px solid rgba(255,255,255,0.5)",
+              padding: "15px 30px",
+              display: "inline-block",
+            }}>
+              2 LUGARES EN SU HONOR
+            </div>
+          </div>
+
+          {/* Sello de cera (opcional, puedes mantenerlo o quitarlo) */}
+          <div style={{
+            position: "relative",
+            zIndex: 2,
+            marginTop: "60px",
+          }}>
+            <WaxSeal onClick={() => setIsOpen(true)} label="Abrir" size={120} />
+          </div>
         </div>
       )}
 
