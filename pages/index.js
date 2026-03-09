@@ -635,7 +635,7 @@ export default function Home() {
       width: "100%",
     },
     reservedSection: {
-      marginTop: "auto",
+      marginTop: 20,
       marginBottom: 10,
       textAlign: "center",
     },
