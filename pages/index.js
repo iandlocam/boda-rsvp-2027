@@ -513,7 +513,7 @@ export default function Home() {
   const BACKGROUND_IMAGE = "/marco-boda.jpeg";
   const SOBRE_IMAGE = "/sobre-boda.jpg";
   const DRESS_CODE_IMAGE = "/Dress-code.png";
-  const DIVIDER_IMAGE = "/divider-floral.png"; // Imagen para separar secciones
+  const DIVIDER_IMAGE = "/imagen-5.jpg"; // Imagen para separar secciones
   const LIVERPOOL_LOGO = "/liverpool-logo.png"; // Logo de Liverpool
   const AMAZON_LOGO = "/amazon-logo.png"; // Logo de Amazon
   const BANK_ICON = "/bank-icon.png"; // Icono de banco/transferencias
