@@ -515,8 +515,15 @@ export default function Home() {
   const DRESS_CODE_IMAGE = "/Dress-code.png";
   
   // Dos imágenes separadoras independientes
-  const DIVIDER_IMAGE_1 = "/familia.jpeg"; // Primera imagen separadora
-  const DIVIDER_IMAGE_2 = "/divider-floral-2.png"; // Segunda imagen separadora
+  const DIVIDER_IMAGE_1 = "/familia.jpeg";
+  const DIVIDER_IMAGE_2 = "/divider-floral-2.png";
+  
+  // Nuevo carrusel de 3 imágenes después del dress code
+  const CAROUSEL_3_IMAGES = [
+    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+  ];
   
   const LIVERPOOL_LOGO = "/liverpool-logo.png";
   const AMAZON_LOGO = "/amazon-logo.png";
@@ -554,11 +561,11 @@ export default function Home() {
   
   // Paleta de colores (5 bolitas)
   const COLOR_PALETTE = [
-    "#b76e79", // Rosa/miel principal
-    "#d4af37", // Dorado
-    "#8b5a2b", // Marrón
-    "#4a704a", // Verde oliva
-    "#2c3e50", // Azul oscuro
+    "#b76e79",
+    "#d4af37",
+    "#8b5a2b",
+    "#4a704a",
+    "#2c3e50",
   ];
   
   // ====================================================
@@ -567,6 +574,13 @@ export default function Home() {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [secondaryCarouselOpen, setSecondaryCarouselOpen] = useState(false);
   const [secondaryCarouselIndex, setSecondaryCarouselIndex] = useState(0);
+  
+  // Estado para el nuevo carrusel de 3 imágenes
+  const [carousel3Open, setCarousel3Open] = useState(false);
+  const [carousel3Index, setCarousel3Index] = useState(0);
+  const [carousel3ImageIndex, setCarousel3ImageIndex] = useState(0);
+  const [carousel3TouchStart, setCarousel3TouchStart] = useState(0);
+  const [carousel3TouchEnd, setCarousel3TouchEnd] = useState(0);
 
   const weddingDateMs = useMemo(() => new Date("2027-04-23T16:00:00").getTime(), []);
 
@@ -585,7 +599,6 @@ export default function Home() {
   const [pasesConfirmados, setPasesConfirmados] = useState(1);
   const [audioPlaying, setAudioPlaying] = useState(false);
   
-  // Nuevos estados para bebidas y alergias
   const [bebidasSeleccionadas, setBebidasSeleccionadas] = useState([]);
   const [alergias, setAlergias] = useState("");
 
@@ -604,6 +617,28 @@ export default function Home() {
         ? prev.filter(id => id !== bebidaId)
         : [...prev, bebidaId]
     );
+  };
+
+  // Handlers para el nuevo carrusel de 3 imágenes
+  const handleCarousel3TouchStart = (e) => {
+    setCarousel3TouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleCarousel3TouchMove = (e) => {
+    setCarousel3TouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleCarousel3TouchEnd = () => {
+    if (carousel3TouchStart - carousel3TouchEnd > 50) {
+      setCarousel3ImageIndex((prev) => (prev + 1) % CAROUSEL_3_IMAGES.length);
+    } else if (carousel3TouchStart - carousel3TouchEnd < -50) {
+      setCarousel3ImageIndex((prev) => (prev - 1 + CAROUSEL_3_IMAGES.length) % CAROUSEL_3_IMAGES.length);
+    }
+  };
+
+  const openCarousel3 = (index) => {
+    setCarousel3Index(index);
+    setCarousel3Open(true);
   };
 
   useEffect(() => {
@@ -640,7 +675,6 @@ export default function Home() {
           setMensaje(String(g.mensaje));
         }
 
-        // Cargar bebidas y alergias si existen
         if (g?.bebidas) {
           setBebidasSeleccionadas(g.bebidas);
         }
@@ -735,18 +769,15 @@ export default function Home() {
   const NUESTRA_HISTORIA = [
     {
       title: "Cómo empezó",
-      text:
-        "Un día cualquiera se volvió especial. Entre risas, pláticas largas y complicidad, entendimos que esto iba en serio.",
+      text: "Un día cualquiera se volvió especial. Entre risas, pláticas largas y complicidad, entendimos que esto iba en serio.",
     },
     {
       title: "Lo que nos une",
-      text:
-        "Amor por lo simple, por la familia, por viajar y por crear un hogar donde siempre haya paz (y música).",
+      text: "Amor por lo simple, por la familia, por viajar y por crear un hogar donde siempre haya paz (y música).",
     },
     {
       title: "El gran día",
-      text:
-        "Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo.",
+      text: "Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo.",
     },
   ];
 
@@ -779,7 +810,7 @@ export default function Home() {
   };
 
   // ====================================================
-  // 🎨 ESTILOS - VERSIÓN CORREGIDA (vertical)
+  // 🎨 ESTILOS
   // ====================================================
   
   const envelopeStyles = {
@@ -928,7 +959,7 @@ export default function Home() {
       fontWeight: 400,
       color: "#b76e79",
       textAlign: "center",
-      marginBottom: 10,
+      marginBottom: 30,
       lineHeight: 1.2,
     },
     subtitle: {
@@ -947,7 +978,6 @@ export default function Home() {
       lineHeight: 1.6,
       fontFamily: "'Quicksand', sans-serif",
     },
-    // Sección de familias - AHORA VERTICAL
     familySection: {
       display: "flex",
       flexDirection: "column",
@@ -998,7 +1028,6 @@ export default function Home() {
       transition: "transform 0.2s",
       cursor: "pointer",
     },
-    // Ubicaciones - AHORA VERTICAL
     ubicacionesContainer: {
       display: "flex",
       flexDirection: "column",
@@ -1006,7 +1035,7 @@ export default function Home() {
       marginTop: "20px",
     },
     ubicacionCard: {
-      background: "#fef9f0",
+      background: "#ffffff",
       borderRadius: 40,
       padding: "25px 20px",
       textAlign: "center",
@@ -1040,7 +1069,6 @@ export default function Home() {
       marginRight: "auto",
       opacity: 0.8,
     },
-    // Galería secundaria - 10% MÁS GRANDE
     secondaryGallery: {
       display: "grid",
       gridTemplateColumns: "repeat(3, 1fr)",
@@ -1056,7 +1084,7 @@ export default function Home() {
       transition: "transform 0.2s",
       border: "2px solid white",
       boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
-      transform: "scale(1.1)", // 10% más grande
+      transform: "scale(1.1)",
     },
     bebidasContainer: {
       display: "grid",
@@ -1264,6 +1292,14 @@ export default function Home() {
       background: "#fff",
       padding: "clamp(15px, 4vw, 20px)",
     },
+    moneyBox: {
+      borderRadius: 40,
+      border: "1px solid #f0e4d7",
+      background: "#ffffff",
+      padding: "30px 20px",
+      textAlign: "center",
+      marginTop: "20px",
+    },
     linkBtnPrimary: {
       display: "inline-block",
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
@@ -1312,14 +1348,6 @@ export default function Home() {
       maxWidth: 300,
       textAlign: "center",
       marginTop: "10px",
-    },
-    moneyBox: {
-      borderRadius: 40,
-      border: "1px solid #f0e4d7",
-      background: "#fef9f0",
-      padding: "30px 20px",
-      textAlign: "center",
-      marginTop: "20px",
     },
   };
 
@@ -1498,34 +1526,14 @@ export default function Home() {
               style={{ display: 'none' }}
             />
 
-            <div style={invitationStyles.names}>Vanessa & Andrés</div>
+            {/* 1. Nombres en tres líneas */}
+            <div style={invitationStyles.names}>
+              Vanessa<br />&<br />Andrés
+            </div>
+            
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
-            {/* Nuevo bloque de invitación */}
-            <div style={invitationStyles.invitationText}>
-              Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
-            </div>
-
-            {/* Bloque de familias y padrinos - AHORA VERTICAL */}
-            <div style={invitationStyles.familySection}>
-              <div style={invitationStyles.familyCard}>
-                <div style={invitationStyles.familyLabel}>Papás de la novia</div>
-                <div style={invitationStyles.familyName}>María González</div>
-                <div style={invitationStyles.familyName}>Juan Pérez</div>
-              </div>
-              <div style={invitationStyles.familyCard}>
-                <div style={invitationStyles.familyLabel}>Papás del novio</div>
-                <div style={invitationStyles.familyName}>Laura Martínez</div>
-                <div style={invitationStyles.familyName}>Pedro Sánchez</div>
-              </div>
-              <div style={invitationStyles.familyCard}>
-                <div style={invitationStyles.familyLabel}>Padrinos de velación</div>
-                <div style={invitationStyles.familyName}>Sofía Ramírez</div>
-                <div style={invitationStyles.familyName}>Diego López</div>
-              </div>
-            </div>
-
-            {/* Contador */}
+            {/* 2. Contador - MOVIDO ANTES DE LOS PAPÁS */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
@@ -1542,6 +1550,30 @@ export default function Home() {
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.seconds}</div>
                 <div style={invitationStyles.countdownLabel}>Segundos</div>
+              </div>
+            </div>
+
+            {/* Bloque de invitación */}
+            <div style={invitationStyles.invitationText}>
+              Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
+            </div>
+
+            {/* Bloque de familias y padrinos */}
+            <div style={invitationStyles.familySection}>
+              <div style={invitationStyles.familyCard}>
+                <div style={invitationStyles.familyLabel}>Papás de la novia</div>
+                <div style={invitationStyles.familyName}>María González</div>
+                <div style={invitationStyles.familyName}>Juan Pérez</div>
+              </div>
+              <div style={invitationStyles.familyCard}>
+                <div style={invitationStyles.familyLabel}>Papás del novio</div>
+                <div style={invitationStyles.familyName}>Laura Martínez</div>
+                <div style={invitationStyles.familyName}>Pedro Sánchez</div>
+              </div>
+              <div style={invitationStyles.familyCard}>
+                <div style={invitationStyles.familyLabel}>Padrinos de velación</div>
+                <div style={invitationStyles.familyName}>Sofía Ramírez</div>
+                <div style={invitationStyles.familyName}>Diego López</div>
               </div>
             </div>
 
@@ -1600,7 +1632,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Primera imagen separadora - INDEPENDIENTE */}
+            {/* Primera imagen separadora */}
             <img 
               src={DIVIDER_IMAGE_1}
               alt="Separador floral 1"
@@ -1651,15 +1683,46 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Segunda imagen separadora - INDEPENDIENTE */}
-            <img 
-              src={DIVIDER_IMAGE_2}
-              alt="Separador floral 2"
-              style={invitationStyles.dividerImage}
-            />
+            {/* 3. Nuevo carrusel de 3 imágenes (reemplaza la imagen separadora) */}
+            <div style={{ marginTop: 30 }}>
+              <div style={invitationStyles.carouselContainer}>
+                <div
+                  style={{
+                    ...invitationStyles.carouselSlide,
+                    transform: `translateX(-${carousel3ImageIndex * 100}%)`,
+                  }}
+                  onTouchStart={handleCarousel3TouchStart}
+                  onTouchMove={handleCarousel3TouchMove}
+                  onTouchEnd={handleCarousel3TouchEnd}
+                >
+                  {CAROUSEL_3_IMAGES.map((img, idx) => (
+                    <img
+                      key={idx}
+                      src={img}
+                      alt={`Carrusel 3 imagen ${idx + 1}`}
+                      style={invitationStyles.carouselImage}
+                      onClick={() => openCarousel3(idx)}
+                    />
+                  ))}
+                </div>
+              </div>
 
-            {/* Ubicaciones - Ceremonia y Recepción - AHORA VERTICAL */}
-            <div style={{ marginTop: 20 }}>
+              <div style={invitationStyles.carouselDots}>
+                {CAROUSEL_3_IMAGES.map((_, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      ...invitationStyles.carouselDot,
+                      ...(idx === carousel3ImageIndex ? invitationStyles.carouselDotActive : {}),
+                    }}
+                    onClick={() => setCarousel3ImageIndex(idx)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Ubicaciones - Ceremonia y Recepción - con fondo blanco */}
+            <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ubicaciones</div>
               <div style={invitationStyles.ubicacionesContainer}>
                 <div style={invitationStyles.ubicacionCard}>
@@ -1725,7 +1788,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Datos bancarios con icono */}
+                {/* Datos bancarios con icono - fondo blanco */}
                 <div style={invitationStyles.moneyBox}>
                   <img 
                     src={BANK_ICON}
@@ -1750,7 +1813,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Galería secundaria (2x3) - 10% MÁS GRANDE */}
+            {/* Galería secundaria (2x3) */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Más momentos</div>
               <div style={invitationStyles.secondaryGallery}>
@@ -1766,7 +1829,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Sección de reservaciones (existente) */}
+            {/* Sección de reservaciones */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Reservaciones</div>
               <div style={envelopeStyles.reservedSection}>
@@ -1947,6 +2010,15 @@ export default function Home() {
           images={SECONDARY_GALLERY_IMAGES}
           initialIndex={secondaryCarouselIndex}
           onClose={() => setSecondaryCarouselOpen(false)}
+        />
+      )}
+
+      {/* Nuevo carrusel de 3 imágenes a pantalla completa */}
+      {carousel3Open && (
+        <ImageCarousel
+          images={CAROUSEL_3_IMAGES}
+          initialIndex={carousel3Index}
+          onClose={() => setCarousel3Open(false)}
         />
       )}
     </>
