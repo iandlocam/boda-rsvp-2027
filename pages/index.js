@@ -20,25 +20,18 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados, bebidas, 
 }
 
 // ====================================================
-// 🎨 PALETA DE COLORES (definida una sola vez)
+// 🎨 PALETA DE COLORES
 // ====================================================
 const COLORS = {
-  // Dorados
-  gold: "#d2ae7b",        // rgb(210,174,123)
-  beige: "#dfc49b",       // rgb(223,196,155)
-  
-  // Azules grisáceos
-  blueGrayLight: "#cad3e3",    // rgb(202,211,227)
-  blueGrayMedium: "#b7c2d6",   // rgb(183,194,214)
-  blueGrayDark: "#a1afc1",     // rgb(161,175,193)
-  
-  // Azules
-  blueDeep: "#4d6a91",         // rgb(77,106,145)
-  blueMedium: "#5e7db2",       // rgb(94,125,178)
-  blueLight: "#7296c7",        // rgb(114,150,199)
-  blueVeryLight: "#8baedd",    // rgb(139,174,221)
-  
-  // Neutros
+  gold: "#d2ae7b",
+  beige: "#dfc49b",
+  blueGrayLight: "#cad3e3",
+  blueGrayMedium: "#b7c2d6",
+  blueGrayDark: "#a1afc1",
+  blueDeep: "#4d6a91",
+  blueMedium: "#5e7db2",
+  blueLight: "#7296c7",
+  blueVeryLight: "#8baedd",
   white: "#ffffff",
   cream: "#fef9f0",
   text: "#4a4a4a",
@@ -112,7 +105,7 @@ function MonogramaAV({ size = 60, color = COLORS.blueDeep }) {
   );
 }
 
-/** ✅ Sello (ahora con los nuevos colores) */
+/** ✅ Sello */
 function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   return (
     <div
@@ -238,7 +231,7 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   );
 }
 
-/** ✅ TimelineIcon - ahora con colores de la paleta */
+/** ✅ TimelineIcon */
 function TimelineIcon({ type = "ceremony", size = 48 }) {
   const ICONOS = {
     ceremony: "/iconos/Ceremony.png",
@@ -289,7 +282,7 @@ function TimelineIcon({ type = "ceremony", size = 48 }) {
   );
 }
 
-/** ✅ ImageCarousel - con nuevos colores */
+/** ✅ ImageCarousel */
 function ImageCarousel({ images, initialIndex = 0, onClose }) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [touchStart, setTouchStart] = useState(0);
@@ -457,7 +450,7 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
   );
 }
 
-/** ✅ Botón Flotante de Música - con colores actualizados */
+/** ✅ Botón Flotante de Música */
 function MusicFloatingButton({ isPlaying, onClick }) {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -586,6 +579,47 @@ export default function Home() {
     COLORS.gold,
     COLORS.beige,
   ];
+  
+  // ====================================================
+  // 📋 DATOS DE HOTELES - ¡CÁMBIALOS AQUÍ!
+  // ====================================================
+  
+  const HOTELES = [
+    {
+      nombre: "Hotel Royal Garden",
+      web: "https://www.royalgarden.com",
+      maps: "https://maps.google.com/?q=Hotel+Royal+Garden+Jiutepec",
+      telefono: "+52 777 123 4567",
+      whatsapp: "+52 777 123 4567",
+    },
+    {
+      nombre: "Hotel Villa Maroma",
+      web: "https://www.villamaroma.com",
+      maps: "https://maps.google.com/?q=Hotel+Villa+Maroma+Jiutepec",
+      telefono: "+52 777 234 5678",
+      whatsapp: "+52 777 234 5678",
+    },
+    {
+      nombre: "Hotel Boutique Casa del Sol",
+      web: "https://www.casasol.com",
+      maps: "https://maps.google.com/?q=Hotel+Boutique+Casa+del+Sol+Jiutepec",
+      telefono: "+52 777 345 6789",
+      whatsapp: "+52 777 345 6789",
+    },
+    {
+      nombre: "Hotel Hacienda San Carlos",
+      web: "https://www.haciendasan.com",
+      maps: "https://maps.google.com/?q=Hotel+Hacienda+San+Carlos+Jiutepec",
+      telefono: "+52 777 456 7890",
+      whatsapp: "+52 777 456 7890",
+    },
+  ];
+  
+  const AIRBNB_DATA = {
+    nombre: "Airbnb",
+    texto: "Revisa la lista que hicimos para ti",
+    link: "https://www.airbnb.com/wishlists/...",
+  };
   
   // ====================================================
 
@@ -778,10 +812,12 @@ export default function Home() {
     }
   }
 
+  // ====================================================
+  // 📍 UBICACIONES - SOLO CEREMONIA Y RECEPCIÓN
+  // ====================================================
+  
   const MAPS_CEREMONY_URL = "https://maps.google.com/?q=Parroquia%20de%20San%20Miguel%20Arcangel%2C%20Jiutepec%2C%20Morelos";
-  const MAPS_RECEPTION_URL = "https://maps.google.com/?q=Jard%C3%ADn%20Maroma%2C%20Jiutepec%2C%20Morelos";
   const WAZE_CEREMONY_URL = "https://waze.com/ul?q=Parroquia%20de%20San%20Miguel%20Arcangel%20Jiutepec%20Morelos";
-  const WAZE_RECEPTION_URL = "https://waze.com/ul?q=Jard%C3%ADn%20Maroma%20Jiutepec%20Morelos";
 
   const NUESTRA_HISTORIA = [
     {
@@ -827,7 +863,7 @@ export default function Home() {
   };
 
   // ====================================================
-  // 🎨 ESTILOS - AHORA CON LA NUEVA PALETA DE COLORES
+  // 🎨 ESTILOS
   // ====================================================
   
   const envelopeStyles = {
@@ -1369,6 +1405,104 @@ export default function Home() {
       textAlign: "center",
       marginTop: "10px",
     },
+    // ====================================================
+    // 🏨 ESTILOS PARA LA SECCIÓN DE HOSPEDAJES
+    // ====================================================
+    hospedajesContainer: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "20px",
+      marginTop: "10px",
+    },
+    hotelCard: {
+      background: COLORS.white,
+      borderRadius: 40,
+      padding: "20px 20px",
+      border: `1px solid ${COLORS.blueGrayLight}`,
+      boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
+    },
+    hotelNombre: {
+      fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
+      fontWeight: 700,
+      color: COLORS.blueDeep,
+      marginBottom: "10px",
+      textAlign: "center",
+    },
+    hotelRow: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "8px",
+      marginBottom: "6px",
+      fontSize: "clamp(0.85rem, 3vw, 0.95rem)",
+      flexWrap: "wrap",
+    },
+    hotelIcon: {
+      fontSize: "1.1rem",
+      opacity: 0.7,
+      minWidth: "24px",
+      textAlign: "center",
+    },
+    hotelLink: {
+      color: COLORS.blueMedium,
+      textDecoration: "none",
+      fontWeight: 500,
+      wordBreak: "break-all",
+      "&:hover": {
+        textDecoration: "underline",
+      },
+    },
+    hotelMapsBtn: {
+      display: "inline-block",
+      padding: "4px 14px",
+      borderRadius: 30,
+      background: COLORS.blueGrayLight,
+      color: COLORS.blueDeep,
+      textDecoration: "none",
+      fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)",
+      fontWeight: 600,
+      border: `1px solid ${COLORS.blueGrayMedium}`,
+      transition: "background 0.2s",
+    },
+    hotelMapsBtnHover: {
+      background: COLORS.blueGrayMedium,
+    },
+    airbnbCard: {
+      background: COLORS.cream,
+      borderRadius: 40,
+      padding: "20px 20px",
+      border: `2px dashed ${COLORS.blueGrayMedium}`,
+      textAlign: "center",
+      marginTop: "5px",
+    },
+    airbnbNombre: {
+      fontSize: "clamp(1.2rem, 4vw, 1.4rem)",
+      fontWeight: 700,
+      color: COLORS.blueDeep,
+      marginBottom: "5px",
+    },
+    airbnbTexto: {
+      fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      color: COLORS.text,
+      marginBottom: "10px",
+    },
+    airbnbLink: {
+      display: "inline-block",
+      padding: "8px 25px",
+      borderRadius: 50,
+      background: COLORS.blueMedium,
+      color: COLORS.white,
+      textDecoration: "none",
+      fontWeight: 600,
+      fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      border: `1px solid ${COLORS.blueMedium}`,
+      transition: "all 0.2s",
+    },
+    whatsappLink: {
+      color: "#25D366",
+      textDecoration: "none",
+      fontWeight: 500,
+    },
   };
 
   const maxPases = Math.max(1, Number(guestData?.pasesAsignados || 1));
@@ -1741,12 +1875,92 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Ubicaciones */}
+            {/* 🏨 NUEVA SECCIÓN: HOSPEDAJES (antes de Ubicaciones) */}
             <div style={{ marginTop: 40 }}>
-              <div style={invitationStyles.sectionTitle}>Ubicaciones</div>
+              <div style={invitationStyles.sectionTitle}>Hospedajes</div>
+              <div style={invitationStyles.hospedajesContainer}>
+                {HOTELES.map((hotel, idx) => (
+                  <div key={idx} style={invitationStyles.hotelCard}>
+                    <div style={invitationStyles.hotelNombre}>{hotel.nombre}</div>
+                    
+                    {/* Web */}
+                    <div style={invitationStyles.hotelRow}>
+                      <span style={invitationStyles.hotelIcon}>🌐</span>
+                      <a 
+                        href={hotel.web} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        style={invitationStyles.hotelLink}
+                      >
+                        {hotel.web.replace(/^https?:\/\//, '')}
+                      </a>
+                    </div>
+                    
+                    {/* Google Maps */}
+                    <div style={invitationStyles.hotelRow}>
+                      <span style={invitationStyles.hotelIcon}>📍</span>
+                      <a 
+                        href={hotel.maps} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        style={invitationStyles.hotelMapsBtn}
+                      >
+                        Google Maps
+                      </a>
+                    </div>
+                    
+                    {/* Teléfono */}
+                    <div style={invitationStyles.hotelRow}>
+                      <span style={invitationStyles.hotelIcon}>📞</span>
+                      <a 
+                        href={`tel:${hotel.telefono}`} 
+                        style={invitationStyles.hotelLink}
+                      >
+                        {hotel.telefono}
+                      </a>
+                    </div>
+                    
+                    {/* WhatsApp */}
+                    <div style={invitationStyles.hotelRow}>
+                      <span style={invitationStyles.hotelIcon}>💬</span>
+                      <a 
+                        href={`https://wa.me/${hotel.whatsapp.replace(/[+\s]/g, '')}`} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        style={{
+                          ...invitationStyles.hotelLink,
+                          color: "#25D366",
+                          fontWeight: 600,
+                        }}
+                      >
+                        WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Airbnb */}
+              <div style={invitationStyles.airbnbCard}>
+                <div style={invitationStyles.airbnbNombre}>{AIRBNB_DATA.nombre}</div>
+                <div style={invitationStyles.airbnbTexto}>{AIRBNB_DATA.texto}</div>
+                <a 
+                  href={AIRBNB_DATA.link} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  style={invitationStyles.airbnbLink}
+                >
+                  Ver lista 🏠
+                </a>
+              </div>
+            </div>
+
+            {/* 📍 UBICACIONES - SOLO CEREMONIA Y RECEPCIÓN (fusionado) */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
               <div style={invitationStyles.ubicacionesContainer}>
                 <div style={invitationStyles.ubicacionCard}>
-                  <div style={invitationStyles.ubicacionTitle}>Ceremonia</div>
+                  <div style={invitationStyles.ubicacionTitle}>📍 Ceremonia</div>
                   <div style={invitationStyles.ubicacionAddress}>
                     Parroquia de San Miguel Arcángel<br />
                     Jiutepec, Morelos
@@ -1760,21 +1974,8 @@ export default function Home() {
                     </a>
                   </div>
                 </div>
-                <div style={invitationStyles.ubicacionCard}>
-                  <div style={invitationStyles.ubicacionTitle}>Recepción</div>
-                  <div style={invitationStyles.ubicacionAddress}>
-                    Jardín Maroma<br />
-                    Jiutepec, Morelos
-                  </div>
-                  <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
-                    <a href={MAPS_RECEPTION_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtnPrimary}>
-                      Google Maps
-                    </a>
-                    <a href={WAZE_RECEPTION_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtn}>
-                      Waze
-                    </a>
-                  </div>
-                </div>
+                
+                {/* La recepción se ha fusionado con la ceremonia, ya no aparece como tarjeta separada */}
               </div>
             </div>
 
