@@ -532,7 +532,7 @@ function MusicFloatingButton({ isPlaying, onClick }) {
   );
 }
 
-/** ✅ Ícono de Sobre (estilo línea, coherente con el itinerario) */
+/** ✅ Ícono de Sobre (estilo línea) */
 function EnvelopeIcon({ size = 48, color = COLORS.blueDeep }) {
   return (
     <svg
@@ -575,7 +575,6 @@ export default function Home() {
   
   const LIVERPOOL_LOGO = "/liverpool-logo.png";
   const AMAZON_LOGO = "/amazon-logo.png";
-  const BANK_ICON = "/bank-icon.png";
   
   const SONG_URL = "/Post-quimica.mp3";
   
@@ -1208,6 +1207,7 @@ export default function Home() {
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
       marginTop: "15px",
+      color: COLORS.text, // ✅ Color de texto visible
     },
     countdownContainer: {
       display: "grid",
@@ -1278,6 +1278,7 @@ export default function Home() {
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
+      color: COLORS.text, // ✅ Color de texto visible
     },
     select: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
@@ -1286,6 +1287,7 @@ export default function Home() {
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
+      color: COLORS.text, // ✅ Color de texto visible
     },
     textarea: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
@@ -1295,6 +1297,7 @@ export default function Home() {
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
       resize: "vertical",
+      color: COLORS.text, // ✅ Color de texto visible
     },
     button: {
       background: COLORS.blueMedium,
@@ -1595,8 +1598,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`
           textarea::placeholder { 
-            color: #000; 
+            color: ${COLORS.textLight}; 
             opacity: 0.6; 
+          }
+          input::placeholder {
+            color: ${COLORS.textLight};
+            opacity: 0.6;
           }
           * {
             box-sizing: border-box;
@@ -2228,4 +2235,3 @@ export default function Home() {
     </>
   );
 }
-          
