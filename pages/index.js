@@ -1849,7 +1849,81 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 🏨 HOSPEDAJES - Debajo de "Más momentos" */}
+            {/* 📍 UBICACIONES - Ceremonia y recepción */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
+              <div style={invitationStyles.ubicacionesContainer}>
+                <div style={invitationStyles.ubicacionCard}>
+                  <div style={invitationStyles.ubicacionTitle}>📍 Ceremonia</div>
+                  <div style={invitationStyles.ubicacionAddress}>
+                    Parroquia de San Miguel Arcángel<br />
+                    Jiutepec, Morelos
+                  </div>
+                  <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
+                    <a href={MAPS_CEREMONY_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtnPrimary}>
+                      Google Maps
+                    </a>
+                    <a href={WAZE_CEREMONY_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtn}>
+                      Waze
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mesa de regalos */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Mesa de regalos</div>
+              <div style={invitationStyles.softBox}>
+                <div style={invitationStyles.regalosContainer}>
+                  <div style={invitationStyles.regaloItem}>
+                    <img 
+                      src={LIVERPOOL_LOGO}
+                      alt="Liverpool"
+                      style={invitationStyles.storeLogo}
+                    />
+                    <a href={MESA_REGALOS[0].url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
+                      Ver lista
+                    </a>
+                  </div>
+                  
+                  <div style={invitationStyles.regaloItem}>
+                    <img 
+                      src={AMAZON_LOGO}
+                      alt="Amazon"
+                      style={invitationStyles.storeLogo}
+                    />
+                    <a href={MESA_REGALOS[1].url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
+                      Ver lista
+                    </a>
+                  </div>
+                </div>
+
+                <div style={invitationStyles.moneyBox}>
+                  <img 
+                    src={BANK_ICON}
+                    alt="Transferencia bancaria"
+                    style={invitationStyles.bankIcon}
+                  />
+                  <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, textAlign: "center" }}>
+                    {REGALO_MONETARIO.subtitle}
+                  </p>
+                  <div style={{ marginTop: 10, textAlign: "center" }}>
+                    <div style={{ fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.blueGrayDark }}>
+                      <b>{REGALO_MONETARIO.accountLabel}:</b>
+                    </div>
+                    <div style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, wordBreak: "break-word" }}>
+                      {REGALO_MONETARIO.accountValue}
+                    </div>
+                  </div>
+                  <div style={{ marginTop: 10, fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, textAlign: "center" }}>
+                    {REGALO_MONETARIO.nameValue}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 🏨 HOSPEDAJES - Después de Mesa de regalos */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Hospedajes</div>
               <div style={invitationStyles.hospedajesContainer}>
@@ -1935,80 +2009,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 📍 UBICACIONES - Ceremonia y recepción */}
-            <div style={{ marginTop: 40 }}>
-              <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
-              <div style={invitationStyles.ubicacionesContainer}>
-                <div style={invitationStyles.ubicacionCard}>
-                  <div style={invitationStyles.ubicacionTitle}>📍 Ceremonia</div>
-                  <div style={invitationStyles.ubicacionAddress}>
-                    Parroquia de San Miguel Arcángel<br />
-                    Jiutepec, Morelos
-                  </div>
-                  <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
-                    <a href={MAPS_CEREMONY_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtnPrimary}>
-                      Google Maps
-                    </a>
-                    <a href={WAZE_CEREMONY_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtn}>
-                      Waze
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Mesa de regalos */}
-            <div style={{ marginTop: 40 }}>
-              <div style={invitationStyles.sectionTitle}>Mesa de regalos</div>
-              <div style={invitationStyles.softBox}>
-                <div style={invitationStyles.regalosContainer}>
-                  <div style={invitationStyles.regaloItem}>
-                    <img 
-                      src={LIVERPOOL_LOGO}
-                      alt="Liverpool"
-                      style={invitationStyles.storeLogo}
-                    />
-                    <a href={MESA_REGALOS[0].url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
-                      Ver lista
-                    </a>
-                  </div>
-                  
-                  <div style={invitationStyles.regaloItem}>
-                    <img 
-                      src={AMAZON_LOGO}
-                      alt="Amazon"
-                      style={invitationStyles.storeLogo}
-                    />
-                    <a href={MESA_REGALOS[1].url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
-                      Ver lista
-                    </a>
-                  </div>
-                </div>
-
-                <div style={invitationStyles.moneyBox}>
-                  <img 
-                    src={BANK_ICON}
-                    alt="Transferencia bancaria"
-                    style={invitationStyles.bankIcon}
-                  />
-                  <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, textAlign: "center" }}>
-                    {REGALO_MONETARIO.subtitle}
-                  </p>
-                  <div style={{ marginTop: 10, textAlign: "center" }}>
-                    <div style={{ fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.blueGrayDark }}>
-                      <b>{REGALO_MONETARIO.accountLabel}:</b>
-                    </div>
-                    <div style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, wordBreak: "break-word" }}>
-                      {REGALO_MONETARIO.accountValue}
-                    </div>
-                  </div>
-                  <div style={{ marginTop: 10, fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, textAlign: "center" }}>
-                    {REGALO_MONETARIO.nameValue}
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* Bloque de bebidas */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>¿Qué se toman los chicos?</div>
@@ -2045,7 +2045,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 📋 RESERVACIONES - Movido aquí (junto a Confirmación) */}
+            {/* 📋 RESERVACIONES */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Reservaciones</div>
               <div style={envelopeStyles.reservedSection}>
