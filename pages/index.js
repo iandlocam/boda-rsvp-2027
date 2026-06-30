@@ -1448,9 +1448,6 @@ export default function Home() {
       textDecoration: "none",
       fontWeight: 500,
       wordBreak: "break-all",
-      "&:hover": {
-        textDecoration: "underline",
-      },
     },
     hotelMapsBtn: {
       display: "inline-block",
@@ -1463,45 +1460,6 @@ export default function Home() {
       fontWeight: 600,
       border: `1px solid ${COLORS.blueGrayMedium}`,
       transition: "background 0.2s",
-    },
-    hotelMapsBtnHover: {
-      background: COLORS.blueGrayMedium,
-    },
-    airbnbCard: {
-      background: COLORS.cream,
-      borderRadius: 40,
-      padding: "20px 20px",
-      border: `2px dashed ${COLORS.blueGrayMedium}`,
-      textAlign: "center",
-      marginTop: "5px",
-    },
-    airbnbNombre: {
-      fontSize: "clamp(1.2rem, 4vw, 1.4rem)",
-      fontWeight: 700,
-      color: COLORS.blueDeep,
-      marginBottom: "5px",
-    },
-    airbnbTexto: {
-      fontSize: "clamp(0.9rem, 3vw, 1rem)",
-      color: COLORS.text,
-      marginBottom: "10px",
-    },
-    airbnbLink: {
-      display: "inline-block",
-      padding: "8px 25px",
-      borderRadius: 50,
-      background: COLORS.blueMedium,
-      color: COLORS.white,
-      textDecoration: "none",
-      fontWeight: 600,
-      fontSize: "clamp(0.9rem, 3vw, 1rem)",
-      border: `1px solid ${COLORS.blueMedium}`,
-      transition: "all 0.2s",
-    },
-    whatsappLink: {
-      color: "#25D366",
-      textDecoration: "none",
-      fontWeight: 500,
     },
   };
 
@@ -1875,7 +1833,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 🏨 NUEVA SECCIÓN: HOSPEDAJES (antes de Ubicaciones) */}
+            {/* 📷 GALERÍA SECUNDARIA - "Más momentos" */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Más momentos</div>
+              <div style={invitationStyles.secondaryGallery}>
+                {SECONDARY_GALLERY_IMAGES.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt={`Foto secundaria ${idx + 1}`}
+                    style={invitationStyles.secondaryGalleryImage}
+                    onClick={() => openSecondaryCarousel(idx)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* 🏨 HOSPEDAJES - Debajo de "Más momentos" */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Hospedajes</div>
               <div style={invitationStyles.hospedajesContainer}>
@@ -1883,7 +1857,6 @@ export default function Home() {
                   <div key={idx} style={invitationStyles.hotelCard}>
                     <div style={invitationStyles.hotelNombre}>{hotel.nombre}</div>
                     
-                    {/* Web */}
                     <div style={invitationStyles.hotelRow}>
                       <span style={invitationStyles.hotelIcon}>🌐</span>
                       <a 
@@ -1896,7 +1869,6 @@ export default function Home() {
                       </a>
                     </div>
                     
-                    {/* Google Maps */}
                     <div style={invitationStyles.hotelRow}>
                       <span style={invitationStyles.hotelIcon}>📍</span>
                       <a 
@@ -1909,7 +1881,6 @@ export default function Home() {
                       </a>
                     </div>
                     
-                    {/* Teléfono */}
                     <div style={invitationStyles.hotelRow}>
                       <span style={invitationStyles.hotelIcon}>📞</span>
                       <a 
@@ -1920,7 +1891,6 @@ export default function Home() {
                       </a>
                     </div>
                     
-                    {/* WhatsApp */}
                     <div style={invitationStyles.hotelRow}>
                       <span style={invitationStyles.hotelIcon}>💬</span>
                       <a 
@@ -1938,24 +1908,34 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
-              </div>
-
-              {/* Airbnb */}
-              <div style={invitationStyles.airbnbCard}>
-                <div style={invitationStyles.airbnbNombre}>{AIRBNB_DATA.nombre}</div>
-                <div style={invitationStyles.airbnbTexto}>{AIRBNB_DATA.texto}</div>
-                <a 
-                  href={AIRBNB_DATA.link} 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  style={invitationStyles.airbnbLink}
-                >
-                  Ver lista 🏠
-                </a>
+                
+                {/* Airbnb - Mismo estilo que los hoteles */}
+                <div style={invitationStyles.hotelCard}>
+                  <div style={invitationStyles.hotelNombre}>{AIRBNB_DATA.nombre}</div>
+                  
+                  <div style={invitationStyles.hotelRow}>
+                    <span style={invitationStyles.hotelIcon}>🏠</span>
+                    <span style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.text }}>
+                      {AIRBNB_DATA.texto}
+                    </span>
+                  </div>
+                  
+                  <div style={invitationStyles.hotelRow}>
+                    <span style={invitationStyles.hotelIcon}>🔗</span>
+                    <a 
+                      href={AIRBNB_DATA.link} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      style={invitationStyles.hotelLink}
+                    >
+                      Ver lista de Airbnb
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* 📍 UBICACIONES - SOLO CEREMONIA Y RECEPCIÓN (fusionado) */}
+            {/* 📍 UBICACIONES - Ceremonia y recepción */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1974,8 +1954,6 @@ export default function Home() {
                     </a>
                   </div>
                 </div>
-                
-                {/* La recepción se ha fusionado con la ceremonia, ya no aparece como tarjeta separada */}
               </div>
             </div>
 
@@ -2031,38 +2009,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Galería secundaria */}
-            <div style={{ marginTop: 40 }}>
-              <div style={invitationStyles.sectionTitle}>Más momentos</div>
-              <div style={invitationStyles.secondaryGallery}>
-                {SECONDARY_GALLERY_IMAGES.map((img, idx) => (
-                  <img
-                    key={idx}
-                    src={img}
-                    alt={`Foto secundaria ${idx + 1}`}
-                    style={invitationStyles.secondaryGalleryImage}
-                    onClick={() => openSecondaryCarousel(idx)}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Sección de reservaciones */}
-            <div style={{ marginTop: 40 }}>
-              <div style={invitationStyles.sectionTitle}>Reservaciones</div>
-              <div style={envelopeStyles.reservedSection}>
-                <div style={envelopeStyles.reservedText}>
-                  HEMOS RESERVADO
-                </div>
-                <div style={envelopeStyles.reservedNumber}>
-                  {guestData?.pasesAsignados || 2}
-                </div>
-                <div style={envelopeStyles.reservedSubtext}>
-                  LUGARES EN SU HONOR
-                </div>
-              </div>
-            </div>
-
             {/* Bloque de bebidas */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>¿Qué se toman los chicos?</div>
@@ -2099,8 +2045,24 @@ export default function Home() {
               </div>
             </div>
 
-            {/* RSVP */}
+            {/* 📋 RESERVACIONES - Movido aquí (junto a Confirmación) */}
             <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Reservaciones</div>
+              <div style={envelopeStyles.reservedSection}>
+                <div style={envelopeStyles.reservedText}>
+                  HEMOS RESERVADO
+                </div>
+                <div style={envelopeStyles.reservedNumber}>
+                  {guestData?.pasesAsignados || 2}
+                </div>
+                <div style={envelopeStyles.reservedSubtext}>
+                  LUGARES EN SU HONOR
+                </div>
+              </div>
+            </div>
+
+            {/* RSVP - Confirmación de asistencia */}
+            <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
               <div style={invitationStyles.formContainer}>
                 <div style={invitationStyles.formGroup}>
