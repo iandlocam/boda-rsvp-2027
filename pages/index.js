@@ -19,8 +19,38 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados, bebidas, 
   return data;
 }
 
-/** ✅ Monograma AV (limpio, elegante, tipo sello) */
-function MonogramaAV({ size = 60, color = "rgba(19,32,45,0.86)" }) {
+// ====================================================
+// 🎨 PALETA DE COLORES (definida una sola vez)
+// ====================================================
+const COLORS = {
+  // Dorados
+  gold: "#d2ae7b",        // rgb(210,174,123)
+  beige: "#dfc49b",       // rgb(223,196,155)
+  
+  // Azules grisáceos
+  blueGrayLight: "#cad3e3",    // rgb(202,211,227)
+  blueGrayMedium: "#b7c2d6",   // rgb(183,194,214)
+  blueGrayDark: "#a1afc1",     // rgb(161,175,193)
+  
+  // Azules
+  blueDeep: "#4d6a91",         // rgb(77,106,145)
+  blueMedium: "#5e7db2",       // rgb(94,125,178)
+  blueLight: "#7296c7",        // rgb(114,150,199)
+  blueVeryLight: "#8baedd",    // rgb(139,174,221)
+  
+  // Neutros
+  white: "#ffffff",
+  cream: "#fef9f0",
+  text: "#4a4a4a",
+  textLight: "#6b6b6b",
+};
+
+// ====================================================
+// 🖼️ COMPONENTES
+// ====================================================
+
+/** ✅ Monograma AV */
+function MonogramaAV({ size = 60, color = COLORS.blueDeep }) {
   return (
     <svg
       width={size}
@@ -32,12 +62,11 @@ function MonogramaAV({ size = 60, color = "rgba(19,32,45,0.86)" }) {
     >
       <defs>
         <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="rgba(176,141,87,0.78)" />
-          <stop offset="1" stopColor="rgba(19,32,45,0.18)" />
+          <stop offset="0" stopColor={COLORS.gold} stopOpacity="0.78" />
+          <stop offset="1" stopColor={COLORS.blueDeep} stopOpacity="0.18" />
         </linearGradient>
       </defs>
 
-      {/* anillo */}
       <circle
         cx="60"
         cy="60"
@@ -56,7 +85,6 @@ function MonogramaAV({ size = 60, color = "rgba(19,32,45,0.86)" }) {
         strokeWidth="1.2"
       />
 
-      {/* AV monograma sobrio */}
       <path
         d="M34 78 L46 38 L58 78"
         fill="none"
@@ -84,7 +112,7 @@ function MonogramaAV({ size = 60, color = "rgba(19,32,45,0.86)" }) {
   );
 }
 
-/** ✅ Sello “dorado” (borde irregular + relieve + brillo) */
+/** ✅ Sello (ahora con los nuevos colores) */
 function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   return (
     <div
@@ -113,13 +141,12 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
             <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="rgba(0,0,0,0.18)" />
           </filter>
 
-          {/* dorado realista */}
           <radialGradient id="goldWax" cx="28%" cy="22%" r="85%">
             <stop offset="0%" stopColor="rgba(255,255,255,0.70)" />
             <stop offset="14%" stopColor="rgba(255,255,255,0.14)" />
-            <stop offset="44%" stopColor="rgba(243,226,166,1)" />
-            <stop offset="70%" stopColor="rgba(214,178,94,1)" />
-            <stop offset="100%" stopColor="rgba(122,91,34,1)" />
+            <stop offset="44%" stopColor={COLORS.gold} stopOpacity="1" />
+            <stop offset="70%" stopColor="#d6b25e" stopOpacity="1" />
+            <stop offset="100%" stopColor="#7a5b22" stopOpacity="1" />
           </radialGradient>
 
           <radialGradient id="goldShine" cx="20%" cy="18%" r="48%">
@@ -127,7 +154,6 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
             <stop offset="70%" stopColor="rgba(255,255,255,0)" />
           </radialGradient>
 
-          {/* forma irregular tipo cera */}
           <path
             id="blob"
             d="M60 7
@@ -147,7 +173,6 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
           <use href="#blob" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" />
           <use href="#blob" fill="none" stroke="rgba(122,91,34,0.28)" strokeWidth="1.3" />
 
-          {/* relieve central (grabado AV) */}
           <path
             d="M42 76 L52 44 L62 76"
             fill="none"
@@ -175,7 +200,6 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
             opacity="0.9"
           />
 
-          {/* highlight fino para “metal” */}
           <path
             d="M26 44 C38 26, 58 18, 78 22"
             fill="none"
@@ -201,9 +225,10 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
           style={{
             fontFamily: '"Great Vibes", cursive',
             fontSize: 32,
-            color: "rgba(19,32,45,0.85)",
+            color: COLORS.blueDeep,
             textShadow: "0 1px 0 rgba(255,255,255,0.25), 0 10px 22px rgba(0,0,0,0.20)",
             letterSpacing: "0.01em",
+            opacity: 0.85,
           }}
         >
           {label}
@@ -213,7 +238,7 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   );
 }
 
-/** ✅ Componente de íconos personalizables para el itinerario */
+/** ✅ TimelineIcon - ahora con colores de la paleta */
 function TimelineIcon({ type = "ceremony", size = 48 }) {
   const ICONOS = {
     ceremony: "/iconos/Ceremony.png",
@@ -236,14 +261,14 @@ function TimelineIcon({ type = "ceremony", size = 48 }) {
         width: size,
         height: size,
         borderRadius: "50%",
-        background: "rgba(214, 178, 94, 0.3)",
-        border: "2px solid rgba(176,141,87,0.5)",
+        background: COLORS.blueGrayLight,
+        border: `2px solid ${COLORS.blueGrayMedium}`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         fontSize: size * 0.4,
         fontWeight: "bold",
-        color: "rgba(19,32,45,0.8)",
+        color: COLORS.blueDeep,
       }}>
         {initial}
       </div>
@@ -264,7 +289,7 @@ function TimelineIcon({ type = "ceremony", size = 48 }) {
   );
 }
 
-/** ✅ Componente Carrusel de Imágenes */
+/** ✅ ImageCarousel - con nuevos colores */
 function ImageCarousel({ images, initialIndex = 0, onClose }) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [touchStart, setTouchStart] = useState(0);
@@ -432,7 +457,7 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
   );
 }
 
-/** ✅ Componente Botón Flotante de Música */
+/** ✅ Botón Flotante de Música - con colores actualizados */
 function MusicFloatingButton({ isPlaying, onClick }) {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -454,9 +479,9 @@ function MusicFloatingButton({ isPlaying, onClick }) {
         width: "60px",
         height: "60px",
         borderRadius: "50%",
-        background: "#b76e79",
-        border: "3px solid white",
-        boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+        background: COLORS.blueMedium,
+        border: `3px solid ${COLORS.white}`,
+        boxShadow: `0 4px 15px rgba(77,106,145,0.3)`,
         cursor: "pointer",
         display: "flex",
         alignItems: "center",
@@ -477,25 +502,25 @@ function MusicFloatingButton({ isPlaying, onClick }) {
       <style jsx>{`
         @keyframes pulse {
           0% {
-            box-shadow: 0 0 0 0 rgba(183, 110, 121, 0.7);
+            box-shadow: 0 0 0 0 rgba(94, 125, 178, 0.7);
           }
           70% {
-            box-shadow: 0 0 0 10px rgba(183, 110, 121, 0);
+            box-shadow: 0 0 0 10px rgba(94, 125, 178, 0);
           }
           100% {
-            box-shadow: 0 0 0 0 rgba(183, 110, 121, 0);
+            box-shadow: 0 0 0 0 rgba(94, 125, 178, 0);
           }
         }
       `}</style>
       
       {isPlaying ? (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-          <rect x="6" y="4" width="4" height="16" rx="1" fill="white" />
-          <rect x="14" y="4" width="4" height="16" rx="1" fill="white" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill={COLORS.white}>
+          <rect x="6" y="4" width="4" height="16" rx="1" fill={COLORS.white} />
+          <rect x="14" y="4" width="4" height="16" rx="1" fill={COLORS.white} />
         </svg>
       ) : (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-          <path d="M8 5v14l11-7z" fill="white" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill={COLORS.white}>
+          <path d="M8 5v14l11-7z" fill={COLORS.white} />
         </svg>
       )}
     </button>
@@ -507,18 +532,16 @@ export default function Home() {
   const audioRef = useRef(null);
 
   // ====================================================
-  // 🖼️ CONFIGURACIÓN DE IMÁGENES - CÁMBIALAS AQUÍ
+  // 🖼️ CONFIGURACIÓN DE IMÁGENES
   // ====================================================
   
   const BACKGROUND_IMAGE = "/marco-boda.jpeg";
   const SOBRE_IMAGE = "/sobre-boda.jpg";
   const DRESS_CODE_IMAGE = "/Dress-code.png";
   
-  // Dos imágenes separadoras independientes
   const DIVIDER_IMAGE_1 = "/familia.jpeg";
   const DIVIDER_IMAGE_2 = "/divider-floral-2.png";
   
-  // Nuevo carrusel de 3 imágenes después del dress code
   const CAROUSEL_3_IMAGES = [
     "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
@@ -529,10 +552,8 @@ export default function Home() {
   const AMAZON_LOGO = "/amazon-logo.png";
   const BANK_ICON = "/bank-icon.png";
   
-  // 🎵 RUTA DE TU CANCIÓN
   const SONG_URL = "/Post-quimica.mp3";
   
-  // Galería principal (6 imágenes - carrusel)
   const GALLERY_IMAGES = [
     "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=80",
@@ -542,7 +563,6 @@ export default function Home() {
     "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80",
   ];
 
-  // Galería secundaria (6 imágenes - cuadrícula 2x3) - 10% más grandes
   const SECONDARY_GALLERY_IMAGES = [
     "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
@@ -559,13 +579,12 @@ export default function Home() {
   const FLORAL_FRAME_OPACITY = 0.4;
   const TIMELINE_ICON_SIZE = 80;
   
-  // Paleta de colores (5 bolitas)
   const COLOR_PALETTE = [
-    "#b76e79",
-    "#d4af37",
-    "#8b5a2b",
-    "#4a704a",
-    "#2c3e50",
+    COLORS.blueDeep,
+    COLORS.blueMedium,
+    COLORS.blueLight,
+    COLORS.gold,
+    COLORS.beige,
   ];
   
   // ====================================================
@@ -575,7 +594,6 @@ export default function Home() {
   const [secondaryCarouselOpen, setSecondaryCarouselOpen] = useState(false);
   const [secondaryCarouselIndex, setSecondaryCarouselIndex] = useState(0);
   
-  // Estado para el nuevo carrusel de 3 imágenes
   const [carousel3Open, setCarousel3Open] = useState(false);
   const [carousel3Index, setCarousel3Index] = useState(0);
   const [carousel3ImageIndex, setCarousel3ImageIndex] = useState(0);
@@ -619,7 +637,6 @@ export default function Home() {
     );
   };
 
-  // Handlers para el nuevo carrusel de 3 imágenes
   const handleCarousel3TouchStart = (e) => {
     setCarousel3TouchStart(e.targetTouches[0].clientX);
   };
@@ -810,13 +827,13 @@ export default function Home() {
   };
 
   // ====================================================
-  // 🎨 ESTILOS
+  // 🎨 ESTILOS - AHORA CON LA NUEVA PALETA DE COLORES
   // ====================================================
   
   const envelopeStyles = {
     pageContainer: {
       minHeight: "100vh",
-      backgroundColor: "#fef9f0",
+      backgroundColor: COLORS.cream,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -837,9 +854,9 @@ export default function Home() {
       position: "relative",
       borderRadius: 30,
       overflow: "hidden",
-      background: "#F9E5D2",
-      boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)",
-      border: "4px solid #FFFFFF",
+      background: COLORS.beige,
+      boxShadow: `0 20px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)`,
+      border: `4px solid ${COLORS.white}`,
       display: "flex",
       flexDirection: "column",
     },
@@ -851,7 +868,7 @@ export default function Home() {
       objectPosition: "center",
       display: "block",
       margin: "15px auto 10px",
-      borderBottom: "2px solid rgba(184,107,107,0.2)",
+      borderBottom: `2px solid ${COLORS.blueGrayLight}`,
     },
     content: {
       flex: 1,
@@ -867,10 +884,11 @@ export default function Home() {
       fontSize: 16,
       letterSpacing: "2px",
       textTransform: "uppercase",
-      color: "rgba(19,32,45,0.6)",
+      color: COLORS.blueDeep,
+      opacity: 0.7,
       margin: "20px 0 15px 0",
-      borderTop: "1px dashed rgba(184,107,107,0.3)",
-      borderBottom: "1px dashed rgba(184,107,107,0.3)",
+      borderTop: `1px dashed ${COLORS.blueGrayLight}`,
+      borderBottom: `1px dashed ${COLORS.blueGrayLight}`,
       padding: "12px 0",
       width: "100%",
     },
@@ -884,14 +902,15 @@ export default function Home() {
       fontSize: 16,
       letterSpacing: "2px",
       textTransform: "uppercase",
-      color: "rgba(19,32,45,0.7)",
+      color: COLORS.blueDeep,
+      opacity: 0.7,
       marginBottom: 5,
     },
     reservedNumber: {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: 48,
       fontWeight: 700,
-      color: "#B86B6B",
+      color: COLORS.blueMedium,
       lineHeight: 1,
       margin: "5px 0",
     },
@@ -900,7 +919,8 @@ export default function Home() {
       fontSize: 14,
       letterSpacing: "2px",
       textTransform: "uppercase",
-      color: "rgba(19,32,45,0.6)",
+      color: COLORS.blueDeep,
+      opacity: 0.6,
     },
     seal: {
       position: "absolute",
@@ -909,13 +929,13 @@ export default function Home() {
       width: 50,
       height: 50,
       borderRadius: "50%",
-      background: "linear-gradient(135deg, #E6C7A8, #D4AF8C)",
-      border: "2px solid #FFFFFF",
+      background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.beige})`,
+      border: `2px solid ${COLORS.white}`,
       boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "#13202D",
+      color: COLORS.blueDeep,
       fontSize: 20,
       opacity: 0.7,
     },
@@ -936,9 +956,9 @@ export default function Home() {
   const invitationStyles = {
     page: {
       minHeight: "100vh",
-      backgroundColor: "#fef9f0",
+      backgroundColor: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
-      color: "#4a4a4a",
+      color: COLORS.text,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -947,24 +967,24 @@ export default function Home() {
     card: {
       width: "100%",
       maxWidth: 800,
-      background: "#ffffff",
+      background: COLORS.white,
       borderRadius: 60,
-      boxShadow: "0 15px 40px rgba(0,0,0,0.05)",
+      boxShadow: `0 15px 40px rgba(0,0,0,0.05)`,
       padding: "50px 40px",
-      border: "1px solid rgba(255,255,255,0.5)",
+      border: `1px solid ${COLORS.blueGrayLight}`,
     },
     names: {
       fontFamily: '"Great Vibes", cursive',
       fontSize: "clamp(3.5rem, 10vw, 5.5rem)",
       fontWeight: 400,
-      color: "#b76e79",
+      color: COLORS.blueDeep,
       textAlign: "center",
       marginBottom: 30,
       lineHeight: 1.2,
     },
     subtitle: {
       fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
-      color: "#a17a6b",
+      color: COLORS.blueMedium,
       textAlign: "center",
       marginBottom: 20,
       fontFamily: "'Quicksand', sans-serif",
@@ -972,7 +992,7 @@ export default function Home() {
     },
     invitationText: {
       fontSize: "clamp(1rem, 3.5vw, 1.1rem)",
-      color: "#4a4a4a",
+      color: COLORS.text,
       textAlign: "center",
       marginBottom: 25,
       lineHeight: 1.6,
@@ -985,15 +1005,15 @@ export default function Home() {
       margin: "30px 0 40px",
     },
     familyCard: {
-      background: "#fef9f0",
+      background: COLORS.cream,
       borderRadius: 30,
       padding: "20px 15px",
       textAlign: "center",
-      border: "1px solid #f0e4d7",
+      border: `1px solid ${COLORS.blueGrayLight}`,
     },
     familyLabel: {
       fontSize: "0.9rem",
-      color: "#b76e79",
+      color: COLORS.blueMedium,
       fontWeight: 600,
       textTransform: "uppercase",
       letterSpacing: "1px",
@@ -1001,7 +1021,7 @@ export default function Home() {
     },
     familyName: {
       fontSize: "1.1rem",
-      color: "#4a4a4a",
+      color: COLORS.text,
       fontWeight: 500,
     },
     dividerImage: {
@@ -1024,7 +1044,7 @@ export default function Home() {
       height: "50px",
       borderRadius: "50%",
       boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-      border: "2px solid white",
+      border: `2px solid ${COLORS.white}`,
       transition: "transform 0.2s",
       cursor: "pointer",
     },
@@ -1035,21 +1055,21 @@ export default function Home() {
       marginTop: "20px",
     },
     ubicacionCard: {
-      background: "#ffffff",
+      background: COLORS.white,
       borderRadius: 40,
       padding: "25px 20px",
       textAlign: "center",
-      border: "1px solid #f0e4d7",
+      border: `1px solid ${COLORS.blueGrayLight}`,
     },
     ubicacionTitle: {
       fontSize: "1.3rem",
       fontWeight: 600,
-      color: "#b76e79",
+      color: COLORS.blueDeep,
       marginBottom: 10,
     },
     ubicacionAddress: {
       fontSize: "1rem",
-      color: "#4a4a4a",
+      color: COLORS.text,
       marginBottom: 15,
     },
     storeLogo: {
@@ -1082,8 +1102,8 @@ export default function Home() {
       borderRadius: 20,
       cursor: "pointer",
       transition: "transform 0.2s",
-      border: "2px solid white",
-      boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
+      border: `2px solid ${COLORS.white}`,
+      boxShadow: `0 5px 15px rgba(0,0,0,0.1)`,
       transform: "scale(1.1)",
     },
     bebidasContainer: {
@@ -1093,29 +1113,29 @@ export default function Home() {
       marginTop: "20px",
     },
     bebidaOption: {
-      background: "#fef9f0",
+      background: COLORS.cream,
       borderRadius: 40,
       padding: "12px",
       textAlign: "center",
       cursor: "pointer",
-      border: "2px solid #f0e4d7",
+      border: `2px solid ${COLORS.blueGrayLight}`,
       transition: "all 0.2s",
       fontSize: "1rem",
       fontWeight: 500,
-      color: "#4a4a4a",
+      color: COLORS.text,
     },
     bebidaOptionSelected: {
-      background: "#b76e79",
-      borderColor: "#b76e79",
-      color: "white",
+      background: COLORS.blueMedium,
+      borderColor: COLORS.blueMedium,
+      color: COLORS.white,
     },
     alergiasInput: {
       width: "100%",
       padding: "15px 20px",
-      border: "2px solid #f0e4d7",
+      border: `2px solid ${COLORS.blueGrayLight}`,
       borderRadius: 50,
       fontSize: "1rem",
-      background: "#fefcf9",
+      background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
       marginTop: "15px",
     },
@@ -1126,10 +1146,10 @@ export default function Home() {
       width: "100%",
       maxWidth: 500,
       margin: "0 auto 40px",
-      background: "#fff",
+      background: COLORS.white,
       borderRadius: 100,
       padding: "clamp(15px, 4vw, 25px) clamp(10px, 3vw, 20px)",
-      boxShadow: "0 5px 20px rgba(183,110,121,0.1)",
+      boxShadow: `0 5px 20px rgba(77,106,145,0.1)`,
     },
     countdownItem: {
       textAlign: "center",
@@ -1137,34 +1157,34 @@ export default function Home() {
     countdownNumber: {
       fontSize: "clamp(1.5rem, 6vw, 2.5rem)",
       fontWeight: 600,
-      color: "#b76e79",
+      color: COLORS.blueDeep,
       lineHeight: 1,
     },
     countdownLabel: {
       fontSize: "clamp(0.65rem, 2.5vw, 0.9rem)",
       textTransform: "uppercase",
       letterSpacing: "1px",
-      color: "#a17a6b",
+      color: COLORS.blueGrayDark,
     },
     sectionTitle: {
       fontFamily: '"Great Vibes", cursive',
       fontSize: "clamp(2.2rem, 8vw, 3rem)",
       fontWeight: 400,
-      color: "#b76e79",
+      color: COLORS.blueDeep,
       textAlign: "center",
       marginBottom: "clamp(20px, 5vw, 30px)",
       letterSpacing: "1px",
     },
     cardItem: {
-      background: "#fff",
+      background: COLORS.white,
       borderRadius: 40,
       padding: "clamp(20px, 4vw, 30px) clamp(15px, 3vw, 20px)",
       textAlign: "center",
-      boxShadow: "0 8px 25px rgba(183,110,121,0.08)",
-      border: "1px solid #f0e4d7",
+      boxShadow: `0 8px 25px rgba(77,106,145,0.08)`,
+      border: `1px solid ${COLORS.blueGrayLight}`,
     },
     formContainer: {
-      background: "#fff",
+      background: COLORS.white,
       borderRadius: 60,
       padding: "clamp(25px, 5vw, 40px) clamp(20px, 4vw, 30px)",
       boxShadow: "0 8px 30px rgba(0,0,0,0.03)",
@@ -1175,7 +1195,7 @@ export default function Home() {
     },
     label: {
       fontSize: "clamp(0.8rem, 3vw, 0.9rem)",
-      color: "#a17a6b",
+      color: COLORS.blueGrayDark,
       marginBottom: 8,
       fontWeight: 600,
       textTransform: "uppercase",
@@ -1183,32 +1203,32 @@ export default function Home() {
     },
     input: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
-      border: "2px solid #f0e4d7",
+      border: `2px solid ${COLORS.blueGrayLight}`,
       borderRadius: 50,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
-      background: "#fefcf9",
+      background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
     },
     select: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
-      border: "2px solid #f0e4d7",
+      border: `2px solid ${COLORS.blueGrayLight}`,
       borderRadius: 50,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
-      background: "#fefcf9",
+      background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
     },
     textarea: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
-      border: "2px solid #f0e4d7",
+      border: `2px solid ${COLORS.blueGrayLight}`,
       borderRadius: 25,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
-      background: "#fefcf9",
+      background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
       resize: "vertical",
     },
     button: {
-      background: "#b76e79",
-      color: "white",
+      background: COLORS.blueMedium,
+      color: COLORS.white,
       border: "none",
       padding: "clamp(15px, 4vw, 18px) clamp(25px, 6vw, 40px)",
       fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
@@ -1219,7 +1239,7 @@ export default function Home() {
       marginTop: 30,
       cursor: "pointer",
       transition: "background 0.3s",
-      boxShadow: "0 10px 25px rgba(183,110,121,0.4)",
+      boxShadow: `0 10px 25px rgba(94,125,178,0.4)`,
       fontFamily: "'Quicksand', sans-serif",
     },
     carouselContainer: {
@@ -1229,7 +1249,7 @@ export default function Home() {
       position: "relative",
       overflow: "hidden",
       borderRadius: 30,
-      boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+      boxShadow: `0 10px 30px rgba(0,0,0,0.1)`,
     },
     carouselSlide: {
       display: "flex",
@@ -1255,14 +1275,14 @@ export default function Home() {
       width: "8px",
       height: "8px",
       borderRadius: "50%",
-      background: "#f0e4d7",
+      background: COLORS.blueGrayLight,
       transition: "all 0.3s ease",
       cursor: "pointer",
     },
     carouselDotActive: {
       width: "20px",
       borderRadius: "10px",
-      background: "#b76e79",
+      background: COLORS.blueMedium,
     },
     timelineGrid: {
       display: "grid",
@@ -1277,25 +1297,25 @@ export default function Home() {
     timelineTime: {
       fontSize: "clamp(1.3rem, 5vw, 1.8rem)",
       fontWeight: 500,
-      color: "#b76e79",
+      color: COLORS.blueDeep,
       marginBottom: 5,
     },
     timelineTitle: {
       fontWeight: 700,
       fontSize: "clamp(1rem, 4vw, 1.2rem)",
       marginBottom: 5,
-      color: "#4a4a4a",
+      color: COLORS.text,
     },
     softBox: {
       borderRadius: 40,
-      border: "1px solid #f0e4d7",
-      background: "#fff",
+      border: `1px solid ${COLORS.blueGrayLight}`,
+      background: COLORS.white,
       padding: "clamp(15px, 4vw, 20px)",
     },
     moneyBox: {
       borderRadius: 40,
-      border: "1px solid #f0e4d7",
-      background: "#ffffff",
+      border: `1px solid ${COLORS.blueGrayLight}`,
+      background: COLORS.white,
       padding: "30px 20px",
       textAlign: "center",
       marginTop: "20px",
@@ -1304,22 +1324,22 @@ export default function Home() {
       display: "inline-block",
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
       borderRadius: 50,
-      background: "rgba(183,110,121,0.1)",
-      color: "#b76e79",
+      background: COLORS.blueGrayLight,
+      color: COLORS.blueDeep,
       textDecoration: "none",
       fontWeight: 600,
-      border: "1px solid #b76e79",
+      border: `1px solid ${COLORS.blueMedium}`,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
     },
     linkBtn: {
       display: "inline-block",
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
       borderRadius: 50,
-      background: "#fff",
-      color: "#4a4a4a",
+      background: COLORS.white,
+      color: COLORS.text,
       textDecoration: "none",
       fontWeight: 600,
-      border: "1px solid #f0e4d7",
+      border: `1px solid ${COLORS.blueGrayLight}`,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
     },
     regalosContainer: {
@@ -1334,15 +1354,15 @@ export default function Home() {
       alignItems: "center",
     },
     regaloLink: {
-      background: "#fff",
+      background: COLORS.white,
       padding: "15px 30px",
       borderRadius: 60,
       textDecoration: "none",
-      color: "#4a4a4a",
+      color: COLORS.text,
       fontWeight: 600,
       fontSize: "1.2rem",
       boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
-      border: "1px solid #f0e4d7",
+      border: `1px solid ${COLORS.blueGrayLight}`,
       transition: "all 0.2s",
       width: "100%",
       maxWidth: 300,
@@ -1533,7 +1553,7 @@ export default function Home() {
             
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
-            {/* 2. Contador - MOVIDO ANTES DE LOS PAPÁS */}
+            {/* 2. Contador */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
@@ -1623,10 +1643,10 @@ export default function Home() {
               <div style={invitationStyles.softBox}>
                 {NUESTRA_HISTORIA.map((b, i) => (
                   <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 20 }}>
-                    <div style={{ fontFamily: '"Great Vibes", cursive', fontSize: "clamp(1.5rem, 6vw, 1.8rem)", color: "#b76e79", marginBottom: 5, textAlign: "center" }}>
+                    <div style={{ fontFamily: '"Great Vibes", cursive', fontSize: "clamp(1.5rem, 6vw, 1.8rem)", color: COLORS.blueDeep, marginBottom: 5, textAlign: "center" }}>
                       {b.title}
                     </div>
-                    <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: "#4a4a4a", textAlign: "center", lineHeight: 1.6 }}>{b.text}</p>
+                    <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, textAlign: "center", lineHeight: 1.6 }}>{b.text}</p>
                   </div>
                 ))}
               </div>
@@ -1664,8 +1684,8 @@ export default function Home() {
                   alt="Dress code"
                   style={{ width: "min(200px, 60%)", maxWidth: "100%", height: "auto", margin: "0 auto 20px", display: "block" }}
                 />
-                <div style={{ fontSize: "clamp(1rem, 4vw, 1.1rem)", color: "#b76e79", marginBottom: 5 }}>{DRESS_CODE.text[0]}</div>
-                <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: "#4a4a4a", marginBottom: 25 }}>{DRESS_CODE.text[1]}</div>
+                <div style={{ fontSize: "clamp(1rem, 4vw, 1.1rem)", color: COLORS.blueDeep, marginBottom: 5 }}>{DRESS_CODE.text[0]}</div>
+                <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.text, marginBottom: 25 }}>{DRESS_CODE.text[1]}</div>
                 
                 {/* Paleta de colores */}
                 <div style={invitationStyles.colorPalette}>
@@ -1683,7 +1703,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 3. Nuevo carrusel de 3 imágenes (reemplaza la imagen separadora) */}
+            {/* Carrusel de 3 imágenes */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.carouselContainer}>
                 <div
@@ -1721,7 +1741,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Ubicaciones - Ceremonia y Recepción - con fondo blanco */}
+            {/* Ubicaciones */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ubicaciones</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1763,7 +1783,6 @@ export default function Home() {
               <div style={invitationStyles.sectionTitle}>Mesa de regalos</div>
               <div style={invitationStyles.softBox}>
                 <div style={invitationStyles.regalosContainer}>
-                  {/* Liverpool */}
                   <div style={invitationStyles.regaloItem}>
                     <img 
                       src={LIVERPOOL_LOGO}
@@ -1775,7 +1794,6 @@ export default function Home() {
                     </a>
                   </div>
                   
-                  {/* Amazon */}
                   <div style={invitationStyles.regaloItem}>
                     <img 
                       src={AMAZON_LOGO}
@@ -1788,32 +1806,31 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Datos bancarios con icono - fondo blanco */}
                 <div style={invitationStyles.moneyBox}>
                   <img 
                     src={BANK_ICON}
                     alt="Transferencia bancaria"
                     style={invitationStyles.bankIcon}
                   />
-                  <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: "#4a4a4a", textAlign: "center" }}>
+                  <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, textAlign: "center" }}>
                     {REGALO_MONETARIO.subtitle}
                   </p>
                   <div style={{ marginTop: 10, textAlign: "center" }}>
-                    <div style={{ fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: "#a17a6b" }}>
+                    <div style={{ fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.blueGrayDark }}>
                       <b>{REGALO_MONETARIO.accountLabel}:</b>
                     </div>
-                    <div style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: "#4a4a4a", wordBreak: "break-word" }}>
+                    <div style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, wordBreak: "break-word" }}>
                       {REGALO_MONETARIO.accountValue}
                     </div>
                   </div>
-                  <div style={{ marginTop: 10, fontSize: "clamp(0.9rem, 3vw, 1rem)", color: "#4a4a4a", textAlign: "center" }}>
+                  <div style={{ marginTop: 10, fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, textAlign: "center" }}>
                     {REGALO_MONETARIO.nameValue}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Galería secundaria (2x3) */}
+            {/* Galería secundaria */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Más momentos</div>
               <div style={invitationStyles.secondaryGallery}>
@@ -1888,13 +1905,13 @@ export default function Home() {
                 <div style={invitationStyles.formGroup}>
                   <div style={invitationStyles.label}>
                     {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
-                    <span style={{ marginLeft: 8, padding: "4px 8px", background: "#f0e4d7", borderRadius: 50, fontSize: "0.8rem" }}>
+                    <span style={{ marginLeft: 8, padding: "4px 8px", background: COLORS.blueGrayLight, borderRadius: 50, fontSize: "0.8rem" }}>
                       {guestId ? `ID: ${guestId}` : "ID no detectado"}
                     </span>
                   </div>
 
                   {guestData?.nombre && (
-                    <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.9rem)", color: "#a17a6b", marginBottom: 10 }}>
+                    <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.9rem)", color: COLORS.blueGrayDark, marginBottom: 10 }}>
                       <b>{guestData.nombre}</b>, nos dará mucho gusto verte.
                       {guestData.pasesAsignados ? (
                         <> · Pases asignados: <b>{guestData.pasesAsignados}</b></>
@@ -1903,11 +1920,11 @@ export default function Home() {
                   )}
 
                   {guestLoadError && (
-                    <div style={{ color: "#b76e79", marginBottom: 10 }}>No se pudo cargar tu invitación: {guestLoadError}</div>
+                    <div style={{ color: COLORS.blueMedium, marginBottom: 10 }}>No se pudo cargar tu invitación: {guestLoadError}</div>
                   )}
 
                   {yaConfirmo && (
-                    <div style={{ color: "#b76e79", marginBottom: 10 }}>
+                    <div style={{ color: COLORS.blueMedium, marginBottom: 10 }}>
                       {asistenciaActual === "Sí" ? (
                         <>
                           Gracias por confirmar <b>{pasesMostrados}</b> {pasesMostrados === 1 ? "pase" : "pases"} 🥳
@@ -1959,7 +1976,7 @@ export default function Home() {
                         </button>
 
                         <button
-                          style={{ ...invitationStyles.button, width: "auto", flex: 1, minWidth: "140px", background: "#a17a6b" }}
+                          style={{ ...invitationStyles.button, width: "auto", flex: 1, minWidth: "140px", background: COLORS.blueGrayDark }}
                           onClick={() => confirmar("No")}
                           disabled={rsvpStatus === "saving"}
                         >
@@ -1969,10 +1986,10 @@ export default function Home() {
                     </>
                   )}
 
-                  {rsvpStatus === "saving" && <div style={{ marginTop: 10, color: "#a17a6b" }}>Guardando tu confirmación…</div>}
-                  {rsvpStatus === "error" && <div style={{ marginTop: 10, color: "#b76e79" }}>{rsvpError}</div>}
+                  {rsvpStatus === "saving" && <div style={{ marginTop: 10, color: COLORS.blueGrayDark }}>Guardando tu confirmación…</div>}
+                  {rsvpStatus === "error" && <div style={{ marginTop: 10, color: COLORS.blueMedium }}>{rsvpError}</div>}
 
-                  <div style={{ marginTop: 15, fontSize: "0.8rem", color: "#a17a6b" }}>
+                  <div style={{ marginTop: 15, fontSize: "0.8rem", color: COLORS.blueGrayDark }}>
                     Tip: tu enlace debe incluir <code>?id=AV001</code> (cada invitado tiene un ID).
                   </div>
                 </div>
@@ -1980,7 +1997,7 @@ export default function Home() {
             </div>
 
             {/* Nota final */}
-            <div style={{ marginTop: 30, fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: "#a17a6b", textAlign: "center" }}>
+            <div style={{ marginTop: 30, fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.blueGrayDark, textAlign: "center" }}>
               *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
             </div>
           </div>
@@ -1995,7 +2012,7 @@ export default function Home() {
         />
       )}
 
-      {/* Carrusel principal a pantalla completa */}
+      {/* Carruseles a pantalla completa */}
       {carouselOpen && (
         <ImageCarousel
           images={GALLERY_IMAGES}
@@ -2004,7 +2021,6 @@ export default function Home() {
         />
       )}
 
-      {/* Carrusel secundario a pantalla completa */}
       {secondaryCarouselOpen && (
         <ImageCarousel
           images={SECONDARY_GALLERY_IMAGES}
@@ -2013,7 +2029,6 @@ export default function Home() {
         />
       )}
 
-      {/* Nuevo carrusel de 3 imágenes a pantalla completa */}
       {carousel3Open && (
         <ImageCarousel
           images={CAROUSEL_3_IMAGES}
