@@ -42,12 +42,12 @@ const COLORS = {
 // 🎨 PALETA DE COLORES PARA BOLITAS (6 colores)
 // ====================================================
 const COLOR_PALETTE = [
-  "#4A6B8A", // Azul grisáceo oscuro
-  "#6B8FA0", // Azul verdoso
-  "#8BAA7A", // Verde salvia
-  "#B5A68A", // Beige
-  "#D4B896", // Beige claro
-  "#C49A8A", // Terracota suave
+  "#4A6B8A",
+  "#6B8FA0",
+  "#8BAA7A",
+  "#B5A68A",
+  "#D4B896",
+  "#C49A8A",
 ];
 
 // ====================================================
@@ -532,6 +532,26 @@ function MusicFloatingButton({ isPlaying, onClick }) {
   );
 }
 
+/** ✅ Ícono de Sobre (estilo línea, coherente con el itinerario) */
+function EnvelopeIcon({ size = 48, color = COLORS.blueDeep }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="M22 7l-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7" />
+    </svg>
+  );
+}
+
 export default function Home() {
   const router = useRouter();
   const audioRef = useRef(null);
@@ -585,7 +605,7 @@ export default function Home() {
   const TIMELINE_ICON_SIZE = 80;
   
   // ====================================================
-  // 📋 DATOS DE HOTELES - ¡CÁMBIALOS AQUÍ!
+  // 📋 DATOS DE HOTELES
   // ====================================================
   
   const HOTELES = [
@@ -817,7 +837,7 @@ export default function Home() {
   }
 
   // ====================================================
-  // 📍 UBICACIONES - SOLO CEREMONIA Y RECEPCIÓN
+  // 📍 UBICACIONES
   // ====================================================
   
   const MAPS_CEREMONY_URL = "https://maps.google.com/?q=Parroquia%20de%20San%20Miguel%20Arcangel%2C%20Jiutepec%2C%20Morelos";
@@ -858,13 +878,6 @@ export default function Home() {
     { type: "liverpool", url: "https://www.liverpool.com.mx/" },
     { type: "amazon", url: "https://www.amazon.com.mx/wedding/share/VanessaAndres/" },
   ];
-
-  const REGALO_MONETARIO = {
-    subtitle: "Si deseas apoyarnos en esta nueva etapa:",
-    accountLabel: "CLABE / Cuenta",
-    accountValue: "012 180 0152 2563 3524",
-    nameValue: "Andrés López",
-  };
 
   // ====================================================
   // 🎨 ESTILOS
@@ -1129,7 +1142,6 @@ export default function Home() {
       textAlign: "center",
       marginTop: "5px",
     },
-    // Nuevos estilos para Lluvia de sobres
     sobresContainer: {
       textAlign: "center",
       marginTop: "10px",
@@ -1146,12 +1158,6 @@ export default function Home() {
       lineHeight: 1.6,
       maxWidth: "400px",
       margin: "0 auto 15px",
-    },
-    sobresIcon: {
-      fontSize: "clamp(2.5rem, 8vw, 3.5rem)",
-      display: "block",
-      margin: "0 auto",
-      opacity: 0.8,
     },
     secondaryGallery: {
       display: "grid",
@@ -1666,14 +1672,14 @@ export default function Home() {
               style={{ display: 'none' }}
             />
 
-            {/* 1. Nombres en tres líneas */}
+            {/* Nombres */}
             <div style={invitationStyles.names}>
               Vanessa<br />&<br />Andrés
             </div>
             
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
-            {/* 2. Contador */}
+            {/* Contador */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
@@ -1693,12 +1699,12 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Bloque de invitación */}
+            {/* Invitación */}
             <div style={invitationStyles.invitationText}>
               Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
             </div>
 
-            {/* Bloque de familias y padrinos */}
+            {/* Familias y padrinos */}
             <div style={invitationStyles.familySection}>
               <div style={invitationStyles.familyCard}>
                 <div style={invitationStyles.familyLabel}>Papás de la novia</div>
@@ -1861,7 +1867,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 📷 GALERÍA SECUNDARIA - "Más momentos" */}
+            {/* 📷 GALERÍA SECUNDARIA */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Más momentos</div>
               <div style={invitationStyles.secondaryGallery}>
@@ -1877,7 +1883,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 📍 UBICACIONES - Ceremonia y recepción */}
+            {/* 📍 UBICACIONES */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1899,7 +1905,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 🎁 MESA DE REGALOS - CON CAMBIOS */}
+            {/* 🎁 MESA DE REGALOS */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Mesa de regalos</div>
               <div style={invitationStyles.softBox}>
@@ -1917,7 +1923,7 @@ export default function Home() {
                     </a>
                   </div>
                   
-                  {/* Bloque 2: Amazon (sin cambios) */}
+                  {/* Bloque 2: Amazon */}
                   <div style={invitationStyles.regaloItem}>
                     <img 
                       src={AMAZON_LOGO}
@@ -1930,14 +1936,14 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Bloque 3: Lluvia de sobres (reemplaza datos bancarios) */}
+                {/* Bloque 3: Lluvia de sobres con SVG estilo itinerario */}
                 <div style={invitationStyles.moneyBox}>
                   <div style={invitationStyles.sobresContainer}>
-                    <div style={invitationStyles.sobresTitle}>💌 Lluvia de sobres</div>
+                    <div style={invitationStyles.sobresTitle}>Lluvia de sobres</div>
                     <p style={invitationStyles.sobresText}>
                       Su compañía es lo más importante. Si desean hacernos un obsequio, lo recibiremos con mucho cariño.
                     </p>
-                    <span style={invitationStyles.sobresIcon}>✉️</span>
+                    <EnvelopeIcon size={48} color={COLORS.blueDeep} />
                   </div>
                 </div>
               </div>
@@ -2029,7 +2035,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Bloque de bebidas */}
+            {/* Bebidas */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>¿Qué se toman los chicos?</div>
               <div style={invitationStyles.softBox}>
@@ -2050,7 +2056,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Bloque de alergias */}
+            {/* Alergias */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>¿Alergias?</div>
               <div style={invitationStyles.softBox}>
@@ -2065,7 +2071,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 📋 RESERVACIONES */}
+            {/* Reservaciones */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Reservaciones</div>
               <div style={envelopeStyles.reservedSection}>
@@ -2081,7 +2087,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* RSVP - Confirmación de asistencia */}
+            {/* RSVP */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
               <div style={invitationStyles.formContainer}>
@@ -2222,3 +2228,4 @@ export default function Home() {
     </>
   );
 }
+          
