@@ -39,6 +39,18 @@ const COLORS = {
 };
 
 // ====================================================
+// 🎨 PALETA DE COLORES PARA BO LITAS (6 colores)
+// ====================================================
+const COLOR_PALETTE = [
+  "#4A6B8A", // Azul grisáceo oscuro
+  "#6B8FA0", // Azul verdoso
+  "#8BAA7A", // Verde salvia
+  "#B5A68A", // Beige
+  "#D4B896", // Beige claro
+  "#C49A8A", // Terracota suave
+];
+
+// ====================================================
 // 🖼️ COMPONENTES
 // ====================================================
 
@@ -572,14 +584,6 @@ export default function Home() {
   const FLORAL_FRAME_OPACITY = 0.4;
   const TIMELINE_ICON_SIZE = 80;
   
-  const COLOR_PALETTE = [
-    COLORS.blueDeep,
-    COLORS.blueMedium,
-    COLORS.blueLight,
-    COLORS.gold,
-    COLORS.beige,
-  ];
-  
   // ====================================================
   // 📋 DATOS DE HOTELES - ¡CÁMBIALOS AQUÍ!
   // ====================================================
@@ -1068,21 +1072,24 @@ export default function Home() {
       display: "block",
       opacity: 0.7,
     },
+    // 🎨 NUEVO ESTILO PARA BO LITAS ENCIMADAS
     colorPalette: {
       display: "flex",
       justifyContent: "center",
-      gap: "15px",
-      margin: "20px 0 30px",
+      alignItems: "center",
+      gap: "6px",
+      margin: "15px 0 10px",
       flexWrap: "wrap",
+      padding: "0 10px",
     },
     colorDot: {
-      width: "50px",
-      height: "50px",
+      width: "32px",
+      height: "32px",
       borderRadius: "50%",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
       border: `2px solid ${COLORS.white}`,
       transition: "transform 0.2s",
-      cursor: "pointer",
+      cursor: "default",
     },
     ubicacionesContainer: {
       display: "flex",
@@ -1767,7 +1774,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Dress code con paleta de colores */}
+            {/* 🎨 DRESS CODE CON 6 BO LITAS ENCIMADAS */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Dress code</div>
               <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
@@ -1779,7 +1786,7 @@ export default function Home() {
                 <div style={{ fontSize: "clamp(1rem, 4vw, 1.1rem)", color: COLORS.blueDeep, marginBottom: 5 }}>{DRESS_CODE.text[0]}</div>
                 <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.text, marginBottom: 25 }}>{DRESS_CODE.text[1]}</div>
                 
-                {/* Paleta de colores */}
+                {/* 🎨 6 BO LITAS ENCIMADAS - COLORES EXACTOS DE LA IMAGEN */}
                 <div style={invitationStyles.colorPalette}>
                   {COLOR_PALETTE.map((color, idx) => (
                     <div
@@ -1787,6 +1794,7 @@ export default function Home() {
                       style={{
                         ...invitationStyles.colorDot,
                         backgroundColor: color,
+                        marginTop: idx % 2 === 0 ? "0px" : "-12px",
                       }}
                       title={`Color ${idx + 1}`}
                     />
