@@ -39,7 +39,7 @@ const COLORS = {
 };
 
 // ====================================================
-// 🎨 PALETA DE COLORES PARA BO LITAS (6 colores)
+// 🎨 PALETA DE COLORES PARA BOLITAS (6 colores)
 // ====================================================
 const COLOR_PALETTE = [
   "#4A6B8A", // Azul grisáceo oscuro
@@ -1072,7 +1072,6 @@ export default function Home() {
       display: "block",
       opacity: 0.7,
     },
-    // 🎨 NUEVO ESTILO PARA BO LITAS ENCIMADAS
     colorPalette: {
       display: "flex",
       justifyContent: "center",
@@ -1123,13 +1122,35 @@ export default function Home() {
       marginLeft: "auto",
       marginRight: "auto",
     },
-    bankIcon: {
-      width: "60px",
-      height: "60px",
-      marginBottom: "15px",
+    storeMesa: {
+      fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      color: COLORS.blueDeep,
+      fontWeight: 600,
+      textAlign: "center",
+      marginTop: "5px",
+    },
+    // Nuevos estilos para Lluvia de sobres
+    sobresContainer: {
+      textAlign: "center",
+      marginTop: "10px",
+    },
+    sobresTitle: {
+      fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
+      fontWeight: 600,
+      color: COLORS.blueDeep,
+      marginBottom: "8px",
+    },
+    sobresText: {
+      fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      color: COLORS.text,
+      lineHeight: 1.6,
+      maxWidth: "400px",
+      margin: "0 auto 15px",
+    },
+    sobresIcon: {
+      fontSize: "clamp(2.5rem, 8vw, 3.5rem)",
       display: "block",
-      marginLeft: "auto",
-      marginRight: "auto",
+      margin: "0 auto",
       opacity: 0.8,
     },
     secondaryGallery: {
@@ -1774,7 +1795,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 🎨 DRESS CODE CON 6 BO LITAS ENCIMADAS */}
+            {/* Dress code con 6 bolitas encimadas */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Dress code</div>
               <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
@@ -1786,7 +1807,6 @@ export default function Home() {
                 <div style={{ fontSize: "clamp(1rem, 4vw, 1.1rem)", color: COLORS.blueDeep, marginBottom: 5 }}>{DRESS_CODE.text[0]}</div>
                 <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.text, marginBottom: 25 }}>{DRESS_CODE.text[1]}</div>
                 
-                {/* 🎨 6 BO LITAS ENCIMADAS - COLORES EXACTOS DE LA IMAGEN */}
                 <div style={invitationStyles.colorPalette}>
                   {COLOR_PALETTE.map((color, idx) => (
                     <div
@@ -1879,22 +1899,25 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Mesa de regalos */}
+            {/* 🎁 MESA DE REGALOS - CON CAMBIOS */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Mesa de regalos</div>
               <div style={invitationStyles.softBox}>
                 <div style={invitationStyles.regalosContainer}>
+                  {/* Bloque 1: Liverpool con número de mesa */}
                   <div style={invitationStyles.regaloItem}>
                     <img 
                       src={LIVERPOOL_LOGO}
                       alt="Liverpool"
                       style={invitationStyles.storeLogo}
                     />
+                    <div style={invitationStyles.storeMesa}>Mesa: 60006608</div>
                     <a href={MESA_REGALOS[0].url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
                       Ver lista
                     </a>
                   </div>
                   
+                  {/* Bloque 2: Amazon (sin cambios) */}
                   <div style={invitationStyles.regaloItem}>
                     <img 
                       src={AMAZON_LOGO}
@@ -1907,31 +1930,20 @@ export default function Home() {
                   </div>
                 </div>
 
+                {/* Bloque 3: Lluvia de sobres (reemplaza datos bancarios) */}
                 <div style={invitationStyles.moneyBox}>
-                  <img 
-                    src={BANK_ICON}
-                    alt="Transferencia bancaria"
-                    style={invitationStyles.bankIcon}
-                  />
-                  <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, textAlign: "center" }}>
-                    {REGALO_MONETARIO.subtitle}
-                  </p>
-                  <div style={{ marginTop: 10, textAlign: "center" }}>
-                    <div style={{ fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.blueGrayDark }}>
-                      <b>{REGALO_MONETARIO.accountLabel}:</b>
-                    </div>
-                    <div style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, wordBreak: "break-word" }}>
-                      {REGALO_MONETARIO.accountValue}
-                    </div>
-                  </div>
-                  <div style={{ marginTop: 10, fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, textAlign: "center" }}>
-                    {REGALO_MONETARIO.nameValue}
+                  <div style={invitationStyles.sobresContainer}>
+                    <div style={invitationStyles.sobresTitle}>💌 Lluvia de sobres</div>
+                    <p style={invitationStyles.sobresText}>
+                      Su compañía es lo más importante. Si desean hacernos un obsequio, lo recibiremos con mucho cariño.
+                    </p>
+                    <span style={invitationStyles.sobresIcon}>✉️</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* 🏨 HOSPEDAJES - Después de Mesa de regalos */}
+            {/* 🏨 HOSPEDAJES */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Hospedajes</div>
               <div style={invitationStyles.hospedajesContainer}>
@@ -1991,7 +2003,7 @@ export default function Home() {
                   </div>
                 ))}
                 
-                {/* Airbnb - Mismo estilo que los hoteles */}
+                {/* Airbnb */}
                 <div style={invitationStyles.hotelCard}>
                   <div style={invitationStyles.hotelNombre}>{AIRBNB_DATA.nombre}</div>
                   
