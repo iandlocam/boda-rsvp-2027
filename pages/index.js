@@ -20,27 +20,18 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados, bebidas, 
 }
 
 // ====================================================
-// 🎨 PALETA DE COLORES - NUEVA (inspirada en la imagen)
+// 🎨 PALETA DE COLORES
 // ====================================================
 const COLORS = {
-  // Colores principales (de la imagen)
-  cream: "#f5ede4",        // Fondo crema
-  textDark: "#2c3e4a",     // Texto principal oscuro
-  textMedium: "#6b7b85",   // Texto secundario
-  accentLight: "#b8a99a",  // Borde/separador claro
-  accentMedium: "#8b7a6a", // Detalles decorativos
-  
-  // Colores complementarios (para elementos interactivos)
-  blueSoft: "#5a7a8a",     // Botones, enlaces
+  cream: "#f5ede4",
+  textDark: "#2c3e4a",
+  textMedium: "#6b7b85",
+  accentLight: "#b8a99a",
+  accentMedium: "#8b7a6a",
+  gold: "#c4a882",        // 🟡 Dorado para títulos y nombres
+  goldLight: "#d4c0a8",   // Dorado más claro
+  blueSoft: "#5a7a8a",
   white: "#ffffff",
-  gold: "#c4a882",
-  
-  // Para compatibilidad con componentes existentes
-  blueDeep: "#2c3e4a",
-  blueMedium: "#5a7a8a",
-  blueGrayDark: "#6b7b85",
-  blueGrayLight: "#b8a99a",
-  beige: "#f5ede4",
   text: "#2c3e4a",
   textLight: "#6b7b85",
 };
@@ -50,7 +41,7 @@ const COLORS = {
 // ====================================================
 
 /** ✅ Monograma AV */
-function MonogramaAV({ size = 60, color = COLORS.blueDeep }) {
+function MonogramaAV({ size = 60, color = COLORS.textDark }) {
   return (
     <svg
       width={size}
@@ -63,7 +54,7 @@ function MonogramaAV({ size = 60, color = COLORS.blueDeep }) {
       <defs>
         <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor={COLORS.gold} stopOpacity="0.78" />
-          <stop offset="1" stopColor={COLORS.blueDeep} stopOpacity="0.18" />
+          <stop offset="1" stopColor={COLORS.textDark} stopOpacity="0.18" />
         </linearGradient>
       </defs>
 
@@ -225,7 +216,7 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
           style={{
             fontFamily: '"Great Vibes", cursive',
             fontSize: 32,
-            color: COLORS.blueDeep,
+            color: COLORS.textDark,
             textShadow: "0 1px 0 rgba(255,255,255,0.25), 0 10px 22px rgba(0,0,0,0.20)",
             letterSpacing: "0.01em",
             opacity: 0.85,
@@ -268,7 +259,7 @@ function TimelineIcon({ type = "ceremony", size = 48 }) {
         justifyContent: "center",
         fontSize: size * 0.4,
         fontWeight: "bold",
-        color: COLORS.blueDeep,
+        color: COLORS.textDark,
       }}>
         {initial}
       </div>
@@ -550,7 +541,6 @@ export default function Home() {
   
   const LIVERPOOL_LOGO = "/liverpool-logo.png";
   const AMAZON_LOGO = "/amazon-logo.png";
-  const BANK_ICON = "/bank-icon.png";
   
   const SONG_URL = "/Post-quimica.mp3";
   
@@ -579,14 +569,13 @@ export default function Home() {
   const FLORAL_FRAME_OPACITY = 0.4;
   const TIMELINE_ICON_SIZE = 80;
   
-  // Paleta de colores para las bolitas (6 colores de la imagen)
   const COLOR_PALETTE = [
-    "#4A6B8A", // Azul grisáceo oscuro
-    "#6B8FA0", // Azul verdoso
-    "#8BAA7A", // Verde salvia
-    "#B5A68A", // Beige
-    "#D4B896", // Beige claro
-    "#C49A8A", // Terracota suave
+    "#4A6B8A",
+    "#6B8FA0",
+    "#8BAA7A",
+    "#B5A68A",
+    "#D4B896",
+    "#C49A8A",
   ];
   
   // ====================================================
@@ -822,7 +811,7 @@ export default function Home() {
   }
 
   // ====================================================
-  // 📍 UBICACIONES - SOLO CEREMONIA Y RECEPCIÓN
+  // 📍 UBICACIONES
   // ====================================================
   
   const MAPS_CEREMONY_URL = "https://maps.google.com/?q=Parroquia%20de%20San%20Miguel%20Arcangel%2C%20Jiutepec%2C%20Morelos";
@@ -864,15 +853,8 @@ export default function Home() {
     { type: "amazon", url: "https://www.amazon.com.mx/wedding/share/VanessaAndres/" },
   ];
 
-  const REGALO_MONETARIO = {
-    subtitle: "Si deseas apoyarnos en esta nueva etapa:",
-    accountLabel: "CLABE / Cuenta",
-    accountValue: "012 180 0152 2563 3524",
-    nameValue: "Andrés López",
-  };
-
   // ====================================================
-  // 🎨 ESTILOS - CON NUEVA PALETA DE COLORES
+  // 🎨 ESTILOS
   // ====================================================
   
   const envelopeStyles = {
@@ -1022,10 +1004,11 @@ export default function Home() {
       fontFamily: '"Great Vibes", cursive',
       fontSize: "clamp(3.5rem, 10vw, 5.5rem)",
       fontWeight: 400,
-      color: COLORS.textDark,
+      color: COLORS.gold,
       textAlign: "center",
       marginBottom: 30,
       lineHeight: 1.2,
+      textShadow: "0 2px 8px rgba(196, 168, 130, 0.15)",
     },
     subtitle: {
       fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
@@ -1058,7 +1041,7 @@ export default function Home() {
     },
     familyLabel: {
       fontSize: "0.9rem",
-      color: COLORS.textMedium,
+      color: COLORS.gold,
       fontWeight: 600,
       textTransform: "uppercase",
       letterSpacing: "1px",
@@ -1111,7 +1094,7 @@ export default function Home() {
     ubicacionTitle: {
       fontSize: "1.3rem",
       fontWeight: 600,
-      color: COLORS.textDark,
+      color: COLORS.gold,
       marginBottom: 10,
     },
     ubicacionAddress: {
@@ -1126,15 +1109,6 @@ export default function Home() {
       display: "block",
       marginLeft: "auto",
       marginRight: "auto",
-    },
-    bankIcon: {
-      width: "60px",
-      height: "60px",
-      marginBottom: "15px",
-      display: "block",
-      marginLeft: "auto",
-      marginRight: "auto",
-      opacity: 0.8,
     },
     secondaryGallery: {
       display: "grid",
@@ -1179,12 +1153,13 @@ export default function Home() {
     alergiasInput: {
       width: "100%",
       padding: "15px 20px",
-      border: `2px solid ${COLORS.accentLight}`,
+      border: `2px solid ${COLORS.blueSoft}`,
       borderRadius: 50,
       fontSize: "1rem",
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
       marginTop: "15px",
+      color: COLORS.textDark,
     },
     countdownContainer: {
       display: "grid",
@@ -1204,7 +1179,7 @@ export default function Home() {
     countdownNumber: {
       fontSize: "clamp(1.5rem, 6vw, 2.5rem)",
       fontWeight: 600,
-      color: COLORS.textDark,
+      color: COLORS.gold,
       lineHeight: 1,
     },
     countdownLabel: {
@@ -1217,7 +1192,7 @@ export default function Home() {
       fontFamily: '"Great Vibes", cursive',
       fontSize: "clamp(2.2rem, 8vw, 3rem)",
       fontWeight: 400,
-      color: COLORS.textDark,
+      color: COLORS.gold,
       textAlign: "center",
       marginBottom: "clamp(20px, 5vw, 30px)",
       letterSpacing: "1px",
@@ -1351,7 +1326,7 @@ export default function Home() {
       fontWeight: 700,
       fontSize: "clamp(1rem, 4vw, 1.2rem)",
       marginBottom: 5,
-      color: COLORS.textDark,
+      color: COLORS.gold,
     },
     softBox: {
       borderRadius: 40,
@@ -1371,8 +1346,8 @@ export default function Home() {
       display: "inline-block",
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
       borderRadius: 50,
-      background: COLORS.accentLight,
-      color: COLORS.textDark,
+      background: COLORS.blueSoft,
+      color: COLORS.white,
       textDecoration: "none",
       fontWeight: 600,
       border: `1px solid ${COLORS.blueSoft}`,
@@ -1435,7 +1410,7 @@ export default function Home() {
     hotelNombre: {
       fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
       fontWeight: 700,
-      color: COLORS.textDark,
+      color: COLORS.gold,
       marginBottom: "10px",
       textAlign: "center",
     },
@@ -1464,12 +1439,12 @@ export default function Home() {
       display: "inline-block",
       padding: "4px 14px",
       borderRadius: 30,
-      background: COLORS.accentLight,
-      color: COLORS.textDark,
+      background: COLORS.blueSoft,
+      color: COLORS.white,
       textDecoration: "none",
       fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)",
       fontWeight: 600,
-      border: `1px solid ${COLORS.accentMedium}`,
+      border: `1px solid ${COLORS.blueSoft}`,
       transition: "background 0.2s",
     },
   };
@@ -1581,7 +1556,7 @@ export default function Home() {
         `}</style>
       </Head>
   
-      {/* SOBRE CERRADO - PRIMERA PANTALLA */}
+      {/* SOBRE CERRADO */}
       {!envelopeOpen && (
         <div style={envelopeStyles.pageContainer}>
           <div style={envelopeStyles.wrap}>
@@ -1633,14 +1608,13 @@ export default function Home() {
         </div>
       )}
 
-      {/* INVITACIÓN - SEGUNDA PANTALLA */}
+      {/* INVITACIÓN */}
       {envelopeOpen && (
         <div 
           style={invitationStyles.page}
           onClick={handleUserInteraction}
         >
           <div style={invitationStyles.card}>
-            {/* 🎵 REPRODUCTOR DE AUDIO OCULTO */}
             <audio
               ref={audioRef}
               src={SONG_URL}
@@ -1649,14 +1623,14 @@ export default function Home() {
               style={{ display: 'none' }}
             />
 
-            {/* 1. Nombres en tres líneas */}
+            {/* 1. Nombres en dorado */}
             <div style={invitationStyles.names}>
               Vanessa<br />&<br />Andrés
             </div>
             
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
-            {/* 2. Contador */}
+            {/* 2. Contador en dorado */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
@@ -1676,12 +1650,11 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Bloque de invitación */}
             <div style={invitationStyles.invitationText}>
               Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
             </div>
 
-            {/* Bloque de familias y padrinos */}
+            {/* Bloque de familias y padrinos - títulos en dorado */}
             <div style={invitationStyles.familySection}>
               <div style={invitationStyles.familyCard}>
                 <div style={invitationStyles.familyLabel}>Papás de la novia</div>
@@ -1700,7 +1673,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* CARRUSEL DE IMÁGENES PRINCIPAL */}
+            {/* Galería */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Galería</div>
               
@@ -1740,13 +1713,13 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Nuestra historia */}
+            {/* Nuestra historia - títulos en dorado */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Nuestra historia</div>
               <div style={invitationStyles.softBox}>
                 {NUESTRA_HISTORIA.map((b, i) => (
                   <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 20 }}>
-                    <div style={{ fontFamily: '"Great Vibes", cursive', fontSize: "clamp(1.5rem, 6vw, 1.8rem)", color: COLORS.textDark, marginBottom: 5, textAlign: "center" }}>
+                    <div style={{ fontFamily: '"Great Vibes", cursive', fontSize: "clamp(1.5rem, 6vw, 1.8rem)", color: COLORS.gold, marginBottom: 5, textAlign: "center" }}>
                       {b.title}
                     </div>
                     <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textMedium, textAlign: "center", lineHeight: 1.6 }}>{b.text}</p>
@@ -1755,14 +1728,13 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Primera imagen separadora */}
             <img 
               src={DIVIDER_IMAGE_1}
               alt="Separador floral 1"
               style={invitationStyles.dividerImage}
             />
 
-            {/* Itinerario */}
+            {/* Itinerario - títulos en dorado */}
             <div style={{ marginTop: 20 }}>
               <div style={invitationStyles.sectionTitle}>Itinerario</div>
               <div style={invitationStyles.timelineGrid}>
@@ -1778,7 +1750,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Dress code con paleta de colores */}
+            {/* Dress code */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Dress code</div>
               <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
@@ -1790,7 +1762,6 @@ export default function Home() {
                 <div style={{ fontSize: "clamp(1rem, 4vw, 1.1rem)", color: COLORS.textDark, marginBottom: 5 }}>{DRESS_CODE.text[0]}</div>
                 <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.textMedium, marginBottom: 25 }}>{DRESS_CODE.text[1]}</div>
                 
-                {/* Paleta de colores - 6 bolitas encimadas */}
                 <div style={invitationStyles.colorPalette}>
                   {COLOR_PALETTE.map((color, idx) => (
                     <div
@@ -1845,7 +1816,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 📷 GALERÍA SECUNDARIA - "Más momentos" */}
+            {/* Más momentos */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Más momentos</div>
               <div style={invitationStyles.secondaryGallery}>
@@ -1861,7 +1832,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 📍 UBICACIONES - Ceremonia y recepción */}
+            {/* Ceremonia y recepción */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1911,31 +1882,17 @@ export default function Home() {
                   </div>
                 </div>
 
+                {/* Regalo monetario - con icono de sobre y texto */}
                 <div style={invitationStyles.moneyBox}>
-                  <img 
-                    src={BANK_ICON}
-                    alt="Transferencia bancaria"
-                    style={invitationStyles.bankIcon}
-                  />
+                  <div style={{ fontSize: "3rem", marginBottom: "10px" }}>✉️</div>
                   <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textMedium, textAlign: "center" }}>
-                    {REGALO_MONETARIO.subtitle}
+                    Déjanos tu aportación
                   </p>
-                  <div style={{ marginTop: 10, textAlign: "center" }}>
-                    <div style={{ fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.textMedium }}>
-                      <b>{REGALO_MONETARIO.accountLabel}:</b>
-                    </div>
-                    <div style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textDark, wordBreak: "break-word" }}>
-                      {REGALO_MONETARIO.accountValue}
-                    </div>
-                  </div>
-                  <div style={{ marginTop: 10, fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textDark, textAlign: "center" }}>
-                    {REGALO_MONETARIO.nameValue}
-                  </div>
                 </div>
               </div>
             </div>
 
-            {/* 🏨 HOSPEDAJES */}
+            {/* Hospedajes */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Hospedajes</div>
               <div style={invitationStyles.hospedajesContainer}>
@@ -1995,7 +1952,6 @@ export default function Home() {
                   </div>
                 ))}
                 
-                {/* Airbnb - Mismo estilo que los hoteles */}
                 <div style={invitationStyles.hotelCard}>
                   <div style={invitationStyles.hotelNombre}>{AIRBNB_DATA.nombre}</div>
                   
@@ -2021,7 +1977,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Bloque de bebidas */}
+            {/* ¿Qué se toman los chicos? */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>¿Qué se toman los chicos?</div>
               <div style={invitationStyles.softBox}>
@@ -2042,7 +1998,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Bloque de alergias */}
+            {/* ¿Alergias? */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>¿Alergias?</div>
               <div style={invitationStyles.softBox}>
@@ -2057,7 +2013,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 📋 RESERVACIONES */}
+            {/* Reservaciones */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Reservaciones</div>
               <div style={envelopeStyles.reservedSection}>
@@ -2073,7 +2029,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* RSVP - Confirmación de asistencia */}
+            {/* Confirma tu asistencia */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
               <div style={invitationStyles.formContainer}>
@@ -2187,7 +2143,7 @@ export default function Home() {
         />
       )}
 
-      {/* Carruseles a pantalla completa */}
+      {/* Carruseles */}
       {carouselOpen && (
         <ImageCarousel
           images={GALLERY_IMAGES}
