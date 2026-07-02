@@ -20,35 +20,30 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados, bebidas, 
 }
 
 // ====================================================
-// 🎨 PALETA DE COLORES
+// 🎨 PALETA DE COLORES - NUEVA (inspirada en la imagen)
 // ====================================================
 const COLORS = {
-  gold: "#d2ae7b",
-  beige: "#dfc49b",
-  blueGrayLight: "#cad3e3",
-  blueGrayMedium: "#b7c2d6",
-  blueGrayDark: "#a1afc1",
-  blueDeep: "#4d6a91",
-  blueMedium: "#5e7db2",
-  blueLight: "#7296c7",
-  blueVeryLight: "#8baedd",
+  // Colores principales (de la imagen)
+  cream: "#f5ede4",        // Fondo crema
+  textDark: "#2c3e4a",     // Texto principal oscuro
+  textMedium: "#6b7b85",   // Texto secundario
+  accentLight: "#b8a99a",  // Borde/separador claro
+  accentMedium: "#8b7a6a", // Detalles decorativos
+  
+  // Colores complementarios (para elementos interactivos)
+  blueSoft: "#5a7a8a",     // Botones, enlaces
   white: "#ffffff",
-  cream: "#fef9f0",
-  text: "#4a4a4a",
-  textLight: "#6b6b6b",
+  gold: "#c4a882",
+  
+  // Para compatibilidad con componentes existentes
+  blueDeep: "#2c3e4a",
+  blueMedium: "#5a7a8a",
+  blueGrayDark: "#6b7b85",
+  blueGrayLight: "#b8a99a",
+  beige: "#f5ede4",
+  text: "#2c3e4a",
+  textLight: "#6b7b85",
 };
-
-// ====================================================
-// 🎨 PALETA DE COLORES PARA BOLITAS (6 colores)
-// ====================================================
-const COLOR_PALETTE = [
-  "#4A6B8A",
-  "#6B8FA0",
-  "#8BAA7A",
-  "#B5A68A",
-  "#D4B896",
-  "#C49A8A",
-];
 
 // ====================================================
 // 🖼️ COMPONENTES
@@ -266,8 +261,8 @@ function TimelineIcon({ type = "ceremony", size = 48 }) {
         width: size,
         height: size,
         borderRadius: "50%",
-        background: COLORS.blueGrayLight,
-        border: `2px solid ${COLORS.blueGrayMedium}`,
+        background: COLORS.accentLight,
+        border: `2px solid ${COLORS.accentMedium}`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -484,9 +479,9 @@ function MusicFloatingButton({ isPlaying, onClick }) {
         width: "60px",
         height: "60px",
         borderRadius: "50%",
-        background: COLORS.blueMedium,
+        background: COLORS.blueSoft,
         border: `3px solid ${COLORS.white}`,
-        boxShadow: `0 4px 15px rgba(77,106,145,0.3)`,
+        boxShadow: `0 4px 15px rgba(44,62,74,0.3)`,
         cursor: "pointer",
         display: "flex",
         alignItems: "center",
@@ -507,13 +502,13 @@ function MusicFloatingButton({ isPlaying, onClick }) {
       <style jsx>{`
         @keyframes pulse {
           0% {
-            box-shadow: 0 0 0 0 rgba(94, 125, 178, 0.7);
+            box-shadow: 0 0 0 0 rgba(90, 122, 138, 0.7);
           }
           70% {
-            box-shadow: 0 0 0 10px rgba(94, 125, 178, 0);
+            box-shadow: 0 0 0 10px rgba(90, 122, 138, 0);
           }
           100% {
-            box-shadow: 0 0 0 0 rgba(94, 125, 178, 0);
+            box-shadow: 0 0 0 0 rgba(90, 122, 138, 0);
           }
         }
       `}</style>
@@ -529,26 +524,6 @@ function MusicFloatingButton({ isPlaying, onClick }) {
         </svg>
       )}
     </button>
-  );
-}
-
-/** ✅ Ícono de Sobre (estilo línea) */
-function EnvelopeIcon({ size = 48, color = COLORS.blueDeep }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="M22 7l-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7" />
-    </svg>
   );
 }
 
@@ -575,6 +550,7 @@ export default function Home() {
   
   const LIVERPOOL_LOGO = "/liverpool-logo.png";
   const AMAZON_LOGO = "/amazon-logo.png";
+  const BANK_ICON = "/bank-icon.png";
   
   const SONG_URL = "/Post-quimica.mp3";
   
@@ -602,6 +578,16 @@ export default function Home() {
   
   const FLORAL_FRAME_OPACITY = 0.4;
   const TIMELINE_ICON_SIZE = 80;
+  
+  // Paleta de colores para las bolitas (6 colores de la imagen)
+  const COLOR_PALETTE = [
+    "#4A6B8A", // Azul grisáceo oscuro
+    "#6B8FA0", // Azul verdoso
+    "#8BAA7A", // Verde salvia
+    "#B5A68A", // Beige
+    "#D4B896", // Beige claro
+    "#C49A8A", // Terracota suave
+  ];
   
   // ====================================================
   // 📋 DATOS DE HOTELES
@@ -836,7 +822,7 @@ export default function Home() {
   }
 
   // ====================================================
-  // 📍 UBICACIONES
+  // 📍 UBICACIONES - SOLO CEREMONIA Y RECEPCIÓN
   // ====================================================
   
   const MAPS_CEREMONY_URL = "https://maps.google.com/?q=Parroquia%20de%20San%20Miguel%20Arcangel%2C%20Jiutepec%2C%20Morelos";
@@ -878,8 +864,15 @@ export default function Home() {
     { type: "amazon", url: "https://www.amazon.com.mx/wedding/share/VanessaAndres/" },
   ];
 
+  const REGALO_MONETARIO = {
+    subtitle: "Si deseas apoyarnos en esta nueva etapa:",
+    accountLabel: "CLABE / Cuenta",
+    accountValue: "012 180 0152 2563 3524",
+    nameValue: "Andrés López",
+  };
+
   // ====================================================
-  // 🎨 ESTILOS
+  // 🎨 ESTILOS - CON NUEVA PALETA DE COLORES
   // ====================================================
   
   const envelopeStyles = {
@@ -906,8 +899,8 @@ export default function Home() {
       position: "relative",
       borderRadius: 30,
       overflow: "hidden",
-      background: COLORS.beige,
-      boxShadow: `0 20px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)`,
+      background: COLORS.cream,
+      boxShadow: `0 20px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08)`,
       border: `4px solid ${COLORS.white}`,
       display: "flex",
       flexDirection: "column",
@@ -920,7 +913,7 @@ export default function Home() {
       objectPosition: "center",
       display: "block",
       margin: "15px auto 10px",
-      borderBottom: `2px solid ${COLORS.blueGrayLight}`,
+      borderBottom: `2px solid ${COLORS.accentLight}`,
     },
     content: {
       flex: 1,
@@ -936,11 +929,11 @@ export default function Home() {
       fontSize: 16,
       letterSpacing: "2px",
       textTransform: "uppercase",
-      color: COLORS.blueDeep,
+      color: COLORS.textDark,
       opacity: 0.7,
       margin: "20px 0 15px 0",
-      borderTop: `1px dashed ${COLORS.blueGrayLight}`,
-      borderBottom: `1px dashed ${COLORS.blueGrayLight}`,
+      borderTop: `1px dashed ${COLORS.accentLight}`,
+      borderBottom: `1px dashed ${COLORS.accentLight}`,
       padding: "12px 0",
       width: "100%",
     },
@@ -954,7 +947,7 @@ export default function Home() {
       fontSize: 16,
       letterSpacing: "2px",
       textTransform: "uppercase",
-      color: COLORS.blueDeep,
+      color: COLORS.textDark,
       opacity: 0.7,
       marginBottom: 5,
     },
@@ -962,7 +955,7 @@ export default function Home() {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: 48,
       fontWeight: 700,
-      color: COLORS.blueMedium,
+      color: COLORS.blueSoft,
       lineHeight: 1,
       margin: "5px 0",
     },
@@ -971,7 +964,7 @@ export default function Home() {
       fontSize: 14,
       letterSpacing: "2px",
       textTransform: "uppercase",
-      color: COLORS.blueDeep,
+      color: COLORS.textDark,
       opacity: 0.6,
     },
     seal: {
@@ -981,13 +974,13 @@ export default function Home() {
       width: 50,
       height: 50,
       borderRadius: "50%",
-      background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.beige})`,
+      background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.accentLight})`,
       border: `2px solid ${COLORS.white}`,
       boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: COLORS.blueDeep,
+      color: COLORS.textDark,
       fontSize: 20,
       opacity: 0.7,
     },
@@ -1010,7 +1003,7 @@ export default function Home() {
       minHeight: "100vh",
       backgroundColor: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
-      color: COLORS.text,
+      color: COLORS.textDark,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -1023,20 +1016,20 @@ export default function Home() {
       borderRadius: 60,
       boxShadow: `0 15px 40px rgba(0,0,0,0.05)`,
       padding: "50px 40px",
-      border: `1px solid ${COLORS.blueGrayLight}`,
+      border: `1px solid ${COLORS.accentLight}`,
     },
     names: {
       fontFamily: '"Great Vibes", cursive',
       fontSize: "clamp(3.5rem, 10vw, 5.5rem)",
       fontWeight: 400,
-      color: COLORS.blueDeep,
+      color: COLORS.textDark,
       textAlign: "center",
       marginBottom: 30,
       lineHeight: 1.2,
     },
     subtitle: {
       fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
-      color: COLORS.blueMedium,
+      color: COLORS.textMedium,
       textAlign: "center",
       marginBottom: 20,
       fontFamily: "'Quicksand', sans-serif",
@@ -1044,7 +1037,7 @@ export default function Home() {
     },
     invitationText: {
       fontSize: "clamp(1rem, 3.5vw, 1.1rem)",
-      color: COLORS.text,
+      color: COLORS.textMedium,
       textAlign: "center",
       marginBottom: 25,
       lineHeight: 1.6,
@@ -1061,11 +1054,11 @@ export default function Home() {
       borderRadius: 30,
       padding: "20px 15px",
       textAlign: "center",
-      border: `1px solid ${COLORS.blueGrayLight}`,
+      border: `1px solid ${COLORS.accentLight}`,
     },
     familyLabel: {
       fontSize: "0.9rem",
-      color: COLORS.blueMedium,
+      color: COLORS.textMedium,
       fontWeight: 600,
       textTransform: "uppercase",
       letterSpacing: "1px",
@@ -1073,7 +1066,7 @@ export default function Home() {
     },
     familyName: {
       fontSize: "1.1rem",
-      color: COLORS.text,
+      color: COLORS.textDark,
       fontWeight: 500,
     },
     dividerImage: {
@@ -1113,17 +1106,17 @@ export default function Home() {
       borderRadius: 40,
       padding: "25px 20px",
       textAlign: "center",
-      border: `1px solid ${COLORS.blueGrayLight}`,
+      border: `1px solid ${COLORS.accentLight}`,
     },
     ubicacionTitle: {
       fontSize: "1.3rem",
       fontWeight: 600,
-      color: COLORS.blueDeep,
+      color: COLORS.textDark,
       marginBottom: 10,
     },
     ubicacionAddress: {
       fontSize: "1rem",
-      color: COLORS.text,
+      color: COLORS.textMedium,
       marginBottom: 15,
     },
     storeLogo: {
@@ -1134,29 +1127,14 @@ export default function Home() {
       marginLeft: "auto",
       marginRight: "auto",
     },
-    storeMesa: {
-      fontSize: "clamp(0.9rem, 3vw, 1rem)",
-      color: COLORS.blueDeep,
-      fontWeight: 600,
-      textAlign: "center",
-      marginTop: "5px",
-    },
-    sobresContainer: {
-      textAlign: "center",
-      marginTop: "10px",
-    },
-    sobresTitle: {
-      fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
-      fontWeight: 600,
-      color: COLORS.blueDeep,
-      marginBottom: "8px",
-    },
-    sobresText: {
-      fontSize: "clamp(0.9rem, 3vw, 1rem)",
-      color: COLORS.text,
-      lineHeight: 1.6,
-      maxWidth: "400px",
-      margin: "0 auto 15px",
+    bankIcon: {
+      width: "60px",
+      height: "60px",
+      marginBottom: "15px",
+      display: "block",
+      marginLeft: "auto",
+      marginRight: "auto",
+      opacity: 0.8,
     },
     secondaryGallery: {
       display: "grid",
@@ -1187,27 +1165,26 @@ export default function Home() {
       padding: "12px",
       textAlign: "center",
       cursor: "pointer",
-      border: `2px solid ${COLORS.blueGrayLight}`,
+      border: `2px solid ${COLORS.accentLight}`,
       transition: "all 0.2s",
       fontSize: "1rem",
       fontWeight: 500,
-      color: COLORS.text,
+      color: COLORS.textDark,
     },
     bebidaOptionSelected: {
-      background: COLORS.blueMedium,
-      borderColor: COLORS.blueMedium,
+      background: COLORS.blueSoft,
+      borderColor: COLORS.blueSoft,
       color: COLORS.white,
     },
     alergiasInput: {
       width: "100%",
       padding: "15px 20px",
-      border: `2px solid ${COLORS.blueGrayLight}`,
+      border: `2px solid ${COLORS.accentLight}`,
       borderRadius: 50,
       fontSize: "1rem",
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
       marginTop: "15px",
-      color: COLORS.text, // ✅ Color de texto visible
     },
     countdownContainer: {
       display: "grid",
@@ -1219,7 +1196,7 @@ export default function Home() {
       background: COLORS.white,
       borderRadius: 100,
       padding: "clamp(15px, 4vw, 25px) clamp(10px, 3vw, 20px)",
-      boxShadow: `0 5px 20px rgba(77,106,145,0.1)`,
+      boxShadow: `0 5px 20px rgba(44,62,74,0.08)`,
     },
     countdownItem: {
       textAlign: "center",
@@ -1227,20 +1204,20 @@ export default function Home() {
     countdownNumber: {
       fontSize: "clamp(1.5rem, 6vw, 2.5rem)",
       fontWeight: 600,
-      color: COLORS.blueDeep,
+      color: COLORS.textDark,
       lineHeight: 1,
     },
     countdownLabel: {
       fontSize: "clamp(0.65rem, 2.5vw, 0.9rem)",
       textTransform: "uppercase",
       letterSpacing: "1px",
-      color: COLORS.blueGrayDark,
+      color: COLORS.textMedium,
     },
     sectionTitle: {
       fontFamily: '"Great Vibes", cursive',
       fontSize: "clamp(2.2rem, 8vw, 3rem)",
       fontWeight: 400,
-      color: COLORS.blueDeep,
+      color: COLORS.textDark,
       textAlign: "center",
       marginBottom: "clamp(20px, 5vw, 30px)",
       letterSpacing: "1px",
@@ -1250,8 +1227,8 @@ export default function Home() {
       borderRadius: 40,
       padding: "clamp(20px, 4vw, 30px) clamp(15px, 3vw, 20px)",
       textAlign: "center",
-      boxShadow: `0 8px 25px rgba(77,106,145,0.08)`,
-      border: `1px solid ${COLORS.blueGrayLight}`,
+      boxShadow: `0 8px 25px rgba(44,62,74,0.06)`,
+      border: `1px solid ${COLORS.accentLight}`,
     },
     formContainer: {
       background: COLORS.white,
@@ -1265,7 +1242,7 @@ export default function Home() {
     },
     label: {
       fontSize: "clamp(0.8rem, 3vw, 0.9rem)",
-      color: COLORS.blueGrayDark,
+      color: COLORS.textMedium,
       marginBottom: 8,
       fontWeight: 600,
       textTransform: "uppercase",
@@ -1273,34 +1250,31 @@ export default function Home() {
     },
     input: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
-      border: `2px solid ${COLORS.blueGrayLight}`,
+      border: `2px solid ${COLORS.accentLight}`,
       borderRadius: 50,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
-      color: COLORS.text, // ✅ Color de texto visible
     },
     select: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
-      border: `2px solid ${COLORS.blueGrayLight}`,
+      border: `2px solid ${COLORS.accentLight}`,
       borderRadius: 50,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
-      color: COLORS.text, // ✅ Color de texto visible
     },
     textarea: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
-      border: `2px solid ${COLORS.blueGrayLight}`,
+      border: `2px solid ${COLORS.accentLight}`,
       borderRadius: 25,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
       resize: "vertical",
-      color: COLORS.text, // ✅ Color de texto visible
     },
     button: {
-      background: COLORS.blueMedium,
+      background: COLORS.blueSoft,
       color: COLORS.white,
       border: "none",
       padding: "clamp(15px, 4vw, 18px) clamp(25px, 6vw, 40px)",
@@ -1312,7 +1286,7 @@ export default function Home() {
       marginTop: 30,
       cursor: "pointer",
       transition: "background 0.3s",
-      boxShadow: `0 10px 25px rgba(94,125,178,0.4)`,
+      boxShadow: `0 10px 25px rgba(90,122,138,0.3)`,
       fontFamily: "'Quicksand', sans-serif",
     },
     carouselContainer: {
@@ -1322,7 +1296,7 @@ export default function Home() {
       position: "relative",
       overflow: "hidden",
       borderRadius: 30,
-      boxShadow: `0 10px 30px rgba(0,0,0,0.1)`,
+      boxShadow: `0 10px 30px rgba(0,0,0,0.08)`,
     },
     carouselSlide: {
       display: "flex",
@@ -1348,14 +1322,14 @@ export default function Home() {
       width: "8px",
       height: "8px",
       borderRadius: "50%",
-      background: COLORS.blueGrayLight,
+      background: COLORS.accentLight,
       transition: "all 0.3s ease",
       cursor: "pointer",
     },
     carouselDotActive: {
       width: "20px",
       borderRadius: "10px",
-      background: COLORS.blueMedium,
+      background: COLORS.blueSoft,
     },
     timelineGrid: {
       display: "grid",
@@ -1370,24 +1344,24 @@ export default function Home() {
     timelineTime: {
       fontSize: "clamp(1.3rem, 5vw, 1.8rem)",
       fontWeight: 500,
-      color: COLORS.blueDeep,
+      color: COLORS.textDark,
       marginBottom: 5,
     },
     timelineTitle: {
       fontWeight: 700,
       fontSize: "clamp(1rem, 4vw, 1.2rem)",
       marginBottom: 5,
-      color: COLORS.text,
+      color: COLORS.textDark,
     },
     softBox: {
       borderRadius: 40,
-      border: `1px solid ${COLORS.blueGrayLight}`,
+      border: `1px solid ${COLORS.accentLight}`,
       background: COLORS.white,
       padding: "clamp(15px, 4vw, 20px)",
     },
     moneyBox: {
       borderRadius: 40,
-      border: `1px solid ${COLORS.blueGrayLight}`,
+      border: `1px solid ${COLORS.accentLight}`,
       background: COLORS.white,
       padding: "30px 20px",
       textAlign: "center",
@@ -1397,11 +1371,11 @@ export default function Home() {
       display: "inline-block",
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
       borderRadius: 50,
-      background: COLORS.blueGrayLight,
-      color: COLORS.blueDeep,
+      background: COLORS.accentLight,
+      color: COLORS.textDark,
       textDecoration: "none",
       fontWeight: 600,
-      border: `1px solid ${COLORS.blueMedium}`,
+      border: `1px solid ${COLORS.blueSoft}`,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
     },
     linkBtn: {
@@ -1409,10 +1383,10 @@ export default function Home() {
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
       borderRadius: 50,
       background: COLORS.white,
-      color: COLORS.text,
+      color: COLORS.textDark,
       textDecoration: "none",
       fontWeight: 600,
-      border: `1px solid ${COLORS.blueGrayLight}`,
+      border: `1px solid ${COLORS.accentLight}`,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
     },
     regalosContainer: {
@@ -1431,11 +1405,11 @@ export default function Home() {
       padding: "15px 30px",
       borderRadius: 60,
       textDecoration: "none",
-      color: COLORS.text,
+      color: COLORS.textDark,
       fontWeight: 600,
       fontSize: "1.2rem",
       boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
-      border: `1px solid ${COLORS.blueGrayLight}`,
+      border: `1px solid ${COLORS.accentLight}`,
       transition: "all 0.2s",
       width: "100%",
       maxWidth: 300,
@@ -1455,13 +1429,13 @@ export default function Home() {
       background: COLORS.white,
       borderRadius: 40,
       padding: "20px 20px",
-      border: `1px solid ${COLORS.blueGrayLight}`,
+      border: `1px solid ${COLORS.accentLight}`,
       boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
     },
     hotelNombre: {
       fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
       fontWeight: 700,
-      color: COLORS.blueDeep,
+      color: COLORS.textDark,
       marginBottom: "10px",
       textAlign: "center",
     },
@@ -1481,7 +1455,7 @@ export default function Home() {
       textAlign: "center",
     },
     hotelLink: {
-      color: COLORS.blueMedium,
+      color: COLORS.blueSoft,
       textDecoration: "none",
       fontWeight: 500,
       wordBreak: "break-all",
@@ -1490,12 +1464,12 @@ export default function Home() {
       display: "inline-block",
       padding: "4px 14px",
       borderRadius: 30,
-      background: COLORS.blueGrayLight,
-      color: COLORS.blueDeep,
+      background: COLORS.accentLight,
+      color: COLORS.textDark,
       textDecoration: "none",
       fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)",
       fontWeight: 600,
-      border: `1px solid ${COLORS.blueGrayMedium}`,
+      border: `1px solid ${COLORS.accentMedium}`,
       transition: "background 0.2s",
     },
   };
@@ -1598,12 +1572,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`
           textarea::placeholder { 
-            color: ${COLORS.textLight}; 
+            color: #000; 
             opacity: 0.6; 
-          }
-          input::placeholder {
-            color: ${COLORS.textLight};
-            opacity: 0.6;
           }
           * {
             box-sizing: border-box;
@@ -1679,14 +1649,14 @@ export default function Home() {
               style={{ display: 'none' }}
             />
 
-            {/* Nombres */}
+            {/* 1. Nombres en tres líneas */}
             <div style={invitationStyles.names}>
               Vanessa<br />&<br />Andrés
             </div>
             
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
-            {/* Contador */}
+            {/* 2. Contador */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
@@ -1706,12 +1676,12 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Invitación */}
+            {/* Bloque de invitación */}
             <div style={invitationStyles.invitationText}>
               Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
             </div>
 
-            {/* Familias y padrinos */}
+            {/* Bloque de familias y padrinos */}
             <div style={invitationStyles.familySection}>
               <div style={invitationStyles.familyCard}>
                 <div style={invitationStyles.familyLabel}>Papás de la novia</div>
@@ -1776,10 +1746,10 @@ export default function Home() {
               <div style={invitationStyles.softBox}>
                 {NUESTRA_HISTORIA.map((b, i) => (
                   <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 20 }}>
-                    <div style={{ fontFamily: '"Great Vibes", cursive', fontSize: "clamp(1.5rem, 6vw, 1.8rem)", color: COLORS.blueDeep, marginBottom: 5, textAlign: "center" }}>
+                    <div style={{ fontFamily: '"Great Vibes", cursive', fontSize: "clamp(1.5rem, 6vw, 1.8rem)", color: COLORS.textDark, marginBottom: 5, textAlign: "center" }}>
                       {b.title}
                     </div>
-                    <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.text, textAlign: "center", lineHeight: 1.6 }}>{b.text}</p>
+                    <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textMedium, textAlign: "center", lineHeight: 1.6 }}>{b.text}</p>
                   </div>
                 ))}
               </div>
@@ -1808,7 +1778,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Dress code con 6 bolitas encimadas */}
+            {/* Dress code con paleta de colores */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Dress code</div>
               <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
@@ -1817,9 +1787,10 @@ export default function Home() {
                   alt="Dress code"
                   style={{ width: "min(200px, 60%)", maxWidth: "100%", height: "auto", margin: "0 auto 20px", display: "block" }}
                 />
-                <div style={{ fontSize: "clamp(1rem, 4vw, 1.1rem)", color: COLORS.blueDeep, marginBottom: 5 }}>{DRESS_CODE.text[0]}</div>
-                <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.text, marginBottom: 25 }}>{DRESS_CODE.text[1]}</div>
+                <div style={{ fontSize: "clamp(1rem, 4vw, 1.1rem)", color: COLORS.textDark, marginBottom: 5 }}>{DRESS_CODE.text[0]}</div>
+                <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.textMedium, marginBottom: 25 }}>{DRESS_CODE.text[1]}</div>
                 
+                {/* Paleta de colores - 6 bolitas encimadas */}
                 <div style={invitationStyles.colorPalette}>
                   {COLOR_PALETTE.map((color, idx) => (
                     <div
@@ -1874,7 +1845,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 📷 GALERÍA SECUNDARIA */}
+            {/* 📷 GALERÍA SECUNDARIA - "Más momentos" */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Más momentos</div>
               <div style={invitationStyles.secondaryGallery}>
@@ -1890,7 +1861,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 📍 UBICACIONES */}
+            {/* 📍 UBICACIONES - Ceremonia y recepción */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1912,25 +1883,22 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 🎁 MESA DE REGALOS */}
+            {/* Mesa de regalos */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Mesa de regalos</div>
               <div style={invitationStyles.softBox}>
                 <div style={invitationStyles.regalosContainer}>
-                  {/* Bloque 1: Liverpool con número de mesa */}
                   <div style={invitationStyles.regaloItem}>
                     <img 
                       src={LIVERPOOL_LOGO}
                       alt="Liverpool"
                       style={invitationStyles.storeLogo}
                     />
-                    <div style={invitationStyles.storeMesa}>Mesa: 60006608</div>
                     <a href={MESA_REGALOS[0].url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
                       Ver lista
                     </a>
                   </div>
                   
-                  {/* Bloque 2: Amazon */}
                   <div style={invitationStyles.regaloItem}>
                     <img 
                       src={AMAZON_LOGO}
@@ -1943,14 +1911,25 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Bloque 3: Lluvia de sobres con SVG estilo itinerario */}
                 <div style={invitationStyles.moneyBox}>
-                  <div style={invitationStyles.sobresContainer}>
-                    <div style={invitationStyles.sobresTitle}>Lluvia de sobres</div>
-                    <p style={invitationStyles.sobresText}>
-                      Su compañía es lo más importante. Si desean hacernos un obsequio, lo recibiremos con mucho cariño.
-                    </p>
-                    <EnvelopeIcon size={48} color={COLORS.blueDeep} />
+                  <img 
+                    src={BANK_ICON}
+                    alt="Transferencia bancaria"
+                    style={invitationStyles.bankIcon}
+                  />
+                  <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textMedium, textAlign: "center" }}>
+                    {REGALO_MONETARIO.subtitle}
+                  </p>
+                  <div style={{ marginTop: 10, textAlign: "center" }}>
+                    <div style={{ fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.textMedium }}>
+                      <b>{REGALO_MONETARIO.accountLabel}:</b>
+                    </div>
+                    <div style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textDark, wordBreak: "break-word" }}>
+                      {REGALO_MONETARIO.accountValue}
+                    </div>
+                  </div>
+                  <div style={{ marginTop: 10, fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textDark, textAlign: "center" }}>
+                    {REGALO_MONETARIO.nameValue}
                   </div>
                 </div>
               </div>
@@ -2016,13 +1995,13 @@ export default function Home() {
                   </div>
                 ))}
                 
-                {/* Airbnb */}
+                {/* Airbnb - Mismo estilo que los hoteles */}
                 <div style={invitationStyles.hotelCard}>
                   <div style={invitationStyles.hotelNombre}>{AIRBNB_DATA.nombre}</div>
                   
                   <div style={invitationStyles.hotelRow}>
                     <span style={invitationStyles.hotelIcon}>🏠</span>
-                    <span style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.text }}>
+                    <span style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.textMedium }}>
                       {AIRBNB_DATA.texto}
                     </span>
                   </div>
@@ -2042,7 +2021,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Bebidas */}
+            {/* Bloque de bebidas */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>¿Qué se toman los chicos?</div>
               <div style={invitationStyles.softBox}>
@@ -2063,7 +2042,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Alergias */}
+            {/* Bloque de alergias */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>¿Alergias?</div>
               <div style={invitationStyles.softBox}>
@@ -2078,7 +2057,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Reservaciones */}
+            {/* 📋 RESERVACIONES */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Reservaciones</div>
               <div style={envelopeStyles.reservedSection}>
@@ -2094,20 +2073,20 @@ export default function Home() {
               </div>
             </div>
 
-            {/* RSVP */}
+            {/* RSVP - Confirmación de asistencia */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
               <div style={invitationStyles.formContainer}>
                 <div style={invitationStyles.formGroup}>
                   <div style={invitationStyles.label}>
                     {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
-                    <span style={{ marginLeft: 8, padding: "4px 8px", background: COLORS.blueGrayLight, borderRadius: 50, fontSize: "0.8rem" }}>
+                    <span style={{ marginLeft: 8, padding: "4px 8px", background: COLORS.accentLight, borderRadius: 50, fontSize: "0.8rem" }}>
                       {guestId ? `ID: ${guestId}` : "ID no detectado"}
                     </span>
                   </div>
 
                   {guestData?.nombre && (
-                    <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.9rem)", color: COLORS.blueGrayDark, marginBottom: 10 }}>
+                    <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.9rem)", color: COLORS.textMedium, marginBottom: 10 }}>
                       <b>{guestData.nombre}</b>, nos dará mucho gusto verte.
                       {guestData.pasesAsignados ? (
                         <> · Pases asignados: <b>{guestData.pasesAsignados}</b></>
@@ -2116,11 +2095,11 @@ export default function Home() {
                   )}
 
                   {guestLoadError && (
-                    <div style={{ color: COLORS.blueMedium, marginBottom: 10 }}>No se pudo cargar tu invitación: {guestLoadError}</div>
+                    <div style={{ color: COLORS.blueSoft, marginBottom: 10 }}>No se pudo cargar tu invitación: {guestLoadError}</div>
                   )}
 
                   {yaConfirmo && (
-                    <div style={{ color: COLORS.blueMedium, marginBottom: 10 }}>
+                    <div style={{ color: COLORS.blueSoft, marginBottom: 10 }}>
                       {asistenciaActual === "Sí" ? (
                         <>
                           Gracias por confirmar <b>{pasesMostrados}</b> {pasesMostrados === 1 ? "pase" : "pases"} 🥳
@@ -2172,7 +2151,7 @@ export default function Home() {
                         </button>
 
                         <button
-                          style={{ ...invitationStyles.button, width: "auto", flex: 1, minWidth: "140px", background: COLORS.blueGrayDark }}
+                          style={{ ...invitationStyles.button, width: "auto", flex: 1, minWidth: "140px", background: COLORS.textMedium }}
                           onClick={() => confirmar("No")}
                           disabled={rsvpStatus === "saving"}
                         >
@@ -2182,10 +2161,10 @@ export default function Home() {
                     </>
                   )}
 
-                  {rsvpStatus === "saving" && <div style={{ marginTop: 10, color: COLORS.blueGrayDark }}>Guardando tu confirmación…</div>}
-                  {rsvpStatus === "error" && <div style={{ marginTop: 10, color: COLORS.blueMedium }}>{rsvpError}</div>}
+                  {rsvpStatus === "saving" && <div style={{ marginTop: 10, color: COLORS.textMedium }}>Guardando tu confirmación…</div>}
+                  {rsvpStatus === "error" && <div style={{ marginTop: 10, color: COLORS.blueSoft }}>{rsvpError}</div>}
 
-                  <div style={{ marginTop: 15, fontSize: "0.8rem", color: COLORS.blueGrayDark }}>
+                  <div style={{ marginTop: 15, fontSize: "0.8rem", color: COLORS.textMedium }}>
                     Tip: tu enlace debe incluir <code>?id=AV001</code> (cada invitado tiene un ID).
                   </div>
                 </div>
@@ -2193,7 +2172,7 @@ export default function Home() {
             </div>
 
             {/* Nota final */}
-            <div style={{ marginTop: 30, fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.blueGrayDark, textAlign: "center" }}>
+            <div style={{ marginTop: 30, fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.textMedium, textAlign: "center" }}>
               *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
             </div>
           </div>
