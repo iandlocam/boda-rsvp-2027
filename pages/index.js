@@ -28,8 +28,8 @@ const COLORS = {
   textMedium: "#6b7b85",
   accentLight: "#b8a99a",
   accentMedium: "#8b7a6a",
-  gold: "#c4a882",        // 🟡 Dorado para títulos y nombres
-  goldLight: "#d4c0a8",   // Dorado más claro
+  gold: "#c4a882",
+  goldLight: "#d4c0a8",
   blueSoft: "#5a7a8a",
   white: "#ffffff",
   text: "#2c3e4a",
@@ -1139,7 +1139,7 @@ export default function Home() {
       padding: "12px",
       textAlign: "center",
       cursor: "pointer",
-      border: `2px solid ${COLORS.accentLight}`,
+      border: `2px solid ${COLORS.blueSoft}`,
       transition: "all 0.2s",
       fontSize: "1rem",
       fontWeight: 500,
@@ -1225,7 +1225,7 @@ export default function Home() {
     },
     input: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
-      border: `2px solid ${COLORS.accentLight}`,
+      border: `2px solid ${COLORS.blueSoft}`,
       borderRadius: 50,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
@@ -1233,7 +1233,7 @@ export default function Home() {
     },
     select: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
-      border: `2px solid ${COLORS.accentLight}`,
+      border: `2px solid ${COLORS.blueSoft}`,
       borderRadius: 50,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
@@ -1241,7 +1241,7 @@ export default function Home() {
     },
     textarea: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
-      border: `2px solid ${COLORS.accentLight}`,
+      border: `2px solid ${COLORS.blueSoft}`,
       borderRadius: 25,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
@@ -1361,7 +1361,7 @@ export default function Home() {
       color: COLORS.textDark,
       textDecoration: "none",
       fontWeight: 600,
-      border: `1px solid ${COLORS.accentLight}`,
+      border: `1px solid ${COLORS.blueSoft}`,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
     },
     regalosContainer: {
@@ -1623,14 +1623,14 @@ export default function Home() {
               style={{ display: 'none' }}
             />
 
-            {/* 1. Nombres en dorado */}
+            {/* Nombres en dorado */}
             <div style={invitationStyles.names}>
               Vanessa<br />&<br />Andrés
             </div>
             
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
-            {/* 2. Contador en dorado */}
+            {/* Contador en dorado */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
@@ -1654,7 +1654,7 @@ export default function Home() {
               Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
             </div>
 
-            {/* Bloque de familias y padrinos - títulos en dorado */}
+            {/* Familias y padrinos - títulos en dorado */}
             <div style={invitationStyles.familySection}>
               <div style={invitationStyles.familyCard}>
                 <div style={invitationStyles.familyLabel}>Papás de la novia</div>
@@ -1832,7 +1832,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Ceremonia y recepción */}
+            {/* Ceremonia y recepción - botones con color de bebidas */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1882,7 +1882,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Regalo monetario - con icono de sobre y texto */}
+                {/* Regalo monetario - con icono de sobre */}
                 <div style={invitationStyles.moneyBox}>
                   <div style={{ fontSize: "3rem", marginBottom: "10px" }}>✉️</div>
                   <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textMedium, textAlign: "center" }}>
@@ -1998,7 +1998,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ¿Alergias? */}
+            {/* ¿Alergias? - con color de botones de bebidas */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>¿Alergias?</div>
               <div style={invitationStyles.softBox}>
