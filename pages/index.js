@@ -1342,27 +1342,30 @@ export default function Home() {
       textAlign: "center",
       marginTop: "20px",
     },
+    // ✅ BOTONES DE UBICACIÓN - MISMO ESTILO QUE BOTONES DE BEBIDAS
     linkBtnPrimary: {
       display: "inline-block",
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
       borderRadius: 50,
-      background: COLORS.blueSoft,
-      color: COLORS.white,
+      background: COLORS.white,
+      color: COLORS.blueSoft,
       textDecoration: "none",
       fontWeight: 600,
-      border: `1px solid ${COLORS.blueSoft}`,
+      border: `2px solid ${COLORS.blueSoft}`,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      transition: "all 0.2s",
     },
     linkBtn: {
       display: "inline-block",
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
       borderRadius: 50,
       background: COLORS.white,
-      color: COLORS.textDark,
+      color: COLORS.blueSoft,
       textDecoration: "none",
       fontWeight: 600,
-      border: `1px solid ${COLORS.blueSoft}`,
+      border: `2px solid ${COLORS.blueSoft}`,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      transition: "all 0.2s",
     },
     regalosContainer: {
       display: "flex",
@@ -1435,17 +1438,18 @@ export default function Home() {
       fontWeight: 500,
       wordBreak: "break-all",
     },
+    // ✅ BOTONES DE MAPS EN HOTELES - MISMO ESTILO QUE BOTONES DE BEBIDAS
     hotelMapsBtn: {
       display: "inline-block",
       padding: "4px 14px",
       borderRadius: 30,
-      background: COLORS.blueSoft,
-      color: COLORS.white,
+      background: COLORS.white,
+      color: COLORS.blueSoft,
       textDecoration: "none",
       fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)",
       fontWeight: 600,
-      border: `1px solid ${COLORS.blueSoft}`,
-      transition: "background 0.2s",
+      border: `2px solid ${COLORS.blueSoft}`,
+      transition: "all 0.2s",
     },
   };
 
@@ -1832,7 +1836,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Ceremonia y recepción - botones con color de bebidas */}
+            {/* Ceremonia y recepción - botones como los de bebidas */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1892,7 +1896,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Hospedajes */}
+            {/* Hospedajes - botón Google Maps como los de bebidas */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Hospedajes</div>
               <div style={invitationStyles.hospedajesContainer}>
@@ -1998,7 +2002,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ¿Alergias? - con color de botones de bebidas */}
+            {/* ¿Alergias? */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>¿Alergias?</div>
               <div style={invitationStyles.softBox}>
