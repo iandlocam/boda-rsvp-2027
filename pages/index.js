@@ -571,12 +571,12 @@ export default function Home() {
   const TIMELINE_ICON_SIZE = 80;
   
   const COLOR_PALETTE = [
-    "#4A6B8A",
-    "#6B8FA0",
-    "#8BAA7A",
-    "#B5A68A",
-    "#D4B896",
-    "#C49A8A",
+    "#DCE1C1",
+    "#FBE9B9",
+    "#C9DCFD",
+    "#F4D4E1",
+    "#F5C89F",
+    "#C7B7E3",
   ];
   
   // ====================================================
