@@ -34,7 +34,7 @@ const COLORS = {
   white: "#ffffff",
   text: "#2c3e4a",
   textLight: "#6b7b85",
-  borderGray: "#e8e0d6",  // ← NUEVO: color de borde para todos los botones
+  borderGray: "#e8e0d6",
 };
 
 // ====================================================
@@ -571,13 +571,28 @@ export default function Home() {
   const TIMELINE_ICON_SIZE = 80;
   
   const COLOR_PALETTE = [
-    "#DCE1C1",
-    "#FBE9B9",
-    "#C9DCFD",
-    "#F4D4E1",
-    "#F5C89F",
-    "#C7B7E3",
+    "#4A6B8A",
+    "#6B8FA0",
+    "#8BAA7A",
+    "#B5A68A",
+    "#D4B896",
+    "#C49A8A",
   ];
+  
+  // ====================================================
+  // 📋 DRESS CODE - TEXTO CON SALTOS DE LÍNEA
+  // ====================================================
+  
+  const DRESS_CODE = {
+    title: "Dress code",
+    text: [
+      "Formal / jardín elegante",
+      "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
+      "Ayúdanos a que la novia sea la única de blanco. Les pedimos no usar blanco ni tonos similares.",
+      "🤍¡Gracias por ser parte de este día! 🤍",
+      "Les sugerimos los siguientes colores."
+    ],
+  };
   
   // ====================================================
   // 📋 DATOS DE HOTELES
@@ -841,14 +856,6 @@ export default function Home() {
     { time: "3:00 AM", title: "Cierre", iconType: "close" },
   ];
   
-  const DRESS_CODE = {
-    title: "Dress code",
-    text: [
-      "Formal / jardín elegante",
-      "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno. Ayúdanos a que la novia sea la única de blanco. Les pedimos no usar blanco ni tonos similares. ¡Gracias por ser parte de este día!🤍. Les sugerimos los siguientes colores."
-    ],
-  };
-
   const MESA_REGALOS = [
     { type: "liverpool", url: "https://www.liverpool.com.mx/" },
     { type: "amazon", url: "https://www.amazon.com.mx/wedding/share/VanessaAndres/" },
@@ -1134,7 +1141,6 @@ export default function Home() {
       gap: "12px",
       marginTop: "20px",
     },
-    // ✅ BOTONES DE BEBIDAS - BORDE ACTUALIZADO A #e8e0d6
     bebidaOption: {
       background: COLORS.white,
       borderRadius: 40,
@@ -1344,7 +1350,6 @@ export default function Home() {
       textAlign: "center",
       marginTop: "20px",
     },
-    // ✅ BOTONES DE UBICACIÓN - BORDE ACTUALIZADO A #e8e0d6
     linkBtnPrimary: {
       display: "inline-block",
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
@@ -1440,7 +1445,6 @@ export default function Home() {
       fontWeight: 500,
       wordBreak: "break-all",
     },
-    // ✅ BOTÓN DE MAPS EN HOTELES - BORDE ACTUALIZADO A #e8e0d6
     hotelMapsBtn: {
       display: "inline-block",
       padding: "4px 14px",
@@ -1756,7 +1760,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Dress code */}
+            {/* Dress code - TEXTO CENTRADO CON SALTOS DE LÍNEA */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Dress code</div>
               <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
@@ -1765,9 +1769,24 @@ export default function Home() {
                   alt="Dress code"
                   style={{ width: "min(200px, 60%)", maxWidth: "100%", height: "auto", margin: "0 auto 20px", display: "block" }}
                 />
-                <div style={{ fontSize: "clamp(1rem, 4vw, 1.1rem)", color: COLORS.textDark, marginBottom: 5 }}>{DRESS_CODE.text[0]}</div>
-                <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.textMedium, marginBottom: 25 }}>{DRESS_CODE.text[1]}</div>
                 
+                {/* ✅ TEXTO CENTRADO CON SALTOS DE LÍNEA */}
+                {DRESS_CODE.text.map((linea, index) => (
+                  <p 
+                    key={index} 
+                    style={{ 
+                      fontSize: "clamp(0.9rem, 3vw, 1rem)", 
+                      color: COLORS.textDark, 
+                      margin: index === 0 ? "0 0 4px 0" : "4px 0",
+                      textAlign: "center",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {linea}
+                  </p>
+                ))}
+                
+                {/* Paleta de colores */}
                 <div style={invitationStyles.colorPalette}>
                   {COLOR_PALETTE.map((color, idx) => (
                     <div
@@ -1838,7 +1857,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Ceremonia y recepción - botones con borde #e8e0d6 */}
+            {/* Ceremonia y recepción */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1898,7 +1917,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Hospedajes - botón Google Maps con borde #e8e0d6 */}
+            {/* Hospedajes */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Hospedajes</div>
               <div style={invitationStyles.hospedajesContainer}>
@@ -1983,7 +2002,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ¿Qué se toman los chicos? - botones con borde #e8e0d6 */}
+            {/* ¿Qué se toman los chicos? */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>¿Qué se toman los chicos?</div>
               <div style={invitationStyles.softBox}>
