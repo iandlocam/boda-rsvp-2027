@@ -34,6 +34,7 @@ const COLORS = {
   white: "#ffffff",
   text: "#2c3e4a",
   textLight: "#6b7b85",
+  borderGray: "#e8e0d6",  // ← NUEVO: color de borde para todos los botones
 };
 
 // ====================================================
@@ -1133,13 +1134,14 @@ export default function Home() {
       gap: "12px",
       marginTop: "20px",
     },
+    // ✅ BOTONES DE BEBIDAS - BORDE ACTUALIZADO A #e8e0d6
     bebidaOption: {
-      background: COLORS.cream,
+      background: COLORS.white,
       borderRadius: 40,
       padding: "12px",
       textAlign: "center",
       cursor: "pointer",
-      border: `2px solid ${COLORS.blueSoft}`,
+      border: `2px solid ${COLORS.borderGray}`,
       transition: "all 0.2s",
       fontSize: "1rem",
       fontWeight: 500,
@@ -1330,28 +1332,28 @@ export default function Home() {
     },
     softBox: {
       borderRadius: 40,
-      border: `1px solid ${COLORS.accentLight}`,
+      border: `1px solid ${COLORS.borderGray}`,
       background: COLORS.white,
       padding: "clamp(15px, 4vw, 20px)",
     },
     moneyBox: {
       borderRadius: 40,
-      border: `1px solid ${COLORS.accentLight}`,
+      border: `1px solid ${COLORS.borderGray}`,
       background: COLORS.white,
       padding: "30px 20px",
       textAlign: "center",
       marginTop: "20px",
     },
-    // ✅ BOTONES DE UBICACIÓN - MISMO ESTILO QUE BOTONES DE BEBIDAS
+    // ✅ BOTONES DE UBICACIÓN - BORDE ACTUALIZADO A #e8e0d6
     linkBtnPrimary: {
       display: "inline-block",
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
       borderRadius: 50,
       background: COLORS.white,
-      color: COLORS.blueSoft,
+      color: COLORS.textDark,
       textDecoration: "none",
       fontWeight: 600,
-      border: `2px solid ${COLORS.blueSoft}`,
+      border: `2px solid ${COLORS.borderGray}`,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       transition: "all 0.2s",
     },
@@ -1360,10 +1362,10 @@ export default function Home() {
       padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
       borderRadius: 50,
       background: COLORS.white,
-      color: COLORS.blueSoft,
+      color: COLORS.textDark,
       textDecoration: "none",
       fontWeight: 600,
-      border: `2px solid ${COLORS.blueSoft}`,
+      border: `2px solid ${COLORS.borderGray}`,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       transition: "all 0.2s",
     },
@@ -1438,17 +1440,17 @@ export default function Home() {
       fontWeight: 500,
       wordBreak: "break-all",
     },
-    // ✅ BOTONES DE MAPS EN HOTELES - MISMO ESTILO QUE BOTONES DE BEBIDAS
+    // ✅ BOTÓN DE MAPS EN HOTELES - BORDE ACTUALIZADO A #e8e0d6
     hotelMapsBtn: {
       display: "inline-block",
       padding: "4px 14px",
       borderRadius: 30,
       background: COLORS.white,
-      color: COLORS.blueSoft,
+      color: COLORS.textDark,
       textDecoration: "none",
       fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)",
       fontWeight: 600,
-      border: `2px solid ${COLORS.blueSoft}`,
+      border: `2px solid ${COLORS.borderGray}`,
       transition: "all 0.2s",
     },
   };
@@ -1836,7 +1838,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Ceremonia y recepción - botones como los de bebidas */}
+            {/* Ceremonia y recepción - botones con borde #e8e0d6 */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1896,7 +1898,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Hospedajes - botón Google Maps como los de bebidas */}
+            {/* Hospedajes - botón Google Maps con borde #e8e0d6 */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Hospedajes</div>
               <div style={invitationStyles.hospedajesContainer}>
@@ -1981,7 +1983,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ¿Qué se toman los chicos? */}
+            {/* ¿Qué se toman los chicos? - botones con borde #e8e0d6 */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>¿Qué se toman los chicos?</div>
               <div style={invitationStyles.softBox}>
