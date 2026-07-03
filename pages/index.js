@@ -571,12 +571,12 @@ export default function Home() {
   const TIMELINE_ICON_SIZE = 80;
   
   const COLOR_PALETTE = [
-    "#4A6B8A",
-    "#6B8FA0",
-    "#8BAA7A",
-    "#B5A68A",
-    "#D4B896",
-    "#C49A8A",
+    "#DCE1C1",
+    "#FBE9B9",
+    "#C9DCFD",
+    "#F4D4E1",
+    "#F5C89F",
+    "#C7B7E3",
   ];
   
   // ====================================================
@@ -589,7 +589,7 @@ export default function Home() {
       "Formal / jardín elegante",
       "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
       "Ayúdanos a que la novia sea la única de blanco. Les pedimos no usar blanco ni tonos similares.",
-      "🤍¡Gracias por ser parte de este día! 🤍",
+      "¡Gracias por ser parte de este día! 🤍",
       "Les sugerimos los siguientes colores."
     ],
   };
