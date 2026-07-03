@@ -1911,7 +1911,7 @@ export default function Home() {
                 <div style={invitationStyles.moneyBox}>
                   <div style={{ fontSize: "3rem", marginBottom: "10px" }}>✉️</div>
                   <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textMedium, textAlign: "center" }}>
-                    Déjanos tu aportación
+                    Tu presencia es nuestro mejor regalo y en caso de desear hacernos un regalo, pueden realizarlo en lluvia de sobres.❤️
                   </p>
                 </div>
               </div>
