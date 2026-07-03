@@ -845,9 +845,7 @@ export default function Home() {
     title: "Dress code",
     text: [
       "Formal / jardín elegante",
-      "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno."
-      "Ayúdanos a que la novia sea la única de blanco. Les pedimos no usar blanco ni tonos similares. ¡Gracias por ser parte de este día!."
-  "Les sugerimos los siguientes colores."
+      "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno. Ayúdanos a que la novia sea la única de blanco. Les pedimos no usar blanco ni tonos similares. ¡Gracias por ser parte de este día!🤍. Les sugerimos los siguientes colores."
     ],
   };
 
