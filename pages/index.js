@@ -571,16 +571,16 @@ export default function Home() {
   const TIMELINE_ICON_SIZE = 80;
   
   const COLOR_PALETTE = [
-    "#DCE1C1",
-    "#FBE9B9",
-    "#C9DCFD",
-    "#F4D4E1",
-    "#F5C89F",
-    "#C7B7E3",
+    "#4A6B8A",
+    "#6B8FA0",
+    "#8BAA7A",
+    "#B5A68A",
+    "#D4B896",
+    "#C49A8A",
   ];
   
   // ====================================================
-  // 📋 DRESS CODE - TEXTO CON SALTOS DE LÍNEA
+  // 📋 DRESS CODE
   // ====================================================
   
   const DRESS_CODE = {
@@ -589,7 +589,7 @@ export default function Home() {
       "Formal / jardín elegante",
       "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
       "Ayúdanos a que la novia sea la única de blanco. Les pedimos no usar blanco ni tonos similares.",
-      "¡Gracias por ser parte de este día! 🤍",
+      "🤍¡Gracias por ser parte de este día! 🤍",
       "Les sugerimos los siguientes colores."
     ],
   };
@@ -862,9 +862,73 @@ export default function Home() {
   ];
 
   // ====================================================
-  // 🎨 ESTILOS
+  // 🎨 ESTILOS - NUEVA PANTALLA DE BIENVENIDA
   // ====================================================
   
+  const welcomeStyles = {
+    page: {
+      minHeight: "100vh",
+      backgroundColor: COLORS.cream,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "20px",
+    },
+    container: {
+      width: "100%",
+      maxWidth: 550,
+      background: COLORS.white,
+      borderRadius: 60,
+      boxShadow: `0 15px 40px rgba(0,0,0,0.05)`,
+      padding: "50px 30px",
+      border: `1px solid ${COLORS.accentLight}`,
+      textAlign: "center",
+      cursor: "pointer",
+      transition: "transform 0.3s ease",
+    },
+    names: {
+      fontFamily: '"Great Vibes", cursive',
+      fontSize: "clamp(3.5rem, 10vw, 5rem)",
+      fontWeight: 400,
+      color: COLORS.gold,
+      textAlign: "center",
+      marginBottom: 10,
+      lineHeight: 1.2,
+    },
+    subtitle: {
+      fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
+      color: COLORS.textMedium,
+      textAlign: "center",
+      marginBottom: 15,
+      fontFamily: "'Quicksand', sans-serif",
+      fontWeight: 400,
+    },
+    date: {
+      fontSize: "clamp(1.5rem, 5vw, 2rem)",
+      color: COLORS.textDark,
+      textAlign: "center",
+      marginBottom: 30,
+      fontFamily: "'Quicksand', sans-serif",
+      fontWeight: 300,
+      letterSpacing: "2px",
+    },
+    openButton: {
+      display: "inline-block",
+      padding: "15px 30px",
+      borderRadius: 50,
+      background: COLORS.white,
+      color: COLORS.blueSoft,
+      textDecoration: "none",
+      fontWeight: 600,
+      border: `2px solid ${COLORS.blueSoft}`,
+      fontSize: "clamp(1rem, 4vw, 1.1rem)",
+      transition: "all 0.2s",
+      cursor: "pointer",
+      fontFamily: "'Quicksand', sans-serif",
+      letterSpacing: "1px",
+    },
+  };
+
   const envelopeStyles = {
     pageContainer: {
       minHeight: "100vh",
@@ -1566,59 +1630,35 @@ export default function Home() {
         `}</style>
       </Head>
   
-      {/* SOBRE CERRADO */}
+      {/* PANTALLA 1: BIENVENIDA */}
       {!envelopeOpen && (
-        <div style={envelopeStyles.pageContainer}>
-          <div style={envelopeStyles.wrap}>
-            <div style={envelopeStyles.envelope}>
-              <img 
-                src={BACKGROUND_IMAGE}
-                alt="Marco floral" 
-                style={envelopeStyles.floralFrame}
-              />
-              
-              <img 
-                src={SOBRE_IMAGE}
-                alt="Vanessa & Andrés 23/04/2027" 
-                style={envelopeStyles.topImage}
-              />
-              
-              <div style={envelopeStyles.content}>
-                <div 
-                  style={envelopeStyles.clickText}
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Abrir invitación"
-                  onClick={abrirSobre}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") abrirSobre();
-                  }}
-                >
-                  CLICK PARA ABRIR LA INVITACIÓN
-                </div>
-                
-                <div style={envelopeStyles.reservedSection}>
-                  <div style={envelopeStyles.reservedText}>
-                    HEMOS RESERVADO
-                  </div>
-                  <div style={envelopeStyles.reservedNumber}>
-                    {guestData?.pasesAsignados || 2}
-                  </div>
-                  <div style={envelopeStyles.reservedSubtext}>
-                    LUGARES EN SU HONOR
-                  </div>
-                </div>
-              </div>
-              
-              <div style={envelopeStyles.seal}>
-                ✦
-              </div>
+        <div style={welcomeStyles.page}>
+          <div 
+            style={welcomeStyles.container}
+            role="button"
+            tabIndex={0}
+            aria-label="Abrir invitación"
+            onClick={abrirSobre}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") abrirSobre();
+            }}
+          >
+            <div style={welcomeStyles.names}>
+              Vanessa & Andrés
+            </div>
+            
+            <div style={welcomeStyles.subtitle}>• ¡NOS CASAMOS! •</div>
+            
+            <div style={welcomeStyles.date}>23 | 04 | 2027</div>
+            
+            <div style={welcomeStyles.openButton}>
+              CLICK PARA ABRIR LA INVITACIÓN
             </div>
           </div>
         </div>
       )}
 
-      {/* INVITACIÓN */}
+      {/* PANTALLA 2: INVITACIÓN COMPLETA */}
       {envelopeOpen && (
         <div 
           style={invitationStyles.page}
@@ -1633,14 +1673,12 @@ export default function Home() {
               style={{ display: 'none' }}
             />
 
-            {/* Nombres en dorado */}
             <div style={invitationStyles.names}>
               Vanessa<br />&<br />Andrés
             </div>
             
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
-            {/* Contador en dorado */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
@@ -1664,7 +1702,6 @@ export default function Home() {
               Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
             </div>
 
-            {/* Familias y padrinos - títulos en dorado */}
             <div style={invitationStyles.familySection}>
               <div style={invitationStyles.familyCard}>
                 <div style={invitationStyles.familyLabel}>Papás de la novia</div>
@@ -1723,7 +1760,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Nuestra historia - títulos en dorado */}
+            {/* Nuestra historia */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Nuestra historia</div>
               <div style={invitationStyles.softBox}>
@@ -1744,7 +1781,7 @@ export default function Home() {
               style={invitationStyles.dividerImage}
             />
 
-            {/* Itinerario - títulos en dorado */}
+            {/* Itinerario */}
             <div style={{ marginTop: 20 }}>
               <div style={invitationStyles.sectionTitle}>Itinerario</div>
               <div style={invitationStyles.timelineGrid}>
@@ -1760,7 +1797,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Dress code - TEXTO CENTRADO CON SALTOS DE LÍNEA */}
+            {/* Dress code */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Dress code</div>
               <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
@@ -1770,7 +1807,6 @@ export default function Home() {
                   style={{ width: "min(200px, 60%)", maxWidth: "100%", height: "auto", margin: "0 auto 20px", display: "block" }}
                 />
                 
-                {/* ✅ TEXTO CENTRADO CON SALTOS DE LÍNEA */}
                 {DRESS_CODE.text.map((linea, index) => (
                   <p 
                     key={index} 
@@ -1786,7 +1822,6 @@ export default function Home() {
                   </p>
                 ))}
                 
-                {/* Paleta de colores */}
                 <div style={invitationStyles.colorPalette}>
                   {COLOR_PALETTE.map((color, idx) => (
                     <div
@@ -1907,11 +1942,10 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Regalo monetario - con icono de sobre */}
                 <div style={invitationStyles.moneyBox}>
                   <div style={{ fontSize: "3rem", marginBottom: "10px" }}>✉️</div>
                   <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textMedium, textAlign: "center" }}>
-                    Tu presencia es nuestro mejor regalo y en caso de desear hacernos un presente, puedes realizarlo en lluvia de sobres.❤️
+                    Déjanos tu aportación
                   </p>
                 </div>
               </div>
@@ -2152,7 +2186,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Nota final */}
             <div style={{ marginTop: 30, fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.textMedium, textAlign: "center" }}>
               *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
             </div>
