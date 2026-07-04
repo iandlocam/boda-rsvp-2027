@@ -519,6 +519,152 @@ function MusicFloatingButton({ isPlaying, onClick }) {
   );
 }
 
+// ====================================================
+// 🌸 COMPONENTE DE FLORES DECORATIVAS
+// ====================================================
+function FloralDecorations() {
+  return (
+    <>
+      {/* Esquina superior izquierda */}
+      <svg
+        style={{
+          position: "absolute",
+          top: "-10px",
+          left: "-10px",
+          width: "80px",
+          height: "80px",
+          pointerEvents: "none",
+          opacity: 0.6,
+        }}
+        viewBox="0 0 100 100"
+      >
+        <g transform="rotate(-15, 50, 50)">
+          {/* Flor pequeña 1 */}
+          <ellipse cx="25" cy="20" rx="10" ry="14" fill="#d4c0a8" opacity="0.8" />
+          <ellipse cx="18" cy="30" rx="10" ry="14" fill="#d4c0a8" opacity="0.7" />
+          <ellipse cx="32" cy="30" rx="10" ry="14" fill="#d4c0a8" opacity="0.7" />
+          <ellipse cx="25" cy="38" rx="10" ry="12" fill="#d4c0a8" opacity="0.6" />
+          <circle cx="25" cy="28" r="6" fill="#c4a882" opacity="0.5" />
+          {/* Hojas */}
+          <path d="M8,45 Q15,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
+          <path d="M42,45 Q35,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
+        </g>
+      </svg>
+
+      {/* Esquina superior derecha */}
+      <svg
+        style={{
+          position: "absolute",
+          top: "-10px",
+          right: "-10px",
+          width: "80px",
+          height: "80px",
+          pointerEvents: "none",
+          opacity: 0.6,
+        }}
+        viewBox="0 0 100 100"
+      >
+        <g transform="rotate(15, 50, 50) scale(-1, 1) translate(-100, 0)">
+          <ellipse cx="25" cy="20" rx="10" ry="14" fill="#d4c0a8" opacity="0.8" />
+          <ellipse cx="18" cy="30" rx="10" ry="14" fill="#d4c0a8" opacity="0.7" />
+          <ellipse cx="32" cy="30" rx="10" ry="14" fill="#d4c0a8" opacity="0.7" />
+          <ellipse cx="25" cy="38" rx="10" ry="12" fill="#d4c0a8" opacity="0.6" />
+          <circle cx="25" cy="28" r="6" fill="#c4a882" opacity="0.5" />
+          <path d="M8,45 Q15,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
+          <path d="M42,45 Q35,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
+        </g>
+      </svg>
+
+      {/* Esquina inferior izquierda */}
+      <svg
+        style={{
+          position: "absolute",
+          bottom: "-10px",
+          left: "-10px",
+          width: "80px",
+          height: "80px",
+          pointerEvents: "none",
+          opacity: 0.6,
+        }}
+        viewBox="0 0 100 100"
+      >
+        <g transform="rotate(165, 50, 50)">
+          <ellipse cx="25" cy="20" rx="10" ry="14" fill="#d4c0a8" opacity="0.8" />
+          <ellipse cx="18" cy="30" rx="10" ry="14" fill="#d4c0a8" opacity="0.7" />
+          <ellipse cx="32" cy="30" rx="10" ry="14" fill="#d4c0a8" opacity="0.7" />
+          <ellipse cx="25" cy="38" rx="10" ry="12" fill="#d4c0a8" opacity="0.6" />
+          <circle cx="25" cy="28" r="6" fill="#c4a882" opacity="0.5" />
+          <path d="M8,45 Q15,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
+          <path d="M42,45 Q35,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
+        </g>
+      </svg>
+
+      {/* Esquina inferior derecha */}
+      <svg
+        style={{
+          position: "absolute",
+          bottom: "-10px",
+          right: "-10px",
+          width: "80px",
+          height: "80px",
+          pointerEvents: "none",
+          opacity: 0.6,
+        }}
+        viewBox="0 0 100 100"
+      >
+        <g transform="rotate(-165, 50, 50) scale(-1, 1) translate(-100, 0)">
+          <ellipse cx="25" cy="20" rx="10" ry="14" fill="#d4c0a8" opacity="0.8" />
+          <ellipse cx="18" cy="30" rx="10" ry="14" fill="#d4c0a8" opacity="0.7" />
+          <ellipse cx="32" cy="30" rx="10" ry="14" fill="#d4c0a8" opacity="0.7" />
+          <ellipse cx="25" cy="38" rx="10" ry="12" fill="#d4c0a8" opacity="0.6" />
+          <circle cx="25" cy="28" r="6" fill="#c4a882" opacity="0.5" />
+          <path d="M8,45 Q15,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
+          <path d="M42,45 Q35,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
+        </g>
+      </svg>
+
+      {/* Flores pequeñas a los lados del botón */}
+      <svg
+        style={{
+          position: "absolute",
+          left: "10px",
+          bottom: "70px",
+          width: "40px",
+          height: "40px",
+          pointerEvents: "none",
+          opacity: 0.5,
+        }}
+        viewBox="0 0 50 50"
+      >
+        <ellipse cx="10" cy="15" rx="6" ry="8" fill="#d4c0a8" opacity="0.7" />
+        <ellipse cx="6" cy="22" rx="6" ry="8" fill="#d4c0a8" opacity="0.6" />
+        <ellipse cx="14" cy="22" rx="6" ry="8" fill="#d4c0a8" opacity="0.6" />
+        <circle cx="10" cy="20" r="4" fill="#c4a882" opacity="0.5" />
+      </svg>
+
+      <svg
+        style={{
+          position: "absolute",
+          right: "10px",
+          bottom: "70px",
+          width: "40px",
+          height: "40px",
+          pointerEvents: "none",
+          opacity: 0.5,
+        }}
+        viewBox="0 0 50 50"
+      >
+        <g transform="scale(-1, 1) translate(-50, 0)">
+          <ellipse cx="10" cy="15" rx="6" ry="8" fill="#d4c0a8" opacity="0.7" />
+          <ellipse cx="6" cy="22" rx="6" ry="8" fill="#d4c0a8" opacity="0.6" />
+          <ellipse cx="14" cy="22" rx="6" ry="8" fill="#d4c0a8" opacity="0.6" />
+          <circle cx="10" cy="20" r="4" fill="#c4a882" opacity="0.5" />
+        </g>
+      </svg>
+    </>
+  );
+}
+
 export default function Home() {
   const router = useRouter();
   const audioRef = useRef(null);
@@ -885,6 +1031,8 @@ export default function Home() {
       textAlign: "center",
       cursor: "pointer",
       transition: "transform 0.3s ease",
+      position: "relative",
+      overflow: "hidden",
     },
     welcomeImage: {
       width: "100%",
@@ -898,7 +1046,7 @@ export default function Home() {
     },
     names: {
       fontFamily: '"Great Vibes", cursive',
-      fontSize: "clamp(2.2rem, 6vw, 3rem)", // Más pequeño para que quepa en una línea
+      fontSize: "clamp(2.2rem, 6vw, 3rem)",
       fontWeight: 400,
       color: COLORS.gold,
       textAlign: "center",
@@ -936,6 +1084,7 @@ export default function Home() {
       cursor: "pointer",
       fontFamily: "'Quicksand', sans-serif",
       letterSpacing: "1px",
+      position: "relative",
     },
   };
 
@@ -1640,7 +1789,7 @@ export default function Home() {
         `}</style>
       </Head>
   
-      {/* PANTALLA 1: BIENVENIDA */}
+      {/* PANTALLA 1: BIENVENIDA CON FLORES DECORATIVAS */}
       {!envelopeOpen && (
         <div style={welcomeStyles.page}>
           <div 
@@ -1653,7 +1802,9 @@ export default function Home() {
               if (e.key === "Enter" || e.key === " ") abrirSobre();
             }}
           >
-            {/* ✅ IMAGEN DE LOS NOVIOS - ARRIBA DE TODO */}
+            {/* 🌸 FLORES DECORATIVAS EN LAS ESQUINAS Y COSTADOS */}
+            <FloralDecorations />
+            
             <img 
               src={SOBRE_IMAGE}
               alt="Vanessa & Andrés"
