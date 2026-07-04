@@ -529,23 +529,21 @@ function FloralDecorations() {
       <svg
         style={{
           position: "absolute",
-          top: "-10px",
-          left: "-10px",
-          width: "80px",
-          height: "80px",
+          top: "-5px",
+          left: "-5px",
+          width: "90px",
+          height: "90px",
           pointerEvents: "none",
-          opacity: 0.6,
+          opacity: 0.5,
         }}
         viewBox="0 0 100 100"
       >
         <g transform="rotate(-15, 50, 50)">
-          {/* Flor pequeña 1 */}
           <ellipse cx="25" cy="20" rx="10" ry="14" fill="#d4c0a8" opacity="0.8" />
           <ellipse cx="18" cy="30" rx="10" ry="14" fill="#d4c0a8" opacity="0.7" />
           <ellipse cx="32" cy="30" rx="10" ry="14" fill="#d4c0a8" opacity="0.7" />
           <ellipse cx="25" cy="38" rx="10" ry="12" fill="#d4c0a8" opacity="0.6" />
           <circle cx="25" cy="28" r="6" fill="#c4a882" opacity="0.5" />
-          {/* Hojas */}
           <path d="M8,45 Q15,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
           <path d="M42,45 Q35,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
         </g>
@@ -555,12 +553,12 @@ function FloralDecorations() {
       <svg
         style={{
           position: "absolute",
-          top: "-10px",
-          right: "-10px",
-          width: "80px",
-          height: "80px",
+          top: "-5px",
+          right: "-5px",
+          width: "90px",
+          height: "90px",
           pointerEvents: "none",
-          opacity: 0.6,
+          opacity: 0.5,
         }}
         viewBox="0 0 100 100"
       >
@@ -579,12 +577,12 @@ function FloralDecorations() {
       <svg
         style={{
           position: "absolute",
-          bottom: "-10px",
-          left: "-10px",
-          width: "80px",
-          height: "80px",
+          bottom: "-5px",
+          left: "-5px",
+          width: "90px",
+          height: "90px",
           pointerEvents: "none",
-          opacity: 0.6,
+          opacity: 0.5,
         }}
         viewBox="0 0 100 100"
       >
@@ -603,12 +601,12 @@ function FloralDecorations() {
       <svg
         style={{
           position: "absolute",
-          bottom: "-10px",
-          right: "-10px",
-          width: "80px",
-          height: "80px",
+          bottom: "-5px",
+          right: "-5px",
+          width: "90px",
+          height: "90px",
           pointerEvents: "none",
-          opacity: 0.6,
+          opacity: 0.5,
         }}
         viewBox="0 0 100 100"
       >
@@ -620,45 +618,6 @@ function FloralDecorations() {
           <circle cx="25" cy="28" r="6" fill="#c4a882" opacity="0.5" />
           <path d="M8,45 Q15,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
           <path d="M42,45 Q35,35 25,38" stroke="#b8a99a" strokeWidth="1.5" fill="none" opacity="0.5" />
-        </g>
-      </svg>
-
-      {/* Flores pequeñas a los lados del botón */}
-      <svg
-        style={{
-          position: "absolute",
-          left: "10px",
-          bottom: "70px",
-          width: "40px",
-          height: "40px",
-          pointerEvents: "none",
-          opacity: 0.5,
-        }}
-        viewBox="0 0 50 50"
-      >
-        <ellipse cx="10" cy="15" rx="6" ry="8" fill="#d4c0a8" opacity="0.7" />
-        <ellipse cx="6" cy="22" rx="6" ry="8" fill="#d4c0a8" opacity="0.6" />
-        <ellipse cx="14" cy="22" rx="6" ry="8" fill="#d4c0a8" opacity="0.6" />
-        <circle cx="10" cy="20" r="4" fill="#c4a882" opacity="0.5" />
-      </svg>
-
-      <svg
-        style={{
-          position: "absolute",
-          right: "10px",
-          bottom: "70px",
-          width: "40px",
-          height: "40px",
-          pointerEvents: "none",
-          opacity: 0.5,
-        }}
-        viewBox="0 0 50 50"
-      >
-        <g transform="scale(-1, 1) translate(-50, 0)">
-          <ellipse cx="10" cy="15" rx="6" ry="8" fill="#d4c0a8" opacity="0.7" />
-          <ellipse cx="6" cy="22" rx="6" ry="8" fill="#d4c0a8" opacity="0.6" />
-          <ellipse cx="14" cy="22" rx="6" ry="8" fill="#d4c0a8" opacity="0.6" />
-          <circle cx="10" cy="20" r="4" fill="#c4a882" opacity="0.5" />
         </g>
       </svg>
     </>
@@ -1008,7 +967,7 @@ export default function Home() {
   ];
 
   // ====================================================
-  // 🎨 ESTILOS
+  // 🎨 ESTILOS - PANTALLA DE BIENVENIDA
   // ====================================================
   
   const welcomeStyles = {
@@ -1023,41 +982,63 @@ export default function Home() {
     container: {
       width: "100%",
       maxWidth: 550,
-      background: COLORS.white,
+      background: `url(${BACKGROUND_IMAGE}) center/cover no-repeat`,
       borderRadius: 60,
-      boxShadow: `0 15px 40px rgba(0,0,0,0.05)`,
-      padding: "40px 30px",
-      border: `1px solid ${COLORS.accentLight}`,
+      boxShadow: `0 15px 40px rgba(0,0,0,0.08)`,
+      padding: "50px 30px",
+      border: `2px solid ${COLORS.accentLight}`,
       textAlign: "center",
       cursor: "pointer",
       transition: "transform 0.3s ease",
       position: "relative",
       overflow: "hidden",
+      minHeight: "420px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    // Capa de superposición para suavizar el fondo
+    overlay: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: "rgba(255, 255, 255, 0.75)",
+      backdropFilter: "blur(2px)",
+      zIndex: 0,
+    },
+    content: {
+      position: "relative",
+      zIndex: 1,
+      width: "100%",
     },
     welcomeImage: {
       width: "100%",
-      maxWidth: "280px",
+      maxWidth: "220px",
       height: "auto",
-      borderRadius: "20px",
+      borderRadius: "50%",
       margin: "0 auto 15px",
       display: "block",
       objectFit: "cover",
-      boxShadow: "0 8px 25px rgba(0,0,0,0.08)",
+      boxShadow: "0 8px 25px rgba(0,0,0,0.12)",
+      border: "3px solid rgba(255,255,255,0.8)",
     },
     names: {
       fontFamily: '"Great Vibes", cursive',
-      fontSize: "clamp(2.2rem, 6vw, 3rem)",
+      fontSize: "clamp(2.5rem, 7vw, 3.5rem)",
       fontWeight: 400,
       color: COLORS.gold,
       textAlign: "center",
-      marginBottom: 8,
+      marginBottom: 5,
       lineHeight: 1.2,
     },
     subtitle: {
       fontSize: "clamp(1rem, 3.5vw, 1.2rem)",
       color: COLORS.textMedium,
       textAlign: "center",
-      marginBottom: 12,
+      marginBottom: 10,
       fontFamily: "'Quicksand', sans-serif",
       fontWeight: 400,
     },
@@ -1789,7 +1770,7 @@ export default function Home() {
         `}</style>
       </Head>
   
-      {/* PANTALLA 1: BIENVENIDA CON FLORES DECORATIVAS */}
+      {/* PANTALLA 1: BIENVENIDA - CON FONDO FLORAL */}
       {!envelopeOpen && (
         <div style={welcomeStyles.page}>
           <div 
@@ -1802,25 +1783,30 @@ export default function Home() {
               if (e.key === "Enter" || e.key === " ") abrirSobre();
             }}
           >
-            {/* 🌸 FLORES DECORATIVAS EN LAS ESQUINAS Y COSTADOS */}
+            {/* Capa de superposición para que el texto sea legible */}
+            <div style={welcomeStyles.overlay} />
+            
+            {/* 🌸 FLORES DECORATIVAS */}
             <FloralDecorations />
             
-            <img 
-              src={SOBRE_IMAGE}
-              alt="Vanessa & Andrés"
-              style={welcomeStyles.welcomeImage}
-            />
-            
-            <div style={welcomeStyles.names}>
-              Vanessa & Andrés
-            </div>
-            
-            <div style={welcomeStyles.subtitle}>• ¡NOS CASAMOS! •</div>
-            
-            <div style={welcomeStyles.date}>23 | 04 | 2027</div>
-            
-            <div style={welcomeStyles.openButton}>
-              CLICK PARA ABRIR LA INVITACIÓN
+            <div style={welcomeStyles.content}>
+              <img 
+                src={SOBRE_IMAGE}
+                alt="Vanessa & Andrés"
+                style={welcomeStyles.welcomeImage}
+              />
+              
+              <div style={welcomeStyles.names}>
+                Vanessa & Andrés
+              </div>
+              
+              <div style={welcomeStyles.subtitle}>• ¡NOS CASAMOS! •</div>
+              
+              <div style={welcomeStyles.date}>23 | 04 | 2027</div>
+              
+              <div style={welcomeStyles.openButton}>
+                CLICK PARA ABRIR LA INVITACIÓN
+              </div>
             </div>
           </div>
         </div>
