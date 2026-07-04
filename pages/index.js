@@ -862,7 +862,7 @@ export default function Home() {
   ];
 
   // ====================================================
-  // 🎨 ESTILOS - NUEVA PANTALLA DE BIENVENIDA
+  // 🎨 ESTILOS
   // ====================================================
   
   const welcomeStyles = {
@@ -880,26 +880,36 @@ export default function Home() {
       background: COLORS.white,
       borderRadius: 60,
       boxShadow: `0 15px 40px rgba(0,0,0,0.05)`,
-      padding: "50px 30px",
+      padding: "40px 30px",
       border: `1px solid ${COLORS.accentLight}`,
       textAlign: "center",
       cursor: "pointer",
       transition: "transform 0.3s ease",
     },
+    welcomeImage: {
+      width: "100%",
+      maxWidth: "280px",
+      height: "auto",
+      borderRadius: "20px",
+      margin: "0 auto 15px",
+      display: "block",
+      objectFit: "cover",
+      boxShadow: "0 8px 25px rgba(0,0,0,0.08)",
+    },
     names: {
       fontFamily: '"Great Vibes", cursive',
-      fontSize: "clamp(3.5rem, 10vw, 5rem)",
+      fontSize: "clamp(2.2rem, 6vw, 3rem)", // Más pequeño para que quepa en una línea
       fontWeight: 400,
       color: COLORS.gold,
       textAlign: "center",
-      marginBottom: 10,
+      marginBottom: 8,
       lineHeight: 1.2,
     },
     subtitle: {
-      fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
+      fontSize: "clamp(1rem, 3.5vw, 1.2rem)",
       color: COLORS.textMedium,
       textAlign: "center",
-      marginBottom: 15,
+      marginBottom: 12,
       fontFamily: "'Quicksand', sans-serif",
       fontWeight: 400,
     },
@@ -907,7 +917,7 @@ export default function Home() {
       fontSize: "clamp(1.5rem, 5vw, 2rem)",
       color: COLORS.textDark,
       textAlign: "center",
-      marginBottom: 30,
+      marginBottom: 25,
       fontFamily: "'Quicksand', sans-serif",
       fontWeight: 300,
       letterSpacing: "2px",
@@ -1643,6 +1653,13 @@ export default function Home() {
               if (e.key === "Enter" || e.key === " ") abrirSobre();
             }}
           >
+            {/* ✅ IMAGEN DE LOS NOVIOS - ARRIBA DE TODO */}
+            <img 
+              src={SOBRE_IMAGE}
+              alt="Vanessa & Andrés"
+              style={welcomeStyles.welcomeImage}
+            />
+            
             <div style={welcomeStyles.names}>
               Vanessa & Andrés
             </div>
