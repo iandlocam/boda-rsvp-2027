@@ -571,16 +571,16 @@ export default function Home() {
   const TIMELINE_ICON_SIZE = 80;
   
   const COLOR_PALETTE = [
-    "#4A6B8A",
-    "#6B8FA0",
-    "#8BAA7A",
-    "#B5A68A",
-    "#D4B896",
-    "#C49A8A",
+    "#DCE1C1",
+    "#FBE9B9",
+    "#C9DCFD",
+    "#F4D4E1",
+    "#F5C89F",
+    "#C7B7E3",
   ];
   
   // ====================================================
-  // 📋 DRESS CODE
+  // 📋 DRESS CODE - TEXTO CON SALTOS DE LÍNEA
   // ====================================================
   
   const DRESS_CODE = {
@@ -589,7 +589,7 @@ export default function Home() {
       "Formal / jardín elegante",
       "Te sugerimos telas frescas y cómodas. Evita tacones muy delgados por el terreno.",
       "Ayúdanos a que la novia sea la única de blanco. Les pedimos no usar blanco ni tonos similares.",
-      "🤍¡Gracias por ser parte de este día! 🤍",
+      "¡Gracias por ser parte de este día! 🤍",
       "Les sugerimos los siguientes colores."
     ],
   };
@@ -828,4 +828,1370 @@ export default function Home() {
 
   // ====================================================
   // 📍 UBICACIONES
-  // =
+  // ====================================================
+  
+  const MAPS_CEREMONY_URL = "https://maps.google.com/?q=Parroquia%20de%20San%20Miguel%20Arcangel%2C%20Jiutepec%2C%20Morelos";
+  const WAZE_CEREMONY_URL = "https://waze.com/ul?q=Parroquia%20de%20San%20Miguel%20Arcangel%20Jiutepec%20Morelos";
+
+  const NUESTRA_HISTORIA = [
+    {
+      title: "Cómo empezó",
+      text: "Un día cualquiera se volvió especial. Entre risas, pláticas largas y complicidad, entendimos que esto iba en serio.",
+    },
+    {
+      title: "Lo que nos une",
+      text: "Amor por lo simple, por la familia, por viajar y por crear un hogar donde siempre haya paz (y música).",
+    },
+    {
+      title: "El gran día",
+      text: "Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo.",
+    },
+  ];
+
+  const TIMELINE = [
+    { time: "4:00 PM", title: "Ceremonia", iconType: "ceremony" },
+    { time: "5:00 PM", title: "Coctel", iconType: "reception" },
+    { time: "7:30 PM", title: "Cena", iconType: "dinner" },
+    { time: "9:00 PM", title: "Fiesta", iconType: "party" },
+    { time: "3:00 AM", title: "Cierre", iconType: "close" },
+  ];
+  
+  const MESA_REGALOS = [
+    { type: "liverpool", url: "https://www.liverpool.com.mx/" },
+    { type: "amazon", url: "https://www.amazon.com.mx/wedding/share/VanessaAndres/" },
+  ];
+
+  // ====================================================
+  // 🎨 ESTILOS
+  // ====================================================
+  
+  const envelopeStyles = {
+    pageContainer: {
+      minHeight: "100vh",
+      backgroundColor: COLORS.cream,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "20px",
+    },
+    wrap: {
+      width: "100%",
+      maxWidth: 600,
+      margin: "0 auto",
+      cursor: "pointer",
+      position: "relative",
+      zIndex: 10,
+      transition: "transform 0.3s ease",
+    },
+    envelope: {
+      width: "100%",
+      aspectRatio: "0.85/1",
+      position: "relative",
+      borderRadius: 30,
+      overflow: "hidden",
+      background: COLORS.cream,
+      boxShadow: `0 20px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08)`,
+      border: `4px solid ${COLORS.white}`,
+      display: "flex",
+      flexDirection: "column",
+    },
+    topImage: {
+      width: "calc(100% - 40px)",
+      height: "auto",
+      maxHeight: "350px",
+      objectFit: "contain",
+      objectPosition: "center",
+      display: "block",
+      margin: "15px auto 10px",
+      borderBottom: `2px solid ${COLORS.accentLight}`,
+    },
+    content: {
+      flex: 1,
+      padding: "0 20px 20px 20px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-end",
+      alignItems: "center",
+      textAlign: "center",
+    },
+    clickText: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      color: COLORS.textDark,
+      opacity: 0.7,
+      margin: "20px 0 15px 0",
+      borderTop: `1px dashed ${COLORS.accentLight}`,
+      borderBottom: `1px dashed ${COLORS.accentLight}`,
+      padding: "12px 0",
+      width: "100%",
+    },
+    reservedSection: {
+      marginTop: 40,
+      marginBottom: 10,
+      textAlign: "center",
+    },
+    reservedText: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 16,
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      color: COLORS.textDark,
+      opacity: 0.7,
+      marginBottom: 5,
+    },
+    reservedNumber: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 48,
+      fontWeight: 700,
+      color: COLORS.blueSoft,
+      lineHeight: 1,
+      margin: "5px 0",
+    },
+    reservedSubtext: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 14,
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      color: COLORS.textDark,
+      opacity: 0.6,
+    },
+    seal: {
+      position: "absolute",
+      bottom: 30,
+      right: 30,
+      width: 50,
+      height: 50,
+      borderRadius: "50%",
+      background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.accentLight})`,
+      border: `2px solid ${COLORS.white}`,
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: COLORS.textDark,
+      fontSize: 20,
+      opacity: 0.7,
+    },
+    floralFrame: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      objectPosition: "center",
+      pointerEvents: "none",
+      zIndex: 1,
+      opacity: FLORAL_FRAME_OPACITY,
+    },
+  };
+
+  const invitationStyles = {
+    page: {
+      minHeight: "100vh",
+      backgroundColor: COLORS.cream,
+      fontFamily: "'Quicksand', sans-serif",
+      color: COLORS.textDark,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "20px",
+    },
+    card: {
+      width: "100%",
+      maxWidth: 800,
+      background: COLORS.white,
+      borderRadius: 60,
+      boxShadow: `0 15px 40px rgba(0,0,0,0.05)`,
+      padding: "50px 40px",
+      border: `1px solid ${COLORS.accentLight}`,
+    },
+    names: {
+      fontFamily: '"Great Vibes", cursive',
+      fontSize: "clamp(3.5rem, 10vw, 5.5rem)",
+      fontWeight: 400,
+      color: COLORS.gold,
+      textAlign: "center",
+      marginBottom: 30,
+      lineHeight: 1.2,
+      textShadow: "0 2px 8px rgba(196, 168, 130, 0.15)",
+    },
+    subtitle: {
+      fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
+      color: COLORS.textMedium,
+      textAlign: "center",
+      marginBottom: 20,
+      fontFamily: "'Quicksand', sans-serif",
+      fontWeight: 400,
+    },
+    invitationText: {
+      fontSize: "clamp(1rem, 3.5vw, 1.1rem)",
+      color: COLORS.textMedium,
+      textAlign: "center",
+      marginBottom: 25,
+      lineHeight: 1.6,
+      fontFamily: "'Quicksand', sans-serif",
+    },
+    familySection: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "15px",
+      margin: "30px 0 40px",
+    },
+    familyCard: {
+      background: COLORS.cream,
+      borderRadius: 30,
+      padding: "20px 15px",
+      textAlign: "center",
+      border: `1px solid ${COLORS.accentLight}`,
+    },
+    familyLabel: {
+      fontSize: "0.9rem",
+      color: COLORS.gold,
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: "1px",
+      marginBottom: 10,
+    },
+    familyName: {
+      fontSize: "1.1rem",
+      color: COLORS.textDark,
+      fontWeight: 500,
+    },
+    dividerImage: {
+      width: "100%",
+      maxWidth: "600px",
+      height: "auto",
+      margin: "40px auto",
+      display: "block",
+      opacity: 0.7,
+    },
+    colorPalette: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: "6px",
+      margin: "15px 0 10px",
+      flexWrap: "wrap",
+      padding: "0 10px",
+    },
+    colorDot: {
+      width: "32px",
+      height: "32px",
+      borderRadius: "50%",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
+      border: `2px solid ${COLORS.white}`,
+      transition: "transform 0.2s",
+      cursor: "default",
+    },
+    ubicacionesContainer: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "20px",
+      marginTop: "20px",
+    },
+    ubicacionCard: {
+      background: COLORS.white,
+      borderRadius: 40,
+      padding: "25px 20px",
+      textAlign: "center",
+      border: `1px solid ${COLORS.accentLight}`,
+    },
+    ubicacionTitle: {
+      fontSize: "1.3rem",
+      fontWeight: 600,
+      color: COLORS.gold,
+      marginBottom: 10,
+    },
+    ubicacionAddress: {
+      fontSize: "1rem",
+      color: COLORS.textMedium,
+      marginBottom: 15,
+    },
+    storeLogo: {
+      width: "120px",
+      height: "auto",
+      marginBottom: "10px",
+      display: "block",
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+    secondaryGallery: {
+      display: "grid",
+      gridTemplateColumns: "repeat(3, 1fr)",
+      gap: "15px",
+      marginTop: "30px",
+    },
+    secondaryGalleryImage: {
+      width: "100%",
+      aspectRatio: "1/1",
+      objectFit: "cover",
+      borderRadius: 20,
+      cursor: "pointer",
+      transition: "transform 0.2s",
+      border: `2px solid ${COLORS.white}`,
+      boxShadow: `0 5px 15px rgba(0,0,0,0.1)`,
+      transform: "scale(1.1)",
+    },
+    bebidasContainer: {
+      display: "grid",
+      gridTemplateColumns: "repeat(2, 1fr)",
+      gap: "12px",
+      marginTop: "20px",
+    },
+    bebidaOption: {
+      background: COLORS.white,
+      borderRadius: 40,
+      padding: "12px",
+      textAlign: "center",
+      cursor: "pointer",
+      border: `2px solid ${COLORS.borderGray}`,
+      transition: "all 0.2s",
+      fontSize: "1rem",
+      fontWeight: 500,
+      color: COLORS.textDark,
+    },
+    bebidaOptionSelected: {
+      background: COLORS.blueSoft,
+      borderColor: COLORS.blueSoft,
+      color: COLORS.white,
+    },
+    alergiasInput: {
+      width: "100%",
+      padding: "15px 20px",
+      border: `2px solid ${COLORS.blueSoft}`,
+      borderRadius: 50,
+      fontSize: "1rem",
+      background: COLORS.cream,
+      fontFamily: "'Quicksand', sans-serif",
+      marginTop: "15px",
+      color: COLORS.textDark,
+    },
+    countdownContainer: {
+      display: "grid",
+      gridTemplateColumns: "repeat(4, 1fr)",
+      gap: "clamp(8px, 2vw, 15px)",
+      width: "100%",
+      maxWidth: 500,
+      margin: "0 auto 40px",
+      background: COLORS.white,
+      borderRadius: 100,
+      padding: "clamp(15px, 4vw, 25px) clamp(10px, 3vw, 20px)",
+      boxShadow: `0 5px 20px rgba(44,62,74,0.08)`,
+    },
+    countdownItem: {
+      textAlign: "center",
+    },
+    countdownNumber: {
+      fontSize: "clamp(1.5rem, 6vw, 2.5rem)",
+      fontWeight: 600,
+      color: COLORS.gold,
+      lineHeight: 1,
+    },
+    countdownLabel: {
+      fontSize: "clamp(0.65rem, 2.5vw, 0.9rem)",
+      textTransform: "uppercase",
+      letterSpacing: "1px",
+      color: COLORS.textMedium,
+    },
+    sectionTitle: {
+      fontFamily: '"Great Vibes", cursive',
+      fontSize: "clamp(2.2rem, 8vw, 3rem)",
+      fontWeight: 400,
+      color: COLORS.gold,
+      textAlign: "center",
+      marginBottom: "clamp(20px, 5vw, 30px)",
+      letterSpacing: "1px",
+    },
+    cardItem: {
+      background: COLORS.white,
+      borderRadius: 40,
+      padding: "clamp(20px, 4vw, 30px) clamp(15px, 3vw, 20px)",
+      textAlign: "center",
+      boxShadow: `0 8px 25px rgba(44,62,74,0.06)`,
+      border: `1px solid ${COLORS.accentLight}`,
+    },
+    formContainer: {
+      background: COLORS.white,
+      borderRadius: 60,
+      padding: "clamp(25px, 5vw, 40px) clamp(20px, 4vw, 30px)",
+      boxShadow: "0 8px 30px rgba(0,0,0,0.03)",
+    },
+    formGroup: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    label: {
+      fontSize: "clamp(0.8rem, 3vw, 0.9rem)",
+      color: COLORS.textMedium,
+      marginBottom: 8,
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: "1px",
+    },
+    input: {
+      padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
+      border: `2px solid ${COLORS.blueSoft}`,
+      borderRadius: 50,
+      fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      background: COLORS.cream,
+      fontFamily: "'Quicksand', sans-serif",
+    },
+    select: {
+      padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
+      border: `2px solid ${COLORS.blueSoft}`,
+      borderRadius: 50,
+      fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      background: COLORS.cream,
+      fontFamily: "'Quicksand', sans-serif",
+    },
+    textarea: {
+      padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
+      border: `2px solid ${COLORS.blueSoft}`,
+      borderRadius: 25,
+      fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      background: COLORS.cream,
+      fontFamily: "'Quicksand', sans-serif",
+      resize: "vertical",
+    },
+    button: {
+      background: COLORS.blueSoft,
+      color: COLORS.white,
+      border: "none",
+      padding: "clamp(15px, 4vw, 18px) clamp(25px, 6vw, 40px)",
+      fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
+      borderRadius: 60,
+      fontWeight: 600,
+      letterSpacing: "2px",
+      width: "100%",
+      marginTop: 30,
+      cursor: "pointer",
+      transition: "background 0.3s",
+      boxShadow: `0 10px 25px rgba(90,122,138,0.3)`,
+      fontFamily: "'Quicksand', sans-serif",
+    },
+    carouselContainer: {
+      width: "100%",
+      maxWidth: 800,
+      margin: "20px auto 0",
+      position: "relative",
+      overflow: "hidden",
+      borderRadius: 30,
+      boxShadow: `0 10px 30px rgba(0,0,0,0.08)`,
+    },
+    carouselSlide: {
+      display: "flex",
+      transition: "transform 0.3s ease",
+      cursor: "pointer",
+    },
+    carouselImage: {
+      width: "100%",
+      flexShrink: 0,
+      height: "auto",
+      aspectRatio: "1.2/1",
+      objectFit: "cover",
+      borderRadius: 30,
+    },
+    carouselDots: {
+      display: "flex",
+      justifyContent: "center",
+      gap: "10px",
+      marginTop: "15px",
+      marginBottom: "10px",
+    },
+    carouselDot: {
+      width: "8px",
+      height: "8px",
+      borderRadius: "50%",
+      background: COLORS.accentLight,
+      transition: "all 0.3s ease",
+      cursor: "pointer",
+    },
+    carouselDotActive: {
+      width: "20px",
+      borderRadius: "10px",
+      background: COLORS.blueSoft,
+    },
+    timelineGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+      gap: "clamp(10px, 3vw, 20px)",
+    },
+    timelineIconBox: {
+      width: "clamp(60px, 15vw, 80px)",
+      height: "clamp(60px, 15vw, 80px)",
+      margin: "0 auto 15px",
+    },
+    timelineTime: {
+      fontSize: "clamp(1.3rem, 5vw, 1.8rem)",
+      fontWeight: 500,
+      color: COLORS.textDark,
+      marginBottom: 5,
+    },
+    timelineTitle: {
+      fontWeight: 700,
+      fontSize: "clamp(1rem, 4vw, 1.2rem)",
+      marginBottom: 5,
+      color: COLORS.gold,
+    },
+    softBox: {
+      borderRadius: 40,
+      border: `1px solid ${COLORS.borderGray}`,
+      background: COLORS.white,
+      padding: "clamp(15px, 4vw, 20px)",
+    },
+    moneyBox: {
+      borderRadius: 40,
+      border: `1px solid ${COLORS.borderGray}`,
+      background: COLORS.white,
+      padding: "30px 20px",
+      textAlign: "center",
+      marginTop: "20px",
+    },
+    linkBtnPrimary: {
+      display: "inline-block",
+      padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
+      borderRadius: 50,
+      background: COLORS.white,
+      color: COLORS.textDark,
+      textDecoration: "none",
+      fontWeight: 600,
+      border: `2px solid ${COLORS.borderGray}`,
+      fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      transition: "all 0.2s",
+    },
+    linkBtn: {
+      display: "inline-block",
+      padding: "clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)",
+      borderRadius: 50,
+      background: COLORS.white,
+      color: COLORS.textDark,
+      textDecoration: "none",
+      fontWeight: 600,
+      border: `2px solid ${COLORS.borderGray}`,
+      fontSize: "clamp(0.9rem, 3vw, 1rem)",
+      transition: "all 0.2s",
+    },
+    regalosContainer: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "30px",
+      marginTop: "20px",
+    },
+    regaloItem: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    regaloLink: {
+      background: COLORS.white,
+      padding: "15px 30px",
+      borderRadius: 60,
+      textDecoration: "none",
+      color: COLORS.textDark,
+      fontWeight: 600,
+      fontSize: "1.2rem",
+      boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
+      border: `1px solid ${COLORS.accentLight}`,
+      transition: "all 0.2s",
+      width: "100%",
+      maxWidth: 300,
+      textAlign: "center",
+      marginTop: "10px",
+    },
+    // ====================================================
+    // 🏨 ESTILOS PARA LA SECCIÓN DE HOSPEDAJES
+    // ====================================================
+    hospedajesContainer: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "20px",
+      marginTop: "10px",
+    },
+    hotelCard: {
+      background: COLORS.white,
+      borderRadius: 40,
+      padding: "20px 20px",
+      border: `1px solid ${COLORS.accentLight}`,
+      boxShadow: "0 5px 15px rgba(0,0,0,0.03)",
+    },
+    hotelNombre: {
+      fontSize: "clamp(1.1rem, 4vw, 1.3rem)",
+      fontWeight: 700,
+      color: COLORS.gold,
+      marginBottom: "10px",
+      textAlign: "center",
+    },
+    hotelRow: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "8px",
+      marginBottom: "6px",
+      fontSize: "clamp(0.85rem, 3vw, 0.95rem)",
+      flexWrap: "wrap",
+    },
+    hotelIcon: {
+      fontSize: "1.1rem",
+      opacity: 0.7,
+      minWidth: "24px",
+      textAlign: "center",
+    },
+    hotelLink: {
+      color: COLORS.blueSoft,
+      textDecoration: "none",
+      fontWeight: 500,
+      wordBreak: "break-all",
+    },
+    hotelMapsBtn: {
+      display: "inline-block",
+      padding: "4px 14px",
+      borderRadius: 30,
+      background: COLORS.white,
+      color: COLORS.textDark,
+      textDecoration: "none",
+      fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)",
+      fontWeight: 600,
+      border: `2px solid ${COLORS.borderGray}`,
+      transition: "all 0.2s",
+    },
+  };
+
+  const maxPases = Math.max(1, Number(guestData?.pasesAsignados || 1));
+  const pasesFromSheet = Number(guestData?.pasesConfirmados || 0);
+  const pasesMostrados =
+    asistenciaActual === "Sí"
+      ? pasesFromSheet > 0
+        ? pasesFromSheet
+        : Number(pasesConfirmados || 1)
+      : 0;
+
+  function abrirSobre() {
+    setEnvelopeOpen(true);
+    
+    setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.play()
+          .then(() => {
+            setAudioPlaying(true);
+            console.log("Audio reproduciéndose");
+          })
+          .catch(error => {
+            console.log("Autoplay bloqueado por el navegador:", error);
+          });
+      }
+    }, 500);
+
+    try {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {}
+  }
+
+  const handleUserInteraction = () => {
+    if (envelopeOpen && audioRef.current && !audioPlaying) {
+      audioRef.current.play()
+        .then(() => setAudioPlaying(true))
+        .catch(e => console.log("Error al reproducir:", e));
+    }
+  };
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (audioPlaying) {
+        audioRef.current.pause();
+        setAudioPlaying(false);
+      } else {
+        audioRef.current.play()
+          .then(() => setAudioPlaying(true))
+          .catch(e => console.log("Error al reproducir:", e));
+      }
+    }
+  };
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      setCurrentImageIndex((prev) => (prev + 1) % GALLERY_IMAGES.length);
+    } else if (touchStart - touchEnd < -50) {
+      setCurrentImageIndex((prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+    }
+  };
+
+  const openCarousel = (index) => {
+    setCarouselIndex(index);
+    setCarouselOpen(true);
+  };
+
+  const openSecondaryCarousel = (index) => {
+    setSecondaryCarouselIndex(index);
+    setSecondaryCarouselOpen(true);
+  };
+
+  return (
+    <>
+      <Head>
+        <title>Vanessa &amp; Andrés — 23 Abril 2027</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap"
+          rel="stylesheet"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>{`
+          textarea::placeholder { 
+            color: #000; 
+            opacity: 0.6; 
+          }
+          * {
+            box-sizing: border-box;
+          }
+        `}</style>
+      </Head>
+  
+      {/* SOBRE CERRADO */}
+      {!envelopeOpen && (
+        <div style={envelopeStyles.pageContainer}>
+          <div style={envelopeStyles.wrap}>
+            <div style={envelopeStyles.envelope}>
+              <img 
+                src={BACKGROUND_IMAGE}
+                alt="Marco floral" 
+                style={envelopeStyles.floralFrame}
+              />
+              
+              <img 
+                src={SOBRE_IMAGE}
+                alt="Vanessa & Andrés 23/04/2027" 
+                style={envelopeStyles.topImage}
+              />
+              
+              <div style={envelopeStyles.content}>
+                <div 
+                  style={envelopeStyles.clickText}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Abrir invitación"
+                  onClick={abrirSobre}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") abrirSobre();
+                  }}
+                >
+                  CLICK PARA ABRIR LA INVITACIÓN
+                </div>
+                
+                <div style={envelopeStyles.reservedSection}>
+                  <div style={envelopeStyles.reservedText}>
+                    HEMOS RESERVADO
+                  </div>
+                  <div style={envelopeStyles.reservedNumber}>
+                    {guestData?.pasesAsignados || 2}
+                  </div>
+                  <div style={envelopeStyles.reservedSubtext}>
+                    LUGARES EN SU HONOR
+                  </div>
+                </div>
+              </div>
+              
+              <div style={envelopeStyles.seal}>
+                ✦
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* INVITACIÓN */}
+      {envelopeOpen && (
+        <div 
+          style={invitationStyles.page}
+          onClick={handleUserInteraction}
+        >
+          <div style={invitationStyles.card}>
+            <audio
+              ref={audioRef}
+              src={SONG_URL}
+              loop
+              preload="auto"
+              style={{ display: 'none' }}
+            />
+
+            {/* Nombres en dorado */}
+            <div style={invitationStyles.names}>
+              Vanessa<br />&<br />Andrés
+            </div>
+            
+            <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
+
+            {/* Contador en dorado */}
+            <div style={invitationStyles.countdownContainer}>
+              <div style={invitationStyles.countdownItem}>
+                <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
+                <div style={invitationStyles.countdownLabel}>Días</div>
+              </div>
+              <div style={invitationStyles.countdownItem}>
+                <div style={invitationStyles.countdownNumber}>{timeLeft.hours}</div>
+                <div style={invitationStyles.countdownLabel}>Horas</div>
+              </div>
+              <div style={invitationStyles.countdownItem}>
+                <div style={invitationStyles.countdownNumber}>{timeLeft.minutes}</div>
+                <div style={invitationStyles.countdownLabel}>Minutos</div>
+              </div>
+              <div style={invitationStyles.countdownItem}>
+                <div style={invitationStyles.countdownNumber}>{timeLeft.seconds}</div>
+                <div style={invitationStyles.countdownLabel}>Segundos</div>
+              </div>
+            </div>
+
+            <div style={invitationStyles.invitationText}>
+              Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
+            </div>
+
+            {/* Familias y padrinos - títulos en dorado */}
+            <div style={invitationStyles.familySection}>
+              <div style={invitationStyles.familyCard}>
+                <div style={invitationStyles.familyLabel}>Papás de la novia</div>
+                <div style={invitationStyles.familyName}>María González</div>
+                <div style={invitationStyles.familyName}>Juan Pérez</div>
+              </div>
+              <div style={invitationStyles.familyCard}>
+                <div style={invitationStyles.familyLabel}>Papás del novio</div>
+                <div style={invitationStyles.familyName}>Laura Martínez</div>
+                <div style={invitationStyles.familyName}>Pedro Sánchez</div>
+              </div>
+              <div style={invitationStyles.familyCard}>
+                <div style={invitationStyles.familyLabel}>Padrinos de velación</div>
+                <div style={invitationStyles.familyName}>Sofía Ramírez</div>
+                <div style={invitationStyles.familyName}>Diego López</div>
+              </div>
+            </div>
+
+            {/* Galería */}
+            <div style={{ marginTop: 30 }}>
+              <div style={invitationStyles.sectionTitle}>Galería</div>
+              
+              <div style={invitationStyles.carouselContainer}>
+                <div
+                  style={{
+                    ...invitationStyles.carouselSlide,
+                    transform: `translateX(-${currentImageIndex * 100}%)`,
+                  }}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
+                  {GALLERY_IMAGES.map((img, idx) => (
+                    <img
+                      key={idx}
+                      src={img}
+                      alt={`Foto ${idx + 1}`}
+                      style={invitationStyles.carouselImage}
+                      onClick={() => openCarousel(idx)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div style={invitationStyles.carouselDots}>
+                {GALLERY_IMAGES.map((_, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      ...invitationStyles.carouselDot,
+                      ...(idx === currentImageIndex ? invitationStyles.carouselDotActive : {}),
+                    }}
+                    onClick={() => setCurrentImageIndex(idx)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Nuestra historia - títulos en dorado */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Nuestra historia</div>
+              <div style={invitationStyles.softBox}>
+                {NUESTRA_HISTORIA.map((b, i) => (
+                  <div key={i} style={{ marginBottom: i === NUESTRA_HISTORIA.length - 1 ? 0 : 20 }}>
+                    <div style={{ fontFamily: '"Great Vibes", cursive', fontSize: "clamp(1.5rem, 6vw, 1.8rem)", color: COLORS.gold, marginBottom: 5, textAlign: "center" }}>
+                      {b.title}
+                    </div>
+                    <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textMedium, textAlign: "center", lineHeight: 1.6 }}>{b.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <img 
+              src={DIVIDER_IMAGE_1}
+              alt="Separador floral 1"
+              style={invitationStyles.dividerImage}
+            />
+
+            {/* Itinerario - títulos en dorado */}
+            <div style={{ marginTop: 20 }}>
+              <div style={invitationStyles.sectionTitle}>Itinerario</div>
+              <div style={invitationStyles.timelineGrid}>
+                {TIMELINE.map((t, i) => (
+                  <div key={i} style={invitationStyles.cardItem}>
+                    <div style={invitationStyles.timelineIconBox}>
+                      <TimelineIcon type={t.iconType} size={80} />
+                    </div>
+                    <div style={invitationStyles.timelineTime}>{t.time}</div>
+                    <div style={invitationStyles.timelineTitle}>{t.title}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Dress code - TEXTO CENTRADO CON SALTOS DE LÍNEA */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Dress code</div>
+              <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
+                <img
+                  src={DRESS_CODE_IMAGE}
+                  alt="Dress code"
+                  style={{ width: "min(200px, 60%)", maxWidth: "100%", height: "auto", margin: "0 auto 20px", display: "block" }}
+                />
+                
+                {/* ✅ TEXTO CENTRADO CON SALTOS DE LÍNEA */}
+                {DRESS_CODE.text.map((linea, index) => (
+                  <p 
+                    key={index} 
+                    style={{ 
+                      fontSize: "clamp(0.9rem, 3vw, 1rem)", 
+                      color: COLORS.textDark, 
+                      margin: index === 0 ? "0 0 4px 0" : "4px 0",
+                      textAlign: "center",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {linea}
+                  </p>
+                ))}
+                
+                {/* Paleta de colores */}
+                <div style={invitationStyles.colorPalette}>
+                  {COLOR_PALETTE.map((color, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        ...invitationStyles.colorDot,
+                        backgroundColor: color,
+                        marginTop: idx % 2 === 0 ? "0px" : "-12px",
+                      }}
+                      title={`Color ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Carrusel de 3 imágenes */}
+            <div style={{ marginTop: 30 }}>
+              <div style={invitationStyles.carouselContainer}>
+                <div
+                  style={{
+                    ...invitationStyles.carouselSlide,
+                    transform: `translateX(-${carousel3ImageIndex * 100}%)`,
+                  }}
+                  onTouchStart={handleCarousel3TouchStart}
+                  onTouchMove={handleCarousel3TouchMove}
+                  onTouchEnd={handleCarousel3TouchEnd}
+                >
+                  {CAROUSEL_3_IMAGES.map((img, idx) => (
+                    <img
+                      key={idx}
+                      src={img}
+                      alt={`Carrusel 3 imagen ${idx + 1}`}
+                      style={invitationStyles.carouselImage}
+                      onClick={() => openCarousel3(idx)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div style={invitationStyles.carouselDots}>
+                {CAROUSEL_3_IMAGES.map((_, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      ...invitationStyles.carouselDot,
+                      ...(idx === carousel3ImageIndex ? invitationStyles.carouselDotActive : {}),
+                    }}
+                    onClick={() => setCarousel3ImageIndex(idx)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Más momentos */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Más momentos</div>
+              <div style={invitationStyles.secondaryGallery}>
+                {SECONDARY_GALLERY_IMAGES.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt={`Foto secundaria ${idx + 1}`}
+                    style={invitationStyles.secondaryGalleryImage}
+                    onClick={() => openSecondaryCarousel(idx)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Ceremonia y recepción */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
+              <div style={invitationStyles.ubicacionesContainer}>
+                <div style={invitationStyles.ubicacionCard}>
+                  <div style={invitationStyles.ubicacionTitle}>📍 Ceremonia</div>
+                  <div style={invitationStyles.ubicacionAddress}>
+                    Parroquia de San Miguel Arcángel<br />
+                    Jiutepec, Morelos
+                  </div>
+                  <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
+                    <a href={MAPS_CEREMONY_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtnPrimary}>
+                      Google Maps
+                    </a>
+                    <a href={WAZE_CEREMONY_URL} target="_blank" rel="noreferrer" style={invitationStyles.linkBtn}>
+                      Waze
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mesa de regalos */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Mesa de regalos</div>
+              <div style={invitationStyles.softBox}>
+                <div style={invitationStyles.regalosContainer}>
+                  <div style={invitationStyles.regaloItem}>
+                    <img 
+                      src={LIVERPOOL_LOGO}
+                      alt="Liverpool"
+                      style={invitationStyles.storeLogo}
+                    />
+                    <a href={MESA_REGALOS[0].url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
+                      Ver lista
+                    </a>
+                  </div>
+                  
+                  <div style={invitationStyles.regaloItem}>
+                    <img 
+                      src={AMAZON_LOGO}
+                      alt="Amazon"
+                      style={invitationStyles.storeLogo}
+                    />
+                    <a href={MESA_REGALOS[1].url} target="_blank" rel="noreferrer" style={invitationStyles.regaloLink}>
+                      Ver lista
+                    </a>
+                  </div>
+                </div>
+
+                {/* Regalo monetario - con icono de sobre */}
+                <div style={invitationStyles.moneyBox}>
+                  <div style={{ fontSize: "3rem", marginBottom: "10px" }}>✉️</div>
+                  <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textMedium, textAlign: "center" }}>
+                    Tu presencia es nuestro mejor regalo y en caso de desear hacernos un presente, puedes realizarlo en lluvia de sobres.❤️
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Hospedajes */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Hospedajes</div>
+              <div style={invitationStyles.hospedajesContainer}>
+                {HOTELES.map((hotel, idx) => (
+                  <div key={idx} style={invitationStyles.hotelCard}>
+                    <div style={invitationStyles.hotelNombre}>{hotel.nombre}</div>
+                    
+                    <div style={invitationStyles.hotelRow}>
+                      <span style={invitationStyles.hotelIcon}>🌐</span>
+                      <a 
+                        href={hotel.web} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        style={invitationStyles.hotelLink}
+                      >
+                        {hotel.web.replace(/^https?:\/\//, '')}
+                      </a>
+                    </div>
+                    
+                    <div style={invitationStyles.hotelRow}>
+                      <span style={invitationStyles.hotelIcon}>📍</span>
+                      <a 
+                        href={hotel.maps} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        style={invitationStyles.hotelMapsBtn}
+                      >
+                        Google Maps
+                      </a>
+                    </div>
+                    
+                    <div style={invitationStyles.hotelRow}>
+                      <span style={invitationStyles.hotelIcon}>📞</span>
+                      <a 
+                        href={`tel:${hotel.telefono}`} 
+                        style={invitationStyles.hotelLink}
+                      >
+                        {hotel.telefono}
+                      </a>
+                    </div>
+                    
+                    <div style={invitationStyles.hotelRow}>
+                      <span style={invitationStyles.hotelIcon}>💬</span>
+                      <a 
+                        href={`https://wa.me/${hotel.whatsapp.replace(/[+\s]/g, '')}`} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        style={{
+                          ...invitationStyles.hotelLink,
+                          color: "#25D366",
+                          fontWeight: 600,
+                        }}
+                      >
+                        WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                ))}
+                
+                <div style={invitationStyles.hotelCard}>
+                  <div style={invitationStyles.hotelNombre}>{AIRBNB_DATA.nombre}</div>
+                  
+                  <div style={invitationStyles.hotelRow}>
+                    <span style={invitationStyles.hotelIcon}>🏠</span>
+                    <span style={{ fontSize: "clamp(0.85rem, 3vw, 0.95rem)", color: COLORS.textMedium }}>
+                      {AIRBNB_DATA.texto}
+                    </span>
+                  </div>
+                  
+                  <div style={invitationStyles.hotelRow}>
+                    <span style={invitationStyles.hotelIcon}>🔗</span>
+                    <a 
+                      href={AIRBNB_DATA.link} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      style={invitationStyles.hotelLink}
+                    >
+                      Ver lista de Airbnb
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ¿Qué se toman los chicos? */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>¿Qué se toman los chicos?</div>
+              <div style={invitationStyles.softBox}>
+                <div style={invitationStyles.bebidasContainer}>
+                  {bebidasOptions.map((bebida) => (
+                    <div
+                      key={bebida.id}
+                      style={{
+                        ...invitationStyles.bebidaOption,
+                        ...(bebidasSeleccionadas.includes(bebida.id) ? invitationStyles.bebidaOptionSelected : {}),
+                      }}
+                      onClick={() => toggleBebida(bebida.id)}
+                    >
+                      {bebida.label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* ¿Alergias? */}
+            <div style={{ marginTop: 30 }}>
+              <div style={invitationStyles.sectionTitle}>¿Alergias?</div>
+              <div style={invitationStyles.softBox}>
+                <input
+                  type="text"
+                  style={invitationStyles.alergiasInput}
+                  placeholder="Ej. Alergia al marisco, gluten, etc."
+                  value={alergias}
+                  onChange={(e) => setAlergias(e.target.value)}
+                  disabled={yaConfirmo || rsvpStatus === "saving"}
+                />
+              </div>
+            </div>
+
+            {/* Reservaciones */}
+            <div style={{ marginTop: 40 }}>
+              <div style={invitationStyles.sectionTitle}>Reservaciones</div>
+              <div style={envelopeStyles.reservedSection}>
+                <div style={envelopeStyles.reservedText}>
+                  HEMOS RESERVADO
+                </div>
+                <div style={envelopeStyles.reservedNumber}>
+                  {guestData?.pasesAsignados || 2}
+                </div>
+                <div style={envelopeStyles.reservedSubtext}>
+                  LUGARES EN SU HONOR
+                </div>
+              </div>
+            </div>
+
+            {/* Confirma tu asistencia */}
+            <div style={{ marginTop: 30 }}>
+              <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
+              <div style={invitationStyles.formContainer}>
+                <div style={invitationStyles.formGroup}>
+                  <div style={invitationStyles.label}>
+                    {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
+                    <span style={{ marginLeft: 8, padding: "4px 8px", background: COLORS.accentLight, borderRadius: 50, fontSize: "0.8rem" }}>
+                      {guestId ? `ID: ${guestId}` : "ID no detectado"}
+                    </span>
+                  </div>
+
+                  {guestData?.nombre && (
+                    <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.9rem)", color: COLORS.textMedium, marginBottom: 10 }}>
+                      <b>{guestData.nombre}</b>, nos dará mucho gusto verte.
+                      {guestData.pasesAsignados ? (
+                        <> · Pases asignados: <b>{guestData.pasesAsignados}</b></>
+                      ) : null}
+                    </div>
+                  )}
+
+                  {guestLoadError && (
+                    <div style={{ color: COLORS.blueSoft, marginBottom: 10 }}>No se pudo cargar tu invitación: {guestLoadError}</div>
+                  )}
+
+                  {yaConfirmo && (
+                    <div style={{ color: COLORS.blueSoft, marginBottom: 10 }}>
+                      {asistenciaActual === "Sí" ? (
+                        <>
+                          Gracias por confirmar <b>{pasesMostrados}</b> {pasesMostrados === 1 ? "pase" : "pases"} 🥳
+                          <br />
+                          Los esperamos con toda la actitud ✨
+                        </>
+                      ) : (
+                        <>Gracias por avisarnos, te vamos a extrañar 💔</>
+                      )}
+                    </div>
+                  )}
+
+                  {!yaConfirmo && (
+                    <>
+                      <textarea
+                        style={invitationStyles.textarea}
+                        value={mensaje}
+                        onChange={(e) => setMensaje(e.target.value)}
+                        placeholder="Escribe un mensaje de buenos deseos (opcional)"
+                        disabled={rsvpStatus === "saving"}
+                        rows="3"
+                      />
+
+                      {guestData?.pasesAsignados && String(guestData.pasesAsignados).trim() !== "" && (
+                        <div style={{ marginTop: 15 }}>
+                          <div style={invitationStyles.label}>Pases a confirmar:</div>
+                          <select
+                            value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
+                            onChange={(e) => setPasesConfirmados(Number(e.target.value))}
+                            style={invitationStyles.select}
+                            disabled={rsvpStatus === "saving"}
+                          >
+                            {Array.from({ length: maxPases }, (_, i) => i + 1).map((n) => (
+                              <option key={n} value={n}>
+                                {n} {n === 1 ? "pase" : "pases"}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+
+                      <div style={{ display: "flex", gap: "clamp(10px, 3vw, 15px)", marginTop: 20, flexWrap: "wrap" }}>
+                        <button
+                          style={{ ...invitationStyles.button, width: "auto", flex: 1, minWidth: "140px" }}
+                          onClick={() => confirmar("Sí")}
+                          disabled={rsvpStatus === "saving"}
+                        >
+                          Sí asistiré
+                        </button>
+
+                        <button
+                          style={{ ...invitationStyles.button, width: "auto", flex: 1, minWidth: "140px", background: COLORS.textMedium }}
+                          onClick={() => confirmar("No")}
+                          disabled={rsvpStatus === "saving"}
+                        >
+                          No podré asistir
+                        </button>
+                      </div>
+                    </>
+                  )}
+
+                  {rsvpStatus === "saving" && <div style={{ marginTop: 10, color: COLORS.textMedium }}>Guardando tu confirmación…</div>}
+                  {rsvpStatus === "error" && <div style={{ marginTop: 10, color: COLORS.blueSoft }}>{rsvpError}</div>}
+
+                  <div style={{ marginTop: 15, fontSize: "0.8rem", color: COLORS.textMedium }}>
+                    Tip: tu enlace debe incluir <code>?id=AV001</code> (cada invitado tiene un ID).
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Nota final */}
+            <div style={{ marginTop: 30, fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.textMedium, textAlign: "center" }}>
+              *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Botón Flotante de Música */}
+      {envelopeOpen && (
+        <MusicFloatingButton
+          isPlaying={audioPlaying}
+          onClick={toggleMusic}
+        />
+      )}
+
+      {/* Carruseles */}
+      {carouselOpen && (
+        <ImageCarousel
+          images={GALLERY_IMAGES}
+          initialIndex={carouselIndex}
+          onClose={() => setCarouselOpen(false)}
+        />
+      )}
+
+      {secondaryCarouselOpen && (
+        <ImageCarousel
+          images={SECONDARY_GALLERY_IMAGES}
+          initialIndex={secondaryCarouselIndex}
+          onClose={() => setSecondaryCarouselOpen(false)}
+        />
+      )}
+
+      {carousel3Open && (
+        <ImageCarousel
+          images={CAROUSEL_3_IMAGES}
+          initialIndex={carousel3Index}
+          onClose={() => setCarousel3Open(false)}
+        />
+      )}
+    </>
+  );
+}
