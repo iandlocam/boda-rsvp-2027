@@ -1161,7 +1161,7 @@ export default function Home() {
     alergiasInput: {
       width: "100%",
       padding: "15px 20px",
-      border: `2px solid ${COLORS.blueSoft}`,
+      border: `2px solid ${COLORS.bordergray}`,
       borderRadius: 50,
       fontSize: "1rem",
       background: COLORS.cream,
