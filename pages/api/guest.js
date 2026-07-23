@@ -5,7 +5,7 @@ import { google } from "googleapis";
 // ⚙️ CONFIGURACIÓN - REEMPLAZA CON TUS DATOS
 // ====================================================
 
-const SPREADSHEET_ID = "TU_SPREADSHEET_ID_AQUI";
+const SPREADSHEET_ID = "1xEMmlb5mQT-3cyTickd3m4ykLE7tz65QPMf7EVE9-fo";
 const SHEET_NAME = "RSVP - Andrés y Vanessa 2027";
 
 // ====================================================
