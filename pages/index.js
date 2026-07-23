@@ -1460,6 +1460,7 @@ export default function Home() {
     },
   };
 
+  // ✅ CALCULAR maxPases - ASEGURA QUE SIEMPRE TENGA UN VALOR
   const maxPases = Math.max(1, Number(guestData?.pasesAsignados || 1));
   const pasesFromSheet = Number(guestData?.pasesConfirmados || 0);
   const pasesMostrados =
@@ -2055,7 +2056,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Confirma tu asistencia - CON SELECTOR DE PASES FUNCIONAL */}
+            {/* ✅ CONFIRMA TU ASISTENCIA - CON SELECTOR DE PASES SIEMPRE VISIBLE */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
               <div style={invitationStyles.formContainer}>
@@ -2105,24 +2106,27 @@ export default function Home() {
                         rows="3"
                       />
 
-                      {/* ✅ SELECTOR DE PASES - AHORA FUNCIONAL SIEMPRE */}
-                      {guestData?.pasesAsignados && Number(guestData.pasesAsignados) > 0 && (
-                        <div style={{ marginTop: 15 }}>
-                          <div style={invitationStyles.label}>Pases a confirmar:</div>
-                          <select
-                            value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
-                            onChange={(e) => setPasesConfirmados(Number(e.target.value))}
-                            style={invitationStyles.select}
-                            disabled={rsvpStatus === "saving"}
-                          >
-                            {Array.from({ length: maxPases }, (_, i) => i + 1).map((n) => (
-                              <option key={n} value={n}>
-                                {n} {n === 1 ? "pase" : "pases"}
-                              </option>
-                            ))}
-                          </select>
+                      {/* ✅ SELECTOR DE PASES - SIEMPRE VISIBLE */}
+                      <div style={{ marginTop: 15 }}>
+                        <div style={invitationStyles.label}>
+                          Pases a confirmar: 
+                          <span style={{ marginLeft: 8, fontSize: "0.8rem", color: COLORS.textMedium }}>
+                            (Disponibles: {guestData?.pasesAsignados || 0})
+                          </span>
                         </div>
-                      )}
+                        <select
+                          value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
+                          onChange={(e) => setPasesConfirmados(Number(e.target.value))}
+                          style={invitationStyles.select}
+                          disabled={rsvpStatus === "saving"}
+                        >
+                          {Array.from({ length: Math.max(1, maxPases) }, (_, i) => i + 1).map((n) => (
+                            <option key={n} value={n}>
+                              {n} {n === 1 ? "pase" : "pases"}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
                       <div style={{ display: "flex", gap: "clamp(10px, 3vw, 15px)", marginTop: 20, flexWrap: "wrap" }}>
                         <button
