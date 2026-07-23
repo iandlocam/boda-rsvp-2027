@@ -2,7 +2,7 @@
 import { google } from "googleapis";
 
 // ====================================================
-// ⚙️ CONFIGURACIÓN - REEMPLAZA CON TUS DATOS
+// ⚙️ CONFIGURACIÓN
 // ====================================================
 
 const SPREADSHEET_ID = "1xEMmlb5mQT-3cyTickd3m4ykLE7tz65QPMf7EVE9-fo";
@@ -11,9 +11,20 @@ const SHEET_NAME = "Invitados";
 // ====================================================
 
 export default async function handler(req, res) {
-  // Solo permitir solicitudes POST
+  // 🔥 PERMITIR TANTO GET COMO POST
+  // GET: Para verificar que la API funciona
+  // POST: Para guardar la confirmación
+  
+  // Si es GET, responder con un mensaje de éxito
+  if (req.method === "GET") {
+    return res.status(200).json({ 
+      message: "✅ API de invitaciones funcionando correctamente. Usa POST para confirmar asistencia." 
+    });
+  }
+
+  // Solo permitir POST para guardar datos
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método no permitido" });
+    return res.status(405).json({ error: "Método no permitido. Usa POST para confirmar asistencia." });
   }
 
   try {
@@ -54,7 +65,7 @@ export default async function handler(req, res) {
     }
 
     if (rowIndex === -1) {
-      return res.status(404).json({ error: "Invitado no encontrado" });
+      return res.status(404).json({ error: "Invitado no encontrado. Verifica tu ID." });
     }
 
     // 2. Verificar si ya confirmó (columna I = Estado_Link)
@@ -82,7 +93,6 @@ export default async function handler(req, res) {
     const bebidasTexto = Array.isArray(bebidas) ? bebidas.join(", ") : "";
 
     // 5. Crear la nueva fila con los datos actualizados
-    // Columnas: A=ID, B=Nombre, C=Teléfono, D=Pases_Asignados, E=Asistencia, F=Mensaje, G=Fecha_Confirmacion, H=IP_Registro, I=Estado_Link, J=Pases_Confirmados, K=Link_Invitacion, L=QR, M=Checkin_Asistio, N=Checkin_Hora, O=Checkin_Notas, P=Bebidas, Q=Alergias
     const newRow = [
       currentRow[0] || id, // A: ID
       currentRow[1] || "", // B: Nombre
@@ -97,7 +107,7 @@ export default async function handler(req, res) {
       currentRow[10] || "", // K: Link_Invitacion
       currentRow[11] || "", // L: QR (manual)
       currentRow[12] || "", // M: Checkin_Asistio
-      currentRow[13] || "", // N: Checkin_Hora (se llena al marcar Checkin_Asistio)
+      currentRow[13] || "", // N: Checkin_Hora
       currentRow[14] || "", // O: Checkin_Notas
       bebidasTexto, // P: Bebidas (invitado)
       alergias || "", // Q: Alergias (invitado)
@@ -147,7 +157,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: "Confirmación guardada correctamente",
+      message: "✅ Confirmación guardada correctamente",
       data: {
         id,
         asistencia,
@@ -160,6 +170,8 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error("Error:", error);
-    return res.status(500).json({ error: error.message || "Error interno" });
+    return res.status(500).json({ 
+      error: error.message || "Error interno del servidor" 
+    });
   }
 }
