@@ -1161,7 +1161,7 @@ export default function Home() {
     alergiasInput: {
       width: "100%",
       padding: "15px 20px",
-      border: `2px solid ${COLORS.bordergray}`,
+      border: `2px solid ${COLORS.borderGray}`,
       borderRadius: 50,
       fontSize: "1rem",
       background: COLORS.cream,
@@ -1255,7 +1255,7 @@ export default function Home() {
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
       resize: "vertical",
-      color: COLORS.textDark,
+      color: "#2c3e4a",
     },
     button: {
       background: COLORS.blueSoft,
@@ -2055,7 +2055,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Confirma tu asistencia */}
+            {/* Confirma tu asistencia - CON SELECTOR DE PASES FUNCIONAL */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
               <div style={invitationStyles.formContainer}>
@@ -2105,7 +2105,8 @@ export default function Home() {
                         rows="3"
                       />
 
-                      {guestData?.pasesAsignados && String(guestData.pasesAsignados).trim() !== "" && (
+                      {/* ✅ SELECTOR DE PASES - AHORA FUNCIONAL SIEMPRE */}
+                      {guestData?.pasesAsignados && Number(guestData.pasesAsignados) > 0 && (
                         <div style={{ marginTop: 15 }}>
                           <div style={invitationStyles.label}>Pases a confirmar:</div>
                           <select
