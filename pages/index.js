@@ -1255,6 +1255,7 @@ export default function Home() {
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
       resize: "vertical",
+      color: COLORS.textDark,
     },
     button: {
       background: COLORS.blueSoft,
