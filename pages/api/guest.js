@@ -6,7 +6,7 @@ import { google } from "googleapis";
 // ====================================================
 
 const SPREADSHEET_ID = "1xEMmlb5mQT-3cyTickd3m4ykLE7tz65QPMf7EVE9-fo";
-const SHEET_NAME = "RSVP - Andrés y Vanessa 2027";
+const SHEET_NAME = "Invitados";
 
 // ====================================================
 
