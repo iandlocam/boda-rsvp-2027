@@ -7,14 +7,19 @@ function clamp(n) {
   return Number.isFinite(n) && n > 0 ? n : 0;
 }
 
+// /pages/index.js - Reemplaza la función enviarRSVP
 async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados, bebidas, alergias }) {
+  console.log("📤 Enviando datos al API:", { id, asistencia, mensaje, pasesConfirmados, bebidas, alergias });
+  
   const resp = await fetch("/api/guest", {
-    method: "POST",
+    method: "PATCH",  // 🔥 CAMBIADO DE POST A PATCH
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id, asistencia, mensaje, pasesConfirmados, bebidas, alergias }),
   });
 
   const data = await resp.json();
+  console.log("📥 Respuesta del API:", data);
+  
   if (!resp.ok) throw new Error(data?.error || "Error desconocido");
   return data;
 }
