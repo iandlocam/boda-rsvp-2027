@@ -1,3 +1,5 @@
+// /pages/api/guest.js - PRIMERA LÍNEA DESPUÉS DE LOS IMPORTS
+console.log("🚀 NUEVA VERSIÓN DEL API - 23 Julio 2026");
 // /pages/api/guest.js
 import { google } from "googleapis";
 
