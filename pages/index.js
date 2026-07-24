@@ -580,7 +580,7 @@ export default function Home() {
   ];
   
   // ====================================================
-  // 📋 DRESS CODE - TEXTO CON SALTOS DE LÍNEA
+  // 📋 DRESS CODE
   // ====================================================
   
   const DRESS_CODE = {
@@ -712,6 +712,7 @@ export default function Home() {
     if (typeof id === "string") setGuestId(id.trim());
   }, [router.isReady, router.query.id]);
 
+  // ✅ CARGAR DATOS DEL INVITADO - AHORA CON LA COLUMNA CORRECTA
   useEffect(() => {
     if (!guestId) return;
 
@@ -730,8 +731,8 @@ export default function Home() {
 
         const g = data.guest || null;
         
-        // ✅ DEBUG: Ver qué datos llegan de la API
-        console.log("📊 Datos recibidos de la API:", g);
+        // ✅ DEBUG: Ver qué datos llegan
+        console.log("📊 Datos recibidos:", g);
         console.log("📊 Pases asignados:", g?.pasesAsignados);
         
         setGuestData(g);
@@ -745,27 +746,23 @@ export default function Home() {
           setMensaje(String(g.mensaje));
         }
 
-        if (g?.bebidas) {
+        if (g?.bebidas && Array.isArray(g.bebidas)) {
           setBebidasSeleccionadas(g.bebidas);
+        } else if (g?.bebidas && typeof g.bebidas === "string") {
+          // Si viene como string separado por comas
+          setBebidasSeleccionadas(g.bebidas.split(",").map(s => s.trim()).filter(Boolean));
         }
         if (g?.alergias) {
           setAlergias(g.alergias);
         }
 
-        // ✅ OBTENER PASES ASIGNADOS CORRECTAMENTE
-        // Si g.pasesAsignados es un número, úsalo; si no, usa 0
+        // ✅ Usar el valor real de pasesAsignados (columna D, índice 3)
         const pasesAsignados = Number(g?.pasesAsignados) || 0;
         console.log("📊 Pases asignados (convertido):", pasesAsignados);
-        
-        // ✅ Asegurar que maxPases tenga el valor correcto
-        // Esto se recalcula en el render, pero lo dejamos aquí para referencia
         
         const j = Number(g?.pasesConfirmados || 0);
         const precarga = j > 0 ? Math.min(Math.max(1, j), Math.max(1, pasesAsignados)) : 1;
         setPasesConfirmados(precarga);
-        
-        // ✅ Guardar el valor real en guestData para que maxPases lo use
-        // Esto ya está hecho con setGuestData(g)
         
       } catch (e) {
         if (cancelled) return;
@@ -878,7 +875,7 @@ export default function Home() {
   ];
 
   // ====================================================
-  // 🎨 ESTILOS
+  // 🎨 ESTILOS (solo los necesarios)
   // ====================================================
   
   const envelopeStyles = {
@@ -1476,8 +1473,7 @@ export default function Home() {
     },
   };
 
-  // ✅ maxPases - AHORA USA EL VALOR REAL DE guestData.pasesAsignados
-  // Si guestData no está cargado, usa 1 como fallback
+  // ✅ maxPases - usa el valor real de pasesAsignados
   const maxPases = useMemo(() => {
     if (!guestData) return 1;
     const pases = Number(guestData.pasesAsignados);
@@ -1784,7 +1780,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Dress code - TEXTO CENTRADO CON SALTOS DE LÍNEA */}
+            {/* Dress code */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Dress code</div>
               <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
@@ -1794,7 +1790,6 @@ export default function Home() {
                   style={{ width: "min(200px, 60%)", maxWidth: "100%", height: "auto", margin: "0 auto 20px", display: "block" }}
                 />
                 
-                {/* ✅ TEXTO CENTRADO CON SALTOS DE LÍNEA */}
                 {DRESS_CODE.text.map((linea, index) => (
                   <p 
                     key={index} 
@@ -1810,7 +1805,6 @@ export default function Home() {
                   </p>
                 ))}
                 
-                {/* Paleta de colores */}
                 <div style={invitationStyles.colorPalette}>
                   {COLOR_PALETTE.map((color, idx) => (
                     <div
@@ -1931,7 +1925,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Regalo monetario - con icono de sobre */}
                 <div style={invitationStyles.moneyBox}>
                   <div style={{ fontSize: "3rem", marginBottom: "10px" }}>✉️</div>
                   <p style={{ fontSize: "clamp(0.9rem, 3vw, 1rem)", color: COLORS.textMedium, textAlign: "center" }}>
@@ -2078,7 +2071,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ✅ CONFIRMA TU ASISTENCIA - CON SELECTOR DE PASES CORRECTO */}
+            {/* ✅ CONFIRMA TU ASISTENCIA */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
               <div style={invitationStyles.formContainer}>
@@ -2128,27 +2121,29 @@ export default function Home() {
                         rows="3"
                       />
 
-                      {/* ✅ SELECTOR DE PASES - CON maxPases CORRECTO */}
-                      <div style={{ marginTop: 15 }}>
-                        <div style={invitationStyles.label}>
-                          Pases a confirmar: 
-                          <span style={{ marginLeft: 8, fontSize: "0.8rem", color: COLORS.textMedium }}>
-                            (Disponibles: {guestData?.pasesAsignados || 0})
-                          </span>
+                      {/* ✅ SELECTOR DE PASES - AHORA CON EL VALOR CORRECTO */}
+                      {guestData && (
+                        <div style={{ marginTop: 15 }}>
+                          <div style={invitationStyles.label}>
+                            Pases a confirmar: 
+                            <span style={{ marginLeft: 8, fontSize: "0.8rem", color: COLORS.textMedium }}>
+                              (Disponibles: {guestData.pasesAsignados || 0})
+                            </span>
+                          </div>
+                          <select
+                            value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
+                            onChange={(e) => setPasesConfirmados(Number(e.target.value))}
+                            style={invitationStyles.select}
+                            disabled={rsvpStatus === "saving"}
+                          >
+                            {Array.from({ length: Math.max(1, maxPases) }, (_, i) => i + 1).map((n) => (
+                              <option key={n} value={n}>
+                                {n} {n === 1 ? "pase" : "pases"}
+                              </option>
+                            ))}
+                          </select>
                         </div>
-                        <select
-                          value={Math.min(Math.max(1, pasesConfirmados), maxPases)}
-                          onChange={(e) => setPasesConfirmados(Number(e.target.value))}
-                          style={invitationStyles.select}
-                          disabled={rsvpStatus === "saving"}
-                        >
-                          {Array.from({ length: Math.max(1, maxPases) }, (_, i) => i + 1).map((n) => (
-                            <option key={n} value={n}>
-                              {n} {n === 1 ? "pase" : "pases"}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      )}
 
                       <div style={{ display: "flex", gap: "clamp(10px, 3vw, 15px)", marginTop: 20, flexWrap: "wrap" }}>
                         <button
