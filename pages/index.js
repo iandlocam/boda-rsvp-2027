@@ -1264,6 +1264,8 @@ export default function Home() {
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
+      color: COLORS.textDark, // 🔥 AÑADE ESTA LÍNEA
+      appearance: "none", // Opcional: quita el estilo nativo del select
     },
     textarea: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
