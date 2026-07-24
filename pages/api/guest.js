@@ -11,32 +11,83 @@ const SHEET_NAME = "Invitados";
 // ====================================================
 
 export default async function handler(req, res) {
-  // 🔥 PERMITIR TANTO GET COMO POST
-  // GET: Para verificar que la API funciona
-  // POST: Para guardar la confirmación
-  
-  // Si es GET, responder con un mensaje de éxito
+  // Permitir GET para verificar y POST para guardar
   if (req.method === "GET") {
-    return res.status(200).json({ 
-      message: "✅ API de invitaciones funcionando correctamente. Usa POST para confirmar asistencia." 
-    });
+    try {
+      const { id } = req.query;
+      if (!id) {
+        return res.status(400).json({ error: "Falta el ID del invitado" });
+      }
+
+      const auth = new google.auth.GoogleAuth({
+        credentials: {
+          client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+          private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+        },
+        scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+      });
+
+      const sheets = google.sheets({ version: "v4", auth });
+
+      // Obtener TODOS los datos de la hoja
+      const response = await sheets.spreadsheets.values.get({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${SHEET_NAME}!A:Q`,
+      });
+
+      const rows = response.data.values || [];
+      let guestData = null;
+
+      // Buscar el ID en la columna A (índice 0)
+      for (let i = 1; i < rows.length; i++) {
+        if (rows[i][0] === id) {
+          // Columnas: A=ID(0), B=Nombre(1), C=Teléfono(2), D=Pases_Asignados(3)
+          guestData = {
+            id: rows[i][0] || "",
+            nombre: rows[i][1] || "",
+            telefono: rows[i][2] || "",
+            pasesAsignados: parseInt(rows[i][3]) || 0, // ✅ COLUMNA D (índice 3)
+            asistencia: rows[i][4] || "",
+            mensaje: rows[i][5] || "",
+            fechaConfirmacion: rows[i][6] || "",
+            ipRegistro: rows[i][7] || "",
+            estadoLink: rows[i][8] || "",
+            pasesConfirmados: parseInt(rows[i][9]) || 0,
+            linkInvitacion: rows[i][10] || "",
+            qr: rows[i][11] || "",
+            checkinAsistio: rows[i][12] || "",
+            checkinHora: rows[i][13] || "",
+            checkinNotas: rows[i][14] || "",
+            bebidas: rows[i][15] || "",
+            alergias: rows[i][16] || "",
+          };
+          break;
+        }
+      }
+
+      if (!guestData) {
+        return res.status(404).json({ error: "Invitado no encontrado" });
+      }
+
+      return res.status(200).json({ guest: guestData });
+    } catch (error) {
+      console.error("Error en GET:", error);
+      return res.status(500).json({ error: error.message });
+    }
   }
 
-  // Solo permitir POST para guardar datos
+  // Solo POST para guardar
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método no permitido. Usa POST para confirmar asistencia." });
+    return res.status(405).json({ error: "Método no permitido" });
   }
 
   try {
-    // Obtener datos del cuerpo de la solicitud
     const { id, asistencia, mensaje, pasesConfirmados, bebidas, alergias } = req.body;
 
-    // Validar que el ID esté presente
     if (!id) {
       return res.status(400).json({ error: "Falta el ID del invitado" });
     }
 
-    // Configurar autenticación con Google Sheets
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -47,7 +98,7 @@ export default async function handler(req, res) {
 
     const sheets = google.sheets({ version: "v4", auth });
 
-    // 1. Buscar al invitado por ID en la columna A
+    // Buscar al invitado
     const searchResponse = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
       range: `${SHEET_NAME}!A:Q`,
@@ -56,64 +107,60 @@ export default async function handler(req, res) {
     const rows = searchResponse.data.values || [];
     let rowIndex = -1;
 
-    // Buscar el ID (columna A)
     for (let i = 1; i < rows.length; i++) {
       if (rows[i][0] === id) {
-        rowIndex = i + 1; // Google Sheets es 1-indexed
+        rowIndex = i + 1;
         break;
       }
     }
 
     if (rowIndex === -1) {
-      return res.status(404).json({ error: "Invitado no encontrado. Verifica tu ID." });
+      return res.status(404).json({ error: "Invitado no encontrado" });
     }
 
-    // 2. Verificar si ya confirmó (columna I = Estado_Link)
+    // Obtener fila actual para preservar datos existentes
     const currentRowResponse = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
       range: `${SHEET_NAME}!A${rowIndex}:Q${rowIndex}`,
     });
 
     const currentRow = currentRowResponse.data.values?.[0] || [];
-    const estadoActual = currentRow[8] || ""; // Columna I = Estado_Link
+    const estadoActual = currentRow[8] || "";
 
-    // Si ya confirmó, no permitir otra confirmación
     if (estadoActual === "Activo") {
       return res.status(400).json({
-        error: "Ya has confirmado tu asistencia anteriormente. No se puede modificar.",
+        error: "Ya has confirmado tu asistencia anteriormente.",
       });
     }
 
-    // 3. Obtener datos automáticos
     const now = new Date();
     const fechaConfirmacion = now.toISOString();
     const ipRegistro = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "";
-
-    // 4. Formatear bebidas (array a texto)
     const bebidasTexto = Array.isArray(bebidas) ? bebidas.join(", ") : "";
 
-    // 5. Crear la nueva fila con los datos actualizados
+    // ✅ PRESERVAR el valor de pasesAsignados de la columna D (índice 3)
+    const pasesAsignadosOriginal = currentRow[3] || "0";
+
     const newRow = [
       currentRow[0] || id, // A: ID
       currentRow[1] || "", // B: Nombre
       currentRow[2] || "", // C: Teléfono
-      currentRow[3] || "", // D: Pases_Asignados
-      asistencia || "", // E: Asistencia (invitado)
-      mensaje || "", // F: Mensaje (invitado)
-      fechaConfirmacion, // G: Fecha_Confirmacion (automático)
-      ipRegistro, // H: IP_Registro (automático)
-      "Activo", // I: Estado_Link (cambia a Activo al confirmar)
-      pasesConfirmados || 0, // J: Pases_Confirmados (invitado)
+      pasesAsignadosOriginal, // D: Pases_Asignados (se mantiene igual) ✅
+      asistencia || "", // E: Asistencia
+      mensaje || "", // F: Mensaje
+      fechaConfirmacion, // G: Fecha_Confirmacion
+      ipRegistro, // H: IP_Registro
+      "Activo", // I: Estado_Link
+      pasesConfirmados || 0, // J: Pases_Confirmados
       currentRow[10] || "", // K: Link_Invitacion
-      currentRow[11] || "", // L: QR (manual)
+      currentRow[11] || "", // L: QR
       currentRow[12] || "", // M: Checkin_Asistio
       currentRow[13] || "", // N: Checkin_Hora
       currentRow[14] || "", // O: Checkin_Notas
-      bebidasTexto, // P: Bebidas (invitado)
-      alergias || "", // Q: Alergias (invitado)
+      bebidasTexto, // P: Bebidas
+      alergias || "", // Q: Alergias
     ];
 
-    // 6. Actualizar la fila completa
     await sheets.spreadsheets.values.update({
       spreadsheetId: SPREADSHEET_ID,
       range: `${SHEET_NAME}!A${rowIndex}:Q${rowIndex}`,
@@ -121,57 +168,13 @@ export default async function handler(req, res) {
       requestBody: { values: [newRow] },
     });
 
-    // 7. (OPCIONAL) Guardar en hoja "Respuestas" para historial
-    try {
-      await sheets.spreadsheets.values.append({
-        spreadsheetId: SPREADSHEET_ID,
-        range: "Respuestas!A:Q",
-        valueInputOption: "RAW",
-        requestBody: {
-          values: [
-            [
-              id,
-              currentRow[1] || "",
-              currentRow[2] || "",
-              currentRow[3] || "",
-              asistencia || "",
-              mensaje || "",
-              fechaConfirmacion,
-              ipRegistro,
-              "Activo",
-              pasesConfirmados || 0,
-              currentRow[10] || "",
-              currentRow[11] || "",
-              currentRow[12] || "",
-              currentRow[13] || "",
-              currentRow[14] || "",
-              bebidasTexto,
-              alergias || "",
-            ],
-          ],
-        },
-      });
-    } catch (e) {
-      console.log("No se pudo guardar en Respuestas:", e.message);
-    }
-
     return res.status(200).json({
       success: true,
-      message: "✅ Confirmación guardada correctamente",
-      data: {
-        id,
-        asistencia,
-        pasesConfirmados,
-        mensaje,
-        bebidas: bebidasTexto,
-        alergias,
-        fecha: fechaConfirmacion,
-      },
+      message: "Confirmación guardada correctamente",
+      data: { id, asistencia, pasesConfirmados, mensaje, bebidas: bebidasTexto, alergias },
     });
   } catch (error) {
     console.error("Error:", error);
-    return res.status(500).json({ 
-      error: error.message || "Error interno del servidor" 
-    });
+    return res.status(500).json({ error: error.message || "Error interno" });
   }
 }
