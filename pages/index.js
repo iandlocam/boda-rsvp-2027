@@ -729,6 +729,11 @@ export default function Home() {
         if (cancelled) return;
 
         const g = data.guest || null;
+        
+        // ✅ DEBUG: Ver qué datos llegan de la API
+        console.log("📊 Datos recibidos de la API:", g);
+        console.log("📊 Pases asignados:", g?.pasesAsignados);
+        
         setGuestData(g);
 
         const a = String(g?.asistencia || "").trim();
@@ -747,10 +752,21 @@ export default function Home() {
           setAlergias(g.alergias);
         }
 
-        const maxPases = Math.max(1, Number(g?.pasesAsignados || 1));
+        // ✅ OBTENER PASES ASIGNADOS CORRECTAMENTE
+        // Si g.pasesAsignados es un número, úsalo; si no, usa 0
+        const pasesAsignados = Number(g?.pasesAsignados) || 0;
+        console.log("📊 Pases asignados (convertido):", pasesAsignados);
+        
+        // ✅ Asegurar que maxPases tenga el valor correcto
+        // Esto se recalcula en el render, pero lo dejamos aquí para referencia
+        
         const j = Number(g?.pasesConfirmados || 0);
-        const precarga = j > 0 ? Math.min(Math.max(1, j), maxPases) : 1;
+        const precarga = j > 0 ? Math.min(Math.max(1, j), Math.max(1, pasesAsignados)) : 1;
         setPasesConfirmados(precarga);
+        
+        // ✅ Guardar el valor real en guestData para que maxPases lo use
+        // Esto ya está hecho con setGuestData(g)
+        
       } catch (e) {
         if (cancelled) return;
         setGuestLoadError(e?.message || String(e));
@@ -1460,8 +1476,14 @@ export default function Home() {
     },
   };
 
-  // ✅ CALCULAR maxPases - ASEGURA QUE SIEMPRE TENGA UN VALOR
-  const maxPases = Math.max(1, Number(guestData?.pasesAsignados || 1));
+  // ✅ maxPases - AHORA USA EL VALOR REAL DE guestData.pasesAsignados
+  // Si guestData no está cargado, usa 1 como fallback
+  const maxPases = useMemo(() => {
+    if (!guestData) return 1;
+    const pases = Number(guestData.pasesAsignados);
+    return pases > 0 ? pases : 1;
+  }, [guestData]);
+
   const pasesFromSheet = Number(guestData?.pasesConfirmados || 0);
   const pasesMostrados =
     asistenciaActual === "Sí"
@@ -2056,7 +2078,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ✅ CONFIRMA TU ASISTENCIA - CON SELECTOR DE PASES SIEMPRE VISIBLE */}
+            {/* ✅ CONFIRMA TU ASISTENCIA - CON SELECTOR DE PASES CORRECTO */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
               <div style={invitationStyles.formContainer}>
@@ -2106,7 +2128,7 @@ export default function Home() {
                         rows="3"
                       />
 
-                      {/* ✅ SELECTOR DE PASES - SIEMPRE VISIBLE */}
+                      {/* ✅ SELECTOR DE PASES - CON maxPases CORRECTO */}
                       <div style={{ marginTop: 15 }}>
                         <div style={invitationStyles.label}>
                           Pases a confirmar: 
