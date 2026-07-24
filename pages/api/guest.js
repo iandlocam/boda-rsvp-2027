@@ -109,7 +109,7 @@ export default async function handler(req, res) {
 
     for (let i = 1; i < rows.length; i++) {
       if (rows[i][0] === id) {
-        rowIndex = i + 1;
+        rowIndex = i + 1; // +1 porque Sheets es 1-indexado
         break;
       }
     }
@@ -138,29 +138,42 @@ export default async function handler(req, res) {
     const ipRegistro = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "";
     const bebidasTexto = Array.isArray(bebidas) ? bebidas.join(", ") : "";
 
-    // ✅ PRESERVAR el valor de pasesAsignados de la columna D (índice 3)
-    const pasesAsignadosOriginal = currentRow[3] || "0";
+    // ====================================================
+    // 🔥 SOLUCIÓN: ACTUALIZAR SOLO LAS COLUMNAS NECESARIAS
+    // ====================================================
+    
+    // 🛡️ PRESERVAR valores que NO deben cambiar
+    const pasesAsignadosOriginal = currentRow[3] || "0"; // Columna D
+    const qrOriginal = currentRow[11] || ""; // Columna L - QR ✅
+    const checkinOriginal = currentRow[12] || ""; // Columna M - Checkin ✅
+    const checkinHoraOriginal = currentRow[13] || ""; // Columna N
+    const checkinNotasOriginal = currentRow[14] || ""; // Columna O
+    const linkInvitacionOriginal = currentRow[10] || ""; // Columna K
 
+    // 📝 Construir la NUEVA fila PRESERVANDO las columnas que no deben cambiar
     const newRow = [
-      currentRow[0] || id, // A: ID
-      currentRow[1] || "", // B: Nombre
-      currentRow[2] || "", // C: Teléfono
-      pasesAsignadosOriginal, // D: Pases_Asignados (se mantiene igual) ✅
-      asistencia || "", // E: Asistencia
-      mensaje || "", // F: Mensaje
-      fechaConfirmacion, // G: Fecha_Confirmacion
-      ipRegistro, // H: IP_Registro
-      "Activo", // I: Estado_Link
-      pasesConfirmados || 0, // J: Pases_Confirmados
-      currentRow[10] || "", // K: Link_Invitacion
-      currentRow[11] || "", // L: QR
-      currentRow[12] || "", // M: Checkin_Asistio
-      currentRow[13] || "", // N: Checkin_Hora
-      currentRow[14] || "", // O: Checkin_Notas
-      bebidasTexto, // P: Bebidas
-      alergias || "", // Q: Alergias
+      currentRow[0] || id, // A: ID (se mantiene)
+      currentRow[1] || "", // B: Nombre (se mantiene)
+      currentRow[2] || "", // C: Teléfono (se mantiene)
+      pasesAsignadosOriginal, // D: Pases_Asignados (se mantiene) ✅
+      asistencia || "", // E: Asistencia (ACTUALIZA)
+      mensaje || "", // F: Mensaje (ACTUALIZA)
+      fechaConfirmacion, // G: Fecha_Confirmacion (ACTUALIZA)
+      ipRegistro, // H: IP_Registro (ACTUALIZA)
+      "Activo", // I: Estado_Link (ACTUALIZA)
+      pasesConfirmados || 0, // J: Pases_Confirmados (ACTUALIZA)
+      linkInvitacionOriginal, // K: Link_Invitacion (se mantiene) ✅
+      qrOriginal, // L: QR (se mantiene) ✅🛡️
+      checkinOriginal, // M: Checkin_Asistio (se mantiene) ✅🛡️
+      checkinHoraOriginal, // N: Checkin_Hora (se mantiene) ✅
+      checkinNotasOriginal, // O: Checkin_Notas (se mantiene) ✅
+      bebidasTexto, // P: Bebidas (ACTUALIZA)
+      alergias || "", // Q: Alergias (ACTUALIZA)
     ];
 
+    // ====================================================
+    // 🚀 ACTUALIZAR LA FILA COMPLETA PERO CON LOS VALORES PRESERVADOS
+    // ====================================================
     await sheets.spreadsheets.values.update({
       spreadsheetId: SPREADSHEET_ID,
       range: `${SHEET_NAME}!A${rowIndex}:Q${rowIndex}`,
@@ -168,10 +181,27 @@ export default async function handler(req, res) {
       requestBody: { values: [newRow] },
     });
 
+    // ====================================================
+    // 📊 LOG PARA VERIFICAR (opcional, puedes eliminar después)
+    // ====================================================
+    console.log("✅ Confirmación guardada para:", id);
+    console.log("📌 QR preservado:", qrOriginal);
+    console.log("📌 Checkin preservado:", checkinOriginal);
+    console.log("📌 Pases Asignados preservados:", pasesAsignadosOriginal);
+
     return res.status(200).json({
       success: true,
       message: "Confirmación guardada correctamente",
-      data: { id, asistencia, pasesConfirmados, mensaje, bebidas: bebidasTexto, alergias },
+      data: { 
+        id, 
+        asistencia, 
+        pasesConfirmados, 
+        mensaje, 
+        bebidas: bebidasTexto, 
+        alergias,
+        qrPreservado: qrOriginal,
+        checkinPreservado: checkinOriginal,
+      },
     });
   } catch (error) {
     console.error("Error:", error);
