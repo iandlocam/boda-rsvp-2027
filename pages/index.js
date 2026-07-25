@@ -1197,10 +1197,9 @@ export default function Home() {
   background: COLORS.white,
   borderRadius: 100,
   padding: "clamp(15px, 4vw, 25px) clamp(10px, 3vw, 20px)",
-  boxShadow: `0 5px 20px rgba(44,62,74,0.08)`,
-  border: `4px solid ${COLORS.gold}`,
-  outline: `2px solid ${COLORS.blueSoft}`, // 🔥 SEGUNDO BORDE
-  outlineOffset: "4px",
+  boxShadow: `0 0 0 3px ${COLORS.gold}`, // 🔥 BORDE CON SOMBRA
+  // boxShadow: `0 0 0 3px #c4a882`,     // Dorado
+  // boxShadow: `0 0 0 3px ${COLORS.blueSoft}`, // Azul suave
 },
     countdownItem: {
       textAlign: "center",
