@@ -858,11 +858,11 @@ export default function Home() {
     },
     {
       title: "Lo que nos une",
-      text: "Amor por lo simple, por la familia, por viajar y por crear un hogar donde siempre haya paz (y música).",
+      text: "Amor por lo simple, por la familia, por viajar y por crear un hogar donde siempre haya paz y amor.",
     },
     {
       title: "El gran día",
-      text: "Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo.",
+      text: "Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo en  uestras vidas.",
     },
   ];
 
@@ -1697,18 +1697,18 @@ export default function Home() {
             <div style={invitationStyles.familySection}>
               <div style={invitationStyles.familyCard}>
                 <div style={invitationStyles.familyLabel}>Papás de la novia</div>
-                <div style={invitationStyles.familyName}>María González</div>
-                <div style={invitationStyles.familyName}>Juan Pérez</div>
+                <div style={invitationStyles.familyName}>Laura Hernández</div>
+                <div style={invitationStyles.familyName}>Juan Tinajero</div>
               </div>
               <div style={invitationStyles.familyCard}>
                 <div style={invitationStyles.familyLabel}>Papás del novio</div>
-                <div style={invitationStyles.familyName}>Laura Martínez</div>
-                <div style={invitationStyles.familyName}>Pedro Sánchez</div>
+                <div style={invitationStyles.familyName}>Claudia Campos</div>
+                <div style={invitationStyles.familyName}>Joel López</div>
               </div>
               <div style={invitationStyles.familyCard}>
                 <div style={invitationStyles.familyLabel}>Padrinos de velación</div>
-                <div style={invitationStyles.familyName}>Sofía Ramírez</div>
-                <div style={invitationStyles.familyName}>Diego López</div>
+                <div style={invitationStyles.familyName}>Yenny Torres</div>
+                <div style={invitationStyles.familyName}>Israel López</div>
               </div>
             </div>
 
@@ -1891,7 +1891,7 @@ export default function Home() {
                 <div style={invitationStyles.ubicacionCard}>
                   <div style={invitationStyles.ubicacionTitle}>📍 Ceremonia</div>
                   <div style={invitationStyles.ubicacionAddress}>
-                    Parroquia de San Miguel Arcángel<br />
+                    Jardín Maroma<br />
                     Jiutepec, Morelos
                   </div>
                   <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
