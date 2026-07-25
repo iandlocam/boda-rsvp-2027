@@ -605,39 +605,39 @@ export default function Home() {
   
   const HOTELES = [
     {
-      nombre: "Hotel Royal Garden",
-      web: "https://www.royalgarden.com",
-      maps: "https://maps.google.com/?q=Hotel+Royal+Garden+Jiutepec",
-      telefono: "+52 777 123 4567",
-      whatsapp: "+52 777 123 4567",
+      nombre: "Hotel One Cuernavaca",
+      web: "https://www.fiestamericanatravelty.com/one-hoteles/hoteles/one-cuernavaca",
+      maps: "https://maps.app.goo.gl/hj1uCt4dN38iXWvM9",
+      telefono: "+52 777 100 9700",
+      whatsapp: "+52 443 137 8728",
     },
     {
-      nombre: "Hotel Villa Maroma",
-      web: "https://www.villamaroma.com",
-      maps: "https://maps.google.com/?q=Hotel+Villa+Maroma+Jiutepec",
-      telefono: "+52 777 234 5678",
-      whatsapp: "+52 777 234 5678",
+      nombre: "Hotel & Spa Hacienda de Cortes",
+      web: "https://hotelhaciendadecortes.com.mx/",
+      maps: "https://maps.app.goo.gl/bqLejhx25xUS5swKA",
+      telefono: "+52 777 315 8844",
+      whatsapp: "+52 777 315 8844",
     },
     {
-      nombre: "Hotel Boutique Casa del Sol",
-      web: "https://www.casasol.com",
-      maps: "https://maps.google.com/?q=Hotel+Boutique+Casa+del+Sol+Jiutepec",
-      telefono: "+52 777 345 6789",
-      whatsapp: "+52 777 345 6789",
+      nombre: "Casa Begonias Hotel + Villas",
+      web: "https://casabegonias.com/",
+      maps: "https://maps.app.goo.gl/xpASGPERdqsHZLcT7",
+      telefono: "+52 777 190 1621",
+      whatsapp: "+52 777 190 1621",
     },
     {
-      nombre: "Hotel Hacienda San Carlos",
-      web: "https://www.haciendasan.com",
-      maps: "https://maps.google.com/?q=Hotel+Hacienda+San+Carlos+Jiutepec",
-      telefono: "+52 777 456 7890",
-      whatsapp: "+52 777 456 7890",
+      nombre: "Hotel Huayacán Cuernavaca",
+      web: "https://www.fiestamericanatravelty.com/curamoria/hoteles/huayacan-cuernavaca-curamoria-collection",
+      maps: "https://maps.app.goo.gl/DAFgd5U7rsMwFs4c9",
+      telefono: "+52 443 310 8137",
+      whatsapp: "+52 443 137 8728",
     },
   ];
   
   const AIRBNB_DATA = {
     nombre: "Airbnb",
-    texto: "Revisa la lista que hicimos para ti",
-    link: "https://www.airbnb.com/wishlists/...",
+    texto: "Revisa la lista que hicimos para ti 🤩",
+    link: "https://www.airbnb.com/l/Qfh3Znx0",
   };
   
   // ====================================================
@@ -875,7 +875,7 @@ export default function Home() {
   ];
   
   const MESA_REGALOS = [
-    { type: "liverpool", url: "https://www.liverpool.com.mx/" },
+    { type: "liverpool", url: "https://mesaderegalos.liverpool.com.mx/milistaderegalos/60006608" },
     { type: "amazon", url: "https://www.amazon.com.mx/wedding/share/VanessaAndres/" },
   ];
 
