@@ -2214,7 +2214,7 @@ export default function Home() {
             </div>
 
             {/* Nota final */}
-            <div style={{ marginTop: 30, fontSize: "clamp(0.8rem, 3vw, 0.9rem)", color: COLORS.textMedium, textAlign: "center" }}>
+            <div style={{ marginTop: 30, fontSize: "clamp(1.15rem, 3vw, 1.5rem)", color: COLORS.textMedium, textAlign: "center" }}>
               *No se permiten menores de 16 años · Invitación personal · Sin acompañantes adicionales
             </div>
           </div>
