@@ -637,7 +637,7 @@ export default function Home() {
   const AIRBNB_DATA = {
     nombre: "Airbnb",
     texto: "Revisa la lista que hicimos para ti 🤩",
-    link: "https://www.airbnb.com/l/Qfh3Znx0",
+    link: "https://www.airbnb.com/l/pKcOAN8q",
   };
   
   // ====================================================
