@@ -527,6 +527,9 @@ function MusicFloatingButton({ isPlaying, onClick }) {
 export default function Home() {
   const router = useRouter();
   const audioRef = useRef(null);
+  // ✅ Bandera: true si el usuario pausó la música MANUALMENTE.
+  // Mientras esté en true, ningún clic en la invitación reactivará la música.
+  const userPausedRef = useRef(false);
 
   // ====================================================
   // 🖼️ CONFIGURACIÓN DE IMÁGENES
@@ -808,6 +811,25 @@ export default function Home() {
     const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
   }, [weddingDateMs]);
+
+  // ✅ Sincroniza el estado `audioPlaying` con el estado REAL del <audio>.
+  // Así, si algo pausa/reproduce el audio, la UI se mantiene correcta.
+  useEffect(() => {
+    if (!envelopeOpen) return;
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const syncPlay = () => setAudioPlaying(true);
+    const syncPause = () => setAudioPlaying(false);
+
+    audio.addEventListener("play", syncPlay);
+    audio.addEventListener("pause", syncPause);
+
+    return () => {
+      audio.removeEventListener("play", syncPlay);
+      audio.removeEventListener("pause", syncPause);
+    };
+  }, [envelopeOpen]);
 
   async function confirmar(asistencia) {
     try {
@@ -1494,6 +1516,9 @@ export default function Home() {
 
   function abrirSobre() {
     setEnvelopeOpen(true);
+
+    // Al abrir el sobre, reseteamos la bandera (nadie ha pausado aún).
+    userPausedRef.current = false;
     
     setTimeout(() => {
       if (audioRef.current) {
@@ -1513,7 +1538,11 @@ export default function Home() {
     } catch {}
   }
 
+  // ✅ Solo reactiva si el usuario NO ha pausado manualmente.
   const handleUserInteraction = () => {
+    // Si el usuario pausó manualmente, NO reactivar por clics en la página.
+    if (userPausedRef.current) return;
+
     if (envelopeOpen && audioRef.current && !audioPlaying) {
       audioRef.current.play()
         .then(() => setAudioPlaying(true))
@@ -1526,9 +1555,15 @@ export default function Home() {
       if (audioPlaying) {
         audioRef.current.pause();
         setAudioPlaying(false);
+        // ✅ Marcar que la pausa fue MANUAL: bloquea reactivaciones automáticas.
+        userPausedRef.current = true;
       } else {
         audioRef.current.play()
-          .then(() => setAudioPlaying(true))
+          .then(() => {
+            setAudioPlaying(true);
+            // ✅ El usuario reanudó manualmente: se libera el bloqueo.
+            userPausedRef.current = false;
+          })
           .catch(e => console.log("Error al reproducir:", e));
       }
     }
