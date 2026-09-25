@@ -623,7 +623,7 @@ export default function Home() {
       web: "https://casabegonias.com/",
       maps: "https://maps.app.goo.gl/xpASGPERdqsHZLcT7",
       telefono: "+52 777 190 1621",
-      whatsapp: "+52 777 190 1621",
+      whatsapp: "+52 777 418 7116",
     },
     {
       nombre: "Hotel Huayacán Cuernavaca",
