@@ -848,8 +848,8 @@ export default function Home() {
   // 📍 UBICACIONES
   // ====================================================
   
-  const MAPS_CEREMONY_URL = "https://maps.google.com/?q=Parroquia%20de%20San%20Miguel%20Arcangel%2C%20Jiutepec%2C%20Morelos";
-  const WAZE_CEREMONY_URL = "https://waze.com/ul?q=Parroquia%20de%20San%20Miguel%20Arcangel%20Jiutepec%20Morelos";
+  const MAPS_CEREMONY_URL = "https://maps.app.goo.gl/q6U7iyU8tVWfY5j38";
+  const WAZE_CEREMONY_URL = "https://maps.app.goo.gl/q6U7iyU8tVWfY5j38";
 
   const NUESTRA_HISTORIA = [
     {
