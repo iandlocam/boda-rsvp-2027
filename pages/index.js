@@ -2208,7 +2208,6 @@ export default function Home() {
                   {rsvpStatus === "error" && <div style={{ marginTop: 10, color: COLORS.blueSoft }}>{rsvpError}</div>}
 
                   <div style={{ marginTop: 15, fontSize: "0.8rem", color: COLORS.textMedium }}>
-                    Tip: tu enlace debe incluir <code>?id=AV001</code> (cada invitado tiene un ID).
                   </div>
                 </div>
               </div>
