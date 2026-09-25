@@ -12,7 +12,7 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados, bebidas, 
   console.log("📤 Enviando datos al API:", { id, asistencia, mensaje, pasesConfirmados, bebidas, alergias });
   
   const resp = await fetch("/api/guest", {
-    method: "PATCH",  // 🔥 CAMBIADO DE POST A PATCH
+    method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id, asistencia, mensaje, pasesConfirmados, bebidas, alergias }),
   });
@@ -862,7 +862,7 @@ export default function Home() {
     },
     {
       title: "El gran día",
-      text: "Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo en  uestras vidas.",
+      text: "Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo en nuestras vidas.",
     },
   ];
 
@@ -880,7 +880,7 @@ export default function Home() {
   ];
 
   // ====================================================
-  // 🎨 ESTILOS (solo los necesarios)
+  // 🎨 ESTILOS
   // ====================================================
   
   const envelopeStyles = {
@@ -1197,9 +1197,7 @@ export default function Home() {
   background: COLORS.white,
   borderRadius: 100,
   padding: "clamp(15px, 4vw, 25px) clamp(10px, 3vw, 20px)",
-  boxShadow: `0 0 0 3px ${COLORS.gold}`, // 🔥 BORDE CON SOMBRA
-  // boxShadow: `0 0 0 3px #c4a882`,     // Dorado
-  // boxShadow: `0 0 0 3px ${COLORS.blueSoft}`, // Azul suave
+  boxShadow: `0 0 0 3px ${COLORS.gold}`,
 },
     countdownItem: {
       textAlign: "center",
@@ -1266,8 +1264,8 @@ export default function Home() {
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
       fontFamily: "'Quicksand', sans-serif",
-      color: COLORS.textDark, // 🔥 AÑADE ESTA LÍNEA
-      appearance: "none", // Opcional: quita el estilo nativo del select
+      color: COLORS.textDark,
+      appearance: "none",
     },
     textarea: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
@@ -1424,9 +1422,6 @@ export default function Home() {
       textAlign: "center",
       marginTop: "10px",
     },
-    // ====================================================
-    // 🏨 ESTILOS PARA LA SECCIÓN DE HOSPEDAJES
-    // ====================================================
     hospedajesContainer: {
       display: "flex",
       flexDirection: "column",
@@ -1959,7 +1954,7 @@ export default function Home() {
                         rel="noreferrer" 
                         style={invitationStyles.hotelLink}
                       >
-                        {hotel.web.replace(/^https?:\/\//, '')}
+                        Sitio web
                       </a>
                     </div>
                     
