@@ -849,7 +849,7 @@ export default function Home() {
   // ====================================================
   
   const MAPS_CEREMONY_URL = "https://maps.app.goo.gl/q6U7iyU8tVWfY5j38";
-  const WAZE_CEREMONY_URL = "https://maps.app.goo.gl/q6U7iyU8tVWfY5j38";
+  const WAZE_CEREMONY_URL = "https://waze.com/ul/h9g37qx3m2";
 
   const NUESTRA_HISTORIA = [
     {
