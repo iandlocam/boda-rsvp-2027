@@ -876,15 +876,15 @@ export default function Home() {
   const NUESTRA_HISTORIA = [
     {
       title: "Cómo empezó",
-      text: "Un día cualquiera se volvió especial. Entre risas, pláticas largas y complicidad, entendimos que esto iba en serio.",
+      text: "Vanessa y Andrés se conocieron en la universidad, donde descubrieron que juntos hacían un gran equipo. Entre risas y complicidad, su historia comenzó con un primer beso bajo la lluvia.",
     },
     {
-      title: "Lo que nos une",
-      text: "Amor por lo simple, por la familia, por viajar y por crear un hogar donde siempre haya paz y amor.",
+      title: "El momento",
+      text: "Casi siete años después, la lluvia volvió a encontrarlos en Colombia. Tras un día lleno de imprevistos y una larga espera, Andrés encontró el momento perfecto para hacerle la pregunta más importante.",
     },
     {
       title: "El gran día",
-      text: "Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo en nuestras vidas.",
+      text: "Ella dijo sí. Y ahora están listos para elegirse una vez más, esta vez para toda la vida.❤️ <br /> Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo en nuestras vidas.",
     },
   ];
 
@@ -1664,7 +1664,8 @@ export default function Home() {
                     {guestData?.pasesAsignados || 2}
                   </div>
                   <div style={envelopeStyles.reservedSubtext}>
-                    LUGARES EN SU HONOR
+                    LUGARES EN SU HONOR<br />
+                    *No se permiten menores de 16 años*
                   </div>
                 </div>
               </div>
