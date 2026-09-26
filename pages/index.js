@@ -2107,7 +2107,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div style={{ marginTop: 30, fontSize: "clamp(1.3rem, 3.5vw, 1.5rem)", color: COLORS.textDar, textAlign: "center", fontWeight: 700}}>
+            <div style={{ marginTop: 30, fontSize: "clamp(1.3rem, 3.5vw, 1.5rem)", color: COLORS.textDar, textAlign: "center", fontWeight: 450}}>
              Invitación personal.<br />
               Sin acompañantes adicionales.*
             </div>
