@@ -1333,7 +1333,7 @@ export default function Home() {
       width: "100%",
       flexShrink: 0,
       height: "auto",
-      aspectRatio: "1.2/1",
+      aspectRatio: "16/9",
       objectFit: "cover",
       borderRadius: 30,
     },
