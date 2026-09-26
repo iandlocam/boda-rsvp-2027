@@ -965,15 +965,16 @@ export default function Home() {
       fontWeight: 400,
     },
     weddingDate: {
-      fontFamily: '"Frank Ruhl Libre", serif',
-      fontSize: "clamp(1.2rem, 4.5vw, 1.5rem)",
-      fontWeight: 500,
-      color: COLORS.textMedium,
-      textAlign: "center",
-      marginTop: 0,
-      marginBottom: 35,
-      letterSpacing: "4px",
-    },
+  fontFamily: '"Frank Ruhl Libre", serif',
+  fontSize: "clamp(1rem, 4vw, 1.5rem)",         // 👈 más pequeño en pantallas chicas
+  fontWeight: 500,
+  color: COLORS.textMedium,
+  textAlign: "center",
+  marginTop: 0,
+  marginBottom: 35,
+  letterSpacing: "clamp(1px, 0.8vw, 4px)",      // 👈 espaciado responsivo
+  whiteSpace: "nowrap",                         // 👈 nunca baja de línea
+},
     invitationText: {
       fontSize: "clamp(1rem, 3.5vw, 1.1rem)",
       color: COLORS.textMedium,
