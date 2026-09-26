@@ -965,7 +965,7 @@ export default function Home() {
       fontWeight: 400,
     },
     weddingDate: {
-      fontFamily: '"Playfair Display", serif',
+      fontFamily: '"Lora", serif',
       fontSize: "clamp(1.2rem, 4.5vw, 1.5rem)",
       fontWeight: 700,
       color: COLORS.textMedium,
@@ -1517,8 +1517,8 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap"
           rel="stylesheet"
         />
-            <link
-  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"
+<link
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap"
   rel="stylesheet"
 />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
