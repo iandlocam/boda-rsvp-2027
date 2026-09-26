@@ -991,14 +991,14 @@ export default function Home() {
     familyCard: {
       background: COLORS.cream,
       borderRadius: 30,
-      padding: "20px 15px",
+      padding: "20px 10px",
       textAlign: "center",
       border: `1px solid ${COLORS.accentLight}`,
     },
     familyLabel: {
       fontSize: "0.9rem",
       color: COLORS.gold,
-      fontWeight: 600,
+      fontWeight: 700,
       textTransform: "uppercase",
       letterSpacing: "1px",
       marginBottom: 10,
@@ -1006,7 +1006,7 @@ export default function Home() {
     familyName: {
       fontSize: "1.1rem",
       color: COLORS.textDark,
-      fontWeight: 500,
+      fontWeight: 400,
     },
     dividerImage: {
       width: "100%",
