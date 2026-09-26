@@ -300,7 +300,7 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
           background: "rgba(0,0,0,0.5)",
           padding: "8px 16px",
           borderRadius: "20px",
-          fontFamily: "'Quicksand', sans-serif",
+          fontFamily: '"Frank Ruhl Libre", serif',
         }}
       >
         {currentIndex + 1} / {images.length}
@@ -843,7 +843,7 @@ export default function Home() {
       textAlign: "center",
     },
     clickText: {
-      fontFamily: '"Cormorant Garamond", serif',
+      fontFamily: '"Frank Ruhl Libre", serif',
       fontSize: 16,
       letterSpacing: "2px",
       textTransform: "uppercase",
@@ -861,7 +861,7 @@ export default function Home() {
       textAlign: "center",
     },
     reservedText: {
-      fontFamily: '"Cormorant Garamond", serif',
+      fontFamily: '"Frank Ruhl Libre", serif',
       fontSize: 16,
       letterSpacing: "2px",
       textTransform: "uppercase",
@@ -870,7 +870,7 @@ export default function Home() {
       marginBottom: 5,
     },
     reservedNumber: {
-      fontFamily: '"Cormorant Garamond", serif',
+      fontFamily: '"Frank Ruhl Libre", serif',
       fontSize: 48,
       fontWeight: 700,
       color: COLORS.blueSoft,
@@ -878,7 +878,7 @@ export default function Home() {
       margin: "5px 0",
     },
     reservedSubtext: {
-      fontFamily: '"Cormorant Garamond", serif',
+      fontFamily: '"Frank Ruhl Libre", serif',
       fontSize: 14,
       letterSpacing: "2px",
       textTransform: "uppercase",
@@ -886,7 +886,7 @@ export default function Home() {
       opacity: 0.6,
     },
     reservedNote: {
-      fontFamily: '"Cormorant Garamond", serif',
+      fontFamily: '"Frank Ruhl Libre", serif',
       fontSize: 13,
       fontWeight: 700,
       letterSpacing: "2px",
@@ -930,7 +930,7 @@ export default function Home() {
     page: {
       minHeight: "100vh",
       backgroundColor: COLORS.cream,
-      fontFamily: "'Quicksand', sans-serif",
+      fontFamily: '"Frank Ruhl Libre", serif',
       color: COLORS.textDark,
       display: "flex",
       justifyContent: "center",
@@ -961,13 +961,13 @@ export default function Home() {
       color: COLORS.textMedium,
       textAlign: "center",
       marginBottom: 20,
-      fontFamily: "'Quicksand', sans-serif",
+      fontFamily: '"Frank Ruhl Libre", serif',
       fontWeight: 400,
     },
     weddingDate: {
       fontFamily: '"Frank Ruhl Libre", serif',
       fontSize: "clamp(1.2rem, 4.5vw, 1.5rem)",
-      fontWeight: 650,
+      fontWeight: 500,
       color: COLORS.textMedium,
       textAlign: "center",
       marginTop: 0,
@@ -980,7 +980,7 @@ export default function Home() {
       textAlign: "center",
       marginBottom: 25,
       lineHeight: 1.6,
-      fontFamily: "'Quicksand', sans-serif",
+      fontFamily: '"Frank Ruhl Libre", serif',
     },
     familySection: {
       display: "flex",
@@ -1113,7 +1113,7 @@ export default function Home() {
       borderRadius: 50,
       fontSize: "1rem",
       background: COLORS.cream,
-      fontFamily: "'Quicksand', sans-serif",
+      fontFamily: '"Frank Ruhl Libre", serif',
       marginTop: "15px",
       color: COLORS.textDark,
     },
@@ -1133,13 +1133,11 @@ export default function Home() {
       textAlign: "center",
     },
     countdownNumber: {
-      fontFamily: "'Quicksand', sans-serif",
+      fontFamily: '"Frank Ruhl Libre", serif',
       fontSize: "clamp(1.5rem, 6vw, 2.5rem)",
       fontWeight: 500,
       color: COLORS.gold,
       lineHeight: 1,
-      fontVariantNumeric: "tabular-nums",
-      fontFeatureSettings: '"tnum" 1',
     },
     countdownLabel: {
       fontSize: "clamp(0.65rem, 2.5vw, 0.9rem)",
@@ -1188,7 +1186,7 @@ export default function Home() {
       borderRadius: 50,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
-      fontFamily: "'Quicksand', sans-serif",
+      fontFamily: '"Frank Ruhl Libre", serif',
     },
     select: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
@@ -1196,7 +1194,7 @@ export default function Home() {
       borderRadius: 50,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
-      fontFamily: "'Quicksand', sans-serif",
+      fontFamily: '"Frank Ruhl Libre", serif',
       color: COLORS.textDark,
       appearance: "none",
     },
@@ -1206,7 +1204,7 @@ export default function Home() {
       borderRadius: 25,
       fontSize: "clamp(0.9rem, 3vw, 1rem)",
       background: COLORS.cream,
-      fontFamily: "'Quicksand', sans-serif",
+      fontFamily: '"Frank Ruhl Libre", serif',
       resize: "vertical",
       color: "#2c3e4a",
     },
@@ -1224,7 +1222,7 @@ export default function Home() {
       cursor: "pointer",
       transition: "background 0.3s",
       boxShadow: `0 10px 25px rgba(90,122,138,0.3)`,
-      fontFamily: "'Quicksand', sans-serif",
+      fontFamily: '"Frank Ruhl Libre", serif',
     },
     carouselContainer: {
       width: "100%",
@@ -1510,17 +1508,13 @@ export default function Home() {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
           rel="stylesheet"
         />
-<link
-  href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;600;700&display=swap"
-  rel="stylesheet"
-/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`
           textarea::placeholder { 
