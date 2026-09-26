@@ -884,7 +884,7 @@ export default function Home() {
     },
     {
       title: "El gran día",
-      text: "Ella dijo sí. Y ahora están listos para elegirse una vez más, esta vez para toda la vida.❤️ <br /> Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo en nuestras vidas.",
+      text: "Ella dijo sí!, y ahora están listos para elegirse una vez más, esta vez para toda la vida. Nos emociona celebrarlo contigo. Gracias por ser parte de nuestra historia y de este nuevo capítulo en nuestras vidas.❤️",
     },
   ];
 
@@ -1664,7 +1664,7 @@ export default function Home() {
                     {guestData?.pasesAsignados || 2}
                   </div>
                   <div style={envelopeStyles.reservedSubtext}>
-                    LUGARES EN SU HONOR<br />
+                    LUGARES EN SU HONOR
                     *No se permiten menores de 16 años*
                   </div>
                 </div>
