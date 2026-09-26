@@ -997,7 +997,7 @@ export default function Home() {
       color: COLORS.textDark,
       opacity: 0.6,
     },
-    // ✅ NUEVO: estilo para la leyenda "*No se permiten menores de 16 años*"
+    // ✅ Estilo para la leyenda "*No se permiten menores de 16 años*"
     reservedNote: {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: 13,
@@ -1076,6 +1076,17 @@ export default function Home() {
       marginBottom: 20,
       fontFamily: "'Quicksand', sans-serif",
       fontWeight: 400,
+    },
+    // ✅ NUEVO: estilo para la fecha "23 de abril de 2027"
+    weddingDate: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: "clamp(1.2rem, 4.5vw, 1.5rem)",
+      fontWeight: 600,
+      color: COLORS.gold,
+      textAlign: "center",
+      marginTop: 0,
+      marginBottom: 35,
+      letterSpacing: "4px",
     },
     invitationText: {
       fontSize: "clamp(1rem, 3.5vw, 1.1rem)",
@@ -1708,7 +1719,12 @@ export default function Home() {
               Vanessa<br />&<br />Andrés
             </div>
             
-            <div style={invitationStyles.subtitle}>¡Nos casamos!<br /> 23 de abril de 2027 </div>
+            <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
+
+            {/* ✅ NUEVO: Fecha entre los nombres y el contador */}
+            <div style={invitationStyles.weddingDate}>
+              23 de abril de 2027
+            </div>
 
             {/* Contador en dorado */}
             <div style={invitationStyles.countdownContainer}>
@@ -2118,7 +2134,7 @@ export default function Home() {
                 <div style={envelopeStyles.reservedSubtext}>
                   LUGARES EN SU HONOR
                 </div>
-                {/* ✅ NUEVO: Leyenda de menores de 16 años */}
+                {/* ✅ Leyenda de menores de 16 años */}
                 <div style={envelopeStyles.reservedNote}>
                   *No se permiten menores de 16 años*
                 </div>
@@ -2230,6 +2246,7 @@ export default function Home() {
 
             {/* Nota final */}
             <div style={{ marginTop: 30, fontSize: "clamp(1.3rem, 3.5vw, 1.5rem)", color: COLORS.textMedium, textAlign: "center", fontWeight: 700}}>
+              *No se permiten menores de 16 años.<br />
               Invitación personal.<br />
               Sin acompañantes adicionales.*
             </div>
