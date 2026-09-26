@@ -965,9 +965,9 @@ export default function Home() {
       fontWeight: 400,
     },
     weddingDate: {
-      fontFamily: '"Cormorant Garamond", serif',
+      fontFamily: '"Playfair Display", serif',
       fontSize: "clamp(1.2rem, 4.5vw, 1.5rem)",
-      fontWeight: 600,
+      fontWeight: 700,
       color: COLORS.textMedium,
       textAlign: "center",
       marginTop: 0,
@@ -1517,6 +1517,10 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap"
           rel="stylesheet"
         />
+            <link
+  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`
           textarea::placeholder { 
