@@ -991,11 +991,11 @@ export default function Home() {
     },
     reservedSubtext: {
       fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 14,
+      fontSize: 16,
       letterSpacing: "2px",
       textTransform: "uppercase",
       color: COLORS.textDark,
-      opacity: 0.6,
+      opacity: 0.7,
     },
     // ✅ Estilo para la leyenda "*No se permiten menores de 16 años*"
     reservedNote: {
