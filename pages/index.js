@@ -1081,8 +1081,8 @@ export default function Home() {
     weddingDate: {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: "clamp(1.2rem, 4.5vw, 1.5rem)",
-      fontWeight: 600,
-      color: COLORS.gold,
+      fontWeight: 700,
+      color: COLORS.textMedium,
       textAlign: "center",
       marginTop: 0,
       marginBottom: 35,
