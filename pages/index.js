@@ -997,6 +997,17 @@ export default function Home() {
       color: COLORS.textDark,
       opacity: 0.6,
     },
+    // ✅ NUEVO: estilo para la leyenda "*No se permiten menores de 16 años*"
+    reservedNote: {
+      fontFamily: '"Cormorant Garamond", serif',
+      fontSize: 13,
+      fontWeight: 700,
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      color: COLORS.textDark,
+      opacity: 0.7,
+      marginTop: 12,
+    },
     seal: {
       position: "absolute",
       bottom: 30,
@@ -2106,6 +2117,10 @@ export default function Home() {
                 </div>
                 <div style={envelopeStyles.reservedSubtext}>
                   LUGARES EN SU HONOR
+                </div>
+                {/* ✅ NUEVO: Leyenda de menores de 16 años */}
+                <div style={envelopeStyles.reservedNote}>
+                  *No se permiten menores de 16 años*
                 </div>
               </div>
             </div>
