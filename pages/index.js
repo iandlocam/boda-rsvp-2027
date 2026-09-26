@@ -7,7 +7,6 @@ function clamp(n) {
   return Number.isFinite(n) && n > 0 ? n : 0;
 }
 
-// /pages/index.js - Reemplaza la función enviarRSVP
 async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados, bebidas, alergias }) {
   console.log("📤 Enviando datos al API:", { id, asistencia, mensaje, pasesConfirmados, bebidas, alergias });
   
@@ -24,9 +23,6 @@ async function enviarRSVP({ id, asistencia, mensaje, pasesConfirmados, bebidas, 
   return data;
 }
 
-// ====================================================
-// 🎨 PALETA DE COLORES
-// ====================================================
 const COLORS = {
   cream: "#f5ede4",
   textDark: "#2c3e4a",
@@ -42,11 +38,6 @@ const COLORS = {
   borderGray: "#e8e0d6",
 };
 
-// ====================================================
-// 🖼️ COMPONENTES
-// ====================================================
-
-/** ✅ Monograma AV */
 function MonogramaAV({ size = 60, color = COLORS.textDark }) {
   return (
     <svg
@@ -64,52 +55,16 @@ function MonogramaAV({ size = 60, color = COLORS.textDark }) {
         </linearGradient>
       </defs>
 
-      <circle
-        cx="60"
-        cy="60"
-        r="48"
-        fill="none"
-        stroke="url(#ring)"
-        strokeWidth="2.2"
-        opacity="0.9"
-      />
-      <circle
-        cx="60"
-        cy="60"
-        r="44"
-        fill="none"
-        stroke="rgba(255,255,255,0.30)"
-        strokeWidth="1.2"
-      />
+      <circle cx="60" cy="60" r="48" fill="none" stroke="url(#ring)" strokeWidth="2.2" opacity="0.9" />
+      <circle cx="60" cy="60" r="44" fill="none" stroke="rgba(255,255,255,0.30)" strokeWidth="1.2" />
 
-      <path
-        d="M34 78 L46 38 L58 78"
-        fill="none"
-        stroke={color}
-        strokeWidth="3.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M40 62 H52"
-        fill="none"
-        stroke={color}
-        strokeWidth="3.0"
-        strokeLinecap="round"
-      />
-      <path
-        d="M66 40 L80 78 L94 40"
-        fill="none"
-        stroke={color}
-        strokeWidth="3.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M34 78 L46 38 L58 78" fill="none" stroke={color} strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M40 62 H52" fill="none" stroke={color} strokeWidth="3.0" strokeLinecap="round" />
+      <path d="M66 40 L80 78 L94 40" fill="none" stroke={color} strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-/** ✅ Sello */
 function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   return (
     <div
@@ -170,41 +125,11 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
           <use href="#blob" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" />
           <use href="#blob" fill="none" stroke="rgba(122,91,34,0.28)" strokeWidth="1.3" />
 
-          <path
-            d="M42 76 L52 44 L62 76"
-            fill="none"
-            stroke="rgba(60,45,18,0.40)"
-            strokeWidth="2.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.9"
-          />
-          <path
-            d="M47 64 H57"
-            fill="none"
-            stroke="rgba(60,45,18,0.40)"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-            opacity="0.9"
-          />
-          <path
-            d="M66 46 L78 76 L90 46"
-            fill="none"
-            stroke="rgba(60,45,18,0.40)"
-            strokeWidth="2.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.9"
-          />
+          <path d="M42 76 L52 44 L62 76" fill="none" stroke="rgba(60,45,18,0.40)" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />
+          <path d="M47 64 H57" fill="none" stroke="rgba(60,45,18,0.40)" strokeWidth="2.4" strokeLinecap="round" opacity="0.9" />
+          <path d="M66 46 L78 76 L90 46" fill="none" stroke="rgba(60,45,18,0.40)" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />
 
-          <path
-            d="M26 44 C38 26, 58 18, 78 22"
-            fill="none"
-            stroke="rgba(255,255,255,0.35)"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-            opacity="0.55"
-          />
+          <path d="M26 44 C38 26, 58 18, 78 22" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2.4" strokeLinecap="round" opacity="0.55" />
         </g>
       </svg>
 
@@ -235,7 +160,6 @@ function WaxSeal({ onClick, disabled = false, label = "Abrir", size = 108 }) {
   );
 }
 
-/** ✅ TimelineIcon */
 function TimelineIcon({ type = "ceremony", size = 48 }) {
   const ICONOS = {
     ceremony: "/iconos/Ceremony.png",
@@ -286,7 +210,6 @@ function TimelineIcon({ type = "ceremony", size = 48 }) {
   );
 }
 
-/** ✅ ImageCarousel */
 function ImageCarousel({ images, initialIndex = 0, onClose }) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [touchStart, setTouchStart] = useState(0);
@@ -454,7 +377,6 @@ function ImageCarousel({ images, initialIndex = 0, onClose }) {
   );
 }
 
-/** ✅ Botón Flotante de Música */
 function MusicFloatingButton({ isPlaying, onClick }) {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -527,14 +449,8 @@ function MusicFloatingButton({ isPlaying, onClick }) {
 export default function Home() {
   const router = useRouter();
   const audioRef = useRef(null);
-  // ✅ Bandera: true si el usuario pausó la música MANUALMENTE.
-  // Mientras esté en true, ningún clic en la invitación reactivará la música.
   const userPausedRef = useRef(false);
 
-  // ====================================================
-  // 🖼️ CONFIGURACIÓN DE IMÁGENES
-  // ====================================================
-  
   const BACKGROUND_IMAGE = "/marco-boda.jpeg";
   const SOBRE_IMAGE = "/sobre-boda.jpg";
   const DRESS_CODE_IMAGE = "/Dress-code.png";
@@ -571,10 +487,6 @@ export default function Home() {
     "/FOTOS/15.JPEG",
   ];
   
-  // ====================================================
-  // 🎨 OPCIONES DE ESTILO
-  // ====================================================
-  
   const FLORAL_FRAME_OPACITY = 0.4;
   const TIMELINE_ICON_SIZE = 80;
   
@@ -587,10 +499,6 @@ export default function Home() {
     "#C7B7E3",
   ];
   
-  // ====================================================
-  // 📋 DRESS CODE
-  // ====================================================
-  
   const DRESS_CODE = {
     title: "Dress code",
     text: [
@@ -601,10 +509,6 @@ export default function Home() {
       "Les sugerimos los siguientes colores."
     ],
   };
-  
-  // ====================================================
-  // 📋 DATOS DE HOTELES
-  // ====================================================
   
   const HOTELES = [
     {
@@ -642,8 +546,6 @@ export default function Home() {
     texto: "Revisa la lista que hicimos para ti 🤩",
     link: "https://www.airbnb.com/l/pKcOAN8q",
   };
-  
-  // ====================================================
 
   const [carouselOpen, setCarouselOpen] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
@@ -720,7 +622,6 @@ export default function Home() {
     if (typeof id === "string") setGuestId(id.trim());
   }, [router.isReady, router.query.id]);
 
-  // ✅ CARGAR DATOS DEL INVITADO - AHORA CON LA COLUMNA CORRECTA
   useEffect(() => {
     if (!guestId) return;
 
@@ -739,7 +640,6 @@ export default function Home() {
 
         const g = data.guest || null;
         
-        // ✅ DEBUG: Ver qué datos llegan
         console.log("📊 Datos recibidos:", g);
         console.log("📊 Pases asignados:", g?.pasesAsignados);
         
@@ -757,14 +657,12 @@ export default function Home() {
         if (g?.bebidas && Array.isArray(g.bebidas)) {
           setBebidasSeleccionadas(g.bebidas);
         } else if (g?.bebidas && typeof g.bebidas === "string") {
-          // Si viene como string separado por comas
           setBebidasSeleccionadas(g.bebidas.split(",").map(s => s.trim()).filter(Boolean));
         }
         if (g?.alergias) {
           setAlergias(g.alergias);
         }
 
-        // ✅ Usar el valor real de pasesAsignados (columna D, índice 3)
         const pasesAsignados = Number(g?.pasesAsignados) || 0;
         console.log("📊 Pases asignados (convertido):", pasesAsignados);
         
@@ -812,8 +710,6 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [weddingDateMs]);
 
-  // ✅ Sincroniza el estado `audioPlaying` con el estado REAL del <audio>.
-  // Así, si algo pausa/reproduce el audio, la UI se mantiene correcta.
   useEffect(() => {
     if (!envelopeOpen) return;
     const audio = audioRef.current;
@@ -866,10 +762,6 @@ export default function Home() {
     }
   }
 
-  // ====================================================
-  // 📍 UBICACIONES
-  // ====================================================
-  
   const MAPS_CEREMONY_URL = "https://maps.app.goo.gl/q6U7iyU8tVWfY5j38";
   const WAZE_CEREMONY_URL = "https://waze.com/ul/h9g37qx3m2";
 
@@ -901,10 +793,6 @@ export default function Home() {
     { type: "amazon", url: "https://www.amazon.com.mx/wedding/share/VanessaAndres/" },
   ];
 
-  // ====================================================
-  // 🎨 ESTILOS
-  // ====================================================
-  
   const envelopeStyles = {
     pageContainer: {
       minHeight: "100vh",
@@ -991,13 +879,12 @@ export default function Home() {
     },
     reservedSubtext: {
       fontFamily: '"Cormorant Garamond", serif',
-      fontSize: 16,
+      fontSize: 14,
       letterSpacing: "2px",
       textTransform: "uppercase",
       color: COLORS.textDark,
-      opacity: 0.7,
+      opacity: 0.6,
     },
-    // ✅ Estilo para la leyenda "*No se permiten menores de 16 años*"
     reservedNote: {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: 13,
@@ -1077,11 +964,10 @@ export default function Home() {
       fontFamily: "'Quicksand', sans-serif",
       fontWeight: 400,
     },
-    // ✅ NUEVO: estilo para la fecha "23 de abril de 2027"
     weddingDate: {
       fontFamily: '"Cormorant Garamond", serif',
       fontSize: "clamp(1.2rem, 4.5vw, 1.5rem)",
-      fontWeight: 700,
+      fontWeight: 600,
       color: COLORS.textMedium,
       textAlign: "center",
       marginTop: 0,
@@ -1247,10 +1133,12 @@ export default function Home() {
       textAlign: "center",
     },
     countdownNumber: {
+      fontFamily: '"Cormorant Garamond", serif',
       fontSize: "clamp(1.5rem, 6vw, 2.5rem)",
       fontWeight: 600,
       color: COLORS.gold,
       lineHeight: 1,
+      fontVariantNumeric: "tabular-nums",
     },
     countdownLabel: {
       fontSize: "clamp(0.65rem, 2.5vw, 0.9rem)",
@@ -1521,7 +1409,6 @@ export default function Home() {
     },
   };
 
-  // ✅ maxPases - usa el valor real de pasesAsignados
   const maxPases = useMemo(() => {
     if (!guestData) return 1;
     const pases = Number(guestData.pasesAsignados);
@@ -1538,8 +1425,6 @@ export default function Home() {
 
   function abrirSobre() {
     setEnvelopeOpen(true);
-
-    // Al abrir el sobre, reseteamos la bandera (nadie ha pausado aún).
     userPausedRef.current = false;
     
     setTimeout(() => {
@@ -1560,9 +1445,7 @@ export default function Home() {
     } catch {}
   }
 
-  // ✅ Solo reactiva si el usuario NO ha pausado manualmente.
   const handleUserInteraction = () => {
-    // Si el usuario pausó manualmente, NO reactivar por clics en la página.
     if (userPausedRef.current) return;
 
     if (envelopeOpen && audioRef.current && !audioPlaying) {
@@ -1577,13 +1460,11 @@ export default function Home() {
       if (audioPlaying) {
         audioRef.current.pause();
         setAudioPlaying(false);
-        // ✅ Marcar que la pausa fue MANUAL: bloquea reactivaciones automáticas.
         userPausedRef.current = true;
       } else {
         audioRef.current.play()
           .then(() => {
             setAudioPlaying(true);
-            // ✅ El usuario reanudó manualmente: se libera el bloqueo.
             userPausedRef.current = false;
           })
           .catch(e => console.log("Error al reproducir:", e));
@@ -1647,7 +1528,6 @@ export default function Home() {
         `}</style>
       </Head>
   
-      {/* SOBRE CERRADO */}
       {!envelopeOpen && (
         <div style={envelopeStyles.pageContainer}>
           <div style={envelopeStyles.wrap}>
@@ -1699,7 +1579,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* INVITACIÓN */}
       {envelopeOpen && (
         <div 
           style={invitationStyles.page}
@@ -1714,19 +1593,16 @@ export default function Home() {
               style={{ display: 'none' }}
             />
 
-            {/* Nombres en dorado */}
             <div style={invitationStyles.names}>
               Vanessa<br />&<br />Andrés
             </div>
             
             <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
 
-            {/* ✅ NUEVO: Fecha entre los nombres y el contador */}
             <div style={invitationStyles.weddingDate}>
               23 de abril de 2027
             </div>
 
-            {/* Contador en dorado */}
             <div style={invitationStyles.countdownContainer}>
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
@@ -1750,7 +1626,6 @@ export default function Home() {
               Estamos felices de invitarlos a celebrar este momento con nosotros y en compañía de
             </div>
 
-            {/* Familias y padrinos - títulos en dorado */}
             <div style={invitationStyles.familySection}>
               <div style={invitationStyles.familyCard}>
                 <div style={invitationStyles.familyLabel}>Papás de la novia</div>
@@ -1769,7 +1644,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Galería */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Galería</div>
               
@@ -1809,7 +1683,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Nuestra historia - títulos en dorado */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Nuestra historia</div>
               <div style={invitationStyles.softBox}>
@@ -1830,7 +1703,6 @@ export default function Home() {
               style={invitationStyles.dividerImage}
             />
 
-            {/* Itinerario - títulos en dorado */}
             <div style={{ marginTop: 20 }}>
               <div style={invitationStyles.sectionTitle}>Itinerario</div>
               <div style={invitationStyles.timelineGrid}>
@@ -1846,7 +1718,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Dress code */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Dress code</div>
               <div style={{ ...invitationStyles.softBox, textAlign: "center" }}>
@@ -1887,7 +1758,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Carrusel de 3 imágenes */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.carouselContainer}>
                 <div
@@ -1925,7 +1795,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Más momentos */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Más momentos</div>
               <div style={invitationStyles.secondaryGallery}>
@@ -1941,7 +1810,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Ceremonia y recepción */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Ceremonia y recepción</div>
               <div style={invitationStyles.ubicacionesContainer}>
@@ -1963,7 +1831,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Mesa de regalos */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Mesa de regalos</div>
               <div style={invitationStyles.softBox}>
@@ -2000,7 +1867,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Hospedajes */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Hospedajes</div>
               <div style={invitationStyles.hospedajesContainer}>
@@ -2010,34 +1876,21 @@ export default function Home() {
                     
                     <div style={invitationStyles.hotelRow}>
                       <span style={invitationStyles.hotelIcon}>🌐</span>
-                      <a 
-                        href={hotel.web} 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        style={invitationStyles.hotelLink}
-                      >
+                      <a href={hotel.web} target="_blank" rel="noreferrer" style={invitationStyles.hotelLink}>
                         Sitio web
                       </a>
                     </div>
                     
                     <div style={invitationStyles.hotelRow}>
                       <span style={invitationStyles.hotelIcon}>📍</span>
-                      <a 
-                        href={hotel.maps} 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        style={invitationStyles.hotelMapsBtn}
-                      >
+                      <a href={hotel.maps} target="_blank" rel="noreferrer" style={invitationStyles.hotelMapsBtn}>
                         Google Maps
                       </a>
                     </div>
                     
                     <div style={invitationStyles.hotelRow}>
                       <span style={invitationStyles.hotelIcon}>📞</span>
-                      <a 
-                        href={`tel:${hotel.telefono}`} 
-                        style={invitationStyles.hotelLink}
-                      >
+                      <a href={`tel:${hotel.telefono}`} style={invitationStyles.hotelLink}>
                         {hotel.telefono}
                       </a>
                     </div>
@@ -2072,12 +1925,7 @@ export default function Home() {
                   
                   <div style={invitationStyles.hotelRow}>
                     <span style={invitationStyles.hotelIcon}>🔗</span>
-                    <a 
-                      href={AIRBNB_DATA.link} 
-                      target="_blank" 
-                      rel="noreferrer" 
-                      style={invitationStyles.hotelLink}
-                    >
+                    <a href={AIRBNB_DATA.link} target="_blank" rel="noreferrer" style={invitationStyles.hotelLink}>
                       Ver lista de Airbnb
                     </a>
                   </div>
@@ -2085,7 +1933,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ¿Qué se toman los chicos? */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>¿Qué se toman los chicos?</div>
               <div style={invitationStyles.softBox}>
@@ -2106,7 +1953,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ¿Alergias? */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>¿Alergias?</div>
               <div style={invitationStyles.softBox}>
@@ -2121,7 +1967,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Reservaciones */}
             <div style={{ marginTop: 40 }}>
               <div style={invitationStyles.sectionTitle}>Reservaciones</div>
               <div style={envelopeStyles.reservedSection}>
@@ -2134,14 +1979,12 @@ export default function Home() {
                 <div style={envelopeStyles.reservedSubtext}>
                   LUGARES EN SU HONOR
                 </div>
-                {/* ✅ Leyenda de menores de 16 años */}
                 <div style={envelopeStyles.reservedNote}>
                   *No se permiten menores de 16 años*
                 </div>
               </div>
             </div>
 
-            {/* ✅ CONFIRMA TU ASISTENCIA */}
             <div style={{ marginTop: 30 }}>
               <div style={invitationStyles.sectionTitle}>Confirma tu asistencia</div>
               <div style={invitationStyles.formContainer}>
@@ -2191,7 +2034,6 @@ export default function Home() {
                         rows="3"
                       />
 
-                      {/* ✅ SELECTOR DE PASES - AHORA CON EL VALOR CORRECTO */}
                       {guestData && (
                         <div style={{ marginTop: 15 }}>
                           <div style={invitationStyles.label}>
@@ -2244,7 +2086,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Nota final */}
             <div style={{ marginTop: 30, fontSize: "clamp(1.3rem, 3.5vw, 1.5rem)", color: COLORS.textMedium, textAlign: "center", fontWeight: 700}}>
               *No se permiten menores de 16 años.<br />
               Invitación personal.<br />
@@ -2254,7 +2095,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* Botón Flotante de Música */}
       {envelopeOpen && (
         <MusicFloatingButton
           isPlaying={audioPlaying}
@@ -2262,7 +2102,6 @@ export default function Home() {
         />
       )}
 
-      {/* Carruseles */}
       {carouselOpen && (
         <ImageCarousel
           images={GALLERY_IMAGES}
