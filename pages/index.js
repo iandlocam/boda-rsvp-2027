@@ -965,16 +965,16 @@ export default function Home() {
       fontWeight: 400,
     },
     weddingDate: {
-  fontFamily: '"Frank Ruhl Libre", serif',
-  fontSize: "clamp(1rem, 4vw, 1.5rem)",         // 👈 más pequeño en pantallas chicas
-  fontWeight: 500,
-  color: COLORS.textMedium,
-  textAlign: "center",
-  marginTop: 0,
-  marginBottom: 35,
-  letterSpacing: "clamp(1px, 0.8vw, 4px)",      // 👈 espaciado responsivo
-  whiteSpace: "nowrap",                         // 👈 nunca baja de línea
-},
+      fontFamily: '"Frank Ruhl Libre", serif',
+      fontSize: "clamp(1rem, 4vw, 1.5rem)",
+      fontWeight: 500,
+      color: COLORS.textMedium,
+      textAlign: "center",
+      marginTop: 0,
+      marginBottom: 35,
+      letterSpacing: "clamp(1px, 0.8vw, 4px)",
+      whiteSpace: "nowrap",
+    },
     invitationText: {
       fontSize: "clamp(1rem, 3.5vw, 1.1rem)",
       color: COLORS.textMedium,
@@ -1188,6 +1188,7 @@ export default function Home() {
       fontWeight: 600,
       textTransform: "uppercase",
       letterSpacing: "1px",
+      textAlign: "center",
     },
     input: {
       padding: "clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px)",
@@ -2007,26 +2008,30 @@ export default function Home() {
                 <div style={invitationStyles.formGroup}>
                   <div style={invitationStyles.label}>
                     {guestLoading ? "Cargando invitado…" : "Confirmación de asistencia"}
-                    <span style={{ marginLeft: 8, padding: "4px 8px", background: COLORS.accentLight, borderRadius: 50, fontSize: "0.8rem" }}>
-                      {guestId ? `ID: ${guestId}` : "ID no detectado"}
-                    </span>
                   </div>
 
                   {guestData?.nombre && (
-                    <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.9rem)", color: COLORS.textMedium, marginBottom: 10 }}>
-                      <b>{guestData.nombre}</b>, nos dará mucho gusto verte.
+                    <div style={{ textAlign: "center", marginBottom: 15 }}>
+                      <div style={{ fontSize: "clamp(1rem, 3.5vw, 1.1rem)", color: COLORS.textDark, fontWeight: 600, marginBottom: 6 }}>
+                        {guestData.nombre}
+                      </div>
+                      <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.9rem)", color: COLORS.textMedium, marginBottom: 6 }}>
+                        Nos dará mucho gusto verte
+                      </div>
                       {guestData.pasesAsignados ? (
-                        <> · Pases asignados: <b>{guestData.pasesAsignados}</b></>
+                        <div style={{ fontSize: "clamp(0.85rem, 3vw, 0.9rem)", color: COLORS.textMedium }}>
+                          Pases asignados: <b>{guestData.pasesAsignados}</b>
+                        </div>
                       ) : null}
                     </div>
                   )}
 
                   {guestLoadError && (
-                    <div style={{ color: COLORS.blueSoft, marginBottom: 10 }}>No se pudo cargar tu invitación: {guestLoadError}</div>
+                    <div style={{ color: COLORS.blueSoft, marginBottom: 10, textAlign: "center" }}>No se pudo cargar tu invitación: {guestLoadError}</div>
                   )}
 
                   {yaConfirmo && (
-                    <div style={{ color: COLORS.blueSoft, marginBottom: 10 }}>
+                    <div style={{ color: COLORS.blueSoft, marginBottom: 10, textAlign: "center" }}>
                       {asistenciaActual === "Sí" ? (
                         <>
                           Gracias por confirmar <b>{pasesMostrados}</b> {pasesMostrados === 1 ? "pase" : "pases"} 🥳
@@ -2052,7 +2057,7 @@ export default function Home() {
 
                       {guestData && (
                         <div style={{ marginTop: 15 }}>
-                          <div style={invitationStyles.label}>
+                          <div style={{ ...invitationStyles.label, textAlign: "center" }}>
                             Pases a confirmar: 
                             <span style={{ marginLeft: 8, fontSize: "0.8rem", color: COLORS.textMedium }}>
                               (Disponibles: {guestData.pasesAsignados || 0})
@@ -2093,8 +2098,8 @@ export default function Home() {
                     </>
                   )}
 
-                  {rsvpStatus === "saving" && <div style={{ marginTop: 10, color: COLORS.textMedium }}>Guardando tu confirmación…</div>}
-                  {rsvpStatus === "error" && <div style={{ marginTop: 10, color: COLORS.blueSoft }}>{rsvpError}</div>}
+                  {rsvpStatus === "saving" && <div style={{ marginTop: 10, color: COLORS.textMedium, textAlign: "center" }}>Guardando tu confirmación…</div>}
+                  {rsvpStatus === "error" && <div style={{ marginTop: 10, color: COLORS.blueSoft, textAlign: "center" }}>{rsvpError}</div>}
 
                   <div style={{ marginTop: 15, fontSize: "0.8rem", color: COLORS.textMedium }}>
                   </div>
