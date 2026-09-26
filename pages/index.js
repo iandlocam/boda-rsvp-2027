@@ -965,9 +965,9 @@ export default function Home() {
       fontWeight: 400,
     },
     weddingDate: {
-      fontFamily: '"Lora", serif',
+      fontFamily: '"Frank Ruhl Libre", serif',
       fontSize: "clamp(1.2rem, 4.5vw, 1.5rem)",
-      fontWeight: 700,
+      fontWeight: 650,
       color: COLORS.textMedium,
       textAlign: "center",
       marginTop: 0,
@@ -1518,7 +1518,7 @@ export default function Home() {
           rel="stylesheet"
         />
 <link
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;600;700&display=swap"
   rel="stylesheet"
 />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
