@@ -543,9 +543,9 @@ export default function Home() {
   const DIVIDER_IMAGE_2 = "/divider-floral-2.png";
   
   const CAROUSEL_3_IMAGES = [
-    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+    "/FOTOS/07.JPEG",
+    "/FOTOS/08.JPEG",
+    "/FOTOS/09.JPEG",
   ];
   
   const LIVERPOOL_LOGO = "/liverpool-logo.png";
@@ -555,20 +555,20 @@ export default function Home() {
   
   const GALLERY_IMAGES = [
     "/FOTOS/01.png",
-    "https://images.unsplash.com/photo-1523437237164-d442d57cc3c9?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80",
+    "/FOTOS/02.jpg",
+    "/FOTOS/03.png",
+    "/FOTOS/04.png",
+    "/FOTOS/05.jpg",
+    "/FOTOS/06.jpg",
   ];
 
   const SECONDARY_GALLERY_IMAGES = [
-    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
+    "/FOTOS/10.JPEG",
+    "/FOTOS/11.JPEG",
+    "/FOTOS/12.JPEG",
+    "/FOTOS/13.JPEG",
+    "/FOTOS/14.JPEG",
+    "/FOTOS/15.JPEG",
   ];
   
   // ====================================================
