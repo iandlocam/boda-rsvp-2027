@@ -1665,7 +1665,6 @@ export default function Home() {
                   </div>
                   <div style={envelopeStyles.reservedSubtext}>
                     LUGARES EN SU HONOR
-                    *No se permiten menores de 16 años*
                   </div>
                 </div>
               </div>
