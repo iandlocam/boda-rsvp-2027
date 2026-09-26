@@ -1708,7 +1708,7 @@ export default function Home() {
               Vanessa<br />&<br />Andrés
             </div>
             
-            <div style={invitationStyles.subtitle}>¡Nos casamos!</div>
+            <div style={invitationStyles.subtitle}>¡Nos casamos!<br /> 23 de abril de 2027 </div>
 
             {/* Contador en dorado */}
             <div style={invitationStyles.countdownContainer}>
