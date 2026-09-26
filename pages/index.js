@@ -1133,12 +1133,13 @@ export default function Home() {
       textAlign: "center",
     },
     countdownNumber: {
-      fontFamily: '"Cormorant Garamond", serif',
+      fontFamily: "'Quicksand', sans-serif",
       fontSize: "clamp(1.5rem, 6vw, 2.5rem)",
-      fontWeight: 600,
+      fontWeight: 500,
       color: COLORS.gold,
       lineHeight: 1,
       fontVariantNumeric: "tabular-nums",
+      fontFeatureSettings: '"tnum" 1',
     },
     countdownLabel: {
       fontSize: "clamp(0.65rem, 2.5vw, 0.9rem)",
