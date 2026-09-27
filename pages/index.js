@@ -781,11 +781,11 @@ export default function Home() {
   ];
 
   const TIMELINE = [
-    { time: "4:00 PM", title: "Ceremonia", iconType: "ceremony" },
-    { time: "5:00 PM", title: "Coctel", iconType: "reception" },
-    { time: "7:30 PM", title: "Cena", iconType: "dinner" },
-    { time: "9:00 PM", title: "Fiesta", iconType: "party" },
-    { time: "3:00 AM", title: "Cierre", iconType: "close" },
+    { time: "3:00 PM", title: "Ceremonia", iconType: "ceremony" },
+    { time: "4:00 PM", title: "Coctel", iconType: "reception" },
+    { time: "6:30 PM", title: "Cena", iconType: "dinner" },
+    { time: "8:30 PM", title: "Fiesta", iconType: "party" },
+    { time: "2:00 AM", title: "Cierre", iconType: "close" },
   ];
   
   const MESA_REGALOS = [
