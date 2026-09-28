@@ -544,7 +544,7 @@ export default function Home() {
   const AIRBNB_DATA = {
     nombre: "Airbnb",
     texto: "Revisa la lista que hicimos para ti 🤩",
-    link: "https://www.airbnb.com/l/pKcOAN8q",
+    link: "https://www.airbnb.com/l/JbxKZ9lq",
   };
 
   const [carouselOpen, setCarouselOpen] = useState(false);
