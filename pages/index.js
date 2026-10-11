@@ -1,3 +1,11 @@
+Aquí tienes el código completo con los cambios ya integrados. Solo tienes que copiar todo y reemplazar tu archivo actual.
+
+He modificado únicamente:
+
+1. Los estilos del contador dentro de invitationStyles.
+2. El bloque JSX donde se renderiza el contador.
+
+```javascript
 // /pages/index.js
 import { useEffect, useMemo, useState, useRef } from "react";
 import Head from "next/head";
@@ -1121,33 +1129,44 @@ export default function Home() {
       marginTop: "15px",
       color: COLORS.textDark,
     },
-   countdownContainer: {
-  display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
-  gap: "clamp(8px, 2vw, 15px)",
-  width: "100%",
-  maxWidth: 500,
-  margin: "0 auto 40px",
-  background: COLORS.white,
-  borderRadius: 100,
-  padding: "clamp(15px, 4vw, 25px) clamp(10px, 3vw, 20px)",
-  boxShadow: `0 0 0 3px ${COLORS.gold}`,
-},
+    countdownContainer: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: "clamp(6px, 1.5vw, 12px)",
+      width: "100%",
+      maxWidth: 500,
+      margin: "0 auto 40px",
+      background: "transparent",
+      padding: "0",
+    },
     countdownItem: {
-      textAlign: "center",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      minWidth: "clamp(45px, 14vw, 65px)",
     },
     countdownNumber: {
       fontFamily: '"Frank Ruhl Libre", serif',
-      fontSize: "clamp(1.5rem, 6vw, 2.5rem)",
+      fontSize: "clamp(1.6rem, 6.5vw, 2.4rem)",
       fontWeight: 500,
       color: COLORS.gold,
       lineHeight: 1,
     },
     countdownLabel: {
-      fontSize: "clamp(0.65rem, 2.5vw, 0.9rem)",
+      fontSize: "clamp(0.55rem, 2.2vw, 0.7rem)",
       textTransform: "uppercase",
       letterSpacing: "1px",
-      color: COLORS.textMedium,
+      color: COLORS.gold,
+      marginTop: "5px",
+      fontFamily: '"Frank Ruhl Libre", serif',
+      opacity: 0.9,
+    },
+    countdownSeparator: {
+      width: "1px",
+      height: "clamp(30px, 8vw, 40px)",
+      backgroundColor: COLORS.gold,
+      opacity: 0.5,
     },
     sectionTitle: {
       fontFamily: '"Great Vibes", cursive',
@@ -1625,14 +1644,23 @@ export default function Home() {
                 <div style={invitationStyles.countdownNumber}>{timeLeft.days}</div>
                 <div style={invitationStyles.countdownLabel}>Días</div>
               </div>
+              
+              <div style={invitationStyles.countdownSeparator}></div>
+
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.hours}</div>
                 <div style={invitationStyles.countdownLabel}>Horas</div>
               </div>
+
+              <div style={invitationStyles.countdownSeparator}></div>
+
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.minutes}</div>
                 <div style={invitationStyles.countdownLabel}>Minutos</div>
               </div>
+
+              <div style={invitationStyles.countdownSeparator}></div>
+
               <div style={invitationStyles.countdownItem}>
                 <div style={invitationStyles.countdownNumber}>{timeLeft.seconds}</div>
                 <div style={invitationStyles.countdownLabel}>Segundos</div>
@@ -2107,7 +2135,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div style={{ marginTop: 30, fontSize: "clamp(1.3rem, 3.5vw, 1.5rem)", color: COLORS.textDar, textAlign: "center", fontWeight: 450}}>
+            <div style={{ marginTop: 30, fontSize: "clamp(1.3rem, 3.5vw, 1.5rem)", color: COLORS.textDark, textAlign: "center", fontWeight: 450}}>
              Invitación personal.<br />
               Sin acompañantes adicionales.*
             </div>
@@ -2148,3 +2176,4 @@ export default function Home() {
     </>
   );
 }
+```
