@@ -1,11 +1,3 @@
-Aquí tienes el código completo con los cambios ya integrados. Solo tienes que copiar todo y reemplazar tu archivo actual.
-
-He modificado únicamente:
-
-1. Los estilos del contador dentro de invitationStyles.
-2. El bloque JSX donde se renderiza el contador.
-
-```javascript
 // /pages/index.js
 import { useEffect, useMemo, useState, useRef } from "react";
 import Head from "next/head";
@@ -1133,7 +1125,7 @@ export default function Home() {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      gap: "clamp(6px, 1.5vw, 12px)",
+      gap: "clamp(4px, 1.2vw, 10px)",
       width: "100%",
       maxWidth: 500,
       margin: "0 auto 40px",
@@ -1144,7 +1136,7 @@ export default function Home() {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      minWidth: "clamp(45px, 14vw, 65px)",
+      minWidth: "clamp(40px, 12vw, 60px)",
     },
     countdownNumber: {
       fontFamily: '"Frank Ruhl Libre", serif',
@@ -1154,7 +1146,7 @@ export default function Home() {
       lineHeight: 1,
     },
     countdownLabel: {
-      fontSize: "clamp(0.55rem, 2.2vw, 0.7rem)",
+      fontSize: "clamp(0.5rem, 2vw, 0.65rem)",
       textTransform: "uppercase",
       letterSpacing: "1px",
       color: COLORS.gold,
@@ -2176,4 +2168,3 @@ export default function Home() {
     </>
   );
 }
-```
